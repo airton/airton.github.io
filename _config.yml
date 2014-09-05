@@ -3,7 +3,7 @@ name: Airton Vancin Junior
 description: A brazilian web developer
 url: http://airton.github.io/
 baseurl: /
-exclude: ['node_modules', 'Gruntfile.js', 'package.json']
+exclude: ['node_modules', 'Gruntfile.js', 'Gulpfile.js', 'package.json']
 
 
 # Build settings

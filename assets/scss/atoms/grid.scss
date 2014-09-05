@@ -32,4 +32,22 @@
     @media only screen and (min-width: $breakpoint) {
         /* Grid calc */
         @import "grid-functions";
+
+        .logo{
+            @include width(6);
+            @extend %column;
+        }
+
+        .nav-menu{
+            @include width(6);
+            @extend %column;
+            @extend %last;
+        }
+
+        .about-text{
+            @include width(6);
+            @extend %column;
+        }
+
+
    }

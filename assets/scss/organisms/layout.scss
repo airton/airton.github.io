@@ -4,13 +4,47 @@
 
     @media only screen {
 
-        /* About
-           ========================================================================== */
+        /*  About
+            ========================================================================== */
             .about{
-                background-color: #4143B2;
+                background-color: #00C7FF;
                 padding: 40px 0;
+                color: #fff;
             }
 
+            .about h1{
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+
+        /*  Social networks
+            ========================================================================== */
+            .social-networks ul{
+                display: block;
+                margin: 0;
+                padding: 0;
+            }
+
+            .social-networks li{
+                display: inline-block;
+            }
+
+            .social-networks a{
+                display: block;
+                padding: 10px 0;
+                width: 45px;
+                height: 45px;
+                background-color: rgba(0,0,0,0.2);
+                color: #fff;
+                text-align: center;
+                font-size: 22px;
+                @include border-radius(2px);
+            }
+
+            .social-networks i{
+                vertical-align: middle;
+            }
     }
 
 
@@ -19,5 +53,12 @@
      */
 
     @media only screen and (min-width: $breakpoint) {
+
+        /*  About
+            ========================================================================== */
+            .about{
+                height: 600px;
+            }
+
 
     }
