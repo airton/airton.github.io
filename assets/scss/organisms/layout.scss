@@ -1,0 +1,23 @@
+/*  ==========================================================================
+    Layout
+    ========================================================================== */
+
+    @media only screen {
+
+        /* About
+           ========================================================================== */
+            .about{
+                background-color: #4143B2;
+                padding: 40px 0;
+            }
+
+    }
+
+
+    /*
+     * CSS for devices with resolution bigger than breakpoint
+     */
+
+    @media only screen and (min-width: $breakpoint) {
+
+    }
