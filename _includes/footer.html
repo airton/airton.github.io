@@ -1,10 +1,3 @@
-<ul class="social-links">
-  <li><a class="social-twitter" href="http://twitter.com/airtonvancin">Twitter</a></li>
-  <li><a class="social-facebook" href="http://www.facebook.com/airtonvancin">Facebook</a></li>
-  <li><a class="social-github" href="https://github.com/airton">Github</a></li>
-  <li><a class="social-email" href="mailto:airtonvancin@gmail.com">Email</a></li>
-  <li><a class="social-rss" href="http://feeds.feedburner.com/airtonvancin">RSS Feed</a></li>
-</ul>
 
 <script type="text/javascript">
   var _gaq = _gaq || [];
@@ -17,23 +10,6 @@
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
 </script>
-
-<!-- jQuery Infinite Scrolling -->
-<script type='text/javascript' src='{{ site.baseurl }}assets/js/jquery.infinitescroll.min.js'></script>
-<script>
-// infinitescroll() is called on the element that surrounds
-// the items you will be loading more of
-$('ul#posts').infinitescroll({
-  navSelector   : "p.pagination",
-          // selector for the paged navigation (it will be hidden)
-  nextSelector  : "p.pagination a.older",
-          // selector for the NEXT link (to page 2)
-  itemSelector  : "#content ul#posts li.post"
-          // selector for all items you'll retrieve
-});
-</script>
-
-<script type='text/javascript' src='{{ site.baseurl }}assets/js/fokus.min.js'></script>
 
 </body>
 </html>

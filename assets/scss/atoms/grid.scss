@@ -49,5 +49,11 @@
             @extend %column;
         }
 
+        .illustration{
+            @include width(6);
+            @extend %column;
+            @extend %last;
+        }
+
 
    }

@@ -2,19 +2,57 @@
     Layout
     ========================================================================== */
 
+    //$color-primary: #00C7FF;
+    $color-primary: #017EC1;
+
     @media only screen {
 
         /*  About
             ========================================================================== */
             .about{
-                background-color: #00C7FF;
+                background: $color-primary url(../img/bg.png) no-repeat scroll top center / 100%;
                 padding: 40px 0;
                 color: #fff;
+            }
+
+            @include keyframes(anime-text) {
+                0%   { opacity: 0; visibility: hidden; }
+                100% { opacity: 1; visibility: visible; }
             }
 
             .about h1{
                 font-weight: 600;
                 text-transform: uppercase;
+                margin: 30px 0;
+                font-size: 30px;
+                line-height: 40px;
+                position: relative;
+                @include animation(anime-text 1s);
+            }
+
+            .about h1 span{
+                color: #002F47;
+            }
+
+            .about p{
+                font-size: 20px;
+                line-height: 30px;
+                font-weight: 600;
+                text-transform: uppercase;
+                color: #fff;
+                margin: 0 0 60px 0;
+                position: relative;
+                @include animation(anime-text 1s);
+            }
+
+            .about a{
+                color: #fff;
+                text-decoration: underline;
+            }
+
+            .about a:hover,
+            .about a:focus{
+                text-decoration: none;
             }
 
 
@@ -40,10 +78,40 @@
                 text-align: center;
                 font-size: 22px;
                 @include border-radius(2px);
+                @include transition(all 0.5s ease);
             }
+
+            @include keyframes(anime-social) {
+                0%   { opacity: 0; box-shadow: 0 0 0 20px rgba(0,0,0,0.1); }
+                100% { opacity: 1; }
+            }
+
+            .social-networks .email{ @include animation(anime-social 0.5s ease); }
+            .social-networks .twitter{ @include animation(anime-social 1s ease); }
+            .social-networks .facebook{ @include animation(anime-social 1.5s ease); }
+            .social-networks .github{ @include animation(anime-social 2s ease); }
+            .social-networks .wordpress{ @include animation(anime-social 2.5s ease); }
 
             .social-networks i{
                 vertical-align: middle;
+            }
+
+            .social-networks a:hover,
+            .social-networks a:focus{
+                @include transition(all 0.5s ease);
+                background-color: rgba(0,0,0,0.5);
+            }
+
+        /*  comentario
+            ========================================================================== */
+            @include keyframes(anime-illustration) {
+                0%   { opacity: 0; right: -100%; }
+                100% { opacity: 1; right: 0; }
+            }
+
+            .illustration img{
+                position: relative;
+                @include animation(anime-illustration 2.5s);
             }
     }
 
