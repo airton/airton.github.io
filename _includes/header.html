@@ -28,8 +28,8 @@
     <!-- CSS -->
     <link rel="stylesheet" href="{{ site.baseurl }}build/css/main.min.css" type="text/css" />
 
-    <!-- Modernizr adding css classes -->
-    <script src='{{ site.baseurl }}assets/js/modernizr_css_classes.js'></script>
+    <!-- Modernizr -->
+    <script src='{{ site.baseurl }}build/js/libs/modernizr.min.js'></script>
 
 </head>
-<body{% if page.class %} class="{{ page.class }}"{% endif %} onload="prettyPrint()">
+<body{% if page.class %} class="{{ page.class }}"{% endif %}>
