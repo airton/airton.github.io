@@ -34,7 +34,7 @@
         @import "grid-functions";
 
         .logo{
-            @include width(6);
+            @include width(2);
             @extend %column;
         }
 
@@ -45,12 +45,13 @@
         }
 
         .about-text{
-            @include width(6);
+            @include width(12);
             @extend %column;
+            @extend %last;
         }
 
         .illustration{
-            @include width(6);
+            @include width(12);
             @extend %column;
             @extend %last;
         }

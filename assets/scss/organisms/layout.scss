@@ -12,42 +12,35 @@
             .about{
                 background: $color-primary url(../img/bg.png) no-repeat scroll top center / 100%;
                 padding: 40px 0;
-                color: #fff;
-            }
-
-            @include keyframes(anime-text) {
-                0%   { opacity: 0; visibility: hidden; }
-                100% { opacity: 1; visibility: visible; }
+                color: #f9f9f9;
+                text-align: center;
             }
 
             .about h1{
-                font-weight: 600;
+                font-weight: 700;
                 text-transform: uppercase;
                 margin: 30px 0;
-                font-size: 30px;
-                line-height: 40px;
-                position: relative;
-                @include animation(anime-text 1s);
-            }
-
-            .about h1 span{
-                color: #002F47;
+                font-size: 38px;
+                line-height: 48px;
+                text-shadow: 0 0 10px rgba(0,0,0,0.5);
+                @include animation(anime-text 1s ease);
             }
 
             .about p{
                 font-size: 20px;
                 line-height: 30px;
-                font-weight: 600;
+                font-weight: 400;
                 text-transform: uppercase;
-                color: #fff;
-                margin: 0 0 60px 0;
-                position: relative;
-                @include animation(anime-text 1s);
+                text-align: center;
+                margin: 0 0 30px 0;
+                color: #f9f9f9;
+                text-shadow: 0 0 5px rgba(0,0,0,0.5);
+                @include animation(anime-text 1.5s ease);
             }
 
             .about a{
-                color: #fff;
-                text-decoration: underline;
+                color: #f9f9f9;
+                text-decoration: none;
             }
 
             .about a:hover,
@@ -58,6 +51,10 @@
 
         /*  Social networks
             ========================================================================== */
+            .social-networks{
+                margin-bottom: 20px;
+            }
+
             .social-networks ul{
                 display: block;
                 margin: 0;
@@ -77,20 +74,10 @@
                 color: #fff;
                 text-align: center;
                 font-size: 22px;
+                line-height: 100%;
                 @include border-radius(2px);
                 @include transition(all 0.5s ease);
             }
-
-            @include keyframes(anime-social) {
-                0%   { opacity: 0; box-shadow: 0 0 0 20px rgba(0,0,0,0.1); }
-                100% { opacity: 1; }
-            }
-
-            .social-networks .email{ @include animation(anime-social 0.5s ease); }
-            .social-networks .twitter{ @include animation(anime-social 1s ease); }
-            .social-networks .facebook{ @include animation(anime-social 1.5s ease); }
-            .social-networks .github{ @include animation(anime-social 2s ease); }
-            .social-networks .wordpress{ @include animation(anime-social 2.5s ease); }
 
             .social-networks i{
                 vertical-align: middle;
@@ -102,17 +89,7 @@
                 background-color: rgba(0,0,0,0.5);
             }
 
-        /*  comentario
-            ========================================================================== */
-            @include keyframes(anime-illustration) {
-                0%   { opacity: 0; right: -100%; }
-                100% { opacity: 1; right: 0; }
-            }
 
-            .illustration img{
-                position: relative;
-                @include animation(anime-illustration 2.5s);
-            }
     }
 
 
@@ -125,8 +102,49 @@
         /*  About
             ========================================================================== */
             .about{
-                height: 600px;
+                height: 700px;
             }
 
+            .about-text{
+                height: 250px;
+            }
 
+            @include keyframes(anime-text) {
+                0%   {  opacity: 0; @include transform(scale(1.1)); }
+                100% {  opacity: 1; @include transform(scale(none)); }
+            }
+
+            .about h1{
+                @include animation(anime-text 1s ease);
+            }
+
+            .about p{
+                @include animation(anime-text 1.5s ease);
+            }
+
+        /*  comentario
+            ========================================================================== */
+            @include keyframes(anime-social) {
+                0%   {  box-shadow: 0 0 0 20px rgba(0,0,0,0.1); }
+                100% { opacity: 1; }
+            }
+
+            .social-networks .email{ @include animation(anime-social 1s ease); }
+            .social-networks .twitter{ @include animation(anime-social 1.5s ease); }
+            .social-networks .facebook{ @include animation(anime-social 2s ease); }
+            .social-networks .github{ @include animation(anime-social 2.5s ease); }
+            .social-networks .wordpress{ @include animation(anime-social 3s ease); }
+
+
+        /*  Illustration
+            ========================================================================== */
+            @include keyframes(anime-illustration) {
+                0%   { opacity: 0; right: -100%; }
+                100% { opacity: 1; right: 0; }
+            }
+
+            .illustration img{
+                position: relative;
+                //@include animation(anime-illustration 2.5s);
+            }
     }
