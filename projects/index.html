@@ -1,0 +1,25 @@
+---
+layout: page
+class: projects
+title: Projects
+description: Some of the most popular projects that I've been working recently.
+---
+
+<div class="github-projects">
+    <div class="github-box-wrap" data-repo="a2comunicacao/a2boilerplate" ></div>
+    <div class="github-box-wrap" data-repo="airton/airton.github.io" ></div>
+    <div class="github-box-wrap" data-repo="airton/video-destacado" ></div>
+    <div class="github-box-wrap" data-repo="airton/font-size" ></div>
+    <div class="github-box-wrap" data-repo="airton/twitter-api" ></div>
+    <div class="github-box-wrap" data-repo="airton/baseline-jekyll" ></div>
+    <div class="github-box-wrap" data-repo="a2comunicacao/A2lab" ></div>
+    <div class="github-box-wrap" data-repo="a2comunicacao/wp-plugins" ></div>
+</div>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+<script src="{{ site.baseurl }}build/js/libs/jquery.github.min.js"></script>
+
+<script>
+    $("[data-repo]").github();
+</script>
+

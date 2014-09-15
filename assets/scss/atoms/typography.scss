@@ -17,14 +17,21 @@
             h3,
             h4,
             h5,
-            h6 {}
+            h6 {
+              margin: 10px 0;
+              font-family: inherit;
+              font-weight: 700;
+              line-height: 20px;
+              color: inherit;
+              text-rendering: optimizelegibility;
+            }
 
         /*  Texts
             ========================================================================== */
             p {
-                color: #666666;
-                font-size: 14px;
-                line-height: 20px;
+                color: #999;
+                font-size: 16px;
+                line-height: 22px;
                 margin: 0 0 15px;
                 text-align: left;
             }
@@ -32,7 +39,7 @@
         /*  Links
             ========================================================================== */
             a {
-                color: blue;
+                color: #017EC1;
                 text-decoration: none;
             }
 

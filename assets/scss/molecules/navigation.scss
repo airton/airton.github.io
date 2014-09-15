@@ -7,14 +7,19 @@
         /*  Header
             ========================================================================== */
             .header{
+                //margin-bottom: 40px;
 
             }
+
+            .home .header{ margin: 0; }
+
+        /*  Menu
+            ========================================================================== */
 
         /*  Footer
             ========================================================================== */
 
-        /*  Menu
-            ========================================================================== */
+
 
     }
 
@@ -39,6 +44,7 @@
                 width: 65px;
                 height: 65px;
                 margin-top: -2px;
+                border: 2px solid #FF8108;
                 @include border-radius(50%);
             }
 
@@ -71,6 +77,16 @@
                 display: block;
                 font-weight: normal;
                 @include border-radius(2px);
+                @include transition(all 0.5s ease);
+            }
+
+            .nav-item > a:hover,
+            .nav-item > a:focus,
+            .projects .item-projects > a{
+                color: #fff;
+                text-decoration: none;
+                background-color: #FF8108;
+                @include transition(all 0.3s ease);
             }
 
         /*  Footer

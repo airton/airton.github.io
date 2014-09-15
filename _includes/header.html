@@ -33,3 +33,24 @@
 
 </head>
 <body{% if page.class %} class="{{ page.class }}"{% endif %}>
+
+    <header class="header" role="banner">
+
+        <div class="row">
+
+            <!-- Logo -->
+            <div class="logo">
+                <a href="/"><img src="{{ site.baseurl }}build/img/airton.png" alt="Logo"></a>
+            </div>
+
+            <!-- Menu -->
+            <nav class="nav-menu" role="navigation">
+                <ul>
+                    <li class="nav-item item-projects"><a href="{{ site.baseurl }}projects/index.html">Projects</a></li>
+                    <li class="nav-item item-blog"><a href="{{ site.baseurl }}projects/index.html">Blog</a></li>
+                </ul>
+            </nav>
+
+        </div>
+
+    </header>
