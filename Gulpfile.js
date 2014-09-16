@@ -56,7 +56,7 @@ var gulp 		= require('gulp'),
 		gulp.task('concat', function() {
 
 			// scripts.min.js
-			return gulp.src([
+			gulp.src([
 				'components/jquery/jquery.js', // jQuery Lib
 				_assets+'js/scripts.js'
 				])
@@ -66,6 +66,19 @@ var gulp 		= require('gulp'),
 		    .pipe(uglify())
 		    .pipe(gulp.dest(_build_js))
 		    .pipe(reload({stream:true}));
+
+            // projects.min.js
+            gulp.src([
+                'components/jquery/jquery.js', // jQuery Lib
+                'components/jquery-github/jquery.github.js', // jquery.github.js
+                _assets+'js/projects.js'
+                ])
+            .pipe(concat('projects.js'))
+            .pipe(gulp.dest(_build_js))
+            .pipe(rename({suffix: ".min"}))
+            .pipe(uglify())
+            .pipe(gulp.dest(_build_js))
+            .pipe(reload({stream:true}));
 		});
 
 	// BROWSER SYNC ------------------------------------------------------
@@ -98,7 +111,7 @@ var gulp 		= require('gulp'),
     	});
 
 	// RUN TASKS ---------------------------------------------------------
-    	gulp.task('default',   ['watch', 'liverelaod']);
+    	gulp.task('default',    ['watch', 'liverelaod']);
     	gulp.task('sync', 		['watch', 'browser-sync']);
     	gulp.task('css', 		['sass']);
     	gulp.task('js', 		['lint', 'concat']);

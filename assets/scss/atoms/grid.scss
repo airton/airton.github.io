@@ -56,5 +56,10 @@
             @extend %last;
         }
 
+        .list-posts{
+            @include width(8);
+            @extend %column;
+        }
+
 
    }

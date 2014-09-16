@@ -33,6 +33,13 @@
                 text-shadow: 0 0 10px rgba(0,0,0,0.5);
             }
 
+            .date{
+                font-size: 16px;
+                line-height: 16px;
+                color: #333;
+                font-weight: 400;
+            }
+
         /*  About
             ========================================================================== */
             .about{
@@ -314,6 +321,80 @@
                     url('../fonts/font-entypo/Entypo-webfont.svg#EntypoRegular') format('svg');
                 font-weight: normal;
                 font-style: normal;
+            }
+
+
+        /*  Blog
+            ========================================================================== */
+            .list-posts .post{
+                margin-bottom: 30px;
+                padding-bottom: 30px;
+                border-bottom: 1px solid #eee;
+                text-align: center;
+            }
+
+            .list-posts .posttitle{
+                font-size: 32px;
+                line-height: 42px;
+                margin: 0 0 10px;
+                text-transform: uppercase;
+            }
+
+            .list-posts .postdate{
+                font-size: 16px;
+                line-height: 16px;
+                text-align: center;
+                color: #333;
+                font-weight: 400;
+                margin-bottom: 15px;
+                display: block;
+            }
+
+            .list-posts p{
+                font-size: 16px;
+                line-height: 16px;
+                text-align: center;
+            }
+
+            .list-posts .postimage{
+                border: 1px solid #eee;
+                background-color: #f9f9f9;
+                padding: 10px;
+                margin: 0 0 10px;
+                @include border-radius(4px);
+            }
+
+        /*  Pagination
+            ========================================================================== */
+            .pagination{
+                text-align: center;
+                font-size: 14px;
+                font-family: arial;
+                margin-bottom: 30px;
+
+            }
+
+            .pagination > span{
+                color: #999;
+            }
+
+            .pagination .newer,
+            .pagination .older{
+                font-size: 28px;
+            }
+
+            .pagination .count{
+                padding: 0 30%;
+            }
+
+            .pagination a{
+                @include transition(all 0.5s ease);
+            }
+
+            .pagination a:hover,
+            .pagination a:focus{
+                @include transition(all 0.5s ease);
+                color: #FF8108;
             }
 
     }

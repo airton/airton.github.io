@@ -80,9 +80,19 @@
                 @include transition(all 0.5s ease);
             }
 
+            .item-home > a,
+            .nav-item.item-home > a:hover,
+            .nav-item.item-home > a:focus{
+                border:none;
+                color: $color-primary;
+                background: transparent;
+            }
+
             .nav-item > a:hover,
             .nav-item > a:focus,
-            .projects .item-projects > a{
+            .projects .item-projects > a,
+            .blog .item-blog > a,
+            .post .item-blog > a{
                 color: #fff;
                 text-decoration: none;
                 background-color: #FF8108;

@@ -1,72 +1,73 @@
 {% include header.html %}
 
-<div class="container">
+<main class="main" role="main">
+    <div class="intro">
+        <div class="row">
+            {% if page.title %}
+            <h1 class="title">{{ page.title }}</h1>
+            {% endif %}
 
-    <div id="content">
+            {% if page.description %}
+            <p class="desc">{{ page.description }}</p>
+            {% endif %}
+        </div>
+    </div>
+    <div class="content row">
 
         {{ content }}
 
-        <ul id="posts">
+        <div class="list-posts centered">
             {% for post in paginator.posts %}
-            {% unless post.draft %}
-            <li class="post">
-                {% if post.link %}
-                <h2 class="linktitle">
-                    <a href="{{ post.link }}">{{ post.title }}</a>&nbsp;
-                    <a href="{{ post.url }}" class="infin">&infin;</a>
-                </h2>
-                {% elsif post.quote %}
-                <p class="date articledate">{{ post.date | date:"%d/%m/%Y" }}</p>
-                {% else %}
-                <h2 class="posttitle">
-                    <a href="{{ post.url }}" class="articletitle">{{ post.title }}</a>
-                </h2>
-                <p class="date articledate">{{ post.date | date:"%d/%m/%Y" }}</p>
-                {% endif %}
+                {% unless post.draft %}
 
-                {% if post.excerpt %}
-                {{ post.excerpt | markdownify }}
-                {% unless post.nomore or post.quote %}
-                <p><a href="{{ post.url }}">
-                    {% if post.language == "en" %}
-                    <strong>Continue reading&#8230;</strong>
-                    {% else %}
-                    <strong>Continue lendo&#8230;</strong>
+                <article class="post">
+
+                    <h2 class="posttitle">
+                        <a href="{{ post.url }}" class="articletitle">{{ post.title }}</a>
+                    </h2>
+
+                    <span class="postdate">{{ post.date | date:"%d/%m/%Y" }}</span>
+
+                    {% if post.image %}
+                    <figure class="postimage"><a href="{{ post.url }}"><img src="{{ site.baseurl }}build/img/{{post.image}}" alt="Imagem {{post.image}}"></a></figure>
                     {% endif %}
-                </a></p>
+
+                    {% if post.description %}
+                        {{ post.description | markdownify }}
+                    {% else %}
+                        {{ post.content }}
+                    {% endif %}
+                </article>
+
                 {% endunless %}
-                {% else %}
-                {{ post.content }}
-                {% endif %}
-            </li>
-            {% endunless %}
             {% endfor %}
-        </ul>
+        </div>
 
 
-        <p class="pagination">
+        <div class="pagination">
             {% if paginator.previous_page %}
 
             {% if paginator.previous_page == 1 %}
-            <a class="newer" href="/blog">Previous</a>
+            <a class="newer" href="/blog"><i class="fa fa-hand-o-left"></i></a>
 
             {% else %}
-            <a class="newer" href="/blog/page{{paginator.previous_page}}">Previous</a>
+            <a class="newer" href="/blog/page{{paginator.previous_page}}"><i class="fa fa-hand-o-left"></i></a>
             {% endif %}
 
             {% else %}
-            <span class="newer">Previous</span>
+            <span class="newer"><i class="fa fa-hand-o-left"></i></span>
             {% endif %}
 
-            <span>Página {{paginator.page}} de {{paginator.total_pages}}</span>
+            <span class="count">Página {{paginator.page}} de {{paginator.total_pages}}</span>
+
             {% if paginator.next_page %}
-            <a class="older" href="/blog/page{{paginator.next_page}}">Next</a>
+            <a class="older" href="/blog/page{{paginator.next_page}}"><i class="fa fa-hand-o-right"></i></a>
             {% else %}
-            <span class="older">Next</span>
+            <span class="older"><i class="fa fa-hand-o-right"></i></span>
             {% endif %}
-        </p>
+        </div>
 
-    </div> <!--/content-->
-</div> <!--/container-->
+    </div><!-- content -->
+</main><!-- main -->
 
 {% include footer.html %}

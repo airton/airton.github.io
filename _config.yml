@@ -3,7 +3,7 @@ name: Airton Vancin Junior
 description: A brazilian web developer
 url: http://airton.github.io/
 baseurl: /
-exclude: ['node_modules', 'Gruntfile.js', 'Gulpfile.js', 'package.json']
+exclude: ['assets','node_modules','components','Gruntfile.js', 'Gulpfile.js', 'package.json', 'bower.json']
 
 
 # Build settings
@@ -16,5 +16,5 @@ destination: ./_site
 plugins:     ./_plugins
 paginate_path: 'blog/page:num'
 
-permalink:   /:title/
+permalink:   blog/:title/
 paginate: 5

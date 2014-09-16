@@ -1,24 +1,29 @@
 {% include header.html %}
 
-<div class="container">
+<main class="main" role="main">
 
-    <div id="content" class="post">
+        <div class="intro">
+            <div class="row">
 
-        {% if page.link %}
-        <h1 class="linktitle"><a href="{{ page.link }}">{{ page.title }}</a></h1>
-        <p class="date">{{ page.date | date:"%d/%m/%Y" }}</p>
-        {% else %}
-        <h1 class="posttitle">{{ page.title }}</h1>
-        <p class="date articledate">{{ page.date | date:"%d/%m/%Y" }}</p>
-        {% endif %}
+                {% if page.title %}
+                <h1 class="title">{{ page.title }}</h1>
+                {% endif %}
 
-        {{ content }}
+                {% if page.description %}
+                <p class="desc">{{ page.description }}</p>
+                {% endif %}
 
-        <a rel="author" style="visibility: hidden;" href="https://profiles.google.com/zno.rocha">Zeno Rocha</a>
+                <span class="date">{{ page.date | date: "%d/%m/%Y" }}</span>
+            </div>
+        </div>
+
+        <div class="content row">
+            {{ content }}
+        </div><!-- content -->
+        <a rel="author" style="visibility: hidden;" href="https://profiles.google.com/airtonvancin">Zeno Rocha</a>
 
         {% include disqus.html %}
 
-    </div> <!-- /content -->
-</div> <!-- /container -->
+</main><!-- main -->
 
 {% include footer.html %}
