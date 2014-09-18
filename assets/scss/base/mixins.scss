@@ -70,25 +70,25 @@
         }
 
         @mixin keyframes($name) {
-            @-webkit-keyframes $name {
-                @content; 
-            }
-
-            @-moz-keyframes $name {
+            @-webkit-keyframes #{$name} {
                 @content;
             }
 
-            @-ms-keyframes $name {
+            @-moz-keyframes #{$name} {
                 @content;
             }
 
-            @-o-keyframes $name {
+            @-ms-keyframes #{$name} {
                 @content;
             }
 
-            @keyframes $name {
+            @-o-keyframes #{$name} {
                 @content;
-            } 
+            }
+
+            @keyframes #{$name} {
+                @content;
+            }
         }
 
     /*  Transform

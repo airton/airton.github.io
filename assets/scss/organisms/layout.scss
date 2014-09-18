@@ -12,7 +12,7 @@
             .intro{
                 background: $color-primary url(../img/bg.png) repeat scroll top center / 40%;
                 text-align: center;
-                padding: 20px 0;
+                padding: 80px 0 20px;
                 margin-bottom: 30px;
             }
 
@@ -460,7 +460,11 @@
                 height: auto;
                 overflow: hidden;
                 visibility: hidden;
-                @include animation(anime-illustration 0.5s ease 3s both);
+                @include animation(anime-illustration 0.5s ease 2s both);
+            }
+
+            .illustration img{
+                margin-left: -20px;
             }
 
         /*  Projects

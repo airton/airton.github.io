@@ -3,7 +3,7 @@ name: Airton Vancin Junior
 description: 'A Brazilian web developer, graduate in information systems'
 url: http://airtonvancin.com/
 baseurl: /
-exclude: ['assets','node_modules','components','Gruntfile.js', 'Gulpfile.js', 'package.json', 'bower.json']
+exclude: ['assets','node_modules','components','Gruntfile.js', 'Gulpfile.js', 'package.json', 'bower.json', 'CNAME']
 
 
 # Build settings
