@@ -18,7 +18,7 @@
 
             .title{
                 font-size: 48px;
-                line-height: 48px;
+                line-height: 58px;
                 margin: 0 0 30px;
                 color: #fff;
                 text-shadow: 0 0 10px rgba(0,0,0,0.5);
@@ -323,7 +323,6 @@
                 font-style: normal;
             }
 
-
         /*  Blog
             ========================================================================== */
             .list-posts .post{
@@ -397,6 +396,16 @@
                 color: #FF8108;
             }
 
+        /*  Content
+            ========================================================================== */
+            .content{
+                margin-bottom: 20px;
+                border-bottom: 1px solid #eee;
+            }
+
+            .disqus{
+                padding-top: 20px;
+            }
     }
 
 

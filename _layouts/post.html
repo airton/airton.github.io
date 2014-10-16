@@ -17,12 +17,16 @@
             </div>
         </div>
 
-        <div class="content row">
-            {{ content }}
-        </div><!-- content -->
-        <a rel="author" style="visibility: hidden;" href="https://profiles.google.com/airtonvancin">Zeno Rocha</a>
+        <!-- content -->
+        <div class="content">
+            <div class="row">
+                {{ content }}
+            </div>
+            <a rel="author" style="visibility: hidden;" href="https://profiles.google.com/airtonvancin">Airton Vancin Junior</a>
+        </div>
 
-        {% include disqus.html %}
+        <!-- disqus -->
+        <div class="disqus"><div class="row">{% include disqus.html %}</div></div>
 
 </main><!-- main -->
 
