@@ -8,6 +8,7 @@
             -webkit-text-size-adjust: none;
             -ms-text-size-adjust:none;
             font-family: 'Arvo', serif;
+            color: #3e3e3e;
         }
 
         /*  Titles
@@ -18,13 +19,45 @@
             h4,
             h5,
             h6 {
-                margin: 10px 0;
+                margin: 0 0 30px 0;
                 font-family: inherit;
                 font-weight: 700;
                 line-height: 20px;
                 color: inherit;
                 text-rendering: optimizelegibility;
+                letter-spacing: -1px;
             }
+
+            h1{
+                font-size: 48px;
+                line-height: 58px;
+            }
+
+            h2{
+                font-size: 36px;
+                line-height: 46px;
+            }
+
+            h3{
+                font-size: 28px;
+                line-height: 38px;
+            }
+
+            h4{
+                font-size: 26px;
+                line-height: 36px;
+            }
+
+            h5{
+                font-size: 24px;
+                line-height: 34px;
+            }
+
+            h6{
+                font-size: 20px;
+                line-height: 30px;
+            }
+
 
         /*  Texts
             ========================================================================== */
@@ -32,8 +65,13 @@
                 color: #444;
                 font-size: 16px;
                 line-height: 26px;
-                margin: 0 0 20px;
+                margin: 0 0 30px;
                 text-align: left;
+                letter-spacing: -1px;
+            }
+
+            .text-info{
+                color: #017EC1;
             }
 
         /*  Links
@@ -47,25 +85,19 @@
 
         /*  Code
             ========================================================================== */
-            pre{ margin: 0 0 30px 0; }
-            pre, code{
-                font-size: 14px;
-                line-height: 14px;
+
+            code {
+               padding: 2px 4px;
+               font-size: 90%;
+               color: #c7254e;
+               background-color: #f9f2f4;
+               border-radius: 4px;
             }
 
-            pre, pre code{ display: block; }
+            pre{
+                word-wrap: break-word;
+            }
 
-            pre code,
-            code{
-                border: 1px solid #eee;
-                background-color: #f9f9f9;
-                padding: 8px 10px;
-                color: #000;
-                @include border-radius(2px);
-            }
-            p code{
-                padding: 5px 10px;
-            }
 
     }
 

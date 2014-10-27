@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 
-    <title>{% if page.title %}{{ page.title }} - {% endif %} {{ site.name }}</title>
+    <title>{% if page.title %}{{ page.title }} - {% endif %}{{ site.name }}</title>
 
     <!-- Meta -->
     <meta charset="utf-8"/>
@@ -10,7 +10,7 @@
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
 
     <!-- Facebook -->
-    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %} {{ site.name }}"/>
+    <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.name }}"/>
     <meta property="og:site_name" content="Airton Vancin Junior"/>
     <meta property="og:url" content="{{ site.url }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}"/>
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}blog{% endif %}"/>

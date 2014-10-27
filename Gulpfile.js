@@ -79,6 +79,21 @@ var gulp 		= require('gulp'),
             .pipe(uglify())
             .pipe(gulp.dest(_build_js))
             .pipe(reload({stream:true}));
+
+            // post.min.js
+            gulp.src([
+                'components/jquery/jquery.js', // jQuery Lib
+                'components/jquery-github/jquery.github.js', // jquery.github.js
+                _assets+'js/projects.js'
+                ])
+            .pipe(concat('post.js'))
+            .pipe(gulp.dest(_build_js))
+            .pipe(rename({suffix: ".min"}))
+            .pipe(uglify())
+            .pipe(gulp.dest(_build_js))
+            .pipe(reload({stream:true}));
+
+
 		});
 
 	// BROWSER SYNC ------------------------------------------------------

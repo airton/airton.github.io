@@ -4,12 +4,26 @@
 
     @media only screen {
         ul,
+        ol,
         dl {
-            color: #666;
-            font-size: 14px;
+            display: block;
+            margin-bottom: 30px;
+            margin-right: 250px;
+            font-size: 16px;
+            line-height: 26px;
+            font-weight: 400;
+            color: #333;
+            padding-left: 30px;
         }
+
+        li{
+            display: list-item;
+        }
+
+
+
     }
-    
+
     /*
      * CSS for devices with resolution bigger than breakpoint
      */

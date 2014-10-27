@@ -20,6 +20,22 @@
         <!-- content -->
         <div class="content">
             <div class="row">
+                <!-- Social Share -->
+                <div class="social-share">
+                    <a class="social-link social-twitter" href="https://twitter.com/home?status={{ site.url }}{{ page.url }}"><i class="fa fa-twitter"></i></a>
+                    <a class="social-link social-facebook" href="https://www.facebook.com/sharer/sharer.php?u={{ site.url }}{{ page.url }}"><i class="fa fa-facebook"></i></a>
+                    <a class="social-link social-google-plus" href="https://plus.google.com/share?url={{ site.url }}{{ page.url }}"><i class="fa fa-google-plus"></i></a>
+                </div>
+            </div>
+            <div class="row">
+                <!-- Code/Demo -->
+                <div class="btn-group centered">
+                    <a href="#" class="btn btn-large btn-success"><i class="fa fa-code"></i> Code</a>
+                    <a href="#" class="btn btn-large btn-primary"><i class="fa fa-eye"></i> Demo</a>
+                </div>
+
+            </div>
+            <div class="row">
                 {{ content }}
             </div>
             <a rel="author" style="visibility: hidden;" href="https://profiles.google.com/airtonvancin">Airton Vancin Junior</a>
@@ -29,5 +45,7 @@
         <div class="disqus"><div class="row">{% include disqus.html %}</div></div>
 
 </main><!-- main -->
+
+<script src="/build/js/libs/prism.js"></script>
 
 {% include footer.html %}

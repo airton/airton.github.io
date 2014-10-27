@@ -1,8 +1,42 @@
 /*  ==========================================================================
     Tables
     ========================================================================== */
-    
+
     @media only screen {
+
+        .table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+        }
+
+        .table td,
+        .table th{
+            padding: 8px;
+            line-height: 20px;
+            vertical-align: top;
+            border: 1px solid #ddd;
+        }
+
+
+        .table td.success{
+            background-color: #dff0d8;
+        }
+
+        .table td.danger{
+            background-color: #f2dede;
+        }
+
+        .table td.active{
+            background-color: #f8f5f0;
+        }
+
+        .table td.warning{
+            background-color: #fcf8e3;
+        }
+
 
     }
 
