@@ -6,7 +6,9 @@ description: "Vamos ver como o AngularJS nos ajuda e facilita na validação de 
 image: angularjs.png
 ---
 
-
+## Demo ##
+<p data-height="333" data-theme-id="9559" data-slug-hash="KDosE" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/KDosE/'>KDosE</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//codepen.io/assets/embed/ei.js"></script>
 
 Para começar vamos listar os requisitos do formulário
 
@@ -17,14 +19,15 @@ Para começar vamos listar os requisitos do formulário
 - <b>email</b> não é obrigatório, mas tem que ser um e-mail válido
 - Formulário de envio é desativado se o formulário não é válido
 - Mostrar um erro de e-mail obrigatório ou inválido
-- Alertar fantástico se apresentou corretamente
+- Monstrar uma mensagem de alerta se estiver tudo correto
 
 Agora que sabemos o que queremos, vamos começar a construção.
 
-## Angular Form Propriedades <code>$valid, $invalid, $pristine, $dirty</code> ## 
+## Propriedades do formulário Angular ##
+<code>$valid</code>, <code>$invalid</code>, <code>$pristine</code>, <code>$dirty</code>
 
 
-O Angular fornece propriedades em formas que nos ajudam a validá-los. Eles nos dão várias informações sobre uma forma ou de seus insumos e são **aplicados a um formulário e insumos.**
+O Angular fornece propriedades que nos ajudam a validá-los. Eles nos dão várias informações sobre um formulário ou de seus insumos e são **aplicados a um formulário e insumos.**
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -60,9 +63,9 @@ O Angular fornece propriedades em formas que nos ajudam a validá-los. Eles nos 
 
 Angular também oferece aulas sobre a forma e as suas entradas de modo que você pode estilizar cada estado de acordo.
 
-### Acessando as propriedades do formulário angular ###
+### Acessando as propriedades do formulário Angular ###
 
-- <b>Para acessar o formulário:</b> <code>< form name >.< angular property ></code> ex: <code>userForm.$valid</code>
+- <b>Para acessar o formulário:</b> <code>< form name >.< angular property ></code> <br>ex: <code>userForm.$valid</code>
 - <b>Para acessar o input:</b> <code>< form name >.< input name >.< angular property ></code> <br>ex: <code>userForm.name.$valid</code>
 
 
@@ -155,34 +158,17 @@ Angular oferece muitas regras de validação que podemos usar, além de <code>ng
 
 Estes são os parâmetros disponíveis para uma entrada angular para criar regras de validação. Leia a <a href="http://docs.angularjs.org/api/ng.directive:input">Angular input directive</a> para mais informações.
 
-
-{% prism javascript %}
-var obj = { 'foo': true, 'bar': false };
-
-for (key in obj) {
-  console.log(obj[key]);
-}
-{% endprism %}
-
-{% prism javascript linenos=1,4 %}
-var obj = { 'foo': true, 'bar': false };
-
-for (key in obj) {
-  console.log(obj[key]);
-}
-{% endprism %}
-
-{% prism html %}
-    <input
-       ng-model="{ string }"
-       name="{ string }"
-       required
-       ng-required="{ boolean }"
-       ng-minlength="{ number }"
-       ng-maxlength="{ number }"
-       ng-pattern="{ string }"
-       ng-change="{ string }">
-    </input>
+{% prism markup %}
+<input
+   ng-model="{ string }"
+   name="{ string }"
+   required
+   ng-required="{ boolean }"
+   ng-minlength="{ number }"
+   ng-maxlength="{ number }"
+   ng-pattern="{ string }"
+   ng-change="{ string }">
+</input>
 {% endprism %}
 
 
@@ -235,8 +221,8 @@ Agora começa a verdadeira diversão. Temos que começar a usar propriedades ang
 Com apenas esse pequeno código (<code>ng-disable</code>), o nosso botão de formulário será desativado se o formulário for <code>$invalid</code>. Isto significa que o nosso campo de entrada de <code>name</code> é obrigatório e nosso campo de entrada de <code>e-mail</code> requer um e-mail válido.
 
 
-## Mostrando uma mensagem de erro ##
-ng-show
+## Mostrando uma mensagem de erro  <code>ng-show</code>##
+
 
 {% prism markup %}
     <!-- index.html -->
@@ -262,25 +248,25 @@ Só assim, angular irá determinar automaticamente se devemos mostrar um erro ba
 
 ## Estilizando as classes ##
 
-Angular já oferece aulas em nossas entradas e nossas formas com base em se eles são válidos ou não. Olhe para a tabela no início deste artigo para essas classes (<code>ng-valid</code>, <code>ng-invalid</code>, <code>ng-pristine</code> and <code>ng-dirty</code>).
+Angular já oferece aulas em nossas entradas e nossas formas com base em se eles são válidos ou não. Olhe para a tabela no início deste artigo para essas classes (<code>ng-valid</code>, <code>ng-invalid</code>, <code>ng-pristine</code> e <code>ng-dirty</code>).
 
 Você pode estilizar os de CSS, se quiser. Você pode fazer o que quiser com essas classes. Não vai mesmo ser classes baseadas nos certas regras aplicadas se você quisesse ficar realmente específico.
 
 
 {% prism css %}
-    .ng-valid       {  }
-    .ng-invalid     {  }
-    .ng-pristine    {  }
-    .ng-dirty       {  }
+.ng-valid       {  }
+.ng-invalid     {  }
+.ng-pristine    {  }
+.ng-dirty       {  }
 
-    /* really specific css rules applied by angular */
-    .ng-invalid-required        {  }
-    .ng-invalid-minlength       {  }
-    .ng-valid-max-length        {  }
+/* really specific css rules applied by angular */
+.ng-invalid-required        {  }
+.ng-invalid-minlength       {  }
+.ng-valid-max-length        {  }
 {% endprism %}
 
-## Adicionando Classes condicionais ##
-ng-class
+## Adicionando Classes condicionais <code>ng-class</code>##
+
 
 Como estamos usando <a href="http://getbootstrap.com/">Bootstrap</a>, vamos utilizar as classes que eles fornecem (<code>has-error</code>). Isso vai nos erros que agradável e cor em torno do nosso <code>form-group</code>.
  
@@ -346,3 +332,9 @@ Aqui estão alguns recursos para o futuro da validação de formulário:
 
 - Github Issue
 - ngForm Module Ideas
+
+## Suporte ##
+
+<blockquote>
+    Nota: <b>AngularJS 1.3</b> não tem suporte para IE8. Leia mais sobre isso <a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">no blog do AngularJS</a>. <b>AngularJS 1.2</b> continuará com suporte ao IE8, mas a equipe principal não pretende gastar tempo com endereçamento específicos para o IE8.
+</blockquote>

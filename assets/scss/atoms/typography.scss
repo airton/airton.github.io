@@ -67,7 +67,7 @@
                 line-height: 26px;
                 margin: 0 0 30px;
                 text-align: left;
-                letter-spacing: -1px;
+                //letter-spacing: -1px;
             }
 
             .text-info{
@@ -96,6 +96,10 @@
 
             pre{
                 word-wrap: break-word;
+            }
+
+            h2 + p code{
+                margin-top: -20px;
             }
 
 

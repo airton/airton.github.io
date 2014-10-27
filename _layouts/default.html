@@ -29,7 +29,7 @@
                     <span class="postdate">{{ post.date | date:"%d/%m/%Y" }}</span>
 
                     {% if post.image %}
-                    <figure class="postimage"><a href="{{ post.url }}"><img src="{{ site.baseurl }}build/img/{{post.image}}" alt="Imagem {{post.image}}"></a></figure>
+                    <figure class="postimage"><a href="{{ post.url }}"><img src="{{ site.baseurl }}build/img/posts/{{post.image}}" alt="Imagem {{post.image}}"></a></figure>
                     {% endif %}
 
                     {% if post.description %}
