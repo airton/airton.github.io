@@ -2,7 +2,7 @@
 layout: post
 class: post
 title: AngularJS Validação de Formulário
-description: "Vamos ver como o AngularJS nos ajuda e facilita na validação de um formulário" 
+description: "Vamos focar a validação do lado do cliente e usando as propriedades de formulário angular. Aqui está uma demonstração rápida." 
 image: angularjs.png
 ---
 
@@ -27,7 +27,7 @@ Agora que sabemos o que queremos, vamos começar a construção.
 <code>$valid</code>, <code>$invalid</code>, <code>$pristine</code>, <code>$dirty</code>
 
 
-O Angular fornece propriedades que nos ajudam a validá-los. Eles nos dão várias informações sobre um formulário ou de seus insumos e são **aplicados a um formulário e insumos.**
+O Angular fornece propriedades que nos ajudam a validá-los.
 
 <table class="table table-bordered table-striped table-hover">
     <thead>
@@ -83,62 +83,59 @@ Vamos precisar de dois arquivos:
 ### Nosso arquivo <code>index.html</code>###
 
 {% prism markup %}
-    <!-- index.html -->
-    <!DOCTYPE html>
-    <html>
-    <head>
-        <!-- CSS ===================== -->
-        <!-- load bootstrap -->
-        <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
-        <style>
-            body    { padding-top:30px; }
-        </style>
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- load bootstrap css -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"> 
+    <style>
+        body    { padding-top:30px; }
+    </style>
+    
+    <!-- load angularJS -->
+    <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
+    <script src="app.js"></script>
+</head>
+
+<!-- aplicar app angular e controlador para o nosso body -->
+<body ng-app="validationApp" ng-controller="mainController">
+<div class="container">
+<div class="col-sm-8 col-sm-offset-2">
+    
+    <!-- PAGE HEADER -->
+    <div class="page-header"><h1>AngularJS Validação de Formulário</h1></div>
+   
+    <!-- FORM -->
+    <!-- passar na variável , se a nossa forma é válida ou inválida -->
+    <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+
+        <!-- NAME -->
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" class="form-control" ng-model="name" required>
+        </div>
+
+        <!-- USERNAME -->
+        <div class="form-group">
+            <label>Username</label>
+            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+        </div>
         
-        <!-- JS ===================== -->
-        <!-- load angular -->
-        <script src="http://code.angularjs.org/1.2.6/angular.js"></script> 
-        <script src="app.js"></script>
-    </head>
-
-    <!-- apply angular app and controller to our body -->
-    <body ng-app="validationApp" ng-controller="mainController">
-    <div class="container">
-    <div class="col-sm-8 col-sm-offset-2">
+        <!-- EMAIL -->
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" class="form-control" ng-model="email">
+        </div>
         
-        <!-- PAGE HEADER -->
-        <div class="page-header"><h1>AngularJS Form Validation</h1></div>
-       
-        <!-- FORM -->
-        <!-- pass in the variable if our form is valid or invalid -->
-        <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+        <!-- SUBMIT BUTTON -->
+        <button type="submit" class="btn btn-primary">Submit</button>
+        
+    </form>
 
-            <!-- NAME -->
-            <div class="form-group">
-                <label>Name</label>
-                <input type="text" name="name" class="form-control" ng-model="name" required>
-            </div>
-
-            <!-- USERNAME -->
-            <div class="form-group">
-                <label>Username</label>
-                <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-            </div>
-            
-            <!-- EMAIL -->
-            <div class="form-group">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control" ng-model="email">
-            </div>
-            
-            <!-- SUBMIT BUTTON -->
-            <button type="submit" class="btn btn-primary">Submit</button>
-            
-        </form>
-
-    </div><!-- col-sm-8 -->
-    </div><!-- /container -->
-    </body>
-    </html>
+</div><!-- col-sm-8 -->
+</div><!-- /container -->
+</body>
+</html>
 {% endprism %}
 
 

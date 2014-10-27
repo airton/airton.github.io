@@ -58,7 +58,6 @@
                 line-height: 30px;
             }
 
-
         /*  Texts
             ========================================================================== */
             p {
@@ -67,7 +66,6 @@
                 line-height: 26px;
                 margin: 0 0 30px;
                 text-align: left;
-                //letter-spacing: -1px;
             }
 
             .text-info{
@@ -102,6 +100,11 @@
                 margin-top: -20px;
             }
 
+        /*  Iframe
+            ========================================================================== */
+            iframe{
+                margin-bottom: 30px;
+            }
 
     }
 
