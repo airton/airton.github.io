@@ -61,7 +61,7 @@ O Angular fornece propriedades que nos ajudam a validá-los.
     </tbody>
 </table>
 
-Angular também oferece aulas sobre a forma e as suas entradas de modo que você pode estilizar cada estado de acordo.
+O Angular também oferece classes de acordo com as entradas de modo que você pode estilizar cada estado do formulário.
 
 ### Acessando as propriedades do formulário Angular ###
 
@@ -73,12 +73,12 @@ Angular também oferece aulas sobre a forma e as suas entradas de modo que você
 
 Vamos usar um formulário simples para demonstrar.
 
-<img src="" alt="">
+<img src="/build/img/posts/angularjs-form.jpg" alt="Formulário simples AngularJS">
 
 Vamos precisar de dois arquivos:
 
 - <code>index.html</code> Nosso código para exibir o formulário
-- <code>app.js</code> Nossa aplicação angular e controlador (quase qualquer código em tudo)
+- <code>app.js</code> Nossa aplicação angular e o controlador
 
 ### Nosso arquivo <code>index.html</code>###
 
@@ -99,41 +99,41 @@ Vamos precisar de dois arquivos:
 
 <!-- aplicar app angular e controlador para o nosso body -->
 <body ng-app="validationApp" ng-controller="mainController">
-<div class="container">
-<div class="col-sm-8 col-sm-offset-2">
-    
-    <!-- PAGE HEADER -->
-    <div class="page-header"><h1>AngularJS Validação de Formulário</h1></div>
-   
-    <!-- FORM -->
-    <!-- passar na variável , se a nossa forma é válida ou inválida -->
-    <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> <!-- novalidate prevents HTML5 validation since we will be validating ourselves -->
+    <div class="container">
+        <div class="col-sm-8 col-sm-offset-2">
+            
+            <!-- PAGE HEADER -->
+            <div class="page-header"><h1>AngularJS Validação de Formulário</h1></div>
+           
+            <!-- FORM -->
+            <!-- passa a variável se nosso formulário é válida ou inválida -->
+            <!-- novalidate isso vai evitar a validação padrão do HTML5, já que vamos fazer isso usando o Angular -->
+            <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate> 
 
-        <!-- NAME -->
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" class="form-control" ng-model="name" required>
-        </div>
+                <!-- NAME -->
+                <div class="form-group">
+                    <label>Name</label>
+                    <input type="text" name="name" class="form-control" ng-model="name" required>
+                </div>
 
-        <!-- USERNAME -->
-        <div class="form-group">
-            <label>Username</label>
-            <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-        </div>
-        
-        <!-- EMAIL -->
-        <div class="form-group">
-            <label>Email</label>
-            <input type="email" name="email" class="form-control" ng-model="email">
-        </div>
-        
-        <!-- SUBMIT BUTTON -->
-        <button type="submit" class="btn btn-primary">Submit</button>
-        
-    </form>
-
-</div><!-- col-sm-8 -->
-</div><!-- /container -->
+                <!-- USERNAME -->
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+                </div>
+                
+                <!-- EMAIL -->
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" name="email" class="form-control" ng-model="email">
+                </div>
+                
+                <!-- SUBMIT BUTTON -->
+                <button type="submit" class="btn btn-primary">Submit</button>
+                
+            </form>
+        </div><!-- col-sm-8 -->
+    </div><!-- /container -->
 </body>
 </html>
 {% endprism %}
@@ -142,8 +142,8 @@ Vamos precisar de dois arquivos:
 Alguns pontos importantes a observar aqui:
 
 
-- <b>novalidate</b>: Isso vai evitar que as validações padrão HTML5 já que vamos estar fazendo isso a nós mesmos (o nosso será muito mais bonita) 
-- Temos aplicado <code>ng-model</code> para nossos insumos para que tenhamos dados de nossos formulários vinculados a variáveis ​​
+- <b>novalidate</b>: isso vai evitar a validação padrão do HTML5, já que vamos fazer isso usando o Angular (o nosso será muito mais bonito) 
+- Temos aplicado <code>ng-model</code> para poder vincular os dados do nosso formulário a variáveis ​​
 - <code>ng-minlength</code> e <code>ng-maxlength</code> no nome de usuário vai criar essas regras de introdução
 - O input <code>name</code> é <b>required</b> 
 - O input <code>e-mail</code> é <b>type = "email"</b>
@@ -164,30 +164,29 @@ Estes são os parâmetros disponíveis para uma entrada angular para criar regra
    ng-minlength="{ number }"
    ng-maxlength="{ number }"
    ng-pattern="{ string }"
-   ng-change="{ string }">
+   ng-change="{ string }"
+   ng-trim="{ boolean }">
 </input>
 {% endprism %}
 
-
 Agora que temos a nosso formulário simples, vamos criar nosso aplicativo Angular e controlador que já aplicou a ele usando <code>ng-app</code> e <code>ng-controller</code>.
 
-### Nosso código Angular App <code>app.js</code>###
-
+### Nosso código Angular <code>app.js</code>###
 
 {% prism javascript %}
 // app.js
-// create angular app
+// criar angular app
 var validationApp = angular.module('validationApp', []);
 
-// create angular controller
+// criar angular controller
 validationApp.controller('mainController', function($scope) {
 
-    // function to submit the form after all validation has occurred            
+    // função para enviar o formulário depois que a validação estiver ok           
     $scope.submitForm = function(isValid) {
 
-        // check to make sure the form is completely valid
+        // verifica se o formulário é válido
         if (isValid) {
-            alert('our form is amazing');
+            alert('Formulário OK');
         }
 
     };
@@ -195,9 +194,7 @@ validationApp.controller('mainController', function($scope) {
 });
 {% endprism %}
 
-
 ## Desabilitar validação HTML5 <code>novalidate</code>##
-
 
 Usaremos <code>novalidate</code> no nosso formulário. Esta é uma boa prática, uma vez que vai lidar com a validação de nós mesmos. Se deixarmos a nossa forma fazê-lo, ele vai olhar muito feio.
 

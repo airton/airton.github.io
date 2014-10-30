@@ -24,7 +24,7 @@ var gulp 		= require('gulp'),
     	_build_img	= "build/img",
 
         // General files
-    	_files		= ['*.php', '*.html', 'build/**/*', 'build/in/*.php'];
+    	_files		= ['*.php', '*.html', '*.md', 'build/**/*', 'build/in/*.php'];
 
 	// STYLES ------------------------------------------------------------
 

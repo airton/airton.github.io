@@ -93,12 +93,9 @@
             }
 
             pre{
-                word-wrap: break-word;
+                word-wrap: break-word !important;
             }
 
-            h2 + p code{
-                margin-top: -20px;
-            }
 
         /*  Iframe
             ========================================================================== */
