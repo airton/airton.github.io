@@ -13,6 +13,13 @@ pre[class*="language-"] {
     direction: ltr;
     text-align: left;
     white-space: pre;
+
+    white-space: pre-wrap; /* css-3 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -pre-wrap; /* Opera 4-6 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+
     word-spacing: normal;
     word-break: normal;
     line-height: 1.5;
@@ -27,13 +34,15 @@ pre[class*="language-"] {
     -moz-hyphens: none;
     -ms-hyphens: none;
     hyphens: none;
+    overflow: hidden;
+    width: 100%;
 }
 
 /* Code blocks */
 pre[class*="language-"] {
     padding: 1em;
     margin: 0 0 30px;
-    overflow: auto;
+    overflow: hidden;
     border-radius: 0.3em;
 }
 
@@ -118,7 +127,7 @@ pre[class*="language-"] {
 
 pre[data-line] {
     position: relative;
-    padding: 20px;
+    padding: 14px 15px;
 }
 
 .line-highlight {

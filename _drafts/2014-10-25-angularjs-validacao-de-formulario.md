@@ -218,7 +218,7 @@ Com apenas esse pequeno código (<code>ng-disable</code>), o nosso botão de for
 
 Vamos percorrer e adicionar uma mensagem de erro para cada uma de nossas entradas, se não forem <code>$valid</code> e já foram usados ​​(uma vez que não queremos mostrar um erro antes de terem sido utilizados).
 
-{% prism markup linenos=7,14,15,22 %}
+{% prism markup linenos=7,16,17,24 %}
 <!-- index.html -->
 ...
     <!-- NAME -->
@@ -273,7 +273,7 @@ Como estamos usando <a href="http://getbootstrap.com/">Bootstrap</a>, vamos util
 
 O modo como funciona é <code> ng-class="{ < nome-da-classe > : < expressão a ser avaliada > }" </code> Para mais informações, leia o <a href="http://docs.angularjs.org/api/ng.directive:ngClass">Angular ngClass docs</a>.
 
-{% prism markup linenos=4,11,19 %}
+{% prism markup linenos=4,12,21 %}
 <!-- index.html -->
 ...
     <!-- NAME -->
