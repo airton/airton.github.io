@@ -129,7 +129,7 @@ Vamos precisar de dois arquivos:
                 </div>
                 
                 <!-- SUBMIT BUTTON -->
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-primary">Enviar</button>
                 
             </form>
         </div><!-- col-sm-8 -->
@@ -196,56 +196,62 @@ validationApp.controller('mainController', function($scope) {
 
 ## Desabilitar validação HTML5 <code>novalidate</code>##
 
-Usaremos <code>novalidate</code> no nosso formulário. Esta é uma boa prática, uma vez que vai lidar com a validação de nós mesmos. Se deixarmos a nossa forma fazê-lo, ele vai olhar muito feio.
+Usaremos <code>novalidate</code> no nosso formulário. Esta é uma boa prática, pois não queremos usar a validação nativa do navegador.
 
 ## Desabilitar o botão Enviar <code>ng-disabled</code>##
 
-Agora começa a verdadeira diversão. Temos que começar a usar propriedades angulares. Primeiro vamos desativar o nosso botão enviar. Nós só queremos que pessoas com deficiência, se o nosso formulário for <code>$invalid</code>.
+Agora começa a verdadeira diversão. Temos que começar a usar propriedades angulares. Primeiro vamos desativar o nosso botão enviar. Nós só queremos que o botão fique habilitado quando a validação estiver correta, então vamos usar a propriedade <code>$invalid</code>.
 
 {% prism markup %}
-        <!-- index.html -->
-        ...
-
-            <!-- SUBMIT BUTTON -->
-            <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Submit</button>
-
-        ...
+<!-- index.html -->
+...
+    <!-- SUBMIT BUTTON -->
+    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Enviar</button>
+...
 {% endprism %}
 
 Com apenas esse pequeno código (<code>ng-disable</code>), o nosso botão de formulário será desativado se o formulário for <code>$invalid</code>. Isto significa que o nosso campo de entrada de <code>name</code> é obrigatório e nosso campo de entrada de <code>e-mail</code> requer um e-mail válido.
 
-
 ## Mostrando uma mensagem de erro  <code>ng-show</code>##
-
-
-{% prism markup %}
-    <!-- index.html -->
-    ...
-
-    ...
-{% endprism %}
 
 <b>ng-valid</b> e <b>ng-invalid</b> irá determinar automaticamente se uma entrada é uma boa base nas regras colocadas sobre ele em seu formulário.
 
-Vamos percorrer e adicionar uma mensagem de erro para cada uma de nossas entradas, se não forem <code>$valid</code> e já foram usados ​​(desde que não queremos mostrar um erro antes que eles foram usados).
+Vamos percorrer e adicionar uma mensagem de erro para cada uma de nossas entradas, se não forem <code>$valid</code> e já foram usados ​​(uma vez que não queremos mostrar um erro antes de terem sido utilizados).
 
-{% prism markup %}
-    <!-- index.html -->
-    ...
-        
+{% prism markup linenos=7,14,15,22 %}
+<!-- index.html -->
+...
+    <!-- NAME -->
+    <div class="form-group">
+        <label>Nome</label>
+        <input type="text" name="name" class="form-control" ng-model="user.name" required>
+        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Seu nome é obrigatório</p>
+    </div>
+
+    <!-- USERNAME -->
+    <div class="form-group">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+        <p ng-show="userForm.username.$error.minlength" class="help-block">Username no mínimo 3 caracteres.</p>
+        <p ng-show="userForm.username.$error.maxlength" class="help-block">Username no máximo 8 caracteres.</p>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" ng-model="user.email">
+        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um e-mail válido.</p>
+    </div>
+...
 {% endprism %}
 
 Só assim, angular irá determinar automaticamente se devemos mostrar um erro baseado em uma entradas <code>$invalid</code> e <code>$pristine</code> propriedades.
 
-<img src="" alt="">
-
-
 ## Estilizando as classes ##
 
-Angular já oferece aulas em nossas entradas e nossas formas com base em se eles são válidos ou não. Olhe para a tabela no início deste artigo para essas classes (<code>ng-valid</code>, <code>ng-invalid</code>, <code>ng-pristine</code> e <code>ng-dirty</code>).
+O Angular já oferece as classes css em nosso formulário, baseando se nossos campos são válidos ou inválidos. Veja a tabela no começo do post com as classes (<code>ng-valid</code>, <code>ng-invalid</code>, <code>ng-pristine</code> e <code>ng-dirty</code>).
 
-Você pode estilizar os de CSS, se quiser. Você pode fazer o que quiser com essas classes. Não vai mesmo ser classes baseadas nos certas regras aplicadas se você quisesse ficar realmente específico.
-
+Você pode estilizar o formulário usando essas classes, se quiser. Você pode fazer o que quiser com essas classes.
 
 {% prism css %}
 .ng-valid       {  }
@@ -261,50 +267,70 @@ Você pode estilizar os de CSS, se quiser. Você pode fazer o que quiser com ess
 
 ## Adicionando Classes condicionais <code>ng-class</code>##
 
-
-Como estamos usando <a href="http://getbootstrap.com/">Bootstrap</a>, vamos utilizar as classes que eles fornecem (<code>has-error</code>). Isso vai nos erros que agradável e cor em torno do nosso <code>form-group</code>.
+Como estamos usando <a href="http://getbootstrap.com/">Bootstrap</a>, vamos utilizar as classes que eles fornecem (<code>has-error</code>).
  
-<code>ng-class</code> nos permite adicionar classes com base em uma expressão. Neste caso, nós queremos adicionar uma classe tem erro para nosso <b>form-group</b>, se uma entrada é <code>$invalid</code> and not <code>pristine</code>.
+<code>ng-class</code> nos permite adicionar classes com base em uma expressão. Neste caso, nós queremos adicionar uma classe <code>has-error</code> no nosso <b>form-group</b>, se uma entrada é <code>$invalid</code> e não <code>pristine</code>.
 
-O modo como funciona é <code> ng-class="{ <class-you-want> : <expression to be evaluated > }" </code> Para mais informações, leia o <a href="http://docs.angularjs.org/api/ng.directive:ngClass">Angular ngClass docs</a>.
+O modo como funciona é <code> ng-class="{ < nome-da-classe > : < expressão a ser avaliada > }" </code> Para mais informações, leia o <a href="http://docs.angularjs.org/api/ng.directive:ngClass">Angular ngClass docs</a>.
 
-{% prism markup %}
-    <!-- index.html -->
-    ...
+{% prism markup linenos=4,11,19 %}
+<!-- index.html -->
+...
+    <!-- NAME -->
+    <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
+        <label>Nome</label>
+        <input type="text" name="name" class="form-control" ng-model="user.name" required>
+        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Seu nome é obrigatório</p>
+    </div>
+
+    <!-- USERNAME -->
+    <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
+        <label>Username</label>
+        <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
+        <p ng-show="userForm.username.$error.minlength" class="help-block">Username no mínimo 3 caracteres.</p>
+        <p ng-show="userForm.username.$error.maxlength" class="help-block">Username no máximo 8 caracteres.</p>
+    </div>
+
+    <!-- EMAIL -->
+    <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
+        <label>Email</label>
+        <input type="email" name="email" class="form-control" ng-model="user.email">
+        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um e-mail válido.</p>
+    </div>
+...
 {% endprism %}
 
-Agora nosso formulário tem as classes de erro Bootstrap corretos.
+Agora nosso formulário tem as classes de erro do Bootstrap corretas.
 
 <img src="" alt="">
 
-Só Mostrando Erros Após enviar o formulário
+## Só mostrar os erros depois que enviar o formulário ##
 
 Às vezes não é desejável para mostrar erros enquanto o usuário está digitando. Os erros atualmente mostram imediatamente como um usuário está a preencher o formulário. Isso acontece por causa da grande característica de ligação de dados do Angular. Uma vez que tudo muda imediatamente, pode ser uma desvantagem quando se fala de validação de formulário.
 
 Para o cenário onde você só quer mostrar erros depois de um formulário é enviado, você poderia ajustar o código acima um pouco.
 
-1 - Você precisaria tirar o <code>ng-disabled</code> no botão enviar, uma vez que deseja que um usuário ser capaz de enviar um formulário, mesmo que não é totalmente válido.
-2 - Você gostaria de acrescentar uma variável após o formulário foi submetido. Dentro da sua função <code>submitForm()</code>, basta adicionar <code>$scope.submitted = true;</code>. Este armazena a variável apresentada como verdade, logo que o formulário é enviado.
-3 - Ajuste as regras de erro de <code>ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }"</code> para <code>ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine && submitted }"</code>. Isso garante que o erro só será exibido após o formulário é enviado. Você precisará ajustar todos os outros <code>ng-class</code> e <code>ng-show</code> para explicar essa variável.
+1. Você precisaria tirar o <code>ng-disabled</code> no botão enviar, para qe o usuário possa enviar o formulário, mesmo que não é totalmente válido.
+2. Você gostaria de acrescentar uma variável após o formulário ser submetido. Dentro da sua função <code>submitForm()</code>, basta adicionar <code>$scope.submitted = true;</code>. Este armazena a variável apresentada como verdade, logo que o formulário é enviado.
+3. Ajuste as regras de erro de <code>ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }"</code> para <code>ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine && submitted }"</code>. Isso garante que o erro só será exibido após o formulário é enviado. Você precisará ajustar todos os outros <code>ng-class</code> e <code>ng-show</code> para explicar essa variável.
+
+Agora, o formulário só mostra erros se a variável <code>submitted</code> é definido como verdadeiro.
+
+## Só mostrar erros após clicar fora de uma entrada ##
+
+Apenas mostrando erros após clicar fora de uma entrada (também conhecida como <b>blur</b>) é um pouco mais complicado do que validar em enviar. Validando um formulário no **blur** requer uma <a href="http://docs.angularjs.org/api/ng.directive:form">custom directive</a>. A directiva permitirá que você manipule o DOM.
 
 
-Agora, a forma só mostra erros se a variável <code>submitted</code> é definido como verdadeiro.
+Aqui estão alguns recursos para criar diretivas personalizadas para lidar com **blur**:
 
-## Só Mostrando Erros após clicar Fora de uma entrada ##
-
-Apenas mostrando erros após clicar fora de uma entrada (também conhecida como <b>blur</b>) é um pouco mais complicado do que validar em enviar. Validando um formulário no borrão requer uma <a href="http://docs.angularjs.org/api/ng.directive:form">custom directive</a>. A directiva permitirá que você manipular o DOM.
-
-
-Aqui estão alguns recursos para criar diretivas personalizadas para lidar com borrão:
-
-- http://coding-issues.blogspot.in/2013/10/angularjs-blur-directive.html
-- http://blog.ejci.net/2013/08/06/dealing-with-focus-and-blur-in-angularjs-directives/
-- http://plnkr.co/edit/Xfr7X6JXPhY9lFL3hnOw?p=preview
+- [http://coding-issues.blogspot.in/2013/10/angularjs-blur-directive.html](http://coding-issues.blogspot.in/2013/10/angularjs-blur-directive.html)
+- [http://blog.ejci.net/2013/08/06/dealing-with-focus-and-blur-in-angularjs-directives/](http://blog.ejci.net/2013/08/06/dealing-with-focus-and-blur-in-angularjs-directives/)
+- [http://plnkr.co/edit/Xfr7X6JXPhY9lFL3hnOw?p=preview](http://plnkr.co/edit/Xfr7X6JXPhY9lFL3hnOw?p=preview)
 
 
 ## Tudo feito ##
 
-Agora, uma vez que preencher todas as nossas informações corretamente, nosso formulário de envio botão estará ativo. Uma vez que nosso formulário, vamos ver a mensagem de alerta montamos.
+Agora preenchemos nossas informações corretamente no nosso formulário o botão de envio estará ativo, e ao enviar aparecera a mensagem de alerta que montamos.
 
 <img src="" alt="">
 
@@ -320,7 +346,7 @@ Como você pode ver, é fácil de usar o construída em técnicas de validação
 
 ## O Futuro ##
 
-Tal como está, não é um processo simples para fazer a validação depois que um usuário clica fora de uma entrada. A equipe é Angular ciente disso e eles disseram que planeja adicionar mais estados para lidar com coisas como <code>form.submitted</code>, <code>input.$visited</code>, <code>input.$blurred</code>, or <code>input.$touched</code>. 
+Tal como está, não é um processo simples para fazer a validação depois que um usuário clica fora de uma entrada. A equipe é Angular ciente disso e eles disseram que planeja adicionar mais estados para lidar com coisas como <code>form.submitted</code>, <code>input.$visited</code>, <code>input.$blurred</code>, ou <code>input.$touched</code>. 
 
 Aqui estão alguns recursos para o futuro da validação de formulário:
 
