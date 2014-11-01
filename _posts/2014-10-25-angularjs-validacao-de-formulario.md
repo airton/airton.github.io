@@ -91,7 +91,7 @@ Vamos precisar de dois arquivos:
 
 ### Nosso arquivo <code>index.html</code>###
 
-{% prism markup %}
+{% highlight html %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -145,7 +145,7 @@ Vamos precisar de dois arquivos:
     </div><!-- /container -->
 </body>
 </html>
-{% endprism %}
+{% endhighlight %}
 
 
 Alguns pontos importantes a observar aqui:
@@ -164,7 +164,7 @@ Angular oferece muitas regras de validação que podemos usar, além de <code>ng
 
 Estes são os parâmetros disponíveis para uma entrada angular para criar regras de validação. Leia a <a href="http://docs.angularjs.org/api/ng.directive:input">Angular input directive</a> para mais informações.
 
-{% prism markup %}
+{% highlight html %}
 <input
    ng-model="{ string }"
    name="{ string }"
@@ -176,13 +176,13 @@ Estes são os parâmetros disponíveis para uma entrada angular para criar regra
    ng-change="{ string }"
    ng-trim="{ boolean }">
 </input>
-{% endprism %}
+{% endhighlight %}
 
 Agora que temos a nosso formulário simples, vamos criar nosso aplicativo Angular e controlador que já aplicou a ele usando <code>ng-app</code> e <code>ng-controller</code>.
 
 ### Nosso código Angular <code>app.js</code>###
 
-{% prism javascript %}
+{% highlight Javascript %}
 // app.js
 // criar angular app
 var validationApp = angular.module('validationApp', []);
@@ -201,7 +201,7 @@ validationApp.controller('mainController', function($scope) {
     };
 
 });
-{% endprism %}
+{% endhighlight %}
 
 ## Desabilitar validação HTML5 <code>novalidate</code>##
 
@@ -211,13 +211,13 @@ Usaremos <code>novalidate</code> no nosso formulário. Esta é uma boa prática,
 
 Agora começa a verdadeira diversão. Temos que começar a usar propriedades angulares. Primeiro vamos desativar o nosso botão enviar. Nós só queremos que o botão fique habilitado quando a validação estiver correta, então vamos usar a propriedade <code>$invalid</code>.
 
-{% prism markup %}
+{% highlight html %}
 <!-- index.html -->
 ...
     <!-- SUBMIT BUTTON -->
     <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Enviar</button>
 ...
-{% endprism %}
+{% endhighlight %}
 
 Com apenas esse pequeno código (<code>ng-disable</code>), o nosso botão de formulário será desativado se o formulário for <code>$invalid</code>. Isto significa que o nosso campo de entrada de <code>name</code> é obrigatório e nosso campo de entrada de <code>e-mail</code> requer um e-mail válido.
 
@@ -227,7 +227,7 @@ Com apenas esse pequeno código (<code>ng-disable</code>), o nosso botão de for
 
 Vamos percorrer e adicionar uma mensagem de erro para cada uma de nossas entradas, se não forem <code>$valid</code> e já foram usados ​​(uma vez que não queremos mostrar um erro antes de terem sido utilizados).
 
-{% prism markup linenos=7,16,17,24 %}
+{% highlight html %}
 <!-- index.html -->
 ...
     <!-- NAME -->
@@ -252,7 +252,7 @@ Vamos percorrer e adicionar uma mensagem de erro para cada uma de nossas entrada
         <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um e-mail válido.</p>
     </div>
 ...
-{% endprism %}
+{% endhighlight %}
 
 Só assim, angular irá determinar automaticamente se devemos mostrar um erro baseado em uma entradas <code>$invalid</code> e <code>$pristine</code> propriedades.
 
@@ -262,7 +262,7 @@ O Angular já oferece as classes css em nosso formulário, baseando se nossos ca
 
 Você pode estilizar o formulário usando essas classes, se quiser. Você pode fazer o que quiser com essas classes.
 
-{% prism css %}
+{% highlight css %}
 .ng-valid       {  }
 .ng-invalid     {  }
 .ng-pristine    {  }
@@ -272,7 +272,7 @@ Você pode estilizar o formulário usando essas classes, se quiser. Você pode f
 .ng-invalid-required        {  }
 .ng-invalid-minlength       {  }
 .ng-valid-max-length        {  }
-{% endprism %}
+{% endhighlight %}
 
 ## Adicionando Classes condicionais <code>ng-class</code>##
 
@@ -282,7 +282,7 @@ O <code>ng-class</code> nos permite adicionar classes com base em uma expressão
 
 O modo como funciona é <code> ng-class="{ < nome-da-classe > : < expressão a ser avaliada > }" </code> Para mais informações, leia o <a href="http://docs.angularjs.org/api/ng.directive:ngClass">Angular ngClass docs</a>.
 
-{% prism markup linenos=4,12,22 %}
+{% highlight html %}
 <!-- index.html -->
 ...
     <!-- NAME -->
@@ -307,7 +307,7 @@ O modo como funciona é <code> ng-class="{ < nome-da-classe > : < expressão a s
         <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um e-mail válido.</p>
     </div>
 ...
-{% endprism %}
+{% endhighlight %}
 
 Agora nosso formulário tem as classes de erro do Bootstrap corretas.
 
