@@ -24,15 +24,11 @@
                 {% include social-share.html %}
             </div>
             <div class="row">
-                <!-- Code/Demo -->
-                <div class="btn-group centered">
-                    <a href="#" class="btn btn-large btn-success"><i class="fa fa-code"></i> Code</a>
-                    <a href="#" class="btn btn-large btn-primary"><i class="fa fa-eye"></i> Demo</a>
-                </div>
-
+                {{ content }}
             </div>
             <div class="row">
-                {{ content }}
+                <!-- Social Share -->
+                {% include social-share.html %}
             </div>
             <a rel="author" style="visibility: hidden;" href="https://profiles.google.com/airtonvancin">Airton Vancin Junior</a>
         </div>
@@ -42,6 +38,6 @@
 
 </main><!-- main -->
 
-<script src="/build/js/libs/prism.js"></script>
+<script src="/build/js/post.min.js"></script>
 
 {% include footer.html %}

@@ -6,6 +6,15 @@ description: "Vamos focar a validação do lado do cliente e usando as proprieda
 image: angularjs.png
 ---
 
+
+<!-- Code/Demo -->
+<div class="btn-group centered">
+    <!-- <a href="http://codepen.io/airton/pen/KDosE" class="btn btn-large btn-success"><i class="fa fa-code"></i> Code</a> -->
+    <a href="http://codepen.io/airton/pen/KDosE" class="btn btn-large btn-primary"><i class="fa fa-eye"></i> Demo</a>
+</div>
+
+
+
 ## Demo ##
 <p data-height="333" data-theme-id="9559" data-slug-hash="KDosE" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/KDosE/'>KDosE</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//codepen.io/assets/embed/ei.js"></script>
@@ -269,11 +278,11 @@ Você pode estilizar o formulário usando essas classes, se quiser. Você pode f
 
 Como estamos usando <a href="http://getbootstrap.com/">Bootstrap</a>, vamos utilizar as classes que eles fornecem (<code>has-error</code>).
  
-<code>ng-class</code> nos permite adicionar classes com base em uma expressão. Neste caso, nós queremos adicionar uma classe <code>has-error</code> no nosso <b>form-group</b>, se uma entrada é <code>$invalid</code> e não <code>pristine</code>.
+O <code>ng-class</code> nos permite adicionar classes com base em uma expressão. Neste caso, nós queremos adicionar uma classe <code>has-error</code> no nosso <b>form-group</b>, se uma entrada é <code>$invalid</code> e não <code>pristine</code>.
 
 O modo como funciona é <code> ng-class="{ < nome-da-classe > : < expressão a ser avaliada > }" </code> Para mais informações, leia o <a href="http://docs.angularjs.org/api/ng.directive:ngClass">Angular ngClass docs</a>.
 
-{% prism markup linenos=4,12,21 %}
+{% prism markup linenos=4,12,22 %}
 <!-- index.html -->
 ...
     <!-- NAME -->
@@ -302,8 +311,6 @@ O modo como funciona é <code> ng-class="{ < nome-da-classe > : < expressão a s
 
 Agora nosso formulário tem as classes de erro do Bootstrap corretas.
 
-<img src="" alt="">
-
 ## Só mostrar os erros depois que enviar o formulário ##
 
 Às vezes não é desejável para mostrar erros enquanto o usuário está digitando. Os erros atualmente mostram imediatamente como um usuário está a preencher o formulário. Isso acontece por causa da grande característica de ligação de dados do Angular. Uma vez que tudo muda imediatamente, pode ser uma desvantagem quando se fala de validação de formulário.
@@ -330,9 +337,9 @@ Aqui estão alguns recursos para criar diretivas personalizadas para lidar com *
 
 ## Tudo feito ##
 
-Agora preenchemos nossas informações corretamente no nosso formulário o botão de envio estará ativo, e ao enviar aparecera a mensagem de alerta que montamos.
+Agora preenchemos nossas informações corretamente no nosso formulário o botão de envio estará ativo, e ao enviar aparecera a mensagem de alerta que montamos. **alert('Formulário OK');**
 
-<img src="" alt="">
+<img src="/build/img/posts/angularjs-alert.jpg" alt="Alert">
 
 Com apenas algumas linhas simples que temos agora:
 
@@ -346,7 +353,7 @@ Como você pode ver, é fácil de usar o construída em técnicas de validação
 
 ## O Futuro ##
 
-Tal como está, não é um processo simples para fazer a validação depois que um usuário clica fora de uma entrada. A equipe é Angular ciente disso e eles disseram que planeja adicionar mais estados para lidar com coisas como <code>form.submitted</code>, <code>input.$visited</code>, <code>input.$blurred</code>, ou <code>input.$touched</code>. 
+Tal como está, não é um processo simples para fazer a validação depois que um usuário clica fora de uma entrada. A equipe é Angular ciente disso e eles disseram que planejam adicionar mais estados para lidar com coisas como <code>form.submitted</code>, <code>input.$visited</code>, <code>input.$blurred</code>, ou <code>input.$touched</code>. 
 
 Aqui estão alguns recursos para o futuro da validação de formulário:
 
@@ -357,4 +364,8 @@ Aqui estão alguns recursos para o futuro da validação de formulário:
 
 <blockquote>
     Nota: <b>AngularJS 1.3</b> não tem suporte para IE8. Leia mais sobre isso <a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">no blog do AngularJS</a>. <b>AngularJS 1.2</b> continuará com suporte ao IE8, mas a equipe principal não pretende gastar tempo com endereçamento específicos para o IE8.
+</blockquote>
+
+<blockquote>
+    Nota: Esse é uma tradução do post original <a href="http://scotch.io/tutorials/javascript/angularjs-form-validation">http://scotch.io/tutorials/javascript/angularjs-form-validation</a>
 </blockquote>
