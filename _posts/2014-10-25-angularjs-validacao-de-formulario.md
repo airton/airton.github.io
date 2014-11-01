@@ -6,15 +6,11 @@ description: "Vamos focar a validação do lado do cliente e usando as proprieda
 image: angularjs.png
 ---
 
-<img src="/build/img/posts/{{% post.image %}}" alt="AngularJS">
-
 <!-- Code/Demo -->
 <div class="btn-group centered">
     <!-- <a href="http://codepen.io/airton/pen/KDosE" class="btn btn-large btn-success"><i class="fa fa-code"></i> Code</a> -->
     <a href="http://codepen.io/airton/pen/KDosE" class="btn btn-large btn-primary"><i class="fa fa-eye"></i> Demo</a>
 </div>
-
-
 
 ## Demo ##
 <p data-height="333" data-theme-id="9559" data-slug-hash="KDosE" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/KDosE/'>KDosE</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
