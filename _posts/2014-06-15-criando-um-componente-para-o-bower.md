@@ -6,17 +6,8 @@ description: Descrição do meu primeiro posts de teste
 image: bower-logo.png
 ---
 
-
-{% highlight html %}
-<input
-   ng-model="{ string }"
-   name="{ string }"
-   required
-   ng-required="{ boolean }"
-   ng-minlength="{ number }"
-   ng-maxlength="{ number }"
-   ng-pattern="{ string }"
-   ng-change="{ string }"
-   ng-trim="{ boolean }">
-</input>
+{% highlight ruby %}
+def foo
+  puts 'foo'
+end
 {% endhighlight %}
