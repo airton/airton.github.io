@@ -10,11 +10,16 @@
     <meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}" />
 
     <!-- Facebook -->
+    <meta property="fb:app_id" content="1509171469355605" />
+    <meta property="fb:admins" content="XXXXXX" />
     <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.name }}"/>
     <meta property="og:site_name" content="Airton Vancin Junior"/>
     <meta property="og:url" content="{{ site.url }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}"/>
     <meta property="og:type" content="{% if page.layout == 'post' %}article{% else %}blog{% endif %}"/>
     <meta property="og:description" content="{% if page.description %}{{ page.description }}{% else %}{{ site.description }}{% endif %}"/>
+    <meta property="og:image" content="{% if page.layout == 'home' %} {{ site.baseurl }}build/img/airton.png {% else %} {{ site.baseurl }}build/img/posts/{{post.image}} {% endif %} " />
+
+    <link rel="canonical" href="{{ site.url }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}">
 
     <!-- Favicon -->
     <link rel="shortcut icon" href="{{ site.baseurl }}favicon.ico" type="image/x-icon" />
@@ -30,6 +35,13 @@
 
 </head>
 <body{% if page.class %} class="{{ page.class }}"{% endif %}>
+
+<div
+  class="fb-like"
+  data-share="true"
+  data-width="450"
+  data-show-faces="true">
+</div>
 
     <header class="header" role="banner">
 
