@@ -6,6 +6,7 @@ description: "Vamos focar a validação do lado do cliente e usando as proprieda
 image: angularjs.png
 ---
 
+<img src="/build/img/posts/{{% post.image %}}" alt="AngularJS">
 
 <!-- Code/Demo -->
 <div class="btn-group centered">
