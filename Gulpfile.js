@@ -83,7 +83,6 @@ var gulp 		= require('gulp'),
             // post.min.js
             gulp.src([
                 'components/jquery/jquery.js', // jQuery Lib
-                'build/js/libs/prism.js', //Prism JS
                 _assets+'js/post.js'
                 ])
             .pipe(concat('post.js'))

@@ -64,56 +64,11 @@
 .highlight .gd { color: #f92672; } /* Generic.Deleted & Diff Deleted */
 .highlight .gi { color: #a6e22e; } /* Generic.Inserted & Diff Inserted */
 
-code[class*="language-"],
-pre[class*="language-"] {
-    background: #272822;
-    color: #f8f8f2;
-    text-shadow: 0 1px rgba(0, 0, 0, 0.3);
-    font-family: Consolas, Monaco, 'Andale Mono', monospace;
-    direction: ltr;
-    text-align: left;
-    white-space: pre;
+.highlight code{
+    background-color: transparent;
+    color: #f5f5f5;
+}
 
-    white-space: pre-wrap; /* css-3 */
-    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
-    white-space: -pre-wrap; /* Opera 4-6 */
-    white-space: -o-pre-wrap; /* Opera 7 */
-    word-wrap: break-word; /* Internet Explorer 5.5+ */
-
-    word-spacing: normal;
-    word-break: normal;
-    line-height: 1.5;
-    font-size: 14px;
-    background-color: inherit;
-
-    -moz-tab-size: 4;
-    -o-tab-size: 4;
-    tab-size: 4;
-
-    -webkit-hyphens: none;
-    -moz-hyphens: none;
-    -ms-hyphens: none;
-    hyphens: none;
+.highlight pre{
     overflow: hidden;
-    width: 100%;
 }
-
-/* Code blocks */
-pre[class*="language-"] {
-    padding: 1em;
-    margin: 0 0 30px;
-    overflow: hidden;
-    border-radius: 0.3em;
-}
-
-:not(pre) > code[class*="language-"],
-pre[class*="language-"] {
-    background: #272822;
-}
-
-/* Inline code */
-:not(pre) > code[class*="language-"] {
-    padding: .1em;
-    border-radius: .3em;
-}
-
