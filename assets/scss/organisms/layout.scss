@@ -2,15 +2,12 @@
     Layout
     ========================================================================== */
 
-    //$color-primary: #00C7FF;
-    $color-primary: #017EC1;
-
     @media only screen {
 
         /*  Main
             ========================================================================== */
             .intro{
-                background: $color-primary url(../img/bg.png) repeat scroll top center / 40%;
+                background: $color-blue url(../img/bg.png) repeat scroll top center / 40%;
                 text-align: center;
                 padding: 80px 0 20px;
                 margin-bottom: 30px;
@@ -39,15 +36,14 @@
                 line-height: 16px;
                 color: #fff;
                 font-weight: 400;
-                border-top: 2px solid #1972D1;
-                border-bottom: 2px solid #1972D1;
                 padding: 5px;
+                background-color: $color-blue-light;
             }
 
         /*  About
             ========================================================================== */
             .about{
-                background: $color-primary url(../img/bg.png) no-repeat scroll top center / 100%;
+                background: $color-blue url(../img/bg.png) no-repeat scroll top center / 100%;
                 padding: 40px 0;
                 color: #f9f9f9;
                 text-align: center;
@@ -355,7 +351,7 @@
 
             .list-posts p{
                 font-size: 16px;
-                line-height: 16px;
+                line-height: 20px;
                 text-align: center;
             }
 

@@ -20,7 +20,7 @@
                 width: 85px;
                 height: 85px;
                 margin-top: -2px;
-                border: 2px solid #FF8108;
+                border: 2px solid $color-orange;
                 @include border-radius(50%);
             }
 
@@ -37,8 +37,8 @@
             }
 
             .nav-item > a{
-                color: #FF8108;
-                border-top: 1px solid #FF8108;
+                color: $color-orange;
+                border-top: 1px solid $color-orange;
                 padding: 10px;
                 display: block;
                 font-weight: normal;
@@ -139,14 +139,14 @@
             }
 
             .nav-item > a{
-                border: 1px solid #FF8108;
+                border: 1px solid $color-orange;
             }
 
             .item-home > a,
             .nav-item.item-home > a:hover,
             .nav-item.item-home > a:focus{
                 border:none;
-                color: $color-primary;
+                color: $color-blue;
                 background: transparent;
             }
 
@@ -157,7 +157,7 @@
             .post .item-blog > a{
                 color: #fff;
                 text-decoration: none;
-                background-color: #FF8108;
+                background-color: $color-orange;
                 @include transition(all 0.3s ease);
             }
 
