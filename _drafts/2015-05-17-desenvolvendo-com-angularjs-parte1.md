@@ -2,7 +2,7 @@
 layout: post
 class: post
 title: Desenvolvendo com <br> AngularJS - Parte 1
-description: Uma introdução básica sobre AngularJS, oque é MVC, vantagens, que tipo de backend é necessário, e nosso primeiro "Hello Word" com o AngularJS
+description: Uma introdução básica sobre AngularJS, oque é MVC, vantagens, que tipo de backend é necessário, nosso primeiro "Hello Word" e uma aplicação básica com AngularJS.
 image: 
 ---
 
@@ -41,7 +41,7 @@ Veja esse [vídeo](https://www.youtube.com/watch?v=q8ekGIkU2jE) explicando.
     Hello <span id="name"></span>
 {% endhighlight %}
 
-O JavaScript para fazer isso funcionar
+O JavaScript para fazer isso funcionar:
 
 {% highlight js %}
 var updateNameInUI = function(name){
@@ -49,7 +49,6 @@ var updateNameInUI = function(name){
 }
 
 updateNameInUI(user.name);
-
 updateNameInUI(updatedName);
 {% endhighlight %}
 
@@ -73,6 +72,49 @@ A resposta é bem simples: esse tipo de requisito não existe.
 
 O AngularJS não tem nenhum requisito sobre o tipo de backend necessário para funcionar como uma Single-Page Application. Você esta livre para usar Java, Python, Ruby, C#, PHP ou qualquer outra linguagem que sentir mais à vontade.
 
-O único recurso necessário é ter uma maneira de se comunicar com o servidor. O ideal é que seja feito por meio de XHR(solicitação HTTP XML) ou sockets.
+O único recurso necessário é ter uma maneira de se comunicar com o servidor. O ideal é que seja feito por meio de XHR([solicitação HTTP XML](https://developer.mozilla.org/pt-BR/docs/Web/API/XMLHttpRequest)) ou sockets.
 
 Se o seu servidor tiver pontos de conexão com REST ou APIs que disponibilizem valores JSON, sua vida como desenvolvedor frontend será mais fácil ainda.
+
+## Nosso Primeiro Hello Word ##
+
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+
+<body ng-app> <!-- Aqui fazemos o start do AngularJS na tag body -->
+    <input  type="text"
+            ng-model="name"
+            placeholder="Enter your name">
+    
+    <h1>Hello <span ng-bind="name"></span></h1>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js">
+    </script>
+</body>
+
+</html>
+{% endhighlight %}
+
+## Básica aplicação com AngularJS ##
+{% highlight html %}
+<!DOCTYPE html>
+<html ng-app>
+
+<body>
+    <h1>Hello { { 1 + 2 } }</h1>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js">
+    </script>
+</body>
+
+</html>
+{% endhighlight %}
+
+
+
+**OBS:** coloquei os exemplos com espaço nas chaves <code>{ { } }</code> porque o highlight não estava mostrando colocando '<pre>{{}}</pre>', se você deixar com espaço no seu exemplo não vai funcionar.
+
+
+
+
