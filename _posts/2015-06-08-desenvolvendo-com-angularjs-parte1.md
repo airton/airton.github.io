@@ -3,7 +3,7 @@ layout: post
 class: post
 title: Desenvolvendo com <br> AngularJS - Parte 1
 description: Uma introdução básica sobre AngularJS, oque é MVC, vantagens, que tipo de backend é necessário, nosso primeiro "Hello Word" e uma aplicação básica com AngularJS.
-image: 
+image: desenvolvendo-com-angularjs-1.png
 ---
 
 
@@ -12,7 +12,7 @@ image:
 Como todo mundo sabe o AngularJS é um framework JavaScript MVC para web, ele oferece uma estrutura consistente e escalável, e tudo isso é feito em JavaScript e HTML, *coisa linda de god :)*.
 
 
-## Oque é MVC (Modelo-Visão-Controlador)? ##
+## O que é MVC (Modelo-Visão-Controlador)? ##
 
 O principal conceito sobre o framework AngularJS é o padrão de arquitetura MVC (Model-View-Controller) ou MVVM (Model-View-ViewModel).
 
@@ -41,7 +41,7 @@ Veja esse [vídeo](https://www.youtube.com/watch?v=q8ekGIkU2jE) explicando.
     Hello <span id="name"></span>
 {% endhighlight %}
 
-O JavaScript para fazer isso funcionar:
+O JavaScript para fazer isso funcionar, seria algo semelhante a isso:
 
 {% highlight js %}
 var updateNameInUI = function(name){
@@ -76,44 +76,25 @@ O único recurso necessário é ter uma maneira de se comunicar com o servidor. 
 
 Se o seu servidor tiver pontos de conexão com REST ou APIs que disponibilizem valores JSON, sua vida como desenvolvedor frontend será mais fácil ainda.
 
-## Nosso Primeiro Hello Word ##
+## Nosso Primeiro Hello Word com AngularJS ##
 
-{% highlight html %}
-<!DOCTYPE html>
-<html>
+<p data-height="266" data-theme-id="9559" data-slug-hash="QbvrmM" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/QbvrmM/'>Hello Word - AngularJS</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-<body ng-app> <!-- Aqui fazemos o start do AngularJS na tag body -->
-    <input  type="text"
-            ng-model="name"
-            placeholder="Enter your name">
-    
-    <h1>Hello <span ng-bind="name"></span></h1>
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js">
-    </script>
-</body>
-
-</html>
-{% endhighlight %}
+- <code>ng-app</code>: diretiva AngularJS para dar o start;
+- <code>ng-model</code>: diretiva AngularJS para campos de entrada, sempre que quisermos que o usuário insira dados e tenha acesso ao valor em JavaScript.
+- <code>ng-bind</code>: diretiva AngularJS para mostrar os dados na view.
 
 ## Básica aplicação com AngularJS ##
-{% highlight html %}
-<!DOCTYPE html>
-<html ng-app>
 
-<body>
-    <h1>Hello { { 1 + 2 } }</h1>
+<p data-height="266" data-theme-id="9559" data-slug-hash="MwmGGV" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/MwmGGV/'>Básica aplicação - AngularJS</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.js">
-    </script>
-</body>
 
-</html>
-{% endhighlight %}
+- <code>{ { } }</code> e <code>ng-bind</code>: essas duas diretivas tem a mesma funcionalidade, mostrar os dados na view. A única diferença é que o AngularJS leva um tempo para ser carregado, e pode ser que você veja as chaves duplas <code>{ { } }</code> na página, isso não acontecera com <code>ng-bind</code>.
+
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 
 
-**OBS:** coloquei os exemplos com espaço nas chaves <code>{ { } }</code> porque o highlight não estava mostrando colocando '<pre>{{}}</pre>', se você deixar com espaço no seu exemplo não vai funcionar.
 
 
 

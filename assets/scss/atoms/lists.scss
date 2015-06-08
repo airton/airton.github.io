@@ -8,7 +8,7 @@
         dl {
             display: block;
             margin-bottom: 30px;
-            margin-right: 250px;
+            margin-right: 0;
             font-size: 16px;
             line-height: 26px;
             font-weight: 400;
@@ -30,5 +30,9 @@
      */
 
     @media only screen and (min-width: $breakpoint) {
-
+        ul,
+        ol,
+        dl {
+            margin-right: 250px;
+        }
     }
