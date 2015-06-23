@@ -41,12 +41,10 @@ Se quisermos carregar um módulo que já foi definido em outro arquivo, devemos 
     angular.module('MeuModulo');
 {% endhighlight %}
 
-
 Há dois erros comuns ao tentar definir um módulo
 
 - Tentar definir um módulo sem passar o segundo argumento, um erro sera gerado <code>'No module found'</code>.
 - Tentar carregar um módulo de outro arquivo que não foi carregado na página.
-
 
 Agora vamos ver um exemplo de como usar esse módulo
 
@@ -54,7 +52,6 @@ Agora vamos ver um exemplo de como usar esse módulo
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 - A diretiva <code>ng-app</code> recebe um argumento opcional, que corresponde ao nome do módulo a ser carregado durante a inicialização
-
 
 ## Criando nosso próprio controlador ##
 
@@ -73,3 +70,12 @@ Vamos ver como podemos criar um controlador para o nosso módulo <code>MeuModulo
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 - Definimos um controlador usando a função <code>controller</code>
+- A função controller recebe o nome <code>MainCrlt</code> como primeiro argumento
+- O segundo argumento do controlador é o que ele faz e como faz
+- Há um pequeno truque nesse caso, definimos nossa função de <code>controller</code> dentro de um array. Ou seja, o primeiro argumento é o nome <code>MainCtrl</code> e o segundo um array <code>[]</code>. O array armazena todas as dependências do controlador em variáveis na forma de string. E a função é o unico argumento presente no array.
+- Vimos a nova diretiva <code>ng-controller</code>. Ela é usada ara dizer ao AngularJS que crie uma instância do controller com o nome especificado e a associe ao elemento do DOM.
+
+## Criando nossa primeira Aplicação AngularJS com controlador ##
+
+<p data-height="266" data-theme-id="9559" data-slug-hash="QbObxg" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/QbObxg/'>Hello Controller</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
