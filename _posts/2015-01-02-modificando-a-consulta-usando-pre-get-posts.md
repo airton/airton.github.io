@@ -3,7 +3,7 @@ layout: post
 class: post
 title: Modificando a consulta atual usando pre_get_posts
 description:
-image: wordpress-pre-get-posts.png
+image: wordpress-pre-get-posts.jpg
 ---
 
 O **pre_get_posts** é um gancho que permite que você modifique a consulta principal, é muito comum você precisar alterar o conteúdo que é exibido em uma página, então vamos usar esse gancho que facilita muito o trabalho.

@@ -3,7 +3,7 @@ layout: post
 class: post
 title: Desenvolvendo com AngularJS - Parte 2
 description: Diretivas e controladores básicos do AngularJS
-image: 
+image: desenvolvendo-com-angularjs-2.jpg
 ---
 
 ## Introdução ##

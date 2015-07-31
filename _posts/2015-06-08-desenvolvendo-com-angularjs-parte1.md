@@ -3,7 +3,7 @@ layout: post
 class: post
 title: Desenvolvendo com AngularJS - Parte 1
 description: Uma introdução básica sobre AngularJS, oque é MVC, vantagens, que tipo de backend é necessário, nosso primeiro 'Hello Word' e uma aplicação básica com AngularJS.
-image: desenvolvendo-com-angularjs-1.png
+image: desenvolvendo-com-angularjs-1.jpg
 ---
 
 

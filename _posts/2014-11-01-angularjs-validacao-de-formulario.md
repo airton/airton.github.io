@@ -3,7 +3,7 @@ layout: post
 class: post
 title: AngularJS Validação de Formulário
 description: "Vamos focar a validação do lado do cliente e usando as propriedades de formulário angular. Aqui está uma demonstração rápida." 
-image: angularjs.png
+image: angularjs.jpg
 ---
 
 <!-- Code/Demo -->
