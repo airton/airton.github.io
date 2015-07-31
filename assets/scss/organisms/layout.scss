@@ -4,6 +4,10 @@
 
     @media only screen {
 
+        .home{
+            @include horizontal-gradient($color-blue, $color-green);
+        }
+
         /*  Main
             ========================================================================== */
             .intro{
@@ -42,7 +46,6 @@
         /*  About
             ========================================================================== */
             .about{
-                background: $color-blue url(../img/bg.png) no-repeat scroll top center / 100%;
                 padding: 40px 0;
                 color: #f9f9f9;
                 text-align: center;
@@ -154,10 +157,7 @@
                 position: relative;
                 border-bottom: 1px solid #ddd;
                 border-radius: 5px 5px 0 0;
-                background: #fcfcfc;
-                background: -moz-linear-gradient(#fcfcfc, #ebebeb);
-                background: -webkit-linear-gradient(#fcfcfc, #ebebeb);
-                -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc',endColorstr='#ebebeb')";
+                @include horizontal-gradient(#fcfcfc, #ebebeb);
             }
 
             .github-box .github-box-header h3 {
@@ -450,10 +450,10 @@
                 100% { visibility: visible; opacity: 1; box-shadow: none; }
             }
 
-            .social-networks .email{ @include animation(anime-social 1.5s both 1s ); }
-            .social-networks .twitter{ @include animation(anime-social 2s both 1s ); }
-            .social-networks .github{ @include animation(anime-social 2.5s both 1s ); }
-            .social-networks .wordpress{ @include animation(anime-social 3s both 1s ); }
+            .social-networks .email{ @include animation(anime-social 1.5s both); }
+            .social-networks .twitter{ @include animation(anime-social 2s both); }
+            .social-networks .github{ @include animation(anime-social 2.5s both); }
+            .social-networks .wordpress{ @include animation(anime-social 3s both); }
 
         /*  Illustration
             ========================================================================== */

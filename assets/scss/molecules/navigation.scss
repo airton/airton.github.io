@@ -9,7 +9,7 @@
             .header{
                 padding: 10px 0;
                 text-align: center;
-                background-color: #f9f9f9;
+                @include horizontal-gradient($color-blue, $color-green);
             }
 
             .home .header{ margin: 0; }
@@ -20,7 +20,7 @@
                 width: 85px;
                 height: 85px;
                 margin-top: -2px;
-                border: 2px solid $color-orange;
+                border: 2px solid #fff;
                 @include border-radius(50%);
             }
 
@@ -37,8 +37,8 @@
             }
 
             .nav-item > a{
-                color: $color-orange;
-                border-top: 1px solid $color-orange;
+                color: #fff;
+                border-top: 1px solid #fff;
                 padding: 10px;
                 display: block;
                 font-weight: normal;
@@ -106,8 +106,6 @@
             .header{
                 height: 80px;
                 text-align: inherit;
-                border-bottom:1px solid #eee;
-
             }
 
             .logo img{
@@ -139,14 +137,13 @@
             }
 
             .nav-item > a{
-                border: 1px solid $color-orange;
+                border: 1px solid #fff;
             }
 
             .item-home > a,
             .nav-item.item-home > a:hover,
             .nav-item.item-home > a:focus{
                 border:none;
-                color: $color-blue;
                 background: transparent;
             }
 
@@ -155,9 +152,9 @@
             .projects .item-projects > a,
             .blog .item-blog > a,
             .post .item-blog > a{
-                color: #fff;
+                //color: #333;
                 text-decoration: none;
-                background-color: $color-orange;
+                background: rgba(0,0,0,.2);
                 @include transition(all 0.3s ease);
             }
 
