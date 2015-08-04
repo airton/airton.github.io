@@ -75,7 +75,31 @@ Vamos ver como podemos criar um controlador para o nosso módulo <code>MeuModulo
 - Há um pequeno truque nesse caso, definimos nossa função de <code>controller</code> dentro de um array. Ou seja, o primeiro argumento é o nome <code>MainCtrl</code> e o segundo um array <code>[]</code>. O array armazena todas as dependências do controlador em variáveis na forma de string. E a função é o unico argumento presente no array.
 - Vimos a nova diretiva <code>ng-controller</code>. Ela é usada ara dizer ao AngularJS que crie uma instância do controller com o nome especificado e a associe ao elemento do DOM.
 
+<blockquote>
+    <p><b>Sintaxe da injeção de dependência e o AngularJS</b><br>
+    A notação que usamos é uma de duas opões que podem ser utilizadas para efetuar a decalaração de controladores no AngularJS. O estilo que usamos nos exemplos é o estilo <i>seguro da injeção de dependência</i> ou declaração, que também é a maneira recomendada:</p>
+
+{% highlight js %}
+angular.module('MeuModulo', [])
+    .controller('MainCtrl', function(){
+});
+{% endhighlight %}
+    <p>o funcionamento será semelhante, porém isso poderá causar problemas se houver um passo para minificar o nosso código.</p>
+
+</blockquote>
+
 ## Criando nossa primeira Aplicação AngularJS com controlador ##
 
 <p data-height="266" data-theme-id="9559" data-slug-hash="QbObxg" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/QbObxg/'>Hello Controller</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+- Definimos a variável <code>goodbyeMSg</code> usando a palavra-chave <code>this</code> e a variável <code>goodbyeMsg</code> usando a palavra chave <code>var</code>
+- Usamos esse controlador por meio da diretiva <code>ng-controller</code>. Essa diretiva permite associar uma instância de um controlador a um elemento, nesse caso o <code>body</code>
+- Demos um nome a essa instância <code>MainCtrl</code> em particular quando usamos <code>ng-controller</code>. Nesse caso chamamos de <code>ctrl</code>. Isso é conhecido como sintaxe <code>controllerAs</code> em AngularJS.
+- Fizemos referência às variaveis <code>helloMsg</code> e <code>goodbyeMsg</code> do controlador no HTML usando a notação de chaves duplas <code>{ { } }</code>
+- Tudo que o HTML tenha de usar deverá ser definido em <code>this</code>. Tudo que o HTML não acessar diretamente não deverá ser colocado em this, mas deverá ser salvo como variável local no escopo do controlador, semelhante a <code>goodbyeMsg</code>.
+
+<blockquote>
+    <p><b>$scope versus sintaxe controllerAs</b><br>
+        Nas versões anteriores a 1.2 do AngularJS, usava a variável <code>$scope</code>. No Angular 1.2 e mais recentes, há uma nova sintaxe - a sintaxe <code>controllerAs</code>, que permite definir as variáveis na instância do controlador usando a palavra-chave <code>this</code>.
+    </p>
+</blockquote>
