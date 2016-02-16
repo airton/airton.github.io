@@ -52,7 +52,6 @@ updateNameInUI(user.name);
 updateNameInUI(updatedName);
 {% endhighlight %}
 
-
 ### Usando AngularJS ###
 
 Basta fazer o binding em nosso HTML, e o AngularJS cuidará de fazer esses valores chegarem até a UI.
@@ -64,7 +63,6 @@ A mesma funcionalidade em uma aplicação AngularJS ficará semelhante a isso:
 {% endhighlight %}
 
 No JavaScript tudo que devemos fazer é definir o valor da variável <code>name</code>
-
 
 ## Que tipo de backend é necessário? ##
 
