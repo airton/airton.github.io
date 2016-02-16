@@ -9,7 +9,7 @@ exclude: ['assets','node_modules','components','Gruntfile.js', 'Gulpfile.js', 'p
 # Build settings
 markdown: kramdown
 permalink: pretty
-highlighter: pygments
+highlighter: rouge
 
 source:      .
 destination: ./_site
