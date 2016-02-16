@@ -76,7 +76,7 @@ O único recurso necessário é ter uma maneira de se comunicar com o servidor. 
 
 Se o seu servidor tiver pontos de conexão com REST ou APIs que disponibilizem valores JSON, sua vida como desenvolvedor frontend será mais fácil ainda.
 
-## Nosso Primeiro Hello Word com AngularJS ##
+## Nosso Primeiro Hello World com AngularJS ##
 
 <p data-height="266" data-theme-id="9559" data-slug-hash="QbvrmM" data-default-tab="result" data-user="airton" class='codepen'>See the Pen <a href='http://codepen.io/airton/pen/QbvrmM/'>Hello Word - AngularJS</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
 
