@@ -7,7 +7,9 @@
         body {
             -webkit-text-size-adjust: none;
             -ms-text-size-adjust:none;
-            font-family: 'Arvo', serif;
+            //font-family: 'Arvo', serif;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
             color: #3e3e3e;
         }
 
@@ -25,7 +27,7 @@
                 line-height: 20px;
                 color: inherit;
                 text-rendering: optimizelegibility;
-                letter-spacing: -1px;
+                letter-spacing: -2px;
             }
 
             h1{
@@ -61,6 +63,8 @@
         /*  Texts
             ========================================================================== */
             p {
+                font-family: 'Arvo', serif;
+                font-weight: 400;
                 color: #444;
                 font-size: 18px;
                 line-height: 28px;
