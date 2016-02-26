@@ -105,3 +105,56 @@ console.log(user); // { name: 'Junior' }
 
 ## Arrow Function
 
+É uma função que possui uma sintaxe mais curta, e elas sempre são funções anônimas ([IIFE](http://airtonvancin.com/blog/artigo-instanciacao-variaveis-javascript/#instanciao-usando-uma-iife)), vinculando o valor de **this** de maneira léxica, quando ela é criada o valor de **this** sempre será o mesmo.
+
+{% highlight js %}
+// Função normal
+function (name) { return name; }
+
+// Arrow Function
+(name) => name;
+{% endhighlight %}
+
+Função nomeada não é possível fazer com arrow function:
+
+{% highlight js %}
+// Função normal
+function sayName(name) { return name; }
+
+// Arrow Function
+sayName(name) => name; // <-- ISSO NÃO EXISTE
+{% endhighlight %}
+
+O que fazer então? vamos estanciar ela como uma constante:
+
+{% highlight js %}
+
+// Arrow Function
+const sayName = (name) => name; // Ae agora sim
+{% endhighlight %}
+
+
+Vamos ver um exemplo de uma função que retorna a média de dois números:
+
+{% highlight js %}
+// ES5
+const media = (function(num1,num2) {
+    return (num1 + num2) / 2;
+})(10,50); // passando os valores 10  e 50 como parâmetros
+
+console.log(media); // 30
+
+// --------------------------------
+
+// ES6
+const media = ((num1,num2) => {
+    return (num1 + num2) / 2;
+})(10,50);
+
+console.log(media); // 30
+
+// OU MAIS SIMPLES
+
+const media = ( (num1,num2) => (num1 + num2) / 2 )(10,50);
+console.log(media); // 30
+{% endhighlight %}
