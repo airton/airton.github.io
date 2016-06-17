@@ -44,18 +44,6 @@
             @extend %last;
         }
 
-        .about-text{
-            @include width(12);
-            @extend %column;
-            @extend %last;
-        }
-
-        .illustration{
-            @include width(12);
-            @extend %column;
-            @extend %last;
-        }
-
         .list-posts{
             @include width(8);
             @extend %column;

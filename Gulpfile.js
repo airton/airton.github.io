@@ -32,16 +32,32 @@ var gulp 		= require('gulp'),
         gulp.task('sass', function () {
 
     	    return gulp.src(_assets+'scss/main.scss')
+                .pipe(rename({suffix: ".min"}))
     	    	.pipe(sass({
     	    		trace: true,
     	    		noCache: true,
     	    		style: "compressed"
     	    	}))
     	        .on('error', function (err) { console.log(err.message); })
-    	        .pipe(rename({suffix: ".min"}))
     	        .pipe(gulp.dest(_build_css))
     	        .pipe(reload({stream:true}));
     	});
+
+        //main.min.css
+        /*gulp.task('sass', function () {
+
+            return gulp.src(dirs._assets+'/scss/main.scss')
+                .pipe(plugins.rename({suffix: ".min"}))
+                .pipe(plugins.sass({
+                    trace: true,
+                    noCache: true,
+                    style: "compressed"
+                }))
+                .on('error', function (err) { console.log(err.message); })
+                .pipe(gulp.dest(dirs._build+"/css"))
+                .pipe(plugins.livereload())
+                .pipe(reload({stream:true}));
+        });*/
 
 	// SCRIPTS  ----------------------------------------------------------
 

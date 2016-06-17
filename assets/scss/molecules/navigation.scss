@@ -7,12 +7,13 @@
         /*  Header
             ========================================================================== */
             .header{
-                padding: 10px 0;
+                padding: 10px 20px;
                 text-align: center;
-                @include horizontal-gradient($color-blue, $color-green);
-            }
+                /* @include horizontal-gradient($color-blue, $color-green); */
+                @include horizontal-gradient(#2980B9, #3498DB);
 
-            .home .header{ margin: 0; }
+                .home &{ margin: 0; }
+            }
 
             .logo img{
                 display: inline;
@@ -26,31 +27,33 @@
 
         /*  Menu
             ========================================================================== */
-            .nav-menu ul{
-                display: block;
-                margin: 0;
-                padding: 10px 0 0;
-            }
+            .nav-menu {
 
-            .nav-item{
-                display: block;
-            }
+                ul{
+                    display: block;
+                    margin: 0;
+                    padding: 0;
+                }
 
-            .nav-item > a{
-                color: #fff;
-                border-top: 1px solid #fff;
-                padding: 10px;
-                display: block;
-                font-weight: normal;
-                @include border-radius(2px);
-                @include transition(all 0.5s ease);
+                .nav-item{
+                    display: block;
+                }
+
+                .nav-item > a{
+                    color: #fff;
+                    border-top: 1px solid rgba(255,255,255,0.141);
+                    padding: 10px;
+                    display: block;
+                    font-weight: normal;
+                    @include border-radius(2px);
+                    @include transition(all 0.5s ease);
+                }
             }
 
         /*  Footer
             ========================================================================== */
             .footer{
                 padding: 20px 0;
-                background-color: #f9f9f9;
             }
 
             .footer p{
@@ -119,46 +122,45 @@
             .nav-menu{
                 text-align: right;
                 font-size: 14px;
-                font-family: Arial;
+
+                ul{
+                    display: block;
+                    margin: 0;
+                    padding: 2px 0 0;
+                }
+
+                .nav-item{
+                    display: inline-block;
+                }
+
+                .nav-item + .nav-item{
+                    margin-left: 5px;
+                }
+
+                .nav-item > a{
+                    border: 1px solid rgba(255,255,255,0.141);
+                }
+
+                .item-home > a,
+                .nav-item.item-home > a:hover,
+                .nav-item.item-home > a:focus{
+                    border:none;
+                    background: transparent;
+                }
+
+                .nav-item > a:hover,
+                .nav-item > a:focus{
+                    text-decoration: none;
+                    background: rgba(255,255,255,0.141);
+                    @include transition(all 0.3s ease);
+                }
             }
 
-            .nav-menu ul{
-                display: block;
-                margin: 0;
-                padding: 10px 0 0;
-            }
-
-            .nav-item{
-                display: inline-block;
-            }
-
-            .nav-item + .nav-item{
-                margin-left: 5px;
-            }
-
-            .nav-item > a{
-                border: 1px solid #fff;
-            }
-
-            .item-home > a,
-            .nav-item.item-home > a:hover,
-            .nav-item.item-home > a:focus{
-                border:none;
-                background: transparent;
-            }
-
-            .nav-item > a:hover,
-            .nav-item > a:focus,
             .projects .item-projects > a,
             .blog .item-blog > a,
             .post .item-blog > a{
-                //color: #333;
                 text-decoration: none;
-                background: rgba(0,0,0,.2);
+                background: rgba(255,255,255,0.141);
                 @include transition(all 0.3s ease);
             }
-
-        /*  Footer
-            ========================================================================== */
-
     }

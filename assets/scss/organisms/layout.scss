@@ -4,14 +4,24 @@
 
     @media only screen {
 
-        .home{
-            @include horizontal-gradient($color-blue, $color-green);
-        }
+        /*  Home
+            ========================================================================== */
+
+            .home{
+                /* @include horizontal-gradient($color-blue, $color-green); */
+                @include horizontal-gradient(#2980B9, #3498DB);
+                overflow: hidden;
+                min-height: 500px;
+                height: 100%;
+
+                .logo{display: none;}
+            }
 
         /*  Main
             ========================================================================== */
             .intro{
-                @include horizontal-gradient($color-blue, $color-green);
+                /* @include horizontal-gradient($color-blue, $color-green); */
+                @include horizontal-gradient(#2980B9, #3498DB);
                 text-align: center;
                 padding: 80px 0 20px;
                 margin-bottom: 30px;
@@ -49,79 +59,90 @@
                 padding: 40px 0;
                 color: #f9f9f9;
                 text-align: center;
-            }
 
-            .about h1{
-                font-weight: 700;
-                text-transform: uppercase;
-                margin: 30px 0;
-                font-size: 38px;
-                line-height: 48px;
-                text-shadow: 0 0 10px rgba(0,0,0,0.5);
-                @include animation(anime-text 1s ease);
-            }
+                .about-text > img{
+                    @include border-radius(50%);
+                }
 
-            .about p{
-                font-size: 20px;
-                line-height: 30px;
-                font-weight: 400;
-                text-transform: uppercase;
-                text-align: center;
-                margin: 0 0 30px 0;
-                color: #f9f9f9;
-                text-shadow: 0 0 5px rgba(0,0,0,0.5);
-                @include animation(anime-text 1.5s ease);
-            }
+                h1{
+                    font-weight: 200;
+                    margin: 30px 0;
+                    font-size: 38px;
+                    line-height: 48px;
+                    letter-spacing: -0.7px;
+                    text-shadow: 0 0 10px rgba(0,0,0,0.05);
+                    @include animation(anime-text 1s ease);
+                }
 
-            .about a{
-                color: #f9f9f9;
-                text-decoration: none;
-            }
+                p{
+                    font-size: 20px;
+                    line-height: 30px;
+                    font-weight: 200;
+                    text-align: center;
+                    margin: 0 0 30px 0;
+                    color: #f9f9f9;
+                    text-shadow: 0 0 5px rgba(0,0,0,0.05);
+                    @include animation(anime-text 1.5s ease);
 
-            .about a:hover,
-            .about a:focus{
-                text-decoration: none;
+                    &.create-by{
+                        font-size: 16px;
+                        line-height: 26px;
+                    }
+                }
+
+                a{
+                    color: #f9f9f9;
+                    text-decoration: none;
+
+                    &:hover,
+                    &:focus{
+                        text-decoration: none;
+                    }
+                }
             }
 
         /*  Social networks
             ========================================================================== */
             .social-networks{
                 margin-bottom: 20px;
-            }
 
-            .social-networks ul{
-                display: block;
-                margin: 0;
-                padding: 0;
-            }
+                ul{
+                    display: inline-block;
+                    margin: 0;
+                    padding: 20px 40px;
+                    border-top: 1px solid rgba(255,255,255,0.141);
+                    max-width: 500px;
+                }
 
-            .social-networks li{
-                display: inline-block;
-                visibility: hidden;
-            }
+                li{
+                    display: inline-block;
+                    //visibility: hidden;
+                    margin: 0;
+                }
 
-            .social-networks a{
-                display: block;
-                padding: 10px 0;
-                width: 45px;
-                height: 45px;
-                background-color: rgba(0,0,0,0.2);
-                color: #fff;
-                text-align: center;
-                font-size: 22px;
-                line-height: 100%;
-                @include border-radius(2px);
-                @include transition(all 0.5s ease);
-            }
+                a{
+                    @include border-radius(2px);
+                    @include transition(all 0.5s ease);
+                    background-color: rgba(0,0,0,0.2);
+                    color: #fff;
+                    display: block;
+                    font-size: 22px;
+                    height: 45px;
+                    line-height: 100%;
+                    padding: 10px 0;
+                    text-align: center;
+                    width: 45px;
 
-            .social-networks i{
-                vertical-align: middle;
-            }
+                    &:hover,
+                    &:focus{
+                        @include transition(all 0.5s ease);
+                        background-color: rgba(0,0,0,0.5);
+                    }
+                }
 
-            .social-networks a:hover,
-            .social-networks a:focus{
-                @include transition(all 0.5s ease);
-                background-color: rgba(0,0,0,0.5);
+                i,img{
+                    vertical-align: middle;
+                }
             }
 
         /*  Projects
@@ -135,7 +156,6 @@
                 margin-right: 0;
                 margin-bottom: 2em;
             }
-
 
             .github-box {
                 font-family: "Helvetica Neue", Arial, sans-serif;
@@ -398,6 +418,7 @@
             ========================================================================== */
             .content{
                 margin-bottom: 20px;
+                padding: 0 10px;
                 border-bottom: 1px solid #eee;
             }
 
@@ -421,17 +442,13 @@
 
         /*  About
             ========================================================================== */
-            .about{
-                height: 680px;
-            }
-
-            .about-text{
-                height: 250px;
-            }
-
             @include keyframes(anime-text) {
                 0%   {  opacity: 0; @include transform(scale(1.1)); }
                 100% {  opacity: 1; @include transform(scale(none)); }
+            }
+
+            .about img{
+                @include animation(anime-text 0.8s ease);
             }
 
             .about h1{
@@ -444,6 +461,12 @@
 
         /*  Social networks
             ========================================================================== */
+            .social-networks{
+                li{
+                    visibility: hidden;
+                }
+            }
+
             @include keyframes(anime-social) {
                 0%   { visibility: hidden; opacity: 0; box-shadow: 0 0 0 20px rgba(0,0,0,0.2); }
                 100% { visibility: visible; opacity: 1; box-shadow: none; }
@@ -453,6 +476,7 @@
             .social-networks .twitter{ @include animation(anime-social 2s both); }
             .social-networks .github{ @include animation(anime-social 2.5s both); }
             .social-networks .wordpress{ @include animation(anime-social 3s both); }
+            .social-networks .codecademy{ @include animation(anime-social 3.5s both); }
 
         /*  Illustration
             ========================================================================== */
