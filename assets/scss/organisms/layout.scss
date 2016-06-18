@@ -452,7 +452,7 @@
                 100% {  opacity: 1; @include transform(scale(none)); }
             }
 
-            .about img{
+            .about-text img{
                 @include animation(anime-text 0.8s ease);
             }
 
@@ -485,7 +485,7 @@
 
         /*  Illustration
             ========================================================================== */
-            @include keyframes(anime-illustration) {
+            /* @include keyframes(anime-illustration) {
                 0%{visibility: hidden;}
                 0%,100% { opacity: 0; height: 0; }
                 20%,80% { opacity: 0.2; height: 20px; }
@@ -497,17 +497,17 @@
                 100%,0% { opacity: 1;  height: auto;}
                 100%{visibility: visible;  height: auto;}
             }
-
+            
             .illustration{
                 height: auto;
                 overflow: hidden;
                 visibility: hidden;
                 @include animation(anime-illustration 0.5s ease 2s both);
             }
-
+            
             .illustration img{
                 margin-left: -20px;
-            }
+            } */
 
         /*  Projects
             ========================================================================== */
