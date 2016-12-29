@@ -25,7 +25,7 @@ section {
 
 ## Referência ##
 
-- [@egghead](https://egghead.io/lessons/css-dynamically-size-elements-with-pure-css)
+- Learn Advanced CSS Layout Techniques: [@egghead](https://egghead.io/lessons/css-dynamically-size-elements-with-pure-css)
 
 ## Suporte ##
 
