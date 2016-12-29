@@ -3,7 +3,7 @@ layout: post
 class: post
 title: Efeito paralax com css puro
 description: Dimensionar os elementos com base nas dimensões da janela de visualização sem javascript. Utilizando as unidades de viewport vw e vh.
-image: paralax.png
+image: efeito-paralax-com-css-puro.jpg
 ---
 
 <!-- Code/Demo -->
@@ -11,15 +11,15 @@ image: paralax.png
     <a href="http://airtonvancin.com/paralax-com-css-puro/" class="btn btn-large btn-primary"><i class="fa fa-eye"></i> Demo</a>
 </div>
 
-- **vw**: largura da viewport
-- **vh**: altura da viewport
-
-```css
+{% highlight css %}
 section {
     width: 100vw;
     height: 100vh;
 }
-```
+{% endhighlight %}
+
+- **vw**: largura da viewport
+- **vh**: altura da viewport
 
 Referência: [@egghead](https://egghead.io/lessons/css-dynamically-size-elements-with-pure-css)
 

@@ -13,10 +13,12 @@ highlighter: rouge
 
 source:      .
 destination: ./_site
-plugins:     ./_plugins
-paginate_path: 'blog/page:num'
+plugins_dir:     ./_plugins
+paginate_path: 'blog/page:num/'
 
 permalink:   blog/:title/
 paginate: 5
 
 excerpt_separator: ""
+
+gems: [jekyll-paginate, jekyll-gist]
