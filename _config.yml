@@ -21,4 +21,4 @@ paginate: 5
 
 excerpt_separator: ""
 
-gems: [jekyll-paginate, jekyll-gist]
+plugins: [jekyll-paginate, jekyll-gist]
