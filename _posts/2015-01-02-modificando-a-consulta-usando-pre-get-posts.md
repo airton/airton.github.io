@@ -96,3 +96,7 @@ add_action( 'pre_get_posts', 'modify_query_eventos' );
 - Palestra Leo Baiano WordCamp São Paulo 2014 - <a href="http://pt.slideshare.net/leobaiano1/dicas-e-truques-para-desenvolver-projetos-web-utilizando-wordpress">Dicas e Truques para desenvolver Projetos Web Utilizando WordPress</a>.
 - wpmidia - <a href="http://wpmidia.com.br/tutoriais/customizando-query-wordpress/">Customizando a query do WordPress</a> 
 - Codex Wordpress <a href="http://codex.wordpress.org/Plugin_API/Action_Reference/pre_get_posts">pre_get_posts</a>
+
+### Livro ###
+
+<a target="_blank" href="https://www.amazon.com.br/gp/search?ie=UTF8&tag=avancin-20&linkCode=ur2&linkId=1e560e5a466d73cd53d0457a2f2ee54d&camp=1789&creative=9325&index=books&keywords=WordPress">Livros WordPress na Amazon</a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=ur2&o=33" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />

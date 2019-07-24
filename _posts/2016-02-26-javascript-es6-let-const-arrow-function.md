@@ -158,3 +158,8 @@ console.log(media); // 30
 const media = ( (num1,num2) => (num1 + num2) / 2 )(10,50);
 console.log(media); // 30
 {% endhighlight %}
+
+### Livro ###
+<a target="_blank" href="https://www.amazon.com.br/gp/offer-listing/193398869X/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=193398869X&linkCode=am2&tag=avancin-20&linkId=099ff8e589bc6767d151d25c6ba0fa81">Secrets of the JavaScript Ninja</a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=193398869X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<br/>
+<a target="_blank"  href="https://www.amazon.com.br/gp/product/193398869X/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=193398869X&linkCode=as2&tag=avancin-20&linkId=a0223e5c2cd8bfe85ee43e8961eb11c2"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=BR&ASIN=193398869X&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL160_&tag=avancin-20" ></a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=193398869X" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
