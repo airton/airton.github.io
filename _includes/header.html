@@ -11,7 +11,7 @@
 
     <!-- Facebook -->
     <meta property="fb:app_id" content="1509171469355605" />
-    <meta property="fb:admins" content="XXXXXX" />
+    <meta property="fb:admins" content="" />
     <meta property="og:title" content="{% if page.title %}{{ page.title }} - {% endif %}{{ site.name }}"/>
     <meta property="og:site_name" content="Airton Vancin Junior"/>
     <meta property="og:url" content="{{ site.url }}{% if page.url != '/index.html' %}{{ page.url }}{% endif %}"/>
@@ -32,6 +32,14 @@
 
     <!-- Modernizr -->
     <script src='{{ site.url }}/build/js/libs/modernizr.min.js'></script>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+    (adsbygoogle = window.adsbygoogle || []).push({
+        google_ad_client: "ca-pub-3553535106347103",
+        enable_page_level_ads: true
+    });
+    </script>
 
 </head>
 <body{% if page.class %} class="{{ page.class }}"{% endif %}>
