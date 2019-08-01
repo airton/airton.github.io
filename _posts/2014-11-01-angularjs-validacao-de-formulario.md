@@ -366,3 +366,8 @@ Aqui estão alguns recursos para o futuro da validação de formulário:
 <blockquote>
     Nota: Esse é uma tradução do post original <a href="http://scotch.io/tutorials/javascript/angularjs-form-validation">http://scotch.io/tutorials/javascript/angularjs-form-validation</a>
 </blockquote>
+
+### Livro ###
+<a target="_blank" href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=8575224093&linkCode=as2&tag=avancin-20&linkId=57a2a7491187bac25f0b697336b4810b">Desenvolvendo com AngularJS</a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<br/>  
+<a target="_blank"  href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=8575224093&linkCode=as2&tag=avancin-20&linkId=e542617f8c23e0d3a9126c073d44bebb"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=BR&ASIN=8575224093&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL160_&tag=avancin-20" ></a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
