@@ -367,7 +367,10 @@ Aqui estão alguns recursos para o futuro da validação de formulário:
     Nota: Esse é uma tradução do post original <a href="http://scotch.io/tutorials/javascript/angularjs-form-validation">http://scotch.io/tutorials/javascript/angularjs-form-validation</a>
 </blockquote>
 
-### Livro ###
-<a target="_blank" href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=8575224093&linkCode=as2&tag=avancin-20&linkId=57a2a7491187bac25f0b697336b4810b">Desenvolvendo com AngularJS</a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
-<br/>  
-<a target="_blank"  href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=8575224093&linkCode=as2&tag=avancin-20&linkId=e542617f8c23e0d3a9126c073d44bebb"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=BR&ASIN=8575224093&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL160_&tag=avancin-20" ></a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+### Livros ###
+
+<div class="books">
+<a class="books__item" href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_ss_il?ie=UTF8&linkCode=li3&tag=avancin-20&linkId=9bb7d1928c71ef92382da430e7418240" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=8575224093&Format=_SL250_&ID=AsinImage&MarketPlace=BR&ServiceVersion=20070822&WS=1&tag=avancin-20" ></a><img src="https://ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=li3&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" />
+<a class="books__item" href="https://www.amazon.com.br/AngularJS-Uma-Abordagem-Pr%C3%A1tica-Objetiva/dp/8575224115/ref=as_li_ss_il?__mk_pt_BR=%C3%85M%C3%85%C5%BD%C3%95%C3%91&keywords=angular+js&qid=1569641345&s=books&sr=1-1&linkCode=li3&tag=avancin-20&linkId=a61426a0ce41f3dc3357e063fd5db889" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=8575224115&Format=_SL250_&ID=AsinImage&MarketPlace=BR&ServiceVersion=20070822&WS=1&tag=avancin-20" ></a><img src="https://ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=li3&o=33&a=8575224115" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>

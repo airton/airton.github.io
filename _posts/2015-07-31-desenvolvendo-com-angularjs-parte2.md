@@ -107,6 +107,10 @@ angular.module('MeuModulo', [])
 
 ### Livro ###
 O Livro usado para escrever esse post:
+
 <a target="_blank" href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=8575224093&linkCode=as2&tag=avancin-20&linkId=57a2a7491187bac25f0b697336b4810b">Desenvolvendo com AngularJS</a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
 <br/>  
-<a target="_blank"  href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_tl?ie=UTF8&camp=1789&creative=9325&creativeASIN=8575224093&linkCode=as2&tag=avancin-20&linkId=e542617f8c23e0d3a9126c073d44bebb"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&MarketPlace=BR&ASIN=8575224093&ServiceVersion=20070822&ID=AsinImage&WS=1&Format=_SL160_&tag=avancin-20" ></a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<div class="books">
+<a class="books__item" href="https://www.amazon.com.br/gp/product/8575224093/ref=as_li_ss_il?ie=UTF8&linkCode=li3&tag=avancin-20&linkId=9bb7d1928c71ef92382da430e7418240" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=8575224093&Format=_SL250_&ID=AsinImage&MarketPlace=BR&ServiceVersion=20070822&WS=1&tag=avancin-20" ></a><img src="https://ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=li3&o=33&a=8575224093" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=am2&o=33&a=8575224093" width="1" height="1" border="0" alt="" />
+</div>

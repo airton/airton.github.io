@@ -99,4 +99,7 @@ add_action( 'pre_get_posts', 'modify_query_eventos' );
 
 ### Livro ###
 
-<a target="_blank" href="https://www.amazon.com.br/gp/search?ie=UTF8&tag=avancin-20&linkCode=ur2&linkId=1e560e5a466d73cd53d0457a2f2ee54d&camp=1789&creative=9325&index=books&keywords=WordPress">Livros WordPress na Amazon</a><img src="//ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=ur2&o=33" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<div class="books">
+<a class="books__item" href="https://www.amazon.com.br/Building-Web-Apps-WordPress-2e/dp/1491990082/ref=as_li_ss_il?&keywords=WordPress.&qid=1569642684&s=books&sr=1-2&linkCode=li3&tag=avancin-20&linkId=2b309008ada83e2600445ed11bfbad2e" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1491990082&Format=_SL250_&ID=AsinImage&MarketPlace=BR&ServiceVersion=20070822&WS=1&tag=avancin-20" ></a><img src="https://ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=li3&o=33&a=1491990082" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+<a class="books__item" href="https://www.amazon.com.br/Criando-Aplica%C3%A7%C3%B5es-Web-com-Wordpress/dp/8575223771/ref=as_li_ss_il?&keywords=WordPress&qid=1569642729&s=books&sr=1-4&linkCode=li3&tag=avancin-20&linkId=81eb5eb8e37cb37d2e14f92323cd7390" target="_blank"><img border="0" src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=8575223771&Format=_SL250_&ID=AsinImage&MarketPlace=BR&ServiceVersion=20070822&WS=1&tag=avancin-20" ></a><img src="https://ir-br.amazon-adsystem.com/e/ir?t=avancin-20&l=li3&o=33&a=8575223771" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;" />
+</div>

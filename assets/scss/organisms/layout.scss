@@ -417,6 +417,25 @@
 
             .disqus{
                 padding-top: 20px;
+                padding: 0 10px;
+            }
+        
+        /*  Books
+            ========================================================================== */
+            .books {
+                display: flex;
+                margin-bottom: 30px;
+
+                &__item {
+                    display: block;
+                    padding: 10px;
+                    border: 1px solid #eee; 
+
+                    &:hover,
+                    &:focus {
+                        background-color: #eee;
+                    }
+                }
             }
     }
 
