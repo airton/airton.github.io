@@ -1,9 +1,9 @@
+import Profile from 'components/Profile'
 
-
-export default function Projects () {
+export default function Projects() {
   return (
-    <div>
-      <h1>Projetos Página</h1>
+    <div className="projects">
+      <Profile/>
     </div>
   )
 }

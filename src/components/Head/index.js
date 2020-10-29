@@ -12,20 +12,20 @@ export default function HeadComponent () {
       <meta name='msapplication-TileColor' content='#06092c' />
       <meta name='msapplication-TileImage' content='/ms-icon-144x144.png' />
       <meta name='theme-color' content='#06092c' />
-      <meta name='application-name' content='De zero a especialista em Styled Components' />
+      <meta name='application-name' content='Airton Vancin Junior' />
 
       <meta property='og:url' content='https://airtonvancin.com' />
       <meta property='og:type' content='website' />
-      <meta property='og:title' content='De zero a especialista em Styled Components' />
+      <meta property='og:title' content='Airton Vancin Junior' />
       <meta property='og:image' content='https://airtonvancin.com/' />
       <meta property='og:image:alt' content='' />
       <meta property='og:description' content='Saiba Mais...' />
       <meta property='og:locale' content='pt_BR' />
 
       <meta name='twitter:card' content='summary' />
-      <meta name='twitter:site' content='@site_account' />
+      <meta name='twitter:site' content='@airtonvancin' />
       <meta name='twitter:url' content='https://airtonvancin.com/' />
-      <meta name='twitter:title' content='De zero a especialista em Styled Components' />
+      <meta name='twitter:title' content='Airton Vancin Junior' />
       <meta name='twitter:description' content='Saiba Mais...' />
       <meta name='twitter:image' content='https://airtonvancin.com/' />
       <meta name='twitter:image:alt' content='' />

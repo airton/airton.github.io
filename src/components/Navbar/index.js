@@ -1,3 +1,4 @@
+import loadCustomRoutes from 'next/dist/lib/load-custom-routes';
 import Link from 'next/link'
 import { useRouter } from "next/router";
 import { NavBar } from './styles'
@@ -15,7 +16,7 @@ export default function Navbar(){
         <a className={router.pathname == '/projetos' ? 'active' : '' }>Projetos</a>
       </Link>
       <Link prefetch href='/blog/' passHref>
-        <a className={router.pathname == '/blog' ? 'active' : '' }>Blog</a>
+        <a className={router.pathname == '/blog' || router.pathname == '/blog/[slug]' ? 'active' : '' }>Blog</a>
       </Link>
     </NavBar>
   )
