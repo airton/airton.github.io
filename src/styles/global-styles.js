@@ -40,6 +40,10 @@ export const GlobalStyle = createGlobalStyle`
     font-weight: 700;
   }
 
+  p {
+    font-weight: 600;
+  }
+
   a {
     color: ${({ theme }) => theme.colors.blue}
   }
