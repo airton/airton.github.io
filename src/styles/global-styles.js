@@ -27,7 +27,6 @@ export const GlobalStyle = createGlobalStyle`
     padding: 0;
     cursor: default;
     font-family: 'Commissioner', sans-serif;
-    /* font-family: 'Work Sans', sans-serif; */
     font-variant-ligatures: none;
     color: #000;
     background: #fff;
@@ -46,5 +45,9 @@ export const GlobalStyle = createGlobalStyle`
 
   a {
     color: ${({ theme }) => theme.colors.blue}
+  }
+
+  main {
+    min-height: calc(100vh - 100px);
   }
 `

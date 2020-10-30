@@ -1,4 +1,5 @@
 import { Wrapper, Article, Title, Date } from 'styles/pages/post'
+import Prism from 'prismjs'
 
 export default function BlogPost({ children, meta }) {
 
