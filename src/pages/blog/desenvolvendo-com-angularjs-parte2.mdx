@@ -1,3 +1,5 @@
+import BlogPost from 'pages/blog/post'
+
 export const meta = {
   title: 'Desenvolvendo com AngularJS - Parte 2',
   description: 'Diretivas e controladores básicos do AngularJS',
@@ -5,3 +7,5 @@ export const meta = {
   readTime: 2,
   image: 'desenvolvendo-com-angularjs-2.jpg'
 }
+
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;

@@ -1,3 +1,5 @@
+import BlogPost from 'pages/blog/post'
+
 export const meta = {
   title: 'Instanciação de Variáveis JavaScript',
   description: 'Esse é um artigo feito como forma de estudo para o curso de BE Mean do WebSchool.io',
@@ -5,3 +7,5 @@ export const meta = {
   readTime: 2,
   image: 'instanciacao-de-variaveis-javascript.jpg'
 }
+
+export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
