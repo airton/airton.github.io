@@ -6,7 +6,7 @@ export default function Custom404 () {
     <Wrapper>
       <Logo src='./apple-icon-180x180.png' />
       <Title>404 - Página não encontrada</Title>
-      <Link prefetch href='/' passHref>
+      <Link href='/' passHref>
         <BackButton>Voltar para a homepage</BackButton>
       </Link>
     </Wrapper>

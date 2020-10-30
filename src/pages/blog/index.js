@@ -19,7 +19,7 @@ export default function Blog() {
 const Posts = ({ posts }) => posts.map(({ link, module })=> (
   <ListItem key={module.meta.date}>
     <ListItemTitle>
-      <Link prefetch href={link} passHref>{module.meta.title}</Link>
+      <Link href={link} passHref>{module.meta.title}</Link>
     </ListItemTitle>
     <ListItemDate>{module.meta.date}</ListItemDate>
   </ListItem>
