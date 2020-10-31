@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { theme } from 'styles'
 
 export const NavBar = styled.nav`
   padding: 0;
@@ -24,5 +25,10 @@ export const NavBar = styled.nav`
       border-bottom: 1px solid ${({ theme }) => theme.colors.blueLigth};
       font-weight: 700;
     }
+  }
+
+  sup {
+    color: ${({ theme }) => theme.colors.orange};
+    font-weight: 700;
   }
 `

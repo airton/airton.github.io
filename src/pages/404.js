@@ -1,14 +1,11 @@
 import styled from 'styled-components'
-import Link from 'next/link'
+import { Button } from 'components/Button'
 
 export default function Custom404 () {
   return (
     <Wrapper>
-      <Logo src='./apple-icon-180x180.png' />
       <Title>404 - Página não encontrada</Title>
-      <Link href='/' passHref>
-        <BackButton>Voltar para a homepage</BackButton>
-      </Link>
+      <Button href="/">Voltar para a homepage</Button>
     </Wrapper>
   )
 }
@@ -31,9 +28,8 @@ const Logo = styled.img`
 
 const Title = styled.h1`
   font-size: 3.2rem;
-  font-family: 'Chivo', sans-serif;
   margin: 0 0 3rem;
-  color: ${({ theme }) => theme.colors.white};
+
 `
 
 const BackButton = styled.a`
@@ -48,6 +44,6 @@ const BackButton = styled.a`
 
   &:hover,
   &:focus {
-    background-color: #fff;
+    background-color: ${({ theme }) => theme.colors.orange};
   }
 `

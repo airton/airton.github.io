@@ -29,7 +29,10 @@ export const Article = styled.article`
   }
 
   > p,
-  > ul {
+  > ul,
+  > ol,
+  > h2,
+  > h3 {
     code {
       padding: 2px 4px;
       color: #c7254e;
@@ -38,16 +41,67 @@ export const Article = styled.article`
     }
   }
 
-  ul {
+  ul,
+  ol {
     margin: 30px 0;
     font-size: 1.8rem;
     line-height: 2.6rem;
+    padding-left: 2rem;
 
     li {
-      margin-bottom: 10px;
+      margin-bottom: 15px;
     }
   }
 
+  blockquote {
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin: 0 0 30px;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+  }
+
+  .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    font-size: 16px;
+    border-spacing: 0;
+    border-collapse: collapse;
+  }
+
+  .table td,
+  .table th{
+    padding: 8px;
+    line-height: 20px;
+    vertical-align: top;
+    border: 1px solid #ddd;
+  }
+
+  .table td.success{
+    background-color: #dff0d8;
+  }
+
+  .table td.danger{
+    background-color: #f2dede;
+  }
+
+  .table td.active{
+    background-color: #f8f5f0;
+  }
+
+  .table td.warning{
+    background-color: #fcf8e3;
+  }
+
+  .text-info {
+    color: ${({theme}) => theme.colors.blueLigth};
+  }
+
+  frame {
+    margin-bottom: 30px;
+  }
 
   /**
   * a11y-dark theme for JavaScript, CSS, and HTML
@@ -214,9 +268,33 @@ export const Article = styled.article`
   }
 `
 
+export const Header = styled.div`
+  text-align: center;
+  position: relative;
+  padding-bottom: 4rem;
+  margin-bottom: 4rem;
+
+  &:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    height: 1px;
+    width: 300px;
+    background-color: #f5f5f5;
+    left: calc(50% - 150px)
+  }
+`
+
 export const Title = styled.h1`
   font-size: 4.2rem;
   line-height: 5.2rem;
+  margin-bottom: 2rem;
+  text-align: center;
+`
+
+export const Desc = styled.p`
+  font-size: 1.8rem;
+  line-height: 2.8rem;
   margin-bottom: 2rem;
   text-align: center;
 `
@@ -228,5 +306,14 @@ export const Date = styled.span`
   text-align: center;
   text-transform: uppercase;
   display: block;
-  margin-bottom: 40px;
+  margin-bottom: 10px;
 `
+
+export const ReadingTime = styled.span`
+  font-size: 1.2rem;
+  line-height: 1.2rem;
+  font-weight: 100;
+  text-align: center;
+  display: block;
+`
+

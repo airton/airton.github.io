@@ -1,5 +1,5 @@
 export const theme = {
-  radius: '1rem',
+  radius: '.4rem',
   space: {
     xs: '1.5rem',
     sm: '3.5rem',
