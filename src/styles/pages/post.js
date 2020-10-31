@@ -11,14 +11,14 @@ export const Article = styled.article`
 
   > h2 {
     margin-bottom: 3rem;
-    font-size: 3.2rem;
-    line-height: 4.2rem;
+    font-size: clamp(2.4rem, 5vw, 3.2rem);
+    line-height: clamp(3.4rem, 5vw, 4.2rem);
   }
 
   > h3 {
     margin-bottom: 2rem;
-    font-size: 2.2rem;
-    line-height: 3.2rem;
+    font-size: clamp(1.8rem, 5vw, 2.2rem);
+    line-height: clamp(2.2rem, 5vw, 3.2rem);
   }
 
   > p {
@@ -286,8 +286,8 @@ export const Header = styled.div`
 `
 
 export const Title = styled.h1`
-  font-size: 4.2rem;
-  line-height: 5.2rem;
+  font-size: clamp(2.4rem, 5vw, 4.2rem);
+  line-height: clamp(3.4rem, 5vw, 5.2rem);
   margin-bottom: 2rem;
   text-align: center;
 `
