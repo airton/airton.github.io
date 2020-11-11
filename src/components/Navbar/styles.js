@@ -6,7 +6,7 @@ export const NavBar = styled.nav`
   margin: 0;
   display: flex;
   justify-content: center;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   font-weight: 100;
   padding-top: 1rem;
 

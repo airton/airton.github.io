@@ -5,7 +5,7 @@ function importAll(r) {
     return {
       link: `/blog${fileName.substr(1).replace(/\.mdx$/, "")}`,
       module: post,
-      date: new Date(post.meta.date)
+      date: post.meta.date
     }
   });
 }

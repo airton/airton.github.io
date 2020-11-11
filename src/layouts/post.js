@@ -2,7 +2,7 @@ import { Wrapper, Article, Header, Title, Desc, Date, ReadingTime } from 'styles
 import Disqus from 'components/Disqus'
 import Prism from 'prismjs'
 import { useEffect } from 'react'
-
+import { dateFormat } from 'helpers'
 
 export default function BlogPost({ children, meta }) {
 
@@ -17,7 +17,7 @@ export default function BlogPost({ children, meta }) {
           <Header>
             <Title>{meta.title}</Title>
             <Desc>{meta.description}</Desc>
-            <Date>{meta.date}</Date>
+            <Date>{dateFormat(meta.date)}</Date>
             <ReadingTime>Tempo de leitura {meta.readTime} min</ReadingTime>
           </Header>
           <img src={meta.image} alt=""/>
