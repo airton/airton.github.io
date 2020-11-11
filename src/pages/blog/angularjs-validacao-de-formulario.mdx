@@ -4,8 +4,9 @@ import { Button } from 'components/Button'
 export const meta = {
   title: 'AngularJS Validação de Formulário',
   description: 'Vamos focar a validação do lado do cliente e usando as propriedades de formulário angular. Aqui está uma demonstração rápida.',
-  date: '01 Nov 2014',
-  readTime: 2
+  date: '2014-11-01', //01 Nov 2014
+  readTime: 4,
+  tags: ['Javascript', 'AngularJS']
 }
 
 export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
@@ -356,7 +357,7 @@ Com apenas algumas linhas simples que temos agora:
 
 Como você pode ver, é fácil de usar o construída em técnicas de validação forma angular para criar um formulário validado no lado do cliente.
 
-## O Futuro ##
+## O Futuro
 
 Tal como está, não é um processo simples para fazer a validação depois que um usuário clica fora de uma entrada. A equipe é Angular ciente disso e eles disseram que planejam adicionar mais estados para lidar com coisas como <code>form.submitted</code>, <code>input.$visited</code>, <code>input.$blurred</code>, ou <code>input.$touched</code>.
 
@@ -365,7 +366,7 @@ Aqui estão alguns recursos para o futuro da validação de formulário:
 - Github Issue
 - ngForm Module Ideas
 
-## Suporte ##
+## Suporte
 
 <blockquote>
     Nota: <b>AngularJS 1.3</b> não tem suporte para IE8. Leia mais sobre isso <a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">no blog do AngularJS</a>. <b>AngularJS 1.2</b> continuará com suporte ao IE8, mas a equipe principal não pretende gastar tempo com endereçamento específicos para o IE8.

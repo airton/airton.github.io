@@ -42,6 +42,10 @@ export const Btn = styled.a`
       transform: translateX(0%);
     }
   }
+
+  + *:not(button) {
+    margin-top: 20px;
+  }
 `
 
 export const BtnLarge = styled.a`

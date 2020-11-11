@@ -9,18 +9,25 @@ export default function Blog() {
       <Profile/>
       <Wrapper>
         <List>
-          <Posts posts={posts} />
+          <Posts posts={sortedPosts(posts)} />
         </List>
       </Wrapper>
     </>
   )
 }
 
-const Posts = ({ posts }) => posts.map(({ link, module })=> (
-  <ListItem key={module.meta.date}>
+var options = { year: 'numeric', month: 'long', day: 'numeric' };
+
+const Posts = ({ posts }) => posts.map(({ link, module, date })=> (
+  <ListItem key={date}>
     <ListItemTitle>
       <Link href={link} passHref>{module.meta.title}</Link>
     </ListItemTitle>
-    <ListItemDate>{module.meta.date}</ListItemDate>
+    <ListItemDate>{date.toLocaleDateString('pt-BR', options)}</ListItemDate>
   </ListItem>
 ))
+
+const sortedPosts = posts => posts.sort((a, b) => b.date - a.date)
+
+
+console.log('sortedPosts',sortedPosts(posts))

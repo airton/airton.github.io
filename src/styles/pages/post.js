@@ -99,7 +99,7 @@ export const Article = styled.article`
     color: ${({theme}) => theme.colors.blueLigth};
   }
 
-  frame {
+  iframe {
     margin-bottom: 30px;
   }
 

@@ -1,11 +1,13 @@
 import BlogPost from 'layouts/post'
+import { Button } from 'components/Button'
 
 export const meta = {
   title: 'Efeito paralax com css puro',
   description: '',
-  date: '29 Dez 2016',
+  date: '2016-12-29', //29 Dez 2016
   readTime: 2,
-  image: 'efeito-paralax-com-css-puro.jpg'
+  image: 'efeito-paralax-com-css-puro.jpg',
+  tags: ['css']
 }
 
 export default ({ children }) => <BlogPost meta={meta}>{children}</BlogPost>;
@@ -23,9 +25,7 @@ section {
 - **vh**: altura da viewport
 
 <!-- Code/Demo -->
-<div class="btn-group centered">
-  <a href="http://airtonvancin.com/paralax-com-css-puro/" class="btn btn-large btn-primary"><i class="fa fa-eye"></i> Demo</a>
-</div>
+<Button href="http://airtonvancin.com/paralax-com-css-puro/">Demo</Button>
 
 ## Referência ##
 
