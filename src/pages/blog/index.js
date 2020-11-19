@@ -1,5 +1,5 @@
-import Profile from 'components/Profile'
 import Link from 'next/link'
+import Profile from 'components/Profile'
 import { Wrapper, List, ListItem, ListItemTitle, ListItemDate } from 'styles/pages/blog'
 import { posts } from 'services/getAllPosts'
 import { dateFormat } from 'helpers'
@@ -17,8 +17,6 @@ export default function Blog() {
   )
 }
 
-// var options = { year: 'numeric', month: 'long', day: 'numeric' };
-
 const Posts = ({ posts }) => posts.map(({ link, module, date })=> (
   <ListItem key={date}>
     <ListItemTitle>
@@ -28,4 +26,5 @@ const Posts = ({ posts }) => posts.map(({ link, module, date })=> (
   </ListItem>
 ))
 
-const sortedPosts = posts => posts.sort((a, b) => b.date - a.date)
+const sortedPosts = posts => posts.sort((a, b) => b.timestamp - a.timestamp)
+

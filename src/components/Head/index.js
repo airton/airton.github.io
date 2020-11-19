@@ -1,6 +1,6 @@
 import Head from 'next/head'
+import ThirdParty from 'helpers/thirdparty'
 
-// export default HeadComponent = () => {
 export default function HeadComponent () {
 
   return (
@@ -46,6 +46,7 @@ export default function HeadComponent () {
       <link rel='icon' href='/favicon.ico' />
       <link href="https://fonts.googleapis.com/css2?family=Commissioner:wght@100;400;600;700&display=swap" rel="stylesheet"/>
 
+      {ThirdParty()}
     </Head>
   )
 }

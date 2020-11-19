@@ -1,6 +1,5 @@
 // Split Date Helper
 export const splitDate = (value) => {
-  console.log('value',value)
 	let dateArr = value.split('-'),
 		valYear = dateArr[0],
 		valMonth = parseInt(dateArr[1], 10) < 10 ? `0${parseInt(dateArr[1], 10)}` : dateArr[1],
