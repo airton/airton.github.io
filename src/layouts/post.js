@@ -1,5 +1,6 @@
 import { Wrapper, Article, Header, Title, Desc, Date, ReadingTime } from 'styles/pages/post'
 import Disqus from 'components/Disqus'
+import HeadComponent from 'components/Head'
 import Prism from 'prismjs'
 import { useEffect } from 'react'
 import { dateFormat } from 'helpers'
@@ -12,6 +13,7 @@ export default function BlogPost({ children, meta }) {
 
   return (
     <div className="post">
+      <HeadComponent meta={meta}/>
       <Wrapper>
         <Article>
           <Header>

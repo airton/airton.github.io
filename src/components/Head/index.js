@@ -2,38 +2,42 @@ import Head from 'next/head'
 import ThirdParty from 'helpers/thirdparty'
 import { useRouter } from 'next/router'
 
-export default function HeadComponent () {
+export default function HeadComponent ({ meta }) {
 
   const { pathname } = useRouter()
+  const title = meta ? `${meta.title} - AirtonVancin.com` : 'AirtonVancin.com'
+  const desc = meta?.description || 'A Brazilian web developer, graduate in information systems'
+  const name = 'Airton Vancin Junior'
+  const url = 'https://airtonvancin.com'
 
   return (
     <Head>
-      <title>AirtonVancin.com</title>
+      <title>{title}</title>
       <meta name='viewport' content='width=device-width,initial-scale=1' />
 
-      <meta name='description' content='A Brazilian web developer, graduate in information systems' />
+      <meta name='description' content={desc} />
       <meta name='msapplication-TileColor' content='#00b2ca' />
       <meta name='msapplication-TileImage' content='/ms-icon-144x144.png' />
       <meta name='theme-color' content='#00b2ca' />
-      <meta name='application-name' content='Airton Vancin Junior' />
+      <meta name='application-name' content={name} />
       <link rel="canonical" href={pathname}></link>
 
       <meta property="fb:app_id" content="1509171469355605" />
-      <meta property='og:url' content='https://airtonvancin.com' />
+      <meta property='og:url' content={url} />
       <meta property='og:type' content='website' />
-      <meta property='og:title' content='Airton Vancin Junior' />
+      <meta property='og:title' content={title} />
       <meta property='og:image' content='/perfil.jpeg' />
-      <meta property='og:image:alt' content='Airton Vancin Junior' />
-      <meta property='og:description' content='A Brazilian web developer, graduate in information systems' />
+      <meta property='og:image:alt' content={name} />
+      <meta property='og:description' content={desc} />
       <meta property='og:locale' content='pt_BR' />
 
       <meta name='twitter:card' content='summary' />
       <meta name='twitter:site' content='@airtonvancin' />
-      <meta name='twitter:url' content='https://airtonvancin.com/' />
-      <meta name='twitter:title' content='Airton Vancin Junior' />
-      <meta name='twitter:description' content='A Brazilian web developer, graduate in information systems' />
+      <meta name='twitter:url' content={url} />
+      <meta name='twitter:title' content={title} />
+      <meta name='twitter:description' content={desc} />
       <meta name='twitter:image' content='/perfil.jpeg' />
-      <meta name='twitter:image:alt' content='Airton Vancin Junior' />
+      <meta name='twitter:image:alt' content={name} />
 
       <link rel='apple-touch-icon' sizes='76x76' href='/apple-icon-76x76.png' />
       <link rel='apple-touch-icon' sizes='120x120' href='/apple-icon-120x120.png' />

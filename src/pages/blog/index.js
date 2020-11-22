@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import Profile from 'components/Profile'
+import HeadComponent from 'components/Head'
 import { Wrapper, List, ListItem, ListItemTitle, ListItemDate } from 'styles/pages/blog'
 import { posts } from 'services/getAllPosts'
 import { dateFormat } from 'helpers'
@@ -7,6 +8,7 @@ import { dateFormat } from 'helpers'
 export default function Blog() {
   return (
     <>
+      <HeadComponent/>
       <Profile/>
       <Wrapper>
         <List>
