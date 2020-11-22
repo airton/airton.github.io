@@ -9,6 +9,7 @@ export default function HeadComponent ({ meta }) {
   const desc = meta?.description || 'A Brazilian web developer, graduate in information systems'
   const name = 'Airton Vancin Junior'
   const url = 'https://airtonvancin.com'
+  const image = meta?.image || 'perfil.jpeg'
 
   return (
     <Head>
@@ -26,7 +27,7 @@ export default function HeadComponent ({ meta }) {
       <meta property='og:url' content={url} />
       <meta property='og:type' content='website' />
       <meta property='og:title' content={title} />
-      <meta property='og:image' content='/perfil.jpeg' />
+      <meta property='og:image' content={'/' + image} />
       <meta property='og:image:alt' content={name} />
       <meta property='og:description' content={desc} />
       <meta property='og:locale' content='pt_BR' />
@@ -36,7 +37,7 @@ export default function HeadComponent ({ meta }) {
       <meta name='twitter:url' content={url} />
       <meta name='twitter:title' content={title} />
       <meta name='twitter:description' content={desc} />
-      <meta name='twitter:image' content='/perfil.jpeg' />
+      <meta name='twitter:image' content={'/' + image} />
       <meta name='twitter:image:alt' content={name} />
 
       <link rel='apple-touch-icon' sizes='76x76' href='/apple-icon-76x76.png' />
