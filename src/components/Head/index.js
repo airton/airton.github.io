@@ -20,7 +20,7 @@ export default function HeadComponent ({ meta }) {
       <meta name='msapplication-TileImage' content='/ms-icon-144x144.png' />
       <meta name='theme-color' content='#00b2ca' />
       <meta name='application-name' content={name} />
-      <link rel="canonical" href={pathname}></link>
+      <link rel="canonical" href={url + pathname}></link>
 
       <meta property="fb:app_id" content="1509171469355605" />
       <meta property='og:url' content={url} />
