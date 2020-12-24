@@ -5,7 +5,7 @@ export default function ProfileComponent() {
     <Profile>
       <Image src="https://www.gravatar.com/avatar/168bb3faf63cd0d91b8732eecfaed4bc.svg?s=80" />
       <Title>Airton Vancin Junior</Title>
-      <SubTitle>Front End Developer na empresa <a href="https://www.redventues.com">Red Ventures</a></SubTitle>
+      <SubTitle>Front End Developer na empresa <a href="https://www.redventures.com">Red Ventures</a></SubTitle>
 
       <SocialLinks>
         <SocialLink>

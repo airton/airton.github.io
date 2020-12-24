@@ -48,7 +48,8 @@ export const SubTitle = styled.h2`
 
   a {
     text-decoration: none;
-    color: ${({ theme }) => theme.colors.blue};
+    color: rgb(178, 41, 46);
+    font-weight: 600;
 
     &:hover,
     &:focus {
