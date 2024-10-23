@@ -40,6 +40,8 @@ export default function HeadComponent ({ meta }) {
       <meta name='twitter:image' content={'/' + image} />
       <meta name='twitter:image:alt' content={name} />
 
+      <meta name="google-adsense-account" content="ca-pub-3553535106347103"></meta>
+
       <link rel='apple-touch-icon' sizes='76x76' href='/apple-icon-76x76.png' />
       <link rel='apple-touch-icon' sizes='120x120' href='/apple-icon-120x120.png' />
       <link rel='apple-touch-icon' sizes='152x152' href='/apple-icon-152x152.png' />
