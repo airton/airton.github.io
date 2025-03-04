@@ -1,10 +1,18 @@
+import React, { ReactNode } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { solarizedlight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
-export function CodeBlock({ language = "javascript", children }) {
+interface CodeBlockProps {
+  language?: string;
+  children: ReactNode;
+}
+
+export function CodeBlock({ language = "javascript", children }: CodeBlockProps) {
+  const codeString = React.Children.toArray(children).join('');
+
   return (
     <SyntaxHighlighter language={language} style={solarizedlight}>
-      {children}
+      {codeString}
     </SyntaxHighlighter>
   );
 }
