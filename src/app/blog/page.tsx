@@ -96,7 +96,8 @@ export default async function FeaturedBlogPosts() {
                     <div className="relative aspect-video">
                       <Image
                         src={
-                          "https://picsum.photos/id/238/200/300" || post.image
+                          "https://picsum.photos/id/238/200/300" 
+                          // || post.image
                         }
                         alt={`${post.title}`}
                         layout="fill"
