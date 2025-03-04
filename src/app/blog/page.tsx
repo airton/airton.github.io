@@ -130,7 +130,7 @@ export default async function FeaturedBlogPosts() {
 
         <div className="grid gap-6 mt-6">
           {lastArticles.map((post) => (
-            <Card className="lg:col-span-2 border-foreground">
+            <Card key={post.id} className="lg:col-span-2 border-foreground">
               <CardContent className="p-6">
                 <div className="space-y-4">
                   <CardTitle className="text-2xl font-bold">
