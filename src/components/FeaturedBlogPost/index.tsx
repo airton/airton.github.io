@@ -5,6 +5,7 @@ import {
   CardFooter,
   CardTitle
 } from "@/components/ui/card";
+import { dateFormat } from "@/helpers/dateFormat";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -47,7 +48,7 @@ export function FeaturedBlogPost() {
               <CardFooter className="px-0">
                 <div className="flex justify-between items-center w-full">
                   <span className="text-sm text-muted-foreground">
-                    {featuredPost.date}
+                    {dateFormat(featuredPost.date as string)}
                   </span>
                   <Link href={`/blog/${featuredPost.slug}`} passHref>
                     <Button variant="default">

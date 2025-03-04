@@ -77,7 +77,7 @@ export default async function FeaturedBlogPosts() {
                     </span>
                     <Link href={`/blog/${articlesFeatured.one.slug}`} passHref>
                       <Button variant="default">
-                        Read Full Article
+                        Veja mais
                         <ArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
