@@ -17,9 +17,10 @@ export default async function FeaturedBlogPosts() {
   ];
 
   function getArticleBySlug(slug: string) {
+    console.log(articles)
     return articles.find((article) => article.slug === slug) as Record<
       string,
-      any
+      string | number
     >;
   }
 
