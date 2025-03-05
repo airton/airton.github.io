@@ -1,11 +1,10 @@
 "use client";
 import { ArticleWithSlug } from "@/helpers/articles";
-import { Prose } from "../Prose";
 import { dateFormat } from "@/helpers/dateFormat";
-import { ZeroDowntimeCTA } from "../ZeroDowntime";
-import Script from "next/script";
-import { useEffect } from "react";
 import { Router } from "next/router";
+import { useEffect } from "react";
+import { Prose } from "../Prose";
+import { ZeroDowntimeCTA } from "../ZeroDowntime";
 
 export const ArticleLayout = ({
   article,
