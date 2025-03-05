@@ -4,6 +4,8 @@ import { Prose } from "../Prose";
 import { dateFormat } from "@/helpers/dateFormat";
 import { ZeroDowntimeCTA } from "../ZeroDowntime";
 import Script from "next/script";
+import { useEffect } from "react";
+import { Router } from "next/router";
 
 export const ArticleLayout = ({
   article,
@@ -12,6 +14,16 @@ export const ArticleLayout = ({
   article: ArticleWithSlug;
   children: React.ReactNode;
 }) => {
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "//airtonvancin.disqus.com/embed.js";
+    script.async = true;
+    document.body.appendChild(script);
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, [Router]);
+
   return (
     <>
       <div className="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-100 to-slate-200 flex justify-center">
@@ -37,8 +49,6 @@ export const ArticleLayout = ({
         <Prose data-mdx-content>{children}</Prose>
       </div>
       <ZeroDowntimeCTA />
-
-      <Script id="disqus-script" src="//airtonvancin.disqus.com/embed.js"/>
 
       <noscript>
         Please enable JavaScript to view the{" "}
