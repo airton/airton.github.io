@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Terms and Conditions",
+  title: "Terms and Conditions | airtonvancin.com",
   description: "Terms and Conditions",
 };
 

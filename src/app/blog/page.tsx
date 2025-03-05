@@ -11,13 +11,12 @@ export default async function FeaturedBlogPosts() {
   const articles = await getAllArticles();
 
   const articlesSlugs = [
+    "10-dicas-tempo-de-inatividade-zero",
     "modificando-a-consulta-usando-pre-get-posts",
     "angularjs-validacao-de-formulario",
-    "desenvolvendo-com-angularjs-parte1",
   ];
 
   function getArticleBySlug(slug: string) {
-    console.log(articles)
     return articles.find((article) => article.slug === slug) as Record<
       string,
       string | number
@@ -54,11 +53,8 @@ export default async function FeaturedBlogPosts() {
               <div className="space-y-4">
                 <div className="relative aspect-video">
                   <Image
-                    src={
-                      "https://picsum.photos/id/180/600/380" 
-                      // || articlesFeatured.one.image
-                    }
-                    alt={`${articlesFeatured.one.title}`}
+                    src={articlesFeatured.one.image as string}
+                    alt={articlesFeatured.one.title as string}
                     layout="fill"
                     objectFit="cover"
                     className="rounded-lg"
@@ -95,11 +91,8 @@ export default async function FeaturedBlogPosts() {
                   <div className="space-y-2">
                     <div className="relative aspect-video">
                       <Image
-                        src={
-                          "https://picsum.photos/id/238/200/300" 
-                          // || post.image
-                        }
-                        alt={`${post.title}`}
+                        src={post.image as string}
+                        alt={post.title as string}
                         layout="fill"
                         objectFit="cover"
                         className="rounded-lg"

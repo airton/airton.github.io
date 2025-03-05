@@ -2,6 +2,8 @@
 import { ArticleWithSlug } from "@/helpers/articles";
 import { Prose } from "../Prose";
 import { dateFormat } from "@/helpers/dateFormat";
+import { ZeroDowntimeCTA } from "../ZeroDowntime";
+import Script from "next/script";
 
 export const ArticleLayout = ({
   article,
@@ -32,10 +34,25 @@ export const ArticleLayout = ({
         </div>
       </div>
       <div className="w-full px-4 md:px-6 py-4 md:py-6 lg:py-8 flex justify-center">
-        <Prose data-mdx-content>
-          {children}
-        </Prose>
+        <Prose data-mdx-content>{children}</Prose>
       </div>
+      <ZeroDowntimeCTA />
+
+      <div id="disqus_thread" className="container py-12 px-4 md:px-6 max-w-4xl"></div>
+      <Script>
+        const disqus_shortname = 'airtonvancin'; let dsq =
+        document.createElement('script'); dsq.type = 'text/javascript';
+        dsq.async = true; dsq.src = '//' + disqus_shortname +
+        '.disqus.com/embed.js'; (document.getElementsByTagName('head')[0] ||
+        document.getElementsByTagName('body')[0]).appendChild(dsq);
+      </Script>
+
+      <noscript>
+        Please enable JavaScript to view the{" "}
+        <a href="http://disqus.com/?ref_noscript">
+          comments powered by Disqus.
+        </a>
+      </noscript>
     </>
   );
 };

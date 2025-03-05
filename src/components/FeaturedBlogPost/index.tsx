@@ -1,27 +1,25 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardTitle
-} from "@/components/ui/card";
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { getAllArticles } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-// Dummy data for blog posts
-const featuredPost = {
-  id: 1,
-  slug: "modificando-a-consulta-usando-pre-get-posts",
-  title: "10 dicas para atingir tempo de inatividade zero",
-  excerpt:
-    "Aprenda as melhores práticas para manter 100% de uptime em seus aplicativos. Descubra as principais estratégias, ferramentas e técnicas usadas por líderes do setor para garantir que seus serviços estejam sempre disponíveis, minimizando interrupções e maximizando a satisfação do cliente.",
-  date: "2024-03-15",
-  imageUrl: "https://picsum.photos/id/180/600/380?grayscale",
-};
+export async function FeaturedBlogPost() {
+  const articles = await getAllArticles();
+  const articlesSlug = "10-dicas-tempo-de-inatividade-zero";
 
-export function FeaturedBlogPost() {
+  function getArticleBySlug(slug: string) {
+    return articles.find((article) => article.slug === slug) as Record<
+      string,
+      string | number
+    >;
+  }
+
+  const article = getArticleBySlug(articlesSlug);
+  console.log(article);
+
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-800 flex justify-center">
       <div className="container px-4 md:px-6">
@@ -34,23 +32,23 @@ export function FeaturedBlogPost() {
             <div className="space-y-4">
               <div className="relative aspect-video">
                 <Image
-                  src={featuredPost.imageUrl}
-                  alt={featuredPost.title}
+                  src={article.image as string}
+                  alt={article.title as string}
                   layout="fill"
                   objectFit="cover"
                   className="rounded-lg"
                 />
               </div>
               <CardTitle className="text-2xl font-bold">
-                {featuredPost.title}
+                {article.title}
               </CardTitle>
-              <p className="text-muted-foreground">{featuredPost.excerpt}</p>
+              <p className="text-muted-foreground">{article.excerpt}</p>
               <CardFooter className="px-0">
                 <div className="flex justify-between items-center w-full">
                   <span className="text-sm text-muted-foreground">
-                    {dateFormat(featuredPost.date as string)}
+                    {dateFormat(article.date as string)}
                   </span>
-                  <Link href={`/blog/${featuredPost.slug}`} passHref>
+                  <Link href={`/blog/${article.slug}`} passHref>
                     <Button variant="default">
                       Veja mais
                       <ArrowRight className="ml-2 h-4 w-4" />
