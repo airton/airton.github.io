@@ -38,14 +38,7 @@ export const ArticleLayout = ({
       </div>
       <ZeroDowntimeCTA />
 
-      <div id="disqus_thread" className="container py-12 px-4 md:px-6 max-w-4xl"></div>
-      <Script id="disqus-script">
-        const disqus_shortname = 'airtonvancin'; let dsq =
-        document.createElement('script'); dsq.type = 'text/javascript';
-        dsq.async = true; dsq.src = '//' + disqus_shortname +
-        '.disqus.com/embed.js'; (document.getElementsByTagName('head')[0] ||
-        document.getElementsByTagName('body')[0]).appendChild(dsq);
-      </Script>
+      <Script id="disqus-script" src="//airtonvancin.disqus.com/embed.js"/>
 
       <noscript>
         Please enable JavaScript to view the{" "}
@@ -53,6 +46,11 @@ export const ArticleLayout = ({
           comments powered by Disqus.
         </a>
       </noscript>
+
+      <div
+        id="disqus_thread"
+        className="container py-12 px-4 md:px-6 max-w-4xl"
+      ></div>
     </>
   );
 };
