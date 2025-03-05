@@ -39,7 +39,7 @@ export const ArticleLayout = ({
       <ZeroDowntimeCTA />
 
       <div id="disqus_thread" className="container py-12 px-4 md:px-6 max-w-4xl"></div>
-      <Script>
+      <Script id="disqus-script">
         const disqus_shortname = 'airtonvancin'; let dsq =
         document.createElement('script'); dsq.type = 'text/javascript';
         dsq.async = true; dsq.src = '//' + disqus_shortname +
