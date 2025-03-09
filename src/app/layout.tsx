@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import { CloudLightning } from "lucide-react";
+import { CircleSlash2, CloudLightning } from "lucide-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
@@ -57,7 +57,7 @@ export default function RootLayout({
                     href={"/zero-downtime"}
                     className="flex items-center gap-1"
                   >
-                    <CloudLightning className="h-4 w-4" /> Zero Downtime
+                    <CircleSlash2 className="h-4 w-4" /> Zero Downtime
                   </Link>
                 </MenubarTrigger>
               </MenubarMenu>
