@@ -1,0 +1,169 @@
+import { ArticleLayout } from "@/components/ArticleLayout";
+
+export const article = {
+  title: 'JavaScript - ES6: let, const, arrow function',
+  description: '',
+  date: '2020-08-04', //04 Ago 2020
+  readTime: 2
+}
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+
+export default (props) => <ArticleLayout article={article} {...props} />;
+
+A nova versão do JavaScript, conhecida também como ECMAScript 6 ou apenas ES6, vamos falar sobre `let`, `const` e `arrow function`.
+
+
+## Let
+
+Declara uma variável local no escopo do bloco atual, opcionalmente iniciando-a com um valor. O `let` é o substituto para `var`, pois ele será descontinuado futuramente. Por que ele se comporta como o esperado de uma variável.
+
+Exemplo usando `var`:
+
+```js
+nome = "Airton";
+var nome;
+console.log(nome); // Airton
+```
+
+Se fizermos o mesmo, substituindo por `let`, o que vai acontecer:
+
+```javascript
+nome = "Airton";
+let nome;
+console.log(nome); // undefined
+```
+
+Vai dar erro, pois o `let` suporta somente o modo estrito, o famoso `'use strict'`, a blz então só adicionar no começo do arquivo:
+
+```javascript
+'use strict';
+nome = "Airton";
+let nome;
+console.log(nome); // undefined
+```
+
+Também não vai funcionar :disappointed: , pois o `let` obriga você a sempre declarar as variáveis antes de ser chamada, então como que vai ficar?
+
+```javascript
+'use strict';
+let nome;
+nome = "Airton";
+console.log(nome); // Airton
+```
+
+Você pode ver aqui sobre [Hoisting](http://airtonvancin.com/blog/artigo-instanciacao-variaveis-javascript/#hoisting) para entender melhor isso.
+
+## Const
+
+Como o próprio nome diz são constantes, então:
+
+- O valor de uma constante não pode ser alterado;
+- É obrigatório que um valor seja atribuido à constante em sua declaração;
+- Uma constante não deve compartilhar o nome com uma função ou variável em um mesmo escopo.
+
+Isso quer dizer que uma vez declarada você não consegue mais alterar o valor dela, certo? sim esse é o propósito, mas existe uma marotagem para poder alterar esse valor.
+
+Então se você declarar uma `const`, ex:
+
+```javascript
+    const nome = "Airton";
+```
+
+O valor da `const` `nome` nesse exemplo sempre vai ser `Airton`, agora se você tentar redeclarar ela com outro valor, o que acontece?
+
+```javascript
+const nome = "Airton";
+const nome = "Junior";
+```
+
+Isso vai dar erro dizendo que essa `const` já foi declarada:
+
+```javascript
+TypeError: Identifier 'nome' has already been declared
+```
+
+E se eu tentar reescrever assim:
+
+```javascript
+const nome = "Airton";
+      nome = "Junior";
+console.log(nome); // Airton
+```
+
+Não vai dar erro, mas quando você for imprimir a `const` `nome` ele vai imprimir `Airton`.
+
+**Const também funciona com objetos:**
+
+```javascript
+const user = {name: 'Airton'};
+console.log(user); // { name: 'Airton' }
+```
+
+Entretanto, atributos de objetos não estão protegidos, logo a seguinte instrução é executada sem problemas:
+
+```javascript
+const user = {name: 'Airton'};
+      user.name = 'Junior';
+console.log(user); // { name: 'Junior' }
+```
+
+## Arrow Function
+
+É uma função que possui uma sintaxe mais curta, e elas sempre são funções anônimas ([IIFE](http://airtonvancin.com/blog/artigo-instanciacao-variaveis-javascript/#instanciao-usando-uma-iife)), vinculando o valor de **this** de maneira léxica, quando ela é criada o valor de **this** sempre será o mesmo.
+
+```javascript
+// Função normal
+function (name) { return name; }
+
+// Arrow Function
+(name) => name;
+```
+
+Função nomeada não é possível fazer com arrow function:
+
+```javascript
+// Função normal
+function sayName(name) { return name; }
+
+// Arrow Function
+sayName(name) => name; // <-- ISSO NÃO EXISTE
+```
+
+O que fazer então? vamos estanciar ela como uma constante:
+
+```javascript
+// Arrow Function
+const sayName = (name) => name; // Ae agora sim
+```
+
+
+Vamos ver um exemplo de uma função que retorna a média de dois números:
+
+```javascript
+// ES5
+const media = (function(num1,num2) {
+    return (num1 + num2) / 2;
+})(10,50); // passando os valores 10  e 50 como parâmetros
+
+console.log(media); // 30
+
+// --------------------------------
+
+// ES6
+const media = ((num1,num2) => {
+    return (num1 + num2) / 2;
+})(10,50);
+
+console.log(media); // 30
+
+// OU MAIS SIMPLES
+
+const media = ( (num1,num2) => (num1 + num2) / 2 )(10,50);
+console.log(media); // 30
+```
+
