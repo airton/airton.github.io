@@ -8,7 +8,7 @@ export default function ZeroDowntime() {
       <ZeroDowntimeCTA />
       <SectionNewsletter />
       <div className="relative py-6 mb-8">
-        <div className="container max-w-4xl mx-auto">
+        <div className="container px-4 md:px-6 max-w-4xl mx-auto">
           <p className="text-lg font-normal mt-2 text-slate-700">
             Essa solução foi pensada e implementada na AWS, mas pode ser
             adaptada para outras plataformas de Cloud, como Google Cloud e

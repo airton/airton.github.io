@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import { CircleSlash2, CloudLightning } from "lucide-react";
+import { CircleSlash2 } from "lucide-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
@@ -33,7 +33,7 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased `}
       >
         <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-stone-900 dark:text-stone-100 transition-colors duration-300">
-          <header className="m-auto p-2 flex items-center justify-center fixed w-full z-10">
+          <header className="m-auto p-2 flex items-center justify-center fixed w-full z-50">
             <Menubar className="rounded-full border-foreground shadow-lg gap-4 opacity-95">
               <Avatar
                 className="w-[30px] h-[30px]"
