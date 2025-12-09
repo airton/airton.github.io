@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getAllArticles, ArticleWithSlug } from "../helpers/articles";
+import { getAllArticles } from "@/helpers/articles";
+import type { ArticleWithSlug } from "@/helpers/articles";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { IconArrowRight } from "@tabler/icons-react";
-import { dateFormat } from "../helpers/dateFormat";
+import { dateFormat } from "@/helpers/dateFormat";
 import { ZeroDowntimeCTA } from "@/components/ZeroDowntime";
 
 export default function Blog() {
@@ -82,40 +83,41 @@ export default function Blog() {
 
             {/* Other Posts (Right Side) */}
             <div className="space-y-6">
-              {[articlesFeatured.two, articlesFeatured.three].map((post) => (
-                post && (
-                  <Card key={post.slug} className="border-foreground">
-                    <CardContent className="p-4">
-                      <div className="space-y-2">
-                        <div className="relative aspect-video">
-                          <img
-                            src={post.image as string}
-                            alt={post.title as string}
-                            className="rounded-lg object-cover w-full"
-                          />
+              {[articlesFeatured.two, articlesFeatured.three].map(
+                (post) =>
+                  post && (
+                    <Card key={post.slug} className="border-foreground">
+                      <CardContent className="p-4">
+                        <div className="space-y-2">
+                          <div className="relative aspect-video">
+                            <img
+                              src={post.image as string}
+                              alt={post.title as string}
+                              className="rounded-lg object-cover w-full"
+                            />
+                          </div>
+                          <CardTitle className="text-xl font-bold">
+                            {post.title}
+                          </CardTitle>
+                          <p className="text-sm text-muted-foreground">
+                            {post.excerpt}
+                          </p>
+                          <div className="flex justify-between items-center">
+                            <span className="text-xs text-muted-foreground">
+                              {dateFormat(post.date as string)}
+                            </span>
+                            <Link to={`/blog/${post.slug}`}>
+                              <Button variant="ghost">
+                                veja mais
+                                <IconArrowRight className="ml-1 h-3 w-3" />
+                              </Button>
+                            </Link>
+                          </div>
                         </div>
-                        <CardTitle className="text-xl font-bold">
-                          {post.title}
-                        </CardTitle>
-                        <p className="text-sm text-muted-foreground">
-                          {post.excerpt}
-                        </p>
-                        <div className="flex justify-between items-center">
-                          <span className="text-xs text-muted-foreground">
-                            {dateFormat(post.date as string)}
-                          </span>
-                          <Link to={`/blog/${post.slug}`}>
-                            <Button variant="ghost">
-                              veja mais
-                              <IconArrowRight className="ml-1 h-3 w-3" />
-                            </Button>
-                          </Link>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              ))}
+                      </CardContent>
+                    </Card>
+                  )
+              )}
             </div>
           </div>
         )}

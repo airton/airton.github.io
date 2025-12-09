@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { importArticle, ArticleWithSlug } from "../helpers/articles";
+import { importArticle } from "@/helpers/articles";
+import type { ArticleWithSlug } from "@/helpers/articles";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
-import { ArticleLayout } from "../components/ArticleLayout";
+import { ArticleLayout } from "@/components/ArticleLayout";
 
 export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();

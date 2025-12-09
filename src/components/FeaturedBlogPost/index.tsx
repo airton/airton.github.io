@@ -1,24 +1,28 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { getAllArticles } from "@/helpers/articles";
+import { getAllArticles, ArticleWithSlug } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
 import { IconArrowRight } from "@tabler/icons-react";
-
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export async function FeaturedBlogPost() {
-  const articles = await getAllArticles();
+export function FeaturedBlogPost() {
+  const [articles, setArticles] = useState<ArticleWithSlug[]>([]);
   const articlesSlug = "10-dicas-tempo-de-inatividade-zero";
 
+  useEffect(() => {
+    getAllArticles().then(setArticles);
+  }, []);
+
   function getArticleBySlug(slug: string) {
-    return articles.find((article) => article.slug === slug) as Record<
-      string,
-      string | number
-    >;
+    return articles.find((article) => article.slug === slug);
   }
 
   const article = getArticleBySlug(articlesSlug);
-  console.log(article);
+
+  if (!article) {
+    return null; // Or a loading spinner
+  }
 
   return (
     <section className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-800 flex justify-center">

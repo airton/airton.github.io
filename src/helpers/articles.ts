@@ -22,9 +22,9 @@ export async function getAllArticles(): Promise<ArticleWithSlug[]> {
   for (const path in modules) {
     const slug = path.replace("../posts/", "").replace(".mdx", "");
     const module = (await modules[path]()) as {
-      frontmatter: Article;
+      article: Article;
     };
-    articles.push({ slug, ...module.frontmatter });
+    articles.push({ slug, ...module.article });
   }
 
   return articles.sort((a, z) => +new Date(z.date) - +new Date(a.date));
@@ -33,14 +33,14 @@ export async function getAllArticles(): Promise<ArticleWithSlug[]> {
 // Function to import a single article's MDX component and its frontmatter
 export async function importArticle(
   slug: string
-): Promise<{ Component: ComponentType; frontmatter: ArticleWithSlug }> {
+): Promise<{ Component: ComponentType; article: ArticleWithSlug }> {
   const module = (await import(/* @vite-ignore */ `../posts/${slug}.mdx`)) as {
     default: ComponentType;
-    frontmatter: Article;
+    article: Article;
   };
 
   return {
     Component: module.default,
-    frontmatter: { slug, ...module.frontmatter },
+    article: { slug, ...module.article },
   };
 }

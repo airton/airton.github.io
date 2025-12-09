@@ -1,5 +1,5 @@
 "use client";
-import { ArticleWithSlug } from "@/helpers/articles";
+import type { ArticleWithSlug } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
 import { useEffect } from "react";
 import { Prose } from "../Prose";
