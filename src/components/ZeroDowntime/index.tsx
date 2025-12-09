@@ -1,13 +1,10 @@
-"use client";
 import { Button } from "@/components/ui/button";
 import { IconArrowRight, IconWashDrycleanOff } from "@tabler/icons-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Link } from "react-router-dom";
 import Background from "../Background";
 
 export function ZeroDowntimeCTA() {
-  const pathname = usePathname();
-  const isPage = pathname.includes("zero-downtime");
+  const isPage = false; // Temporarily set to false, will be handled by react-router-dom in main App.tsx
 
   return (
     <>
@@ -34,7 +31,7 @@ export function ZeroDowntimeCTA() {
                     size="lg"
                     asChild
                   >
-                    <Link href="/zero-downtime">
+                    <Link to="/zero-downtime">
                       Saiba mais
                       <IconArrowRight className="ml-2 h-5 w-5" />
                     </Link>

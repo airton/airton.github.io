@@ -1,4 +1,4 @@
-import glob from "fast-glob";
+import type { ComponentType } from "react";
 
 interface Article {
   title: string;
@@ -6,28 +6,41 @@ interface Article {
   author: string;
   date: string;
   image: string;
+  excerpt: string;
+  tags: string[];
 }
 
 export interface ArticleWithSlug extends Article {
   slug: string;
 }
-export async function importArticle(
-  articleFilename: string
-): Promise<Record<string, string | number>> {
-  const { article } = (await import(`../app/posts/${articleFilename}`)) as {
-    default: React.ComponentType;
-    article: Article;
-  };
-  return {
-    slug: articleFilename.replace(/\.mdx$/, ""),
-    ...article,
-  };
+
+// Function to get all articles with their frontmatter
+export async function getAllArticles(): Promise<ArticleWithSlug[]> {
+  const modules = import.meta.glob("../posts/*.mdx");
+  const articles: ArticleWithSlug[] = [];
+
+  for (const path in modules) {
+    const slug = path.replace("../posts/", "").replace(".mdx", "");
+    const module = (await modules[path]()) as {
+      frontmatter: Article;
+    };
+    articles.push({ slug, ...module.frontmatter });
+  }
+
+  return articles.sort((a, z) => +new Date(z.date) - +new Date(a.date));
 }
 
-export async function getAllArticles() {
-  const articleFilenames = await glob("*.mdx", {
-    cwd: "./src/app/posts",
-  });
-  const articles = await Promise.all(articleFilenames.map(importArticle));
-  return articles.sort((a, z) => +new Date(z.date) - +new Date(a.date));
+// Function to import a single article's MDX component and its frontmatter
+export async function importArticle(
+  slug: string
+): Promise<{ Component: ComponentType; frontmatter: ArticleWithSlug }> {
+  const module = (await import(/* @vite-ignore */ `../posts/${slug}.mdx`)) as {
+    default: ComponentType;
+    frontmatter: Article;
+  };
+
+  return {
+    Component: module.default,
+    frontmatter: { slug, ...module.frontmatter },
+  };
 }

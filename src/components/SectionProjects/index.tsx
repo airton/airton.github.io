@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 
 const dataProjects = [
   {
@@ -42,17 +41,15 @@ export function SectionProjects() {
           {dataProjects.map(({ project, desc, link, id }) => (
             <Card key={project} className="bg-white dark:bg-muted/70 border-foreground">
               <CardContent className="p-4 pb-20 h-full !relative">
-                <Image
+                <img
                   src={`https://picsum.photos/id/${id}/300/200?grayscale`}
                   alt={`Project ${project}`}
                   className="rounded-lg object-cover w-full"
-                  width={300}
-                  height={200}
                 />
                 <h3 className="text-xl font-bold mt-4 mb-2">{project}</h3>
                 <p className="text-stone-500 dark:text-stone-300">{desc}</p>
                 <Button className="mt-4 absolute bottom-4" variant="outline">
-                  <Link href={link} target="_blank">Ver projeto</Link>
+                  <Link to={link} target="_blank">Ver projeto</Link>
                 </Button>
               </CardContent>
             </Card>

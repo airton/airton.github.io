@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { IconBrandGithub, IconBrandLinkedin, IconBrandWordpress, IconMail } from "@tabler/icons-react";
-import Link from "next/link";
 
 export function SectionAbout() {
   return (
@@ -17,7 +16,7 @@ export function SectionAbout() {
             </p>
           </div>
           <div className="space-x-4">
-            <Link
+            <a
               href="https://github.com/airton"
               target="_blank"
               rel="noopener noreferrer"
@@ -26,8 +25,8 @@ export function SectionAbout() {
                 <IconBrandGithub className="h-4 w-4" />
                 <span className="sr-only">GitHub</span>
               </Button>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://linkedin.com/in/airtonvancin"
               target="_blank"
               rel="noopener noreferrer"
@@ -36,8 +35,8 @@ export function SectionAbout() {
                 <IconBrandLinkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn</span>
               </Button>
-            </Link>
-            <Link
+            </a>
+            <a
               href="https://profiles.wordpress.org/airtonvancin/"
               target="_blank"
               rel="noopener noreferrer"
@@ -46,13 +45,13 @@ export function SectionAbout() {
                 <IconBrandWordpress className="h-4 w-4" />
                 <span className="sr-only">WordPress</span>
               </Button>
-            </Link>
-            <Link href="mailto:airtonvancin@gmail.com">
+            </a>
+            <a href="mailto:airtonvancin@gmail.com">
               <Button variant="outline" size="icon">
                 <IconMail className="h-4 w-4" />
                 <span className="sr-only">Email</span>
               </Button>
-            </Link>
+            </a>
           </div>
         </div>
       </div>

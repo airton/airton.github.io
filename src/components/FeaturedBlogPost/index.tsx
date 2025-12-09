@@ -3,8 +3,8 @@ import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { getAllArticles } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
 import { IconArrowRight } from "@tabler/icons-react";
-import Image from "next/image";
-import Link from "next/link";
+
+import { Link } from "react-router-dom";
 
 export async function FeaturedBlogPost() {
   const articles = await getAllArticles();
@@ -31,12 +31,10 @@ export async function FeaturedBlogPost() {
           <CardContent className="p-6">
             <div className="space-y-4">
               <div className="relative aspect-video">
-                <Image
+                <img
                   src={article.image as string}
                   alt={article.title as string}
-                  layout="fill"
-                  objectFit="cover"
-                  className="rounded-lg"
+                  className="rounded-lg object-cover w-full"
                 />
               </div>
               <CardTitle className="text-2xl font-bold">
@@ -48,7 +46,7 @@ export async function FeaturedBlogPost() {
                   <span className="text-sm text-muted-foreground">
                     {dateFormat(article.date as string)}
                   </span>
-                  <Link href={`/blog/${article.slug}`} passHref>
+                  <Link to={`/blog/${article.slug}`}>
                     <Button variant="default">
                       Veja mais
                       <IconArrowRight className="ml-2 h-4 w-4" />
@@ -62,7 +60,7 @@ export async function FeaturedBlogPost() {
 
         {/* View All Posts Button */}
         <div className="mt-10 text-center">
-          <Link href="/blog" passHref>
+          <Link to="/blog">
             <Button variant="outline" size="lg">
               Veja todos os posts
               <IconArrowRight className="ml-2 h-5 w-5" />

@@ -2,8 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { IconBrandWordpress } from "@tabler/icons-react";
 
-import Link from "next/link";
-
 const dataPlugins = [
   {
     id: 1,
@@ -56,9 +54,9 @@ export function SectionWordPressPlugins() {
                 <h3 className="text-xl font-bold mt-4 mb-2">{name}</h3>
                 <p className="text-stone-500 dark:text-stone-300">{desc}</p>
                 <Button className="mt-4 absolute bottom-4" variant="outline">
-                  <Link href={link} target="_blank">
+                  <a href={link} target="_blank">
                     Ver plugin
-                  </Link>
+                  </a>
                 </Button>
               </CardContent>
             </Card>

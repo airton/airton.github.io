@@ -1,5 +1,5 @@
 import type { MDXComponents } from "mdx/types";
-import Image, { ImageProps } from "next/image";
+import React from "react";
 
 export function useMDXComponents(components: MDXComponents): MDXComponents {
   return {
@@ -37,10 +37,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
       >
     ) => {
       return (
-        <Image
+        <img
           sizes="100vw"
           style={{ width: "100%", height: "auto" }}
-          {...(props as ImageProps)}
+          {...props}
           alt={props.alt || ""}
         />
       );
