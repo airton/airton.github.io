@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { IconBrandWordpress } from "@tabler/icons-react";
 
-import Image from "next/image";
 import Link from "next/link";
 
 const dataPlugins = [
@@ -48,13 +47,18 @@ export function SectionWordPressPlugins() {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {dataPlugins.map(({ name, desc, link, id }) => (
-            <Card key={name} className="bg-white dark:bg-muted/70 border-foreground">
+            <Card
+              key={name}
+              className="bg-white dark:bg-muted/70 border-foreground"
+            >
               <CardContent className="p-4 pb-20 h-full !relative">
                 <IconBrandWordpress className="w-full h-[100px] text-gray-500" />
                 <h3 className="text-xl font-bold mt-4 mb-2">{name}</h3>
                 <p className="text-stone-500 dark:text-stone-300">{desc}</p>
                 <Button className="mt-4 absolute bottom-4" variant="outline">
-                  <Link href={link} target="_blank">Ver plugin</Link>
+                  <Link href={link} target="_blank">
+                    Ver plugin
+                  </Link>
                 </Button>
               </CardContent>
             </Card>

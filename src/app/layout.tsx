@@ -4,6 +4,7 @@ import { IconWashDrycleanOff } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
+import Script from "next/script";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -82,6 +83,18 @@ export default function RootLayout({
             </nav>
           </footer>
         </div>
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-1HNLJCL2MF"
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', 'G-1HNLJCL2MF');
+          `}
+        </Script>
       </body>
     </html>
   );
