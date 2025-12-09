@@ -30,10 +30,11 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </table>
     ),
-    img: (props) => (
+    img: ({ alt, ...props }) => (
       <Image
         sizes="100vw"
         style={{ width: "100%", height: "auto" }}
+        alt={alt || ""}
         {...(props as ImageProps)}
       />
     ),

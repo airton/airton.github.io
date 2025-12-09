@@ -1,7 +1,6 @@
 "use client";
 import { ArticleWithSlug } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
-import { Router } from "next/router";
 import { useEffect } from "react";
 import { Prose } from "../Prose";
 import { ZeroDowntimeCTA } from "../ZeroDowntime";
@@ -21,7 +20,7 @@ export const ArticleLayout = ({
     return () => {
       document.body.removeChild(script);
     };
-  }, [Router]);
+  }, []);
 
   return (
     <>

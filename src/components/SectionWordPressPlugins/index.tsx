@@ -46,7 +46,7 @@ export function SectionWordPressPlugins() {
           Meus Plugins WordPress
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {dataPlugins.map(({ name, desc, link, id }) => (
+          {dataPlugins.map(({ name, desc, link }) => (
             <Card
               key={name}
               className="bg-white dark:bg-muted/70 border-foreground"
