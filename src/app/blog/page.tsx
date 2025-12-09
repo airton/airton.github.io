@@ -3,7 +3,7 @@ import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { ZeroDowntimeCTA } from "@/components/ZeroDowntime";
 import { getAllArticles } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
-import { ArrowRight } from "lucide-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -74,7 +74,7 @@ export default async function FeaturedBlogPosts() {
                     <Link href={`/blog/${articlesFeatured.one.slug}`} passHref>
                       <Button variant="default">
                         Veja mais
-                        <ArrowRight className="ml-2 h-4 w-4" />
+                        <IconArrowRight className="ml-2 h-4 w-4" />
                       </Button>
                     </Link>
                   </div>
@@ -111,7 +111,7 @@ export default async function FeaturedBlogPosts() {
                       <Link href={`/blog/${post.slug}`} passHref>
                         <Button variant="ghost">
                           veja mais
-                          <ArrowRight className="ml-1 h-3 w-3" />
+                          <IconArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>
@@ -139,7 +139,7 @@ export default async function FeaturedBlogPosts() {
                       <Link href={`/blog/${post.slug}`} passHref>
                         <Button variant="ghost">
                           veja mais
-                          <ArrowRight className="ml-1 h-3 w-3" />
+                          <IconArrowRight className="ml-1 h-3 w-3" />
                         </Button>
                       </Link>
                     </div>

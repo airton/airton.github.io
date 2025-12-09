@@ -1,6 +1,6 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, CircleSlash2 } from "lucide-react";
+import { IconArrowRight, IconWashDrycleanOff } from "@tabler/icons-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Background from "../Background";
@@ -17,7 +17,7 @@ export function ZeroDowntimeCTA() {
           <div className="flex flex-col lg:flex-row items-center justify-center gap-4 space-y-4 text-center">
             <div className="flex flex-col items-center space-y-4 text-center">
               <div className="space-y-4">
-                <CircleSlash2 className="w-[90px] h-[90px] lg:w-[120px] lg:h-[120px] text-slate-50 mx-auto" />
+                <IconWashDrycleanOff className="w-[90px] h-[90px] lg:w-[120px] lg:h-[120px] text-slate-50 mx-auto" />
 
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white">
                   Front End Zero Downtime
@@ -36,7 +36,7 @@ export function ZeroDowntimeCTA() {
                   >
                     <Link href="/zero-downtime">
                       Saiba mais
-                      <ArrowRight className="ml-2 h-5 w-5" />
+                      <IconArrowRight className="ml-2 h-5 w-5" />
                     </Link>
                   </Button>
                   <p className="text-xs text-slate-200 dark:text-slate-200">

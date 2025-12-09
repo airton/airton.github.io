@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
-import { CircleSlash2 } from "lucide-react";
+import { IconWashDrycleanOff } from "@tabler/icons-react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
@@ -35,9 +35,7 @@ export default function RootLayout({
         <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-stone-900 dark:text-stone-100 transition-colors duration-300">
           <header className="m-auto p-2 flex items-center justify-center fixed w-full z-50">
             <Menubar className="rounded-full border-foreground shadow-lg gap-4 opacity-95">
-              <Avatar
-                className="w-[30px] h-[30px]"
-              >
+              <Avatar className="w-[30px] h-[30px]">
                 <Link href="/">
                   <AvatarImage
                     src="https://github.com/airton.png"
@@ -57,7 +55,7 @@ export default function RootLayout({
                     href={"/zero-downtime"}
                     className="flex items-center gap-1"
                   >
-                    <CircleSlash2 className="h-4 w-4" /> Zero Downtime
+                    <IconWashDrycleanOff className="h-4 w-4" /> Zero Downtime
                   </Link>
                 </MenubarTrigger>
               </MenubarMenu>

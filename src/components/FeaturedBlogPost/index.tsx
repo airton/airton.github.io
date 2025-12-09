@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
 import { getAllArticles } from "@/helpers/articles";
 import { dateFormat } from "@/helpers/dateFormat";
-import { ArrowRight } from "lucide-react";
+import { IconArrowRight } from "@tabler/icons-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -51,7 +51,7 @@ export async function FeaturedBlogPost() {
                   <Link href={`/blog/${article.slug}`} passHref>
                     <Button variant="default">
                       Veja mais
-                      <ArrowRight className="ml-2 h-4 w-4" />
+                      <IconArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   </Link>
                 </div>
@@ -65,7 +65,7 @@ export async function FeaturedBlogPost() {
           <Link href="/blog" passHref>
             <Button variant="outline" size="lg">
               Veja todos os posts
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <IconArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </Link>
         </div>

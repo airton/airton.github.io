@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { Github, Linkedin, Mail } from "lucide-react";
+import { IconBrandGithub, IconBrandLinkedin, IconBrandWordpress, IconMail } from "@tabler/icons-react";
 import Link from "next/link";
 
 export function SectionAbout() {
@@ -23,7 +23,7 @@ export function SectionAbout() {
               rel="noopener noreferrer"
             >
               <Button variant="outline" size="icon">
-                <Github className="h-4 w-4" />
+                <IconBrandGithub className="h-4 w-4" />
                 <span className="sr-only">GitHub</span>
               </Button>
             </Link>
@@ -33,13 +33,23 @@ export function SectionAbout() {
               rel="noopener noreferrer"
             >
               <Button variant="outline" size="icon">
-                <Linkedin className="h-4 w-4" />
+                <IconBrandLinkedin className="h-4 w-4" />
                 <span className="sr-only">LinkedIn</span>
+              </Button>
+            </Link>
+            <Link
+              href="https://profiles.wordpress.org/airtonvancin/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline" size="icon">
+                <IconBrandWordpress className="h-4 w-4" />
+                <span className="sr-only">WordPress</span>
               </Button>
             </Link>
             <Link href="mailto:airtonvancin@gmail.com">
               <Button variant="outline" size="icon">
-                <Mail className="h-4 w-4" />
+                <IconMail className="h-4 w-4" />
                 <span className="sr-only">Email</span>
               </Button>
             </Link>
