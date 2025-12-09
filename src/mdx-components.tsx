@@ -30,14 +30,21 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </table>
     ),
-    img: ({ alt, ...props }) => (
-      <Image
-        sizes="100vw"
-        style={{ width: "100%", height: "auto" }}
-        alt={alt || ""}
-        {...(props as ImageProps)}
-      />
-    ),
+    img: (
+      props: React.DetailedHTMLProps<
+        React.ImgHTMLAttributes<HTMLImageElement>,
+        HTMLImageElement
+      >
+    ) => {
+      return (
+        <Image
+          sizes="100vw"
+          style={{ width: "100%", height: "auto" }}
+          {...(props as ImageProps)}
+          alt={props.alt || ""}
+        />
+      );
+    },
     ...components,
   };
 }
