@@ -10,8 +10,26 @@ interface Article {
   tags: string[];
 }
 
-export interface ArticleWithSlug extends Article {
+export class ArticleWithSlug implements Article {
   slug: string;
+  title: string;
+  description: string;
+  author: string;
+  date: string;
+  image: string;
+  excerpt: string;
+  tags: string[];
+
+  constructor(data: Omit<ArticleWithSlug, 'slug'> & { slug: string }) {
+    this.slug = data.slug;
+    this.title = data.title;
+    this.description = data.description;
+    this.author = data.author;
+    this.date = data.date;
+    this.image = data.image;
+    this.excerpt = data.excerpt;
+    this.tags = data.tags;
+  }
 }
 
 // Function to get all articles with their frontmatter
@@ -24,7 +42,7 @@ export async function getAllArticles(): Promise<ArticleWithSlug[]> {
     const module = (await modules[path]()) as {
       article: Article;
     };
-    articles.push({ slug, ...module.article });
+    articles.push(new ArticleWithSlug({ slug, ...module.article }));
   }
 
   return articles.sort((a, z) => +new Date(z.date) - +new Date(a.date));
@@ -41,6 +59,6 @@ export async function importArticle(
 
   return {
     Component: module.default,
-    article: { slug, ...module.article },
+    article: new ArticleWithSlug({ slug, ...module.article }),
   };
 }

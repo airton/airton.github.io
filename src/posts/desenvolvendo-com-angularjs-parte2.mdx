@@ -1,23 +1,22 @@
 import { ArticleLayout } from "@/components/ArticleLayout";
 
 export const article = {
-  title: 'Desenvolvendo com AngularJS - Parte 2',
-  description: 'Diretivas e controladores básicos do AngularJS',
-  date: '2015-06-31', //31 Jul 2015
+  title: "Desenvolvendo com AngularJS - Parte 2",
+  description: "Diretivas e controladores básicos do AngularJS",
+  date: "2015-06-31", //31 Jul 2015
   readTime: 2,
-  image: '/desenvolvendo-com-angularjs-2.jpg',
-  tags: ['Javascript', 'AngularJS']
-}
+  image: "/desenvolvendo-com-angularjs-2.jpg",
+  tags: ["Javascript", "AngularJS"],
+};
 
 export const metadata = {
   title: article.title,
   description: article.description,
 };
 
-
-export default (props) => <ArticleLayout article={article} {...props} />;
-
-- <a href="/blog/desenvolvendo-com-angularjs-parte1/">Desenvolvendo com AngularJS - Parte 1</a>
+- <a href="/blog/desenvolvendo-com-angularjs-parte1/">
+    Desenvolvendo com AngularJS - Parte 1
+  </a>
 
 ## Introdução
 
@@ -35,7 +34,7 @@ O módulo também é usado para inicializar uma aplicação, assim podemos dizer
 Vamos ver como definir um módulo chamdo <code>MeuModulo</code>:
 
 ```js
-  angular.module('MeuModulo', []);
+angular.module("MeuModulo", []);
 ```
 
 - O primeiro argumento da função corresponde ao nome do módulo.
@@ -45,13 +44,13 @@ Vamos ver como definir um módulo chamdo <code>MeuModulo</code>:
 Um exemplo de um módulo com dependências
 
 ```js
-  angular.module('MeuModulo', ['dependencia1', 'dependencia2']);
+angular.module("MeuModulo", ["dependencia1", "dependencia2"]);
 ```
 
 Se quisermos carregar um módulo que já foi definido em outro arquivo, devemos usar a função <code>angular.module</code> somente com o primeiro argumento.
 
 ```js
-  angular.module('MeuModulo');
+angular.module("MeuModulo");
 ```
 
 Há dois erros comuns ao tentar definir um módulo
@@ -61,7 +60,18 @@ Há dois erros comuns ao tentar definir um módulo
 
 Agora vamos ver um exemplo de como usar esse módulo
 
-<p data-height="266" data-theme-id="9559" data-slug-hash="VLMPMp" data-default-tab="result" data-user="airton" className='codepen'>See the Pen <a href='http://codepen.io/airton/pen/VLMPMp/'>Module</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<p
+  data-height="266"
+  data-theme-id="9559"
+  data-slug-hash="VLMPMp"
+  data-default-tab="result"
+  data-user="airton"
+  className="codepen"
+>
+  See the Pen <a href="http://codepen.io/airton/pen/VLMPMp/">Module</a> by
+  Airton Vancin Junior (<a href="http://codepen.io/airton">@airton</a>) on{" "}
+  <a href="http://codepen.io">CodePen</a>.
+</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 - A diretiva <code>ng-app</code> recebe um argumento opcional, que corresponde ao nome do módulo a ser carregado durante a inicialização
@@ -79,7 +89,19 @@ Algumas responsabilidades comuns de um controlador em um aplicação AngularJS i
 
 Vamos ver como podemos criar um controlador para o nosso módulo <code>MeuModulo</code>
 
-<p data-height="266" data-theme-id="9559" data-slug-hash="MwEJQM" data-default-tab="result" data-user="airton" className='codepen'>See the Pen <a href='http://codepen.io/airton/pen/MwEJQM/'>Creating controller</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+<p
+  data-height="266"
+  data-theme-id="9559"
+  data-slug-hash="MwEJQM"
+  data-default-tab="result"
+  data-user="airton"
+  className="codepen"
+>
+  See the Pen{" "}
+  <a href="http://codepen.io/airton/pen/MwEJQM/">Creating controller</a> by
+  Airton Vancin Junior (<a href="http://codepen.io/airton">@airton</a>) on{" "}
+  <a href="http://codepen.io">CodePen</a>.
+</p>
 <script async src="//assets.codepen.io/assets/embed/ei.js"></script>
 
 - Definimos um controlador usando a função <code>controller</code>
@@ -92,17 +114,32 @@ Vamos ver como podemos criar um controlador para o nosso módulo <code>MeuModulo
   <p><b>Sintaxe da injeção de dependência e o AngularJS</b><br/>
   A notação que usamos é uma de duas opões que podem ser utilizadas para efetuar a decalaração de controladores no AngularJS. O estilo que usamos nos exemplos é o estilo <i>seguro da injeção de dependência</i> ou declaração, que também é a maneira recomendada:</p>
 
-  ```js
-  angular.module('MeuModulo', [])
-    .controller('MainCtrl', function(){
-  });
-  ```
-  <p>o funcionamento será semelhante, porém isso poderá causar problemas se houver um passo para minificar o nosso código.</p>
+```js
+angular.module("MeuModulo", []).controller("MainCtrl", function () {});
+```
+
+{" "}
+<p>
+  o funcionamento será semelhante, porém isso poderá causar problemas se houver
+  um passo para minificar o nosso código.
+</p>
 
 </blockquote>
 
 ## Criando nossa primeira Aplicação AngularJS com controlador
-<p data-height="333" data-theme-id="9559" data-slug-hash="QbObxg" data-default-tab="result" data-user="airton" className='codepen'>See the Pen <a href='http://codepen.io/airton/pen/QbObxg/'>QbObxg</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+<p
+  data-height="333"
+  data-theme-id="9559"
+  data-slug-hash="QbObxg"
+  data-default-tab="result"
+  data-user="airton"
+  className="codepen"
+>
+  See the Pen <a href="http://codepen.io/airton/pen/QbObxg/">QbObxg</a> by
+  Airton Vancin Junior (<a href="http://codepen.io/airton">@airton</a>) on{" "}
+  <a href="http://codepen.io">CodePen</a>.
+</p>
 <script async src="//codepen.io/assets/embed/ei.js"></script>
 
 - Definimos a variável <code>goodbyeMSg</code> usando a palavra-chave <code>this</code> e a variável <code>goodbyeMsg</code> usando a palavra chave <code>var</code>
@@ -113,7 +150,11 @@ Vamos ver como podemos criar um controlador para o nosso módulo <code>MeuModulo
 
 <blockquote>
   <p>
-    <b>$scope versus sintaxe controllerAs</b><br/>
-    Nas versões anteriores a 1.2 do AngularJS, usava a variável <code>$scope</code>. No Angular 1.2 e mais recentes, há uma nova sintaxe - a sintaxe <code>controllerAs</code>, que permite definir as variáveis na instância do controlador usando a palavra-chave <code>this</code>.
+    <b>$scope versus sintaxe controllerAs</b>
+    <br />
+    Nas versões anteriores a 1.2 do AngularJS, usava a variável{" "}
+    <code>$scope</code>. No Angular 1.2 e mais recentes, há uma nova sintaxe - a
+    sintaxe <code>controllerAs</code>, que permite definir as variáveis na
+    instância do controlador usando a palavra-chave <code>this</code>.
   </p>
 </blockquote>

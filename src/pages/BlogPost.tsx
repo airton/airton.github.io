@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { importArticle } from "@/helpers/articles";
-import type { ArticleWithSlug } from "@/helpers/articles";
+import { ArticleWithSlug } from "@/helpers/articles";
 import { MDXProvider, useMDXComponents } from "@mdx-js/react";
 import { ArticleLayout } from "@/components/ArticleLayout";
 
@@ -9,7 +9,7 @@ export default function BlogPost() {
   const { slug } = useParams<{ slug: string }>();
   const [article, setArticle] = useState<{
     Component: React.ComponentType;
-    frontmatter: ArticleWithSlug;
+    article: ArticleWithSlug;
   } | null>(null);
   const mdxComponents = useMDXComponents();
 
@@ -24,7 +24,7 @@ export default function BlogPost() {
   }
 
   return (
-    <ArticleLayout article={article.frontmatter}>
+    <ArticleLayout article={article.article}>
       <MDXProvider components={mdxComponents}>
         <article.Component />
       </MDXProvider>

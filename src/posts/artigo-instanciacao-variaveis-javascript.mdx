@@ -1,20 +1,18 @@
 import { ArticleLayout } from "@/components/ArticleLayout";
 
 export const article = {
-  title: 'Instanciação de Variáveis JavaScript',
-  description: 'Esse é um artigo feito como forma de estudo para o curso de BE Mean do WebSchool.io',
-  date: '2015-12-11', //11 Dez 2015
+  title: "Instanciação de Variáveis JavaScript",
+  description:
+    "Esse é um artigo feito como forma de estudo para o curso de BE Mean do WebSchool.io",
+  date: "2015-12-11", //11 Dez 2015
   readTime: 2,
-  image: '/assets/images/instanciacao-de-variaveis-javascript.jpg'
-}
+  image: "/assets/images/instanciacao-de-variaveis-javascript.jpg",
+};
 
 export const metadata = {
   title: article.title,
   description: article.description,
 };
-
-
-export default (props) => <ArticleLayout article={article} {...props} />;
 
 ## Hoisting
 
@@ -27,8 +25,8 @@ sobrenome = "Vancin";
 var sobrenome;
 
 nome();
-function nome(){
-    return "Airton";
+function nome() {
+  return "Airton";
 }
 ```
 
@@ -37,15 +35,16 @@ function nome(){
 Uma closure é o escopo criado quando uma função é declarada que permite à função acessar e manipular variáveis externas a ela. Em outras palavras, clousers permitem quem uma função acesse todas as variáveis, assim como outras funções, que estão em escopo quando ela é declarada.
 
 **Como usar**
+
 ```js
 var sobrenome = "Vancin"; // Declara variável em escopo global
 
-function nomeCompleto(){ // Declara função em escopo global
-    return "Airton " + sobrenome;
+function nomeCompleto() {
+  // Declara função em escopo global
+  return "Airton " + sobrenome;
 }
 nomeCompleto(); // Executa a função
 ```
-
 
 ## Variável Global
 
@@ -54,53 +53,60 @@ Todas as variáveis ​​ou funções declaradas fora de uma função estarão 
 ```js
 var sobrenome = "Vancin"; // Declara variável em escopo global
 
-function nomeCompleto(){ // Declara função em escopo global
-    return "Airton " + sobrenome;
+function nomeCompleto() {
+  // Declara função em escopo global
+  return "Airton " + sobrenome;
 }
 ```
 
 - A variável `sobrenome` essa é uma variável global pois é criada no exterior de uma função, e porque é global, ela pode ser utilizado em qualquer lugar na página.
 - A função `nomeCompleto()` acessa a variável `sobrenome` para retornar o nome completo.
 
-
 ## Variável por parâmetro
 
 Parâmetros de função são semelhantes às variáveis, eles têm um âmbito local, e, portanto, só pode ser acessado de dentro da função.
 
 ```js
-function nomeCompleto(sobrenome){ // Declara função em escopo global
-    return "Airton " + sobrenome;
+function nomeCompleto(sobrenome) {
+  // Declara função em escopo global
+  return "Airton " + sobrenome;
 }
 
-nomeCompleto('Vancin'); // Chama a função passando uma string como parametro
+nomeCompleto("Vancin"); // Chama a função passando uma string como parametro
 ```
 
 - Nesse caso a função espera que você passe um valor como parametro, se não passar nada ela retornara `undefined`.
-
 
 ## Instanciação usando uma IIFE
 
 IIFE significa uma "Função anônima auto-executável" ou "Função Imediatamente Executável", quando usamos isso queremos criar um escopo no JavaScript para que as variáveis dentro dela não poluam o escopo global, evitando possíveis conflitos de variáveis ou funções com o mesmo nome.
 
 Existem dois padrões para invovar funções imediatas
+
 ```js
-(function(){ /* código */ }()); // Crockford recomenda esse
-(function(){ /* código */ })(); // Mas esse também funciona
+(function () {
+  /* código */
+})(); // Crockford recomenda esse
+(function () {
+  /* código */
+})(); // Mas esse também funciona
 ```
 
 **Exemplo usando variável**
+
 ```js
-var nomeCompleto = (function(){
-    return "Airton Vancin";
+var nomeCompleto = (function () {
+  return "Airton Vancin";
 })();
 
 nomeCompleto; // Chama a variável que executa a função imediata que retorna o nome completo
 ```
 
 **Exemplo usando parâmetros**
+
 ```js
-(function(x) {
-    return x;
+(function (x) {
+  return x;
 })(1); // Passando o valor 1 como parâmetro
 ```
 

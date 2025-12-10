@@ -1,22 +1,18 @@
 import { ArticleLayout } from "@/components/ArticleLayout";
 
 export const article = {
-  title: 'JavaScript - ES6: let, const, arrow function',
-  description: '',
-  date: '2020-08-04', //04 Ago 2020
-  readTime: 2
-}
+  title: "JavaScript - ES6: let, const, arrow function",
+  description: "",
+  date: "2020-08-04", //04 Ago 2020
+  readTime: 2,
+};
 
 export const metadata = {
   title: article.title,
   description: article.description,
 };
 
-
-export default (props) => <ArticleLayout article={article} {...props} />;
-
 A nova versão do JavaScript, conhecida também como ECMAScript 6 ou apenas ES6, vamos falar sobre `let`, `const` e `arrow function`.
-
 
 ## Let
 
@@ -41,7 +37,7 @@ console.log(nome); // undefined
 Vai dar erro, pois o `let` suporta somente o modo estrito, o famoso `'use strict'`, a blz então só adicionar no começo do arquivo:
 
 ```javascript
-'use strict';
+"use strict";
 nome = "Airton";
 let nome;
 console.log(nome); // undefined
@@ -50,7 +46,7 @@ console.log(nome); // undefined
 Também não vai funcionar :disappointed: , pois o `let` obriga você a sempre declarar as variáveis antes de ser chamada, então como que vai ficar?
 
 ```javascript
-'use strict';
+"use strict";
 let nome;
 nome = "Airton";
 console.log(nome); // Airton
@@ -71,7 +67,7 @@ Isso quer dizer que uma vez declarada você não consegue mais alterar o valor d
 Então se você declarar uma `const`, ex:
 
 ```javascript
-    const nome = "Airton";
+const nome = "Airton";
 ```
 
 O valor da `const` `nome` nesse exemplo sempre vai ser `Airton`, agora se você tentar redeclarar ela com outro valor, o que acontece?
@@ -91,7 +87,7 @@ E se eu tentar reescrever assim:
 
 ```javascript
 const nome = "Airton";
-      nome = "Junior";
+nome = "Junior";
 console.log(nome); // Airton
 ```
 
@@ -100,15 +96,15 @@ Não vai dar erro, mas quando você for imprimir a `const` `nome` ele vai imprim
 **Const também funciona com objetos:**
 
 ```javascript
-const user = {name: 'Airton'};
+const user = { name: "Airton" };
 console.log(user); // { name: 'Airton' }
 ```
 
 Entretanto, atributos de objetos não estão protegidos, logo a seguinte instrução é executada sem problemas:
 
 ```javascript
-const user = {name: 'Airton'};
-      user.name = 'Junior';
+const user = { name: "Airton" };
+user.name = "Junior";
 console.log(user); // { name: 'Junior' }
 ```
 
@@ -141,29 +137,27 @@ O que fazer então? vamos estanciar ela como uma constante:
 const sayName = (name) => name; // Ae agora sim
 ```
 
-
 Vamos ver um exemplo de uma função que retorna a média de dois números:
 
 ```javascript
 // ES5
-const media = (function(num1,num2) {
-    return (num1 + num2) / 2;
-})(10,50); // passando os valores 10  e 50 como parâmetros
+const media = (function (num1, num2) {
+  return (num1 + num2) / 2;
+})(10, 50); // passando os valores 10  e 50 como parâmetros
 
 console.log(media); // 30
 
 // --------------------------------
 
 // ES6
-const media = ((num1,num2) => {
-    return (num1 + num2) / 2;
-})(10,50);
+const media = ((num1, num2) => {
+  return (num1 + num2) / 2;
+})(10, 50);
 
 console.log(media); // 30
 
 // OU MAIS SIMPLES
 
-const media = ( (num1,num2) => (num1 + num2) / 2 )(10,50);
+const media = ((num1, num2) => (num1 + num2) / 2)(10, 50);
 console.log(media); // 30
 ```
-

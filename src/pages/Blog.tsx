@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllArticles } from "@/helpers/articles";
-import type { ArticleWithSlug } from "@/helpers/articles";
+import { ArticleWithSlug } from "@/helpers/articles";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";

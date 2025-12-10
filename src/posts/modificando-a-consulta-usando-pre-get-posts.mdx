@@ -16,8 +16,6 @@ export const metadata = {
   description: article.description,
 };
 
-export default (props) => <ArticleLayout article={article} {...props} />;
-
 O **pre_get_posts** é um gancho que permite que você modifique a consulta principal, é muito comum você precisar alterar o conteúdo que é exibido em uma página, então vamos usar esse gancho que facilita muito o trabalho.
 
 Para poder funcionar você precisa adicionar a função no arquivo **functions.php**.

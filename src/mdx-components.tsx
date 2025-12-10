@@ -23,8 +23,10 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </ul>
     ),
+
     pre: ({ children }) => <pre className="w-full">{children}</pre>,
     code: ({ children }) => <code className="bg-slate-400">{children}</code>,
+
     table: ({ children }) => (
       <table className="table table-bordered table-striped table-hover w-full">
         {children}

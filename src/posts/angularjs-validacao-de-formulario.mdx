@@ -2,25 +2,36 @@ import { ArticleLayout } from "@/components/ArticleLayout";
 import { Button } from "@/components/ui/button";
 
 export const article = {
-  title: 'AngularJS Validação de Formulário',
-  description: 'Vamos focar a validação do lado do cliente e usando as propriedades de formulário angular. Aqui está uma demonstração rápida.',
-  date: '2014-11-01', //01 Nov 2014
+  title: "AngularJS Validação de Formulário",
+  description:
+    "Vamos focar a validação do lado do cliente e usando as propriedades de formulário angular. Aqui está uma demonstração rápida.",
+  date: "2014-11-01", //01 Nov 2014
   readTime: 4,
-  tags: ['Javascript', 'AngularJS'],
-  image: 'https://picsum.photos/id/76/200/300?grayscale'
-}
+  tags: ["Javascript", "AngularJS"],
+  image: "https://picsum.photos/id/76/200/300?grayscale",
+};
 
 export const metadata = {
   title: article.title,
   description: article.description,
 };
 
-export default (props) => <ArticleLayout article={article} {...props} />;
-
 <Button href="http://codepen.io/airton/pen/KDosE">Demo</Button>
 
 ## Demo
-<p data-height="333" data-theme-id="9559" data-slug-hash="KDosE" data-default-tab="result" data-user="airton" className='codepen'>See the Pen <a href='http://codepen.io/airton/pen/KDosE/'>KDosE</a> by Airton Vancin Junior (<a href='http://codepen.io/airton'>@airton</a>) on <a href='http://codepen.io'>CodePen</a>.</p>
+
+<p
+  data-height="333"
+  data-theme-id="9559"
+  data-slug-hash="KDosE"
+  data-default-tab="result"
+  data-user="airton"
+  className="codepen"
+>
+  See the Pen <a href="http://codepen.io/airton/pen/KDosE/">KDosE</a> by Airton
+  Vancin Junior (<a href="http://codepen.io/airton">@airton</a>) on{" "}
+  <a href="http://codepen.io">CodePen</a>.
+</p>
 <script async src="//codepen.io/assets/embed/ei.js"></script>
 
 Para começar vamos listar os requisitos do formulário
@@ -28,7 +39,8 @@ Para começar vamos listar os requisitos do formulário
 ## Requisitos
 
 - <b>name</b> é obrigatório
-- <b>username</b> não é necessária, comprimento mínimo de 3 caracteres e comprimento máximo de 8 caracteres
+- <b>username</b> não é necessária, comprimento mínimo de 3 caracteres e comprimento
+  máximo de 8 caracteres
 - <b>email</b> não é obrigatório, mas tem que ser um e-mail válido
 - Formulário de envio é desativado se o formulário não é válido
 - Mostrar um erro de e-mail obrigatório ou inválido
@@ -37,7 +49,11 @@ Para começar vamos listar os requisitos do formulário
 Agora que sabemos o que queremos, vamos começar a construção.
 
 ## Propriedades do formulário Angular
-<p><code>$valid</code>, <code>$invalid</code>, <code>$pristine</code>, <code>$dirty</code></p>
+
+<p>
+  <code>$valid</code>, <code>$invalid</code>, <code>$pristine</code>,{" "}
+  <code>$dirty</code>
+</p>
 
 O Angular fornece propriedades que nos ajudam a validá-los.
 
@@ -51,24 +67,36 @@ O Angular fornece propriedades que nos ajudam a validá-los.
   </thead>
   <tbody>
     <tr>
-        <td class="success">$valid</td>
-        <td>ng-valid</td>
-        <td><em class="text-info">Boolean</em> Diz se um item é válido no momento com base nas regras que você colocou.</td>
+      <td class="success">$valid</td>
+      <td>ng-valid</td>
+      <td>
+        <em class="text-info">Boolean</em> Diz se um item é válido no momento
+        com base nas regras que você colocou.
+      </td>
     </tr>
     <tr>
-        <td class="danger">$invalid</td>
-        <td>ng-invalid</td>
-        <td><em class="text-info">Boolean</em> Diz se um item está inválida com base nas regras que você colocou.</td>
+      <td class="danger">$invalid</td>
+      <td>ng-invalid</td>
+      <td>
+        <em class="text-info">Boolean</em> Diz se um item está inválida com base
+        nas regras que você colocou.
+      </td>
     </tr>
     <tr>
-        <td class="active">$pristine</td>
-        <td>ng-pristine</td>
-        <td><em class="text-info">Boolean</em> Verdadeiro se o form/input <b>ainda não</b> foi usado</td>
+      <td class="active">$pristine</td>
+      <td>ng-pristine</td>
+      <td>
+        <em class="text-info">Boolean</em> Verdadeiro se o form/input{" "}
+        <b>ainda não</b> foi usado
+      </td>
     </tr>
     <tr>
-        <td class="warning">$dirty</td>
-        <td>ng-dirty</td>
-        <td><em class="text-info">Boolean</em> Verdadeiro se o form/input <strong>foi</strong> usado.</td>
+      <td class="warning">$dirty</td>
+      <td>ng-dirty</td>
+      <td>
+        <em class="text-info">Boolean</em> Verdadeiro se o form/input{" "}
+        <strong>foi</strong> usado.
+      </td>
     </tr>
   </tbody>
 </table>
@@ -77,87 +105,130 @@ O Angular também oferece classes de acordo com as entradas de modo que você po
 
 ### Acessando as propriedades do formulário Angular
 
-- <p><b>Para acessar o formulário:</b> <code>"form name"."angular property"</code>
-  <br/>ex: <code>userForm.$valid</code></p>
-- <p><b>Para acessar o input:</b> <code>"form name"."input name"."angular property"</code>
-  <br/>ex: <code>userForm.name.$valid</code></p>
+- <p>
+    <b>Para acessar o formulário:</b>{" "}
+    <code>"form name"."angular property"</code>
+    <br />
+    ex: <code>userForm.$valid</code>
+  </p>
+- <p>
+    <b>Para acessar o input:</b>{" "}
+    <code>"form name"."input name"."angular property"</code>
+    <br />
+    ex: <code>userForm.name.$valid</code>
+  </p>
 
 ### Configurando nosso Formulário
 
 Vamos usar um formulário simples para demonstrar.
 
-<img src="/assets/images/angularjs-form.jpg" alt="Formulário simples AngularJS"/>
+<img
+  src="/assets/images/angularjs-form.jpg"
+  alt="Formulário simples AngularJS"
+/>
 
 Vamos precisar de dois arquivos:
 
-- <p><code>index.html</code> Nosso código para exibir o formulário</p>
-- <p><code>app.js</code> Nossa aplicação angular e o controlador</p>
+- <p>
+    <code>index.html</code> Nosso código para exibir o formulário
+  </p>
+- <p>
+    <code>app.js</code> Nossa aplicação angular e o controlador
+  </p>
 
 ```html
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
     <!-- load bootstrap css -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+    <link
+      rel="stylesheet"
+      href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css"
+    />
     <style>
-        body    { padding-top:30px; }
+      body {
+        padding-top: 30px;
+      }
     </style>
 
     <!-- load angularJS -->
     <script src="http://code.angularjs.org/1.2.6/angular.js"></script>
     <script src="app.js"></script>
-</head>
+  </head>
 
-<!-- aplicar app angular e controlador para o nosso body -->
-<body ng-app="validationApp" ng-controller="mainController">
+  <!-- aplicar app angular e controlador para o nosso body -->
+  <body ng-app="validationApp" ng-controller="mainController">
     <div class="container">
-        <div class="col-sm-8 col-sm-offset-2">
+      <div class="col-sm-8 col-sm-offset-2">
+        <!-- PAGE HEADER -->
+        <div class="page-header">
+          <h1>AngularJS Validação de Formulário</h1>
+        </div>
 
-            <!-- PAGE HEADER -->
-            <div class="page-header"><h1>AngularJS Validação de Formulário</h1></div>
+        <!-- FORM -->
+        <!-- passa a variável se nosso formulário é válida ou inválida -->
+        <!-- novalidate isso vai evitar a validação padrão do HTML5, já que vamos fazer isso usando o Angular -->
+        <form
+          name="userForm"
+          ng-submit="submitForm(userForm.$valid)"
+          novalidate
+        >
+          <!-- NAME -->
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              name="name"
+              class="form-control"
+              ng-model="name"
+              required
+            />
+          </div>
 
-            <!-- FORM -->
-            <!-- passa a variável se nosso formulário é válida ou inválida -->
-            <!-- novalidate isso vai evitar a validação padrão do HTML5, já que vamos fazer isso usando o Angular -->
-            <form name="userForm" ng-submit="submitForm(userForm.$valid)" novalidate>
+          <!-- USERNAME -->
+          <div class="form-group">
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              class="form-control"
+              ng-model="user.username"
+              ng-minlength="3"
+              ng-maxlength="8"
+            />
+          </div>
 
-                <!-- NAME -->
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" name="name" class="form-control" ng-model="name" required>
-                </div>
+          <!-- EMAIL -->
+          <div class="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              ng-model="email"
+            />
+          </div>
 
-                <!-- USERNAME -->
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-                </div>
-
-                <!-- EMAIL -->
-                <div class="form-group">
-                    <label>Email</label>
-                    <input type="email" name="email" class="form-control" ng-model="email">
-                </div>
-
-                <!-- SUBMIT BUTTON -->
-                <button type="submit" class="btn btn-primary">Enviar</button>
-
-            </form>
-        </div><!-- col-sm-8 -->
-    </div><!-- /container -->
-</body>
+          <!-- SUBMIT BUTTON -->
+          <button type="submit" class="btn btn-primary">Enviar</button>
+        </form>
+      </div>
+      <!-- col-sm-8 -->
+    </div>
+    <!-- /container -->
+  </body>
 </html>
 ```
 
 Alguns pontos importantes a observar aqui:
 
-
-- <b>novalidate</b>: isso vai evitar a validação padrão do HTML5, já que vamos fazer isso usando o Angular (o nosso será muito mais bonito)
+- <b>novalidate</b>: isso vai evitar a validação padrão do HTML5, já que vamos
+  fazer isso usando o Angular (o nosso será muito mais bonito)
 - Temos aplicado <code>ng-model</code> para poder vincular os dados do nosso formulário a variáveis ​​
-- <code>ng-minlength</code> e <code>ng-maxlength</code> no nome de usuário vai criar essas regras de introdução
+- <code>ng-minlength</code> e <code>ng-maxlength</code> no nome de usuário vai criar
+  essas regras de introdução
 - O input <code>name</code> é <b>required</b>
 - O input <code>e-mail</code> é <b>type = "email"</b>
-
 
 ### Regras de Validação
 
@@ -186,21 +257,17 @@ Agora que temos a nosso formulário simples, vamos criar nosso aplicativo Angula
 ```js
 // app.js
 // criar angular app
-var validationApp = angular.module('validationApp', []);
+var validationApp = angular.module("validationApp", []);
 
 // criar angular controller
-validationApp.controller('mainController', function($scope) {
-
-    // função para enviar o formulário depois que a validação estiver ok
-    $scope.submitForm = function(isValid) {
-
-        // verifica se o formulário é válido
-        if (isValid) {
-            alert('Formulário OK');
-        }
-
-    };
-
+validationApp.controller("mainController", function ($scope) {
+  // função para enviar o formulário depois que a validação estiver ok
+  $scope.submitForm = function (isValid) {
+    // verifica se o formulário é válido
+    if (isValid) {
+      alert("Formulário OK");
+    }
+  };
 });
 ```
 
@@ -215,43 +282,75 @@ Agora começa a verdadeira diversão. Temos que começar a usar propriedades ang
 ```html
 <!-- index.html -->
 ...
-    <!-- SUBMIT BUTTON -->
-    <button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">Enviar</button>
+<!-- SUBMIT BUTTON -->
+<button type="submit" class="btn btn-primary" ng-disabled="userForm.$invalid">
+  Enviar
+</button>
 ...
 ```
 
 Com apenas esse pequeno código (<code>ng-disable</code>), o nosso botão de formulário será desativado se o formulário for <code>$invalid</code>. Isto significa que o nosso campo de entrada de <code>name</code> é obrigatório e nosso campo de entrada de <code>e-mail</code> requer um e-mail válido.
 
-## Mostrando uma mensagem de erro  <code>ng-show</code>
+## Mostrando uma mensagem de erro <code>ng-show</code>
 
-<p><b>ng-valid</b> e <b>ng-invalid</b> irá determinar automaticamente se uma entrada é uma boa base nas regras colocadas sobre ele em seu formulário.</p>
+<p>
+  <b>ng-valid</b> e <b>ng-invalid</b> irá determinar automaticamente se uma
+  entrada é uma boa base nas regras colocadas sobre ele em seu formulário.
+</p>
 
 Vamos percorrer e adicionar uma mensagem de erro para cada uma de nossas entradas, se não forem <code>$valid</code> e já foram usados ​​(uma vez que não queremos mostrar um erro antes de terem sido utilizados).
 
 ```html
 <!-- index.html -->
 ...
-    <!-- NAME -->
-    <div class="form-group">
-        <label>Nome</label>
-        <input type="text" name="name" class="form-control" ng-model="user.name" required>
-        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Seu nome é obrigatório</p>
-    </div>
+<!-- NAME -->
+<div class="form-group">
+  <label>Nome</label>
+  <input
+    type="text"
+    name="name"
+    class="form-control"
+    ng-model="user.name"
+    required
+  />
+  <p
+    ng-show="userForm.name.$invalid && !userForm.name.$pristine"
+    class="help-block"
+  >
+    Seu nome é obrigatório
+  </p>
+</div>
 
-    <!-- USERNAME -->
-    <div class="form-group">
-        <label>Username</label>
-        <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-        <p ng-show="userForm.username.$error.minlength" class="help-block">Username no mínimo 3 caracteres.</p>
-        <p ng-show="userForm.username.$error.maxlength" class="help-block">Username no máximo 8 caracteres.</p>
-    </div>
+<!-- USERNAME -->
+<div class="form-group">
+  <label>Username</label>
+  <input
+    type="text"
+    name="username"
+    class="form-control"
+    ng-model="user.username"
+    ng-minlength="3"
+    ng-maxlength="8"
+  />
+  <p ng-show="userForm.username.$error.minlength" class="help-block">
+    Username no mínimo 3 caracteres.
+  </p>
+  <p ng-show="userForm.username.$error.maxlength" class="help-block">
+    Username no máximo 8 caracteres.
+  </p>
+</div>
 
-    <!-- EMAIL -->
-    <div class="form-group">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control" ng-model="user.email">
-        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um e-mail válido.</p>
-    </div>
+<!-- EMAIL -->
+<div class="form-group">
+  <label>Email</label>
+  <input type="email" name="email" class="form-control" ng-model="user.email" />
+  <p
+    ng-show="userForm.email.$invalid && !userForm.email.$pristine"
+    class="help-block"
+  >
+    Informe um e-mail válido.
+  </p>
+</div>
 ...
 ```
 
@@ -264,15 +363,22 @@ O Angular já oferece as classes css em nosso formulário, baseando se nossos ca
 Você pode estilizar o formulário usando essas classes, se quiser. Você pode fazer o que quiser com essas classes.
 
 ```css
-.ng-valid       {  }
-.ng-invalid     {  }
-.ng-pristine    {  }
-.ng-dirty       {  }
+.ng-valid {
+}
+.ng-invalid {
+}
+.ng-pristine {
+}
+.ng-dirty {
+}
 
 /* really specific css rules applied by angular */
-.ng-invalid-required        {  }
-.ng-invalid-minlength       {  }
-.ng-valid-max-length        {  }
+.ng-invalid-required {
+}
+.ng-invalid-minlength {
+}
+.ng-valid-max-length {
+}
 ```
 
 ## Adicionando Classes condicionais <code>ng-class</code>
@@ -286,27 +392,63 @@ O modo como funciona é `ng-class="{ < nome-da-classe > : < expressão a ser ava
 ```html
 <!-- index.html -->
 ...
-    <!-- NAME -->
-    <div class="form-group" ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }">
-        <label>Nome</label>
-        <input type="text" name="name" class="form-control" ng-model="user.name" required>
-        <p ng-show="userForm.name.$invalid && !userForm.name.$pristine" class="help-block">Seu nome é obrigatório</p>
-    </div>
+<!-- NAME -->
+<div
+  class="form-group"
+  ng-class="{ 'has-error' : userForm.name.$invalid && !userForm.name.$pristine }"
+>
+  <label>Nome</label>
+  <input
+    type="text"
+    name="name"
+    class="form-control"
+    ng-model="user.name"
+    required
+  />
+  <p
+    ng-show="userForm.name.$invalid && !userForm.name.$pristine"
+    class="help-block"
+  >
+    Seu nome é obrigatório
+  </p>
+</div>
 
-    <!-- USERNAME -->
-    <div class="form-group" ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }">
-        <label>Username</label>
-        <input type="text" name="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="8">
-        <p ng-show="userForm.username.$error.minlength" class="help-block">Username no mínimo 3 caracteres.</p>
-        <p ng-show="userForm.username.$error.maxlength" class="help-block">Username no máximo 8 caracteres.</p>
-    </div>
+<!-- USERNAME -->
+<div
+  class="form-group"
+  ng-class="{ 'has-error' : userForm.username.$invalid && !userForm.username.$pristine }"
+>
+  <label>Username</label>
+  <input
+    type="text"
+    name="username"
+    class="form-control"
+    ng-model="user.username"
+    ng-minlength="3"
+    ng-maxlength="8"
+  />
+  <p ng-show="userForm.username.$error.minlength" class="help-block">
+    Username no mínimo 3 caracteres.
+  </p>
+  <p ng-show="userForm.username.$error.maxlength" class="help-block">
+    Username no máximo 8 caracteres.
+  </p>
+</div>
 
-    <!-- EMAIL -->
-    <div class="form-group" ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }">
-        <label>Email</label>
-        <input type="email" name="email" class="form-control" ng-model="user.email">
-        <p ng-show="userForm.email.$invalid && !userForm.email.$pristine" class="help-block">Informe um e-mail válido.</p>
-    </div>
+<!-- EMAIL -->
+<div
+  class="form-group"
+  ng-class="{ 'has-error' : userForm.email.$invalid && !userForm.email.$pristine }"
+>
+  <label>Email</label>
+  <input type="email" name="email" class="form-control" ng-model="user.email" />
+  <p
+    ng-show="userForm.email.$invalid && !userForm.email.$pristine"
+    class="help-block"
+  >
+    Informe um e-mail válido.
+  </p>
+</div>
 ...
 ```
 
@@ -328,19 +470,19 @@ Agora, o formulário só mostra erros se a variável <code>submitted</code> é d
 
 Apenas mostrando erros após clicar fora de uma entrada (também conhecida como <b>blur</b>) é um pouco mais complicado do que validar em enviar. Validando um formulário no **blur** requer uma <a href="http://docs.angularjs.org/api/ng.directive:form">custom directive</a>. A directiva permitirá que você manipule o DOM.
 
-
 Aqui estão alguns recursos para criar diretivas personalizadas para lidar com **blur**:
 
 - [http://coding-issues.blogspot.in/2013/10/angularjs-blur-directive.html](http://coding-issues.blogspot.in/2013/10/angularjs-blur-directive.html)
 - [http://blog.ejci.net/2013/08/06/dealing-with-focus-and-blur-in-angularjs-directives/](http://blog.ejci.net/2013/08/06/dealing-with-focus-and-blur-in-angularjs-directives/)
 - [http://plnkr.co/edit/Xfr7X6JXPhY9lFL3hnOw?p=preview](http://plnkr.co/edit/Xfr7X6JXPhY9lFL3hnOw?p=preview)
 
-
 ## Tudo feito
 
 Agora preenchemos nossas informações corretamente no nosso formulário o botão de envio estará ativo, e ao enviar aparecera a mensagem de alerta que montamos. **alert('Formulário OK');**
 
-<p><img src="/assets/images/angularjs-alert.jpg" alt="Alert"/></p>
+<p>
+  <img src="/assets/images/angularjs-alert.jpg" alt="Alert" />
+</p>
 
 Com apenas algumas linhas simples que temos agora:
 
@@ -364,9 +506,17 @@ Aqui estão alguns recursos para o futuro da validação de formulário:
 ## Suporte
 
 <blockquote>
-    Nota: <b>AngularJS 1.3</b> não tem suporte para IE8. Leia mais sobre isso <a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">no blog do AngularJS</a>. <b>AngularJS 1.2</b> continuará com suporte ao IE8, mas a equipe principal não pretende gastar tempo com endereçamento específicos para o IE8.
+  Nota: <b>AngularJS 1.3</b> não tem suporte para IE8. Leia mais sobre isso{" "}
+  <a href="http://blog.angularjs.org/2013/12/angularjs-13-new-release-approaches.html">
+    no blog do AngularJS
+  </a>
+  . <b>AngularJS 1.2</b> continuará com suporte ao IE8, mas a equipe principal não
+  pretende gastar tempo com endereçamento específicos para o IE8.
 </blockquote>
 
 <blockquote>
-    Nota: Esse é uma tradução do post original <a href="http://scotch.io/tutorials/javascript/angularjs-form-validation">http://scotch.io/tutorials/javascript/angularjs-form-validation</a>
+  Nota: Esse é uma tradução do post original{" "}
+  <a href="http://scotch.io/tutorials/javascript/angularjs-form-validation">
+    http://scotch.io/tutorials/javascript/angularjs-form-validation
+  </a>
 </blockquote>

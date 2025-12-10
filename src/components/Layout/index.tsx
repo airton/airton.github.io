@@ -12,7 +12,7 @@ export default function Layout({
   return (
     <div className="flex flex-col min-h-screen bg-white dark:bg-gray-900 text-stone-900 dark:text-stone-100 transition-colors duration-300">
       <header className="m-auto p-2 flex items-center justify-center fixed w-full z-50">
-        <Menubar className="rounded-full border-foreground shadow-lg gap-4 opacity-95">
+        <Menubar className="rounded-full border-foreground shadow-lg gap-4 opacity-95 bg-white dark:bg-gray-900">
           <Avatar className="w-[30px] h-[30px]">
             <Link to="/">
               <AvatarImage
@@ -29,10 +29,7 @@ export default function Layout({
           </MenubarMenu>
           <MenubarMenu>
             <MenubarTrigger className="rounded-full">
-              <Link
-                to={"/zero-downtime"}
-                className="flex items-center gap-1"
-              >
+              <Link to={"/zero-downtime"} className="flex items-center gap-1">
                 <IconWashDrycleanOff className="h-4 w-4" /> Zero Downtime
               </Link>
             </MenubarTrigger>
