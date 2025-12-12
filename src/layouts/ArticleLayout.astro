@@ -4,6 +4,8 @@ import Layout from "@/layouts/Layout.astro";
 import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
 
 const { frontmatter } = Astro.props;
+const pageUrl = Astro.url.href;
+const pageId = Astro.url.pathname;
 ---
 
 <Layout>
@@ -68,40 +70,33 @@ const { frontmatter } = Astro.props;
       <slot />
     </article>
   </div>
-  <div id="disqus_thread"></div>
-  <script type="text/javascript">
-    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-    var disqus_shortname = "airtonvancin"; // required: replace example with your forum shortname
 
-    /* * * DON'T EDIT BELOW THIS LINE * * */
-    (function () {
-      var dsq = document.createElement("script");
-      dsq.type = "text/javascript";
-      dsq.async = true;
-      dsq.src = "//" + disqus_shortname + ".disqus.com/embed.js";
-      (
-        document.getElementsByTagName("head")[0] ||
-        document.getElementsByTagName("body")[0]
-      ).appendChild(dsq);
-    })();
-  </script>
+  <!-- Disqus Comments Section -->
+  <div class="w-full bg-slate-50 py-12">
+    <div class="container px-4 md:px-6 max-w-4xl mx-auto">
+      <h2 class="text-2xl font-bold text-slate-900 mb-6">Comentários</h2>
+      <div id="disqus_thread"></div>
+      <noscript>
+        Por favor, habilite o JavaScript para ver os
+        <a href="https://disqus.com/?ref_noscript">comentários do Disqus.</a>
+      </noscript>
+    </div>
+  </div>
+
   <ZeroDowntimeCTA />
-  <noscript
-    >Please enable JavaScript to view the <a
-      href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a
-    ></noscript
-  >
-
-  <noscript>
-    Please enable JavaScript to view the{" "}
-    <a href="http://disqus.com/?ref_noscript"> comments powered by Disqus. </a>
-  </noscript>
-  <div id="disqus_thread" class="container py-12 px-4 md:px-6 max-w-4xl"></div>
 </Layout>
 
-<script>
-  const script = document.createElement("script");
-  script.src = "//airtonvancin.disqus.com/embed.js";
-  script.async = true;
-  document.body.appendChild(script);
+<script is:inline define:vars={{ pageUrl, pageId }}>
+  var disqus_config = function () {
+    this.page.url = pageUrl;
+    this.page.identifier = pageId;
+  };
+
+  (function () {
+    var d = document,
+      s = d.createElement("script");
+    s.src = "https://airtonvancin.disqus.com/embed.js";
+    s.setAttribute("data-timestamp", +new Date());
+    (d.head || d.body).appendChild(s);
+  })();
 </script>
