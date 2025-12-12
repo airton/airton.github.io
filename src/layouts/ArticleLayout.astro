@@ -1,0 +1,84 @@
+---
+import { dateFormat } from "@/helpers/dateFormat";
+import Layout from "@/layouts/Layout.astro";
+import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
+
+const { frontmatter } = Astro.props;
+---
+
+<Layout>
+  <div
+    class="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-100 to-slate-200 flex justify-center"
+  >
+    <div class="container px-4 md:px-6 max-w-4xl">
+      <div
+        class="flex flex-col lg:flex-row items-center justify-center gap-4 space-y-4 text-center"
+      >
+        <div class="flex flex-col items-center space-y-4 text-center">
+          <div class="space-y-2">
+            <h1
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-slate-900"
+            >
+              {frontmatter.title}
+            </h1>
+            <p
+              class="mx-auto max-w-[700px] text-slate-900 md:text-xl dark:text-slate-900"
+            >
+              {frontmatter.description}
+            </p>
+            <p
+              class="mx-auto max-w-[700px] text-slate-900 md:text-sm dark:text-slate-900"
+            >
+              {dateFormat(frontmatter.date)}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div
+    class="w-full px-4 md:px-6 py-8 md:py-12 lg:py-16 flex justify-center bg-white"
+  >
+    <article
+      class="prose prose-slate prose-lg max-w-4xl w-full
+        prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900
+        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-2
+        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
+        prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-2
+        prose-h5:text-lg prose-h5:mt-4 prose-h5:mb-2
+        prose-h6:text-base prose-h6:mt-4 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wide
+        prose-p:text-slate-700 prose-p:leading-relaxed prose-p:mb-4
+        prose-a:text-blue-600 prose-a:font-medium prose-a:no-underline hover:prose-a:underline hover:prose-a:text-blue-800
+        prose-strong:font-bold prose-strong:text-slate-900
+        prose-em:italic prose-em:text-slate-700
+        prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ul:space-y-2
+        prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-ol:space-y-2
+        prose-li:text-slate-700 prose-li:leading-relaxed
+        prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-slate-50 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-6 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-slate-600
+        prose-code:bg-slate-100 prose-code:text-pink-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+        prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:my-6 prose-pre:overflow-x-auto
+        prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:rounded-lg prose-table:overflow-hidden
+        prose-thead:bg-slate-100
+        prose-th:text-left prose-th:font-semibold prose-th:text-slate-900 prose-th:p-3 prose-th:border prose-th:border-slate-200
+        prose-td:p-3 prose-td:border prose-td:border-slate-200 prose-td:text-slate-700
+        prose-tr:even:bg-slate-50
+        prose-img:rounded-xl prose-img:shadow-lg prose-img:my-6
+        prose-hr:border-slate-200 prose-hr:my-8"
+    >
+      <slot />
+    </article>
+  </div>
+  <ZeroDowntimeCTA />
+  <noscript>
+    Please enable JavaScript to view the{" "}
+    <a href="http://disqus.com/?ref_noscript"> comments powered by Disqus. </a>
+  </noscript>
+  <div id="disqus_thread" class="container py-12 px-4 md:px-6 max-w-4xl"></div>
+</Layout>
+
+<script>
+  const script = document.createElement("script");
+  script.src = "//airtonvancin.disqus.com/embed.js";
+  script.async = true;
+  document.body.appendChild(script);
+</script>

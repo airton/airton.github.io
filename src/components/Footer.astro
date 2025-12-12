@@ -1,0 +1,151 @@
+---
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconBrandWordpress,
+  IconMail,
+} from "@tabler/icons-react";
+import { plugins } from "../data/plugins";
+import { projects } from "../data/projects";
+
+const currentYear = new Date().getFullYear();
+---
+
+<footer
+  class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
+>
+  <div class="container mx-auto px-4 md:px-6 py-12 md:py-16">
+    <div
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 text-center md:text-left"
+    >
+      <div class="space-y-4 flex flex-col items-center md:items-start">
+        <h3 class="font-bold text-lg">Airton Vancin</h3>
+        <p class="text-sm text-stone-500 dark:text-stone-400">
+          Software Developer with over 14 years of experience. Building useful
+          tools and sharing knowledge.
+        </p>
+        <div class="flex gap-4">
+          <a
+            href="https://github.com/airton"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+          >
+            <IconBrandGithub className="h-5 w-5" />
+            <span class="sr-only">GitHub</span>
+          </a>
+          <a
+            href="https://linkedin.com/in/airtonvancin"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+          >
+            <IconBrandLinkedin className="h-5 w-5" />
+            <span class="sr-only">LinkedIn</span>
+          </a>
+          <a
+            href="https://profiles.wordpress.org/airtonvancin/"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+          >
+            <IconBrandWordpress className="h-5 w-5" />
+            <span class="sr-only">WordPress</span>
+          </a>
+          <a
+            href="mailto:airtonvancin@gmail.com"
+            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+          >
+            <IconMail className="h-5 w-5" />
+            <span class="sr-only">Email</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="space-y-4 flex flex-col items-center md:items-start">
+        <h3 class="font-bold text-lg">Mapa do Site</h3>
+        <ul class="space-y-2 text-sm">
+          <li>
+            <a
+              href="/"
+              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/blog"
+              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+              >Blog</a
+            >
+          </li>
+          <li>
+            <a
+              href="/zero-downtime"
+              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+              >Zero Downtime</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div class="space-y-4 flex flex-col items-center md:items-start">
+        <h3 class="font-bold text-lg">Projetos</h3>
+        <ul class="space-y-2 text-sm">
+          {
+            projects.map((project) => (
+              <li>
+                <a
+                  href={`/project/${project.slug}`}
+                  class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+                >
+                  {project.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="space-y-4 flex flex-col items-center md:items-start">
+        <h3 class="font-bold text-lg">Plugins WP</h3>
+        <ul class="space-y-2 text-sm">
+          {
+            plugins.map((plugin) => (
+              <li>
+                <a
+                  href={`/plugin/${plugin.slug}`}
+                  class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+                >
+                  {plugin.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+    >
+      <p class="text-xs text-stone-500 dark:text-stone-400">
+        © {currentYear} Airton Vancin. All rights reserved.
+      </p>
+      <nav class="flex gap-4 sm:gap-6">
+        <a
+          class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400"
+          href="/termos"
+        >
+          Termos de Uso
+        </a>
+        <a
+          class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400"
+          href="/politicas"
+        >
+          Políticas de Privacidade
+        </a>
+      </nav>
+    </div>
+  </div>
+</footer>

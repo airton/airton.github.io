@@ -1,0 +1,51 @@
+---
+import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { IconArrowRight, IconCalendar } from "@tabler/icons-react";
+import { dateFormat } from "@/helpers/dateFormat";
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  className?: string;
+}
+
+const { post, className } = Astro.props;
+---
+
+<a href={`/blog/${post.id}`} class:list={["group block h-full", className]}>
+  <Card
+    className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-muted"
+  >
+    <div class="relative aspect-video overflow-hidden">
+      <img
+        src={post.data.image || "https://picsum.photos/600/400?grayscale"}
+        alt={post.data.title}
+        class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+      />
+    </div>
+    <CardContent className="p-6">
+      <div class="flex items-center gap-2 text-sm text-muted-foreground mb-3">
+        <IconCalendar className="w-4 h-4" />
+        <time datetime={post.data.date.toISOString()}>
+          {dateFormat(post.data.date)}
+        </time>
+      </div>
+      <CardTitle
+        className="text-xl mb-3 group-hover:text-primary transition-colors line-clamp-2"
+      >
+        {post.data.title}
+      </CardTitle>
+      <p class="text-muted-foreground line-clamp-3 text-sm">
+        {post.data.description}
+      </p>
+    </CardContent>
+    <CardFooter className="p-6 pt-0 mt-auto">
+      <span
+        class="text-sm font-medium text-primary flex items-center gap-1 group-hover:gap-2 transition-all"
+      >
+        Ler artigo <IconArrowRight className="w-4 h-4" />
+      </span>
+    </CardFooter>
+  </Card>
+</a>

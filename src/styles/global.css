@@ -1,0 +1,177 @@
+@import "tailwindcss";
+
+@theme {
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 0 0% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 0 0% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 3.9%;
+    --primary: 0 0% 9%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 0 0% 96.1%;
+    --secondary-foreground: 0 0% 9%;
+    --muted: 0 0% 96.1%;
+    --muted-foreground: 0 0% 45.1%;
+    --accent: 0 0% 96.1%;
+    --accent-foreground: 0 0% 9%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 89.8%;
+    --input: 0 0% 89.8%;
+    --ring: 0 0% 3.9%;
+    --radius: 0.5rem;
+    --chart-1: 12 76% 61%;
+    --chart-2: 173 58% 39%;
+    --chart-3: 197 37% 24%;
+    --chart-4: 43 74% 66%;
+    --chart-5: 27 87% 67%;
+  }
+
+  .dark {
+    --background: 0 0% 3.9%;
+    --foreground: 0 0% 98%;
+    --card: 0 0% 3.9%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 3.9%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 0 0% 98%;
+    --primary-foreground: 0 0% 9%;
+    --secondary: 0 0% 14.9%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 0 0% 14.9%;
+    --muted-foreground: 0 0% 63.9%;
+    --accent: 0 0% 14.9%;
+    --accent-foreground: 0 0% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 0 0% 14.9%;
+    --input: 0 0% 14.9%;
+    --ring: 0 0% 83.1%;
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+}
+
+/* Article Content Styling */
+@layer components {
+  .prose {
+    @apply text-slate-900;
+  }
+
+  .prose p {
+    @apply font-medium text-base mb-4 lg:mb-6 break-words text-slate-900;
+  }
+
+  .prose h2 {
+    @apply text-2xl lg:text-3xl font-bold mt-10 mb-4 text-slate-900 border-b border-slate-200 pb-2;
+  }
+
+  .prose h3 {
+    @apply text-xl lg:text-2xl font-bold mt-8 mb-3 text-slate-900;
+  }
+
+  .prose h4 {
+    @apply text-lg lg:text-xl font-semibold mt-6 mb-2 text-slate-900;
+  }
+
+  .prose h5, .prose h6 {
+    @apply text-base lg:text-lg font-semibold mt-4 mb-2 text-slate-900;
+  }
+
+  .prose a {
+    @apply text-blue-600 hover:text-blue-800 hover:underline font-medium;
+  }
+
+  .prose strong, .prose b {
+    @apply font-bold text-slate-900;
+  }
+
+  .prose ul {
+    @apply list-disc pl-6 mb-4 lg:mb-6 space-y-2 text-slate-900 font-medium;
+  }
+
+  .prose ol {
+    @apply list-decimal pl-6 mb-4 lg:mb-6 space-y-2 text-slate-900 font-medium;
+  }
+
+  .prose li {
+    @apply text-slate-900;
+  }
+
+  .prose blockquote {
+    @apply border-l-4 border-blue-500 bg-slate-50 py-4 px-6 my-6 rounded-r-lg italic text-slate-600;
+  }
+
+  .prose pre {
+    @apply w-full bg-slate-900 text-slate-100 rounded-lg p-4 my-6 overflow-x-auto shadow-lg;
+  }
+
+  .prose code {
+    @apply bg-slate-200 text-pink-600 px-1.5 py-0.5 rounded text-sm font-mono;
+  }
+
+  .prose pre code {
+    @apply bg-transparent text-slate-100 p-0;
+  }
+
+  .prose table {
+    @apply w-full my-6 border-collapse;
+  }
+
+  .prose th {
+    @apply bg-slate-100 text-left font-semibold p-3 border border-slate-300 text-slate-900;
+  }
+
+  .prose td {
+    @apply p-3 border border-slate-200 text-slate-700;
+  }
+
+  .prose tr:nth-child(even) {
+    @apply bg-slate-50;
+  }
+
+  .prose img {
+    @apply w-full h-auto rounded-lg shadow-md my-6;
+  }
+
+  .prose hr {
+    @apply border-slate-200 my-8;
+  }
+}

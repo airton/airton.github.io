@@ -1,0 +1,47 @@
+---
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+---
+
+<div
+  class="w-full bg-gradient-to-r from-blue-700 to-blue-800 py-8 px-2 sm:px-4 lg:px-6 mb-8"
+>
+  <div class="container max-w-4xl mx-auto">
+    <form
+      id="newsletter-form"
+      class="flex flex-col sm:flex-row gap-4 items-center"
+    >
+      <label for="email" class="text-white">
+        Deixe seu email para ser avisado sobre as atualizações
+      </label>
+      <Input
+        type="email"
+        placeholder="Seu melhor e-mail"
+        required
+        class="flex-grow bg-white"
+        aria-label="Endereço de e-mail"
+        id="newsletter-email"
+      />
+      <Button
+        type="submit"
+        size="lg"
+        class="w-full sm:w-auto bg-primary text-white hover:bg-primary-600"
+      >
+        Salvar
+      </Button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document
+    .getElementById("newsletter-form")
+    ?.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const emailInput = document.getElementById(
+        "newsletter-email"
+      ) as HTMLInputElement;
+      console.log("E-mail enviado:", emailInput.value);
+      emailInput.value = "";
+    });
+</script>

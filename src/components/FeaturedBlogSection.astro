@@ -1,0 +1,76 @@
+---
+import { getCollection } from "astro:content";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardTitle, CardFooter } from "@/components/ui/card";
+import { IconArrowRight, IconCalendar } from "@tabler/icons-react";
+import { dateFormat } from "@/helpers/dateFormat";
+
+const posts = (await getCollection("blog")).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+// Try to find the specific "10 dicas" post, otherwise use the latest
+let featuredPost = posts.find((post) =>
+  post.id.includes("10-dicas-tempo-de-inatividade-zero")
+);
+
+if (!featuredPost) {
+  featuredPost = posts[0];
+}
+---
+
+{
+  featuredPost && (
+    <section class="w-full py-12 md:py-24 lg:py-32 bg-gray-50 dark:bg-gray-800 flex justify-center">
+      <div class="container px-4 md:px-6">
+        <h2 class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center">
+          Blog Posts
+        </h2>
+        <Card className="rounded-xl border bg-card text-card-foreground shadow lg:col-span-2 max-w-screen-md m-auto border-foreground">
+          <CardContent className="p-6">
+            <div class="space-y-4">
+              <div class="relative aspect-video">
+                <img
+                  src={featuredPost.data.image || "/blog-placeholder.jpg"}
+                  alt={featuredPost.data.title}
+                  class="rounded-lg object-cover w-full"
+                />
+              </div>
+              <div class="flex items-center gap-2 text-sm text-muted-foreground">
+                <IconCalendar className="w-4 h-4" />
+                <time datetime={featuredPost.data.date.toISOString()}>
+                  {dateFormat(featuredPost.data.date)}
+                </time>
+              </div>
+              <CardTitle className="text-2xl font-bold">
+                {featuredPost.data.title}
+              </CardTitle>
+              <p class="text-muted-foreground">
+                {featuredPost.data.description}
+              </p>
+              <CardFooter className="px-0">
+                <div class="flex justify-between items-center w-full">
+                  <a href={`/blog/${featuredPost.id}`}>
+                    <Button variant="default">
+                      Veja mais
+                      <IconArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </a>
+                </div>
+              </CardFooter>
+            </div>
+          </CardContent>
+        </Card>
+
+        <div class="mt-10 text-center">
+          <a href="/blog">
+            <Button variant="outline" size="lg">
+              Veja todos os posts
+              <IconArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </a>
+        </div>
+      </div>
+    </section>
+  )
+}
