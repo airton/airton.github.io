@@ -1,0 +1,56 @@
+---
+import { Button } from "@/components/ui/button";
+import { IconArrowRight, IconWashDrycleanOff } from "@tabler/icons-react";
+import Background from "./Background.astro";
+
+const isPage = false;
+---
+
+<section
+  class="relative overflow-hidden z-10 w-full py-20 md:py-22 lg:py-30 bg-gradient-to-r from-slate-600 to-slate-600 flex justify-center"
+>
+  <Background />
+  <div class="relative container px-4 md:px-6">
+    <div
+      class="flex flex-col lg:flex-row items-center justify-center gap-4 space-y-4 text-center"
+    >
+      <div class="flex flex-col items-center space-y-4 text-center">
+        <div class="space-y-4">
+          <IconWashDrycleanOff
+            className="w-[90px] h-[90px] lg:w-[120px] lg:h-[120px] text-slate-50 mx-auto"
+          />
+
+          <h2
+            class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-white"
+          >
+            Front End Zero Downtime
+          </h2>
+          <p
+            class="mx-auto max-w-[700px] text-slate-200 md:text-xl dark:text-slate-200"
+          >
+            Garanta que suas aplicações Web estejam sempre disponíveis, sem
+            interrupções, sem perda de receita.
+          </p>
+        </div>
+        {
+          !isPage && (
+            <div class="w-full max-w-sm space-y-2 justify-end">
+              <a href="/zero-downtime">
+                <Button
+                  className="w-full bg-white text-slate-600 hover:bg-slate-100"
+                  size="lg"
+                >
+                  Saiba mais
+                  <IconArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </a>
+              <p class="text-xs text-slate-200 dark:text-slate-200">
+                Disponível por tempo limitado.
+              </p>
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>

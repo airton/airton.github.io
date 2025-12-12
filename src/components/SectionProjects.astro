@@ -1,0 +1,71 @@
+---
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  IconExternalLink,
+  IconCode,
+  IconBrandGithub,
+} from "@tabler/icons-react";
+import { projects } from "../data/projects";
+---
+
+<section
+  id="projects"
+  class="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-br from-slate-50 to-slate-100 flex justify-center"
+>
+  <div class="container px-4 md:px-6 max-w-7xl">
+    <!-- Header -->
+    <div class="text-center mb-12 lg:mb-16">
+      <div
+        class="inline-flex items-center gap-2 bg-slate-200 text-slate-700 px-4 py-1.5 rounded-full text-sm font-medium mb-4"
+      >
+        <IconCode className="w-4 h-4" />
+        Portfólio
+      </div>
+      <h2
+        class="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl text-slate-900 mb-4"
+      >
+        Meus Projetos
+      </h2>
+      <p class="text-lg text-slate-600 max-w-2xl mx-auto">
+        Alguns dos projetos que desenvolvi ao longo da minha carreira,
+        utilizando as melhores tecnologias do mercado.
+      </p>
+    </div>
+
+    <!-- Projects Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {
+        projects.map(({ name, desc, slug, image }, index) => (
+          <a href={`/project/${slug}`} class="group block">
+            <Card className="h-full bg-white border-slate-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-2 overflow-hidden">
+              <div class="relative aspect-video overflow-hidden">
+                <img
+                  src={`https://picsum.photos/id/${image}/600/400?grayscale`}
+                  alt={`Projeto ${name}`}
+                  class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                />
+                <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div class="bg-white rounded-full p-2 shadow-lg">
+                    <IconExternalLink className="w-5 h-5 text-slate-700" />
+                  </div>
+                </div>
+              </div>
+              <CardContent className="p-6">
+                <h3 class="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">
+                  {name}
+                </h3>
+                <p class="text-slate-600 line-clamp-2 mb-4">{desc}</p>
+                <div class="flex items-center gap-2 text-sm text-blue-600 font-medium">
+                  Ver projeto
+                  <IconExternalLink className="w-4 h-4" />
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
