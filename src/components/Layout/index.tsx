@@ -1,7 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Menubar, MenubarMenu, MenubarTrigger } from "@/components/ui/menubar";
 import { IconWashDrycleanOff } from "@tabler/icons-react";
-import { Link } from "react-router-dom";
 import React from "react";
 
 export default function Layout({
@@ -14,24 +13,24 @@ export default function Layout({
       <header className="m-auto p-2 flex items-center justify-center fixed w-full z-50">
         <Menubar className="rounded-full border-foreground shadow-lg gap-4 opacity-95 bg-white dark:bg-gray-900">
           <Avatar className="w-[30px] h-[30px]">
-            <Link to="/">
+            <a href="/">
               <AvatarImage
                 src="https://github.com/airton.png"
                 className="p-0 m-0 "
               />
-            </Link>
+            </a>
             <AvatarFallback>AV</AvatarFallback>
           </Avatar>
           <MenubarMenu>
-            <MenubarTrigger className="rounded-full">
-              <Link to={"/blog"}>Blog</Link>
+            <MenubarTrigger className="rounded-full" asChild>
+              <a href="/blog">Blog</a>
             </MenubarTrigger>
           </MenubarMenu>
           <MenubarMenu>
-            <MenubarTrigger className="rounded-full">
-              <Link to={"/zero-downtime"} className="flex items-center gap-1">
+            <MenubarTrigger className="rounded-full" asChild>
+              <a href="/zero-downtime" className="flex items-center gap-1">
                 <IconWashDrycleanOff className="h-4 w-4" /> Zero Downtime
-              </Link>
+              </a>
             </MenubarTrigger>
           </MenubarMenu>
         </Menubar>

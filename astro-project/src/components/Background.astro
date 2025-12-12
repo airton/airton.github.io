@@ -1,0 +1,39 @@
+---
+const COLORS = ['#FFD980', '#FF8480', '#81FF80', '#80EAFF'];
+---
+
+<div
+  class="absolute top-0 left-0 w-full h-full grid bg-[#050505]"
+  style={{
+    gridTemplateColumns: 'repeat(auto-fill, 32px)',
+    gridTemplateRows: 'repeat(auto-fill, 32px)',
+  }}
+>
+  {[...Array(3000)].map(() => (
+    <div
+      class="w-8 h-8 border cell"
+      style={{
+        background: '#050505',
+        border: 'solid 0.5px #20202099',
+      }}
+    />
+  ))}
+</div>
+
+<script>
+  const COLORS = ['#FFD980', '#FF8480', '#81FF80', '#80EAFF'];
+  const cells = document.querySelectorAll('.cell');
+
+  cells.forEach(cell => {
+    cell.addEventListener('mouseenter', () => {
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      cell.style.background = `${color}1a`;
+      cell.style.border = `solid 1px ${color}`;
+
+      setTimeout(() => {
+        cell.style.background = '#050505';
+        cell.style.border = 'solid 0.5px #20202099';
+      }, 1000);
+    });
+  });
+</script>

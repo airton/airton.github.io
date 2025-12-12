@@ -20,9 +20,9 @@ export default function ZeroDowntime() {
 
             <h2>Ideia</h2>
             <p>
-              Utilizar uma estratégia de deploy chamada{' '}
-              <strong>Blue-Green</strong> Deployment que reduz downtime e
-              riscos ao manter duas versões do ambiente:
+              Utilizar uma estratégia de deploy chamada{" "}
+              <strong>Blue-Green</strong> Deployment que reduz downtime e riscos
+              ao manter duas versões do ambiente:
             </p>
             <ul>
               <li>🔵 Blue (versão atual em produção)</li>
@@ -30,8 +30,8 @@ export default function ZeroDowntime() {
             </ul>
             <p>
               Após testar o Green, o tráfego é redirecionado para ele
-              instantaneamente. Se houver problemas, basta reverter para o
-              Blue. Isso garante atualizações seguras e contínuas. 🚀
+              instantaneamente. Se houver problemas, basta reverter para o Blue.
+              Isso garante atualizações seguras e contínuas. 🚀
             </p>
 
             <h2>Requisitos</h2>

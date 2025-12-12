@@ -1,0 +1,107 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { projects } from "../../data/projects";
+import { Button } from "@/components/ui/button";
+import { IconArrowLeft, IconExternalLink } from "@tabler/icons-react";
+
+export async function getStaticPaths() {
+  return projects.map((project) => ({
+    params: { slug: project.slug },
+    props: { project },
+  }));
+}
+
+const { project } = Astro.props;
+---
+
+<Layout>
+  <div class="container px-4 md:px-6 py-10 max-w-4xl mx-auto">
+    <a
+      href="/"
+      class="inline-flex items-center text-sm text-stone-500 hover:text-stone-900 dark:text-stone-400 dark:hover:text-stone-100 mb-6 transition-colors"
+    >
+      <IconArrowLeft className="mr-2 h-4 w-4" />
+      Voltar para a home
+    </a>
+
+    <div class="flex flex-col md:flex-row gap-8 items-start mb-12">
+      <div class="w-full md:w-auto flex-shrink-0">
+        <img
+          src={`https://picsum.photos/id/${project.image}/400/300?grayscale`}
+          alt={`Project ${project.name}`}
+          class="rounded-xl object-cover w-full h-auto md:w-[400px]"
+        />
+      </div>
+      <div class="space-y-4">
+        <h1 class="text-3xl md:text-4xl font-bold tracking-tight">
+          {project.name}
+        </h1>
+        <p class="text-xl text-stone-600 dark:text-stone-300">
+          {project.desc}
+        </p>
+        <div class="flex gap-4">
+          <Button size="lg" asChild>
+            <a href={project.link} target="_blank" rel="noopener noreferrer">
+              Visitar Projeto <IconExternalLink className="ml-2 h-5 w-5" />
+            </a>
+          </Button>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid gap-12">
+      <section class="prose dark:prose-invert max-w-none">
+        <div set:html={project.fullDescription} />
+      </section>
+
+      <section>
+        <h2 class="text-2xl font-bold mb-6 border-b pb-2">
+          Principais Funcionalidades
+        </h2>
+        <ul class="grid md:grid-cols-2 gap-4">
+          {
+            project.features.map((feature) => (
+              <li class="flex items-start bg-slate-50 dark:bg-slate-900 p-3 rounded-lg">
+                <span class="mr-2 text-green-500">✔</span>
+                <span>{feature}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      {
+        project.technologies && project.technologies.length > 0 && (
+          <section class="bg-slate-50 dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+            <h2 class="text-2xl font-bold mb-4">Tecnologias Utilizadas</h2>
+            <div class="flex flex-wrap gap-2">
+              {project.technologies.map((tech) => (
+                <span class="px-3 py-1 bg-white dark:bg-gray-800 border rounded-full text-sm font-medium">
+                  {tech}
+                </span>
+              ))}
+            </div>
+          </section>
+        )
+      }
+
+      {
+        project.faq && project.faq.length > 0 && (
+          <section>
+            <h2 class="text-2xl font-bold mb-6">Perguntas Frequentes (FAQ)</h2>
+            <div class="grid gap-6">
+              {project.faq.map((item) => (
+                <div class="border rounded-lg p-4">
+                  <h3 class="font-bold text-lg mb-2">{item.question}</h3>
+                  <p class="text-stone-600 dark:text-stone-300">
+                    {item.answer}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </div>
+</Layout>

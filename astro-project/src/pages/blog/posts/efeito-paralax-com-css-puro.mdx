@@ -1,0 +1,37 @@
+import { Button } from "@/components/ui/button";
+
+export const article = {
+  title: "Efeito paralax com css puro",
+  description: "",
+  date: "2016-12-29", //29 Dez 2016
+  readTime: 2,
+  image: "/efeito-paralax-com-css-puro.jpg",
+  tags: ["css"],
+};
+
+export const metadata = {
+  title: article.title,
+  description: article.description,
+};
+
+Dimensionar os elementos com base nas dimensões da janela de visualização sem javascript. Utilizando as unidades de viewport vw e vh.
+
+```css
+section {
+  width: 100vw;
+  height: 100vh;
+}
+```
+
+- **vw**: largura da viewport
+- **vh**: altura da viewport
+
+<Button href="http://airtonvancin.com/paralax-com-css-puro/">Demo</Button>
+
+## Referência
+
+- Learn Advanced CSS Layout Techniques: [@egghead](https://egghead.io/lessons/css-dynamically-size-elements-with-pure-css)
+
+## Suporte
+
+- Suporte aos browsers: [Viewport units: vw, vh, vmin, vmax](http://caniuse.com/#search=vw)
