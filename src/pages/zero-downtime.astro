@@ -1,59 +1,245 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
 import SectionNewsletter from "@/components/SectionNewsletter.astro";
-import { CheckIcon } from "@/components/CheckIcon";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
+import {
+  IconArrowRight,
+  IconBrandAws,
+  IconBrandGithub,
+  IconCloud,
+  IconCloudComputing,
+  IconDatabase,
+  IconRefresh,
+  IconRocket,
+  IconServer,
+  IconShieldCheck,
+} from "@tabler/icons-react";
+import Layout from "../layouts/Layout.astro";
 ---
 
-<Layout>
+<Layout
+  title="Zero Downtime - Front End | Airton Vancin"
+  description="Garanta que suas aplicações Web estejam sempre disponíveis, sem interrupções, sem perda de receita."
+>
   <ZeroDowntimeCTA />
-  <SectionNewsletter />
-  <section class="w-full py-12 md:py-24 lg:py-32 flex justify-center">
-    <div class="container px-4 md:px-6 max-w-4xl">
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Essa solução foi pensada e implementada na AWS, mas pode ser adaptada
-        para outras plataformas de Cloud, como Google Cloud e afins.
-      </p>
 
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
+  <!-- Main Content -->
+  <section class="w-full py-16 md:py-24 lg:py-32 bg-white flex justify-center">
+    <div class="container px-4 md:px-6 max-w-5xl">
+      <!-- Intro Card -->
+      <Card
+        className="mb-12 border-blue-200 bg-gradient-to-r from-blue-50 to-slate-50"
       >
-        Ideia
-      </h2>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Utilizar uma estratégia de deploy chamada{" "}
-        <strong>Blue-Green</strong> Deployment que reduz downtime e riscos ao manter
-        duas versões do ambiente:
-      </p>
-      <ul class="text-slate-900 font-medium text-md !mb-4 !lg:mb-6 pb-4 block">
-        <li>🔵 Blue (versão atual em produção)</li>
-        <li>🟢 Green (nova versão)</li>
-      </ul>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Após testar o Green, o tráfego é redirecionado para ele
-        instantaneamente. Se houver problemas, basta reverter para o Blue. Isso
-        garante atualizações seguras e contínuas. 🚀
-      </p>
+        <CardContent className="p-6 md:p-8">
+          <div class="flex items-start gap-4">
+            <div
+              class="flex-shrink-0 w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center"
+            >
+              <IconCloud className="w-6 h-6 text-blue-600" />
+            </div>
+            <div>
+              <h3 class="font-semibold text-lg text-slate-900 mb-2">
+                Flexível e Adaptável
+              </h3>
+              <p class="text-slate-600">
+                Essa solução foi pensada e implementada na <strong>AWS</strong>,
+                mas pode ser facilmente adaptada para outras plataformas de
+                Cloud, como <strong>Google Cloud</strong>, <strong>Azure</strong
+                > e outras.
+              </p>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
 
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
-      >
-        Requisitos
-      </h2>
-      <ul class="text-slate-900 font-medium text-md !mb-4 !lg:mb-6 pb-4 block">
-        <li class="flex items-center">
-          <CheckIcon className="mr-2" /> Cloudfront
-        </li>
-        <li class="flex items-center">
-          <CheckIcon className="mr-2" /> Key Value Storage (KVS)
-        </li>
-        <li class="flex items-center">
-          <CheckIcon className="mr-2" /> S3
-        </li>
-        <li class="flex items-center">
-          <CheckIcon className="mr-2" /> CI/CD (Github Actions)
-        </li>
-      </ul>
+      <!-- Blue-Green Section -->
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 bg-slate-900 rounded-lg flex items-center justify-center"
+          >
+            <IconRocket className="w-5 h-5 text-white" />
+          </div>
+          <h2 class="text-3xl font-bold text-slate-900">A Ideia</h2>
+        </div>
+
+        <p class="text-lg text-slate-700 mb-8 leading-relaxed">
+          Utilizamos uma estratégia de deploy chamada <strong
+            class="text-blue-600">Blue-Green Deployment</strong
+          >
+          que reduz o downtime e os riscos ao manter duas versões do ambiente simultaneamente.
+        </p>
+
+        <!-- Blue-Green Cards -->
+        <div class="grid md:grid-cols-2 gap-6 mb-8">
+          <Card className="border-blue-300 bg-blue-50/50">
+            <CardContent className="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                <div
+                  class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center"
+                >
+                  <span class="text-white font-bold text-sm">B</span>
+                </div>
+                <h3 class="text-xl font-bold text-blue-700">Blue</h3>
+              </div>
+              <p class="text-slate-600">
+                A versão <strong>atual em produção</strong>. Estável, testada e
+                servindo os usuários.
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="border-green-300 bg-green-50/50">
+            <CardContent className="p-6">
+              <div class="flex items-center gap-3 mb-3">
+                <div
+                  class="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center"
+                >
+                  <span class="text-white font-bold text-sm">G</span>
+                </div>
+                <h3 class="text-xl font-bold text-green-700">Green</h3>
+              </div>
+              <p class="text-slate-600">
+                A <strong>nova versão</strong> sendo preparada. Testada em isolamento
+                antes do switch.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <Card className="border-slate-200 bg-slate-50">
+          <CardContent className="p-6">
+            <div class="flex items-start gap-4">
+              <IconRefresh
+                className="w-6 h-6 text-green-600 flex-shrink-0 mt-1"
+              />
+              <p class="text-slate-700">
+                Após testar o <strong>Green</strong>, o tráfego é redirecionado
+                instantaneamente. Se houver problemas, basta reverter para o <strong
+                  >Blue</strong
+                >. Isso garante atualizações <strong>seguras e contínuas</strong
+                >. 🚀
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+
+      <!-- Benefits Section -->
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center"
+          >
+            <IconShieldCheck className="w-5 h-5 text-white" />
+          </div>
+          <h2 class="text-3xl font-bold text-slate-900">Benefícios</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          {
+            [
+              {
+                icon: IconRocket,
+                title: "Zero Downtime",
+                desc: "Atualizações sem interrupção do serviço",
+              },
+              {
+                icon: IconRefresh,
+                title: "Rollback Instantâneo",
+                desc: "Volte à versão anterior em segundos",
+              },
+              {
+                icon: IconShieldCheck,
+                title: "Menor Risco",
+                desc: "Teste a nova versão antes de expor ao público",
+              },
+            ].map(({ icon: Icon, title, desc }) => (
+              <Card className="border-slate-200 hover:border-green-300 hover:shadow-md transition-all">
+                <CardContent className="p-5">
+                  <Icon className="w-8 h-8 text-green-600 mb-3" />
+                  <h3 class="font-semibold text-slate-900 mb-1">{title}</h3>
+                  <p class="text-sm text-slate-600">{desc}</p>
+                </CardContent>
+              </Card>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- Requirements Section -->
+      <div class="mb-16">
+        <div class="flex items-center gap-3 mb-6">
+          <div
+            class="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center"
+          >
+            <IconBrandAws className="w-5 h-5 text-white" />
+          </div>
+          <h2 class="text-3xl font-bold text-slate-900">Requisitos AWS</h2>
+        </div>
+
+        <div class="grid sm:grid-cols-2 gap-4">
+          {
+            [
+              {
+                icon: IconCloudComputing,
+                name: "CloudFront",
+                desc: "CDN para distribuição global",
+              },
+              {
+                icon: IconDatabase,
+                name: "Key Value Storage (KVS)",
+                desc: "Armazenamento de configuração",
+              },
+              {
+                icon: IconServer,
+                name: "S3",
+                desc: "Armazenamento dos builds",
+              },
+              {
+                icon: IconBrandGithub,
+                name: "GitHub Actions",
+                desc: "CI/CD automatizado",
+              },
+            ].map(({ icon: Icon, name, desc }) => (
+              <Card className="border-slate-200 hover:shadow-md transition-all group">
+                <CardContent className="p-5 flex items-center gap-4">
+                  <div class="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center group-hover:bg-orange-500 transition-colors">
+                    <Icon className="w-6 h-6 text-orange-600 group-hover:text-white transition-colors" />
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-slate-900">{name}</h3>
+                    <p class="text-sm text-slate-500">{desc}</p>
+                  </div>
+                </CardContent>
+              </Card>
+            ))
+          }
+        </div>
+      </div>
+
+      <!-- CTA Section -->
+      <Card className="border-slate-900 bg-slate-900 text-white">
+        <CardContent className="p-8 text-center">
+          <h3 class="text-2xl font-bold mb-3">
+            Quer implementar na sua empresa?
+          </h3>
+          <p class="text-slate-300 mb-6 max-w-lg mx-auto">
+            Entre em contato para discutirmos como essa solução pode beneficiar
+            seu projeto.
+          </p>
+          <a href="mailto:airtonvancin@gmail.com">
+            <Button
+              className="bg-white text-slate-900 hover:bg-slate-100"
+              size="lg"
+            >
+              Entrar em contato
+              <IconArrowRight className="ml-2 w-4 h-4" />
+            </Button>
+          </a>
+        </CardContent>
+      </Card>
     </div>
   </section>
 </Layout>
