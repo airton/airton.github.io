@@ -4,6 +4,7 @@ import {
   IconBrandLinkedin,
   IconBrandWordpress,
   IconMail,
+  IconNews,
 } from "@tabler/icons-react";
 import { plugins } from "../data/plugins";
 import { projects } from "../data/projects";
@@ -21,8 +22,8 @@ const currentYear = new Date().getFullYear();
       <div class="space-y-4 flex flex-col items-center md:items-start">
         <h3 class="font-bold text-lg">Airton Vancin</h3>
         <p class="text-sm text-stone-500 dark:text-stone-400">
-          Software Developer with over 14 years of experience. Building useful
-          tools and sharing knowledge.
+          Sou apenas um desenvolvedor de software com mais de 15 anos de
+          experiência lidando com diversas tecnologias.
         </p>
         <div class="flex gap-4">
           <a
@@ -59,6 +60,15 @@ const currentYear = new Date().getFullYear();
             <IconMail className="h-5 w-5" />
             <span class="sr-only">Email</span>
           </a>
+          <a
+            href="https://nichesignal.substack.com/?utm_campaign=airtonvancin.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+          >
+            <IconNews className="h-5 w-5" />
+            <span class="sr-only">Substack</span>
+          </a>
         </div>
       </div>
 
@@ -77,6 +87,20 @@ const currentYear = new Date().getFullYear();
               href="/blog"
               class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
               >Blog</a
+            >
+          </li>
+          <li>
+            <a
+              href="/sobre"
+              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+              >Sobre</a
+            >
+          </li>
+          <li>
+            <a
+              href="/contato"
+              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+              >Contato</a
             >
           </li>
           <li>

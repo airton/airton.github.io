@@ -19,6 +19,22 @@ export function Navigation() {
           className="rounded-full cursor-pointer hover:bg-gray-100"
           asChild
         >
+          <a href="/sobre">Sobre</a>
+        </MenubarTrigger>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger
+          className="rounded-full cursor-pointer hover:bg-gray-100"
+          asChild
+        >
+          <a href="/contato">Contato</a>
+        </MenubarTrigger>
+      </MenubarMenu>
+      <MenubarMenu>
+        <MenubarTrigger
+          className="rounded-full cursor-pointer hover:bg-gray-100"
+          asChild
+        >
           <a href="/zero-downtime" className="flex items-center gap-1">
             <IconWashDrycleanOff className="h-4 w-4" /> Zero Downtime
           </a>
