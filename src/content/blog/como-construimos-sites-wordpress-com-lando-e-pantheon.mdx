@@ -2,7 +2,7 @@
 title: "Como construimos sites WordPress com Lando e Pantheon 🚀"
 description: "Se você trabalha ou já fez Freela com WordPress provavelmente já ouviu falar em (Mamp, Xamp, Wamp…). O que basicamente essas ferramentas fazem é instalar e configurar um servidor local apache com PHP e MySQL e assim você conseguir rodar o WordPress localmente para desenvolvimento."
 date: "2020-01-07"
-image: "/assets/blog-placeholder-2.jpg"
+image: "/assets/images/lando-pantheon-1.png"
 tags: ["wordpress", "lando", "pantheon", "devops"]
 ---
 
@@ -19,6 +19,8 @@ Basicamente Lando é uma ferramenta open-source para desenvolvimento local de si
 Para saber mais sobre veja a documentação:
 [Overview · Lando Documentation](https://docs.devwithlando.io/)
 
+![Lando Pantheon 2](/assets/images/lando-pantheon-2.png)
+
 **O que é Pantheon?**
 
 O Pantheon é uma hospedagem de alta performance, infraestrutura escalável e com um workflow automatizado.
@@ -26,11 +28,17 @@ O Pantheon é uma hospedagem de alta performance, infraestrutura escalável e co
 Para saber mais detalhes veja a documentação:
 [Home](https://pantheon.io/docs)
 
+![Lando Pantheon 3](/assets/images/lando-pantheon-3.png)
+
 **Começando um projeto novo**
 
 Acessando o Pantheon no dashboard clique em Create New Site e digite no nome do seu site.
 
+![Lando Pantheon 4](/assets/images/lando-pantheon-4.png)
+
 Na próxima tela escolha o CMS WordPress e clique em deploy e aguarde até esse novo ambiente para WordPress ser criado, após a instalação você ja pode ver o dashboard do seu novo site.
+
+![Lando Pantheon 5](/assets/images/lando-pantheon-5.jpeg)
 
 Clicando em Install WordPress você sera direcionado para instalação tradicional do WordPress no ambiente de Dev, next > next > next. Não vamos entrar em detalhes aqui.
 
@@ -44,7 +52,11 @@ Feito o clone do projeto, agora vamos configurar o Lando no projeto para podermo
 
 Agora o primeiro passo é rodar `lando init` e selecionar o pantheon na lista.
 
+![Lando Pantheon 6](/assets/images/lando-pantheon-6.png)
+
 Selecione o seu e-mail cadastrado na conta do Pantheon.
+
+![Lando Pantheon 7](/assets/images/lando-pantheon-7.png)
 
 Agora selecione o projeto WordPress que você acabou de criar no Pantheon.
 
@@ -56,9 +68,13 @@ Os próximos passos agora são clonar o banco de dados MySql e os Arquivos(se ne
 
 Agora vamos rodar o: `lando pull`.
 
+![Lando Pantheon 8](/assets/images/lando-pantheon-8.gif)
+
 Selecione dev para as opções code , database e files , esse processo pode demorar alguns minutos.
 
 Se tudo correr certo você vai receber a mensagem: Pull complete!
+
+![Lando Pantheon 9](/assets/images/lando-pantheon-9.png)
 
 **Rodar o projeto**
 
@@ -69,6 +85,8 @@ Agora vamos rodar o: `lando start`.
 O primeiro lando start sempre é mais demorado, mas os próximos tendem a ser mais rápidos porque tudo já esta configurado.
 
 Se tudo correr certo você vai receber a mensagem: BOOMSHAKALAKA!!!
+
+![Lando Pantheon 10](/assets/images/lando-pantheon-10.gif)
 
 E agora você já pode acessar o site localmente usando a url gerada pelo Lando, nesse caso ele gerou: http://wp-br.lndo.site
 
@@ -82,15 +100,23 @@ Fazer o commit normalmente usando o git.
 
 Agora vamos rodar o: `lando push`.
 
+![Lando Pantheon 11](/assets/images/lando-pantheon-11.png)
+
 Selecione dev para code , database e files (se necessário), esse processo pode demorar se tiver bastante alterações como novos plugins instalados, novos posts, novas imagens e arquivos de tema, Se tudo correr certo você vai receber a mensagem: Push complete!
+
+![Lando Pantheon 12](/assets/images/lando-pantheon-12.png)
 
 **Olhando as alterações**
 
 Depois de fazer o push, acessando o Dashboard do Pantheon você vai conseguir ver suas alterações e acessar o site e admin do WordPress.
 
+![Lando Pantheon 13](/assets/images/lando-pantheon-13.png)
+
 Para acessar o site clique em Visit Development Site.
 
 Para acessar o admin do WordPress clique em Site Admin.
+
+![Lando Pantheon 14](/assets/images/lando-pantheon-14.png)
 
 **Comandos mais utilizados**
 
