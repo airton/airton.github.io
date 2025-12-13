@@ -2,10 +2,15 @@
 import { dateFormat } from "@/helpers/dateFormat";
 import Layout from "@/layouts/Layout.astro";
 import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
+import RecentPosts from "@/components/RecentPosts.astro";
 
 const { frontmatter } = Astro.props;
 const pageUrl = Astro.url.href;
 const pageId = Astro.url.pathname;
+
+const allPosts = await Astro.glob('../content/blog/*.mdx');
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+const recentPosts = sortedPosts.filter(post => post.url !== Astro.url.pathname).slice(0, 3);
 ---
 
 <Layout>
@@ -70,6 +75,8 @@ const pageId = Astro.url.pathname;
       <slot />
     </article>
   </div>
+
+  <RecentPosts posts={recentPosts} />
 
   <!-- Disqus Comments Section -->
   <div
