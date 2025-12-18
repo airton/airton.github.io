@@ -1,73 +1,160 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import {
+  IconGavel,
+  IconScale,
+  IconFileText,
+  IconShieldLock,
+} from "@tabler/icons-react";
 ---
 
-<Layout>
-  <section class="w-full py-12 md:py-24 lg:py-32 flex justify-center">
-    <div class="container px-4 md:px-6 max-w-4xl">
-      <h1
-        class="scroll-m-20 text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
+<Layout
+  title="Termos de Uso | Airton Vancin"
+  description="Regras, responsabilidades e diretrizes para o uso do conteúdo e serviços oferecidos no site airtonvancin.com."
+>
+  <div class="bg-indigo-900 border-b border-white/5 overflow-hidden relative">
+    <!-- Abstract Background Decor -->
+    <div
+      class="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl"
+    >
+    </div>
+    <div
+      class="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl"
+    >
+    </div>
+
+    <div
+      class="container relative px-4 md:px-6 py-16 md:py-24 max-w-4xl mx-auto text-center"
+    >
+      <div
+        class="inline-flex items-center gap-2 bg-white/10 text-white px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6 backdrop-blur-sm"
       >
+        <IconGavel className="w-4 h-4" />
+        Legal terms
+      </div>
+      <h1 class="text-4xl md:text-5xl font-bold tracking-tight text-white mb-6">
         Termos de Uso
       </h1>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Última atualização: 24 Outubro, 2024
+      <p class="text-lg text-indigo-100/70 font-serif italic max-w-2xl mx-auto">
+        As diretrizes e regras para utilização de nossos serviços, conteúdos e
+        produtos digitais.
       </p>
+      <div class="mt-8 text-sm text-indigo-300 font-medium">
+        Última atualização: 18 de Dezembro, 2025
+      </div>
+    </div>
+  </div>
 
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Seu acesso e uso do Serviço estão condicionados à sua aceitação e
-        conformidade com estes Termos. Estes Termos se aplicam a todos os
-        visitantes, usuários e outros que acessam ou usam o Serviço.
-      </p>
-
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Ao acessar ou usar o Serviço, você concorda em ficar vinculado a estes
-        Termos. Se você discordar de qualquer parte dos termos, então você não
-        poderá acessar o Serviço.
-      </p>
-
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
+  <section class="w-full py-20 bg-white flex justify-center">
+    <div class="container px-4 md:px-6 max-w-3xl">
+      <div
+        class="prose prose-slate prose-lg max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 prose-li:text-slate-600"
       >
-        Conteúdo do Site
-      </h2>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Todo o conteúdo disponível no site airtonvancin.com, incluindo textos,
-        imagens e vídeos, é de propriedade intelectual de Airton Vancin e
-        protegido por direitos autorais.
-      </p>
+        <p>
+          Ao acessar o site <strong>airtonvancin.com</strong>, você concorda em
+          cumprir estes termos de serviço, todas as leis e regulamentos
+          aplicáveis ​​e concorda que é responsável pelo cumprimento de todas as
+          leis locais aplicáveis. Se você não concordar com algum destes termos,
+          está proibido de usar ou acessar este site.
+        </p>
 
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
-      >
-        Responsabilidades do Usuário
-      </h2>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Os usuários concordam em não violar direitos autorais, publicar conteúdo
-        ilegal ou prejudicial, ou realizar atividades que possam comprometer a
-        segurança do site.
-      </p>
+        <div class="grid sm:grid-cols-2 gap-6 my-12 not-prose">
+          <div
+            class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 flex flex-col gap-4"
+          >
+            <IconScale className="w-8 h-8 text-indigo-600" />
+            <h3 class="text-lg font-bold text-slate-900">Uso Licenciado</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-0">
+              Licença limitada para visualizar e baixar conteúdos apenas para
+              uso pessoal e não comercial.
+            </p>
+          </div>
+          <div
+            class="p-8 bg-slate-50 rounded-[2rem] border border-slate-100 flex flex-col gap-4"
+          >
+            <IconShieldLock className="w-8 h-8 text-indigo-600" />
+            <h3 class="text-lg font-bold text-slate-900">Segurança</h3>
+            <p class="text-sm text-slate-500 leading-relaxed mb-0">
+              Compromisso do usuário em não tentar violar as medidas de
+              segurança do servidor ou do site.
+            </p>
+          </div>
+        </div>
 
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
-      >
-        Compras de Produtos Digitais
-      </h2>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Ao adquirir um produto digital em nosso site, os usuários concordam com
-        os termos de compra estabelecidos, incluindo políticas de reembolso e
-        suporte ao cliente.
-      </p>
+        <h2>1. Licença de Uso</h2>
+        <p>
+          É concedida permissão para baixar temporariamente uma cópia dos
+          materiais (informações ou software) no site airtonvancin.com, apenas
+          para visualização transitória pessoal e não comercial. Esta é a
+          concessão de uma licença, não uma transferência de título e, sob esta
+          licença, você não pode:
+        </p>
+        <ul>
+          <li>Modificar ou copiar os materiais;</li>
+          <li>
+            Usar os materiais para qualquer finalidade comercial ou para
+            exibição pública (comercial ou não comercial);
+          </li>
+          <li>
+            Tentar descompilar ou fazer engenharia reversa de qualquer software
+            contido no site airtonvancin.com;
+          </li>
+          <li>
+            Remover quaisquer direitos autorais ou outras notações de
+            propriedade dos materiais; ou
+          </li>
+          <li>
+            Transferir os materiais para outra pessoa ou 'espelhar' os materiais
+            em qualquer outro servidor.
+          </li>
+        </ul>
 
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
-      >
-        Alterações nos Termos
-      </h2>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Reservamos o direito de modificar os termos de uso a qualquer momento.
-        Os usuários serão notificados sobre quaisquer alterações significativas.
-      </p>
+        <h2>2. Isenção de Responsabilidade</h2>
+        <p>
+          Os materiais no site da airtonvancin.com são fornecidos 'como estão'.
+          airtonvancin.com não oferece garantias, expressas ou implícitas, e,
+          por este meio, isenta e nega todas as outras garantias, incluindo, sem
+          limitação, garantias implícitas ou condições de comercialização,
+          adequação a um fim específico ou não violação de propriedade
+          intelectual ou outra violação de direitos.
+        </p>
+
+        <h2>3. Limitações</h2>
+        <p>
+          Em nenhum caso o airtonvancin.com ou seus fornecedores serão
+          responsáveis ​​por quaisquer danos (incluindo, sem limitação, danos
+          por perda de dados ou lucro ou devido a interrupção dos negócios)
+          decorrentes do uso ou da incapacidade de usar os materiais em
+          airtonvancin.com.
+        </p>
+
+        <h2>4. Precisão dos Materiais</h2>
+        <p>
+          Os materiais exibidos no site da airtonvancin.com podem incluir erros
+          técnicos, tipográficos ou fotográficos. airtonvancin.com não garante
+          que qualquer material em seu site seja preciso, completo ou atual.
+          airtonvancin.com pode fazer alterações nos materiais contidos em seu
+          site a qualquer momento, sem aviso prévio.
+        </p>
+
+        <h2>5. Links</h2>
+        <p>
+          O airtonvancin.com não analisou todos os sites vinculados ao seu site
+          e não é responsável pelo conteúdo de nenhum site vinculado. A inclusão
+          de qualquer link não implica endosso por airtonvancin.com do site. O
+          uso de qualquer site vinculado é por conta e risco do usuário.
+        </p>
+
+        <div
+          class="mt-16 pt-8 border-t border-slate-100 text-sm text-slate-400"
+        >
+          <p>
+            Estes termos e condições são regidos e interpretados de acordo com
+            as leis do Brasil e você se submete irrevogavelmente à jurisdição
+            exclusiva dos tribunais naquele estado ou localidade.
+          </p>
+        </div>
+      </div>
     </div>
   </section>
 </Layout>

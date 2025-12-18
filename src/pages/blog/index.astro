@@ -15,7 +15,10 @@ const featuredPost = posts[0];
 const remainingPosts = posts.slice(1);
 ---
 
-<Layout>
+<Layout
+  title="Blog & Artigos de Tecnologia | Airton Vancin"
+  description="Explore artigos sobre desenvolvimento web, arquitetura de software, DevOps e as últimas tendências em tecnologia no blog de Airton Vancin."
+>
   <section
     class="w-full py-12 md:py-24 lg:py-32 bg-background flex flex-col items-center"
   >
@@ -44,10 +47,10 @@ const remainingPosts = posts.slice(1);
                 <img
                   src={
                     featuredPost.data.image ||
-                    "https://picsum.photos/600/400?grayscale"
+                    "/assets/images/blog/code-minimalist.jpg"
                   }
-                  alt={featuredPost.data.title}
-                  class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+                  alt={`Cover image for the article: ${featuredPost.data.title}`}
+                  class="object-cover w-full h-full transition-transform duration-700 group-hover:scale-105"
                 />
               </div>
               <div class="p-6 md:p-10 flex flex-col justify-center">

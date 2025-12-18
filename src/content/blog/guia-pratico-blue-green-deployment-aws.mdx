@@ -1,0 +1,57 @@
+---
+title: "Guia Prático: Blue-Green Deployment com AWS e GitHub Actions"
+description: "Aprenda como implementar uma estratégia de deploy com tempo de inatividade zero usando AWS S3, CloudFront e KVS para garantir 100% de uptime."
+date: "2025-07-05"
+image: "/assets/images/blog/aws-deployment.jpg"
+tags: ["AWS", "DevOps", "GitHubActions"]
+---
+
+Manter uma aplicação web sempre online é um dos maiores desafios de arquitetura. O famoso "estamos em manutenção" é coisa do passado. Hoje, vou te mostrar como eu implemento o **Blue-Green Deployment** de forma enxuta e eficiente usando o ecossistema da **AWS**.
+
+## Por que Blue-Green?
+
+A ideia é simples: você mantém dois ambientes idênticos.
+
+- **Blue**: A versão que está rodando em produção agora.
+- **Green**: A nova versão que você acabou de buildar e quer testar.
+
+O tráfego só muda para o **Green** depois que você confirma que tudo está 100%. Se algo der errado, o rollback é instantâneo: basta apontar o tráfego de volta para o **Blue**.
+
+## Minha Stack preferida para Zero Downtime
+
+Para sites estáticos (como este feito em Astro) ou SPAs, minha configuração vencedora é:
+
+1.  **AWS S3**: Para hospedar os arquivos estáticos de cada build em pastas separadas.
+2.  **AWS CloudFront**: A CDN que entrega seu site globalmente.
+3.  **Key Value Storage (KVS) at the edge**: Uso o KVS para armazenar a variável que indica qual pasta do S3 o CloudFront deve ler.
+4.  **GitHub Actions**: Para automatizar todo o processo.
+
+### O fluxo de CI/CD
+
+Meu workflow no GitHub Actions faz o seguinte:
+
+1.  Builda a aplicação Astro.
+2.  Gera um ID único para o deploy (normalmente o hash do commit).
+3.  Faz o upload para o S3 em `s3://meu-bucket/deploy-[hash]/`.
+4.  Executa um script que atualiza o valor no **KVS** da CloudFront Functions.
+
+```yaml
+# Trecho do meu GitHub Action
+- name: Deploy to S3
+  run: aws s3 sync ./dist s3://my-bucket/deploy-${{ github.sha }}
+
+- name: Switch Environment
+  run: node ./scripts/update-kvs.js ${{ github.sha }}
+```
+
+## O resultado real
+
+Desde que implementei essa estratégia, meus deploys pararam de ser momentos de tensão. Não existe mais aquele "limbo" de alguns segundos enquanto os arquivos são substituídos no servidor. O switch é atômico no nível da borda (Edge).
+
+## Conclusão
+
+Implementar Blue-Green Deployment exige um pouco mais de configuração inicial, mas o ganho em paz de espírito e confiabilidade é incalculável. Se você preza por **UX** e profissionalismo, essa é a única forma aceitável de fazer deploys em 2025.
+
+---
+
+**Você já teve problemas com downtime durante deploys? Como resolveu? Comente abaixo!**

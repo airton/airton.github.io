@@ -1,0 +1,53 @@
+---
+title: "Por que mudei meu portfólio para Astro: Performance e Islands Architecture"
+description: "Neste artigo, compartilho minha experiência migrando meu portfólio e blog para o Astro, e como a arquitetura de 'ilhas' mudou minha forma de pensar em performance web."
+date: "2025-05-15"
+image: "/assets/images/blog/astro-portfolio.jpg"
+tags: ["Astro", "React", "Performance"]
+---
+
+Depois de mais de 15 anos desenvolvendo para a web, a gente começa a notar padrões. Um desses padrões é a obesidade de JavaScript que injetamos em sites que poderiam ser, em sua essência, documentos estáticos. Meu portfólio antigo seguia essa tendência: era uma aplicação **Next.js** parruda, cheia de recursos, mas que entregava um bundle pesado para o usuário ler um simples artigo de blog.
+
+Foi então que decidi migrar para o **Astro**. E aqui conto o porquê dessa decisão ter sido um divisor de águas.
+
+## O problema do excesso de JavaScript
+
+Em aplicações complexas (dashboards, e-commerces com filtros pesados), o React é imbatível. Mas para um site de conteúdo, como este portfólio, o "custo do JS" é real. O navegador precisa baixar, parsear e executar o script antes que o usuário possa interagir plenamente.
+
+O Astro resolve isso com a filosofia **Zero JavaScript by Default**. Ele gera HTML estático no servidor e não envia uma única linha de JS para o cliente, a menos que você explicitamente peça.
+
+## A mágica da Islands Architecture
+
+O que me convenceu não foi apenas a velocidade, mas a **Islands Architecture** (Arquitetura de Ilhas). Imagine que você tem uma página estática, mas precisa de um botão de menu ou de um formulário de feedback interativo.
+
+No Astro, você pode criar esses componentes em **React**, **Vue** ou **Svelte**, e o framework isola esses componentes em "ilhas" de interatividade. Todo o resto permanece HTML puro e leve.
+
+### Exemplo de implementação dinâmica:
+
+Em um dos meus projetos de plugins, precisei de um modal de suporte (o famoso "Buy Me a Coffee"). Com o Astro, eu puxo o componente React apenas quando o botão é clicado (`client:click`), mantendo o peso inicial da página lá embaixo.
+
+```astro
+---
+import SupportModal from './SupportModal';
+---
+
+<SupportModal client:click />
+```
+
+## Minha experiência de migração
+
+Migrar não foi apenas trocar de framework, foi repensar a estrutura. Aproveitei para focar em **Core Web Vitals**.
+
+1.  **Imagens**: Usei o componente do Astro para otimização automática.
+2.  **CSS**: Adotei o Tailwind pela produtividade (e porque ele gera um CSS crítico mínimo).
+3.  **Content Collections**: Organizei meus posts de blog com schemas rigorosos em TypeScript, o que me poupa de bugs de formatação que eu tinha antigamente.
+
+## Vale a pena?
+
+Se você é um desenvolvedor que se importa com a experiência do usuário final e não quer lutar contra o lighthouse o tempo todo, a resposta é um sonoro **sim**.
+
+Meu site agora carrega quase que instantaneamente, o SEO melhorou (o Google adora HTML estático bem estruturado) e a experiência de desenvolvimento é fenomenal. O Astro me devolveu o prazer de escrever HTML, sem abrir mão do poder dos componentes modernos.
+
+---
+
+**Qual a sua stack favorita para portfólios hoje? Comente abaixo e vamos trocar uma ideia!**

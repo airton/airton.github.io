@@ -26,7 +26,11 @@ const getPluginBannerImageUrl = (slug: string) =>
 const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
 ---
 
-<Layout>
+<Layout
+  title={`${plugin.name} - WordPress Plugin | Airton Vancin`}
+  description={plugin.desc}
+  image={pluginImageUrl}
+>
   <div class="bg-slate-50/50 border-b border-slate-100">
     <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
       <a

@@ -1,0 +1,46 @@
+---
+title: "Supabase: O Backend que todo Desenvolvedor Full Stack deveria usar em 2025"
+description: "Cansado de configurar servidores e APIs do zero? Descubra como o Supabase se tornou minha ferramenta favorita para prototipar e escalar projetos rapidamente."
+date: "2025-06-10"
+image: "/assets/images/blog/supabase-backend.jpg"
+tags: ["Supabase", "FullStack", "Database"]
+---
+
+Como desenvolvedores Full Stack, muitas vezes caímos na armadilha de querer construir tudo do zero. Eu mesmo passei anos configurando instâncias PostgreSQL, lidando com JWT, refresh tokens e permissões de storage.
+
+Em 2025, o tempo é o nosso recurso mais escasso. É por isso que o **Supabase** se tornou meu braço direito em quase todos os novos projetos.
+
+## O que é o Supabase (além de ser o 'Firebase Open Source')?
+
+O Supabase não é apenas um banco de dados. É um ecossistema completo baseado no **PostgreSQL**. Isso é fundamental: você tem todo o poder das queries relacionais, triggers e views, mas com uma interface amigável e SDKs modernos.
+
+### 1. Autenticação que funciona
+
+Configurar um fluxo de login (Google, GitHub, E-mail) leva minutos, não horas. O sistema de **Row Level Security (RLS)** do Postgres é exposto de forma brilhante, permitindo que você controle quem pode ler ou escrever em cada linha do banco direto pela interface.
+
+### 2. Realtime por padrão
+
+Precisa de um chat ou um dashboard que atualiza sozinho? O Supabase escuta as mudanças no seu banco e notifica seu frontend em tempo real via WebSockets.
+
+## Casos de Uso no meu dia a dia
+
+Recentemente, precisei criar um sistema de gestão para um cliente que precisava de upload de arquivos pesados e controle de acesso rígido. Com o **Supabase Storage** e as políticas de RLS, implementei em dois dias o que antes levaria duas semanas.
+
+```sql
+-- Exemplo de política RLS no Supabase
+create policy "Usuários só podem ver seus próprios dados"
+  on profiles for select
+  using ( auth.uid() = id );
+```
+
+## A curva de aprendizado
+
+Se você já conhece SQL, você está 90% pronto. A diferença é que você para de se preocupar com a infraestrutura e foca na **regra de negócio**.
+
+## Conclusão
+
+O Supabase não é apenas uma facilidade; é uma decisão estratégica. Ele me permite entregar projetos com qualidade de nível enterprise sendo um desenvolvedor solo ou em times pequenos. Para quem busca escalar sem dor de cabeça, é a escolha óbvia hoje.
+
+---
+
+**Já usou Supabase ou ainda prefere o setup manual de servidores? Me conta sua experiência nos comentários!**

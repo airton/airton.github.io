@@ -1,80 +1,174 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import {
+  IconShieldCheck,
+  IconCookie,
+  IconGavel,
+  IconMail,
+} from "@tabler/icons-react";
 ---
 
-<Layout>
-  <section class="w-full py-12 md:py-24 lg:py-32 flex justify-center">
-    <div class="container px-4 md:px-6 max-w-4xl">
+<Layout
+  title="Políticas de Privacidade | Airton Vancin"
+  description="Transparência e respeito com seus dados. Conheça as políticas de privacidade e termos do site airtonvancin.com."
+>
+  <div class="bg-slate-50 border-b border-slate-100">
+    <div
+      class="container px-4 md:px-6 py-16 md:py-24 max-w-4xl mx-auto text-center"
+    >
+      <div
+        class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6"
+      >
+        <IconShieldCheck className="w-4 h-4" />
+        Privacy & Trust
+      </div>
       <h1
-        class="scroll-m-20 text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
+        class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-6"
       >
         Políticas de Privacidade
       </h1>
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Última atualização: 24 Outubro, 2024
+      <p class="text-lg text-slate-500 font-serif italic max-w-2xl mx-auto">
+        Transparência sobre como tratamos seus dados e garantimos sua
+        privacidade ao navegar no airtonvancin.com.
       </p>
+      <div class="mt-8 text-sm text-slate-400 font-medium">
+        Última atualização: 18 de Dezembro, 2025
+      </div>
+    </div>
+  </div>
 
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Esta página informa sobre nossas políticas relacionadas à coleta, uso e
-        divulgação de dados pessoais quando você usa nosso Serviço e as escolhas
-        que você associou a esses dados.
-      </p>
-
-      <p class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words">
-        Usamos seus dados para fornecer e melhorar o Serviço. Ao usar o Serviço,
-        você concorda com a coleta e uso de informações de acordo com esta
-        política. A menos que definido de outra forma nesta Política de
-        Privacidade, os termos usados nesta Política de Privacidade têm os
-        mesmos significados que em nossos Termos e Condições.
-      </p>
-
-      <h2
-        class="text-2xl font-bold tracking-tighter sm:text-2xl md:text-3xl lg:text-4xl/none text-slate-900"
+  <section class="w-full py-20 bg-white flex justify-center">
+    <div class="container px-4 md:px-6 max-w-3xl">
+      <div
+        class="prose prose-slate prose-lg max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-relaxed prose-strong:text-slate-900 prose-li:text-slate-600"
       >
-        Definições
-      </h2>
-      <ul class="text-slate-900 font-medium text-md !mb-4 !lg:mb-6 pb-4 block">
-        <li>
-          <strong>Coleta de Informações</strong>
-          <p
-            class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words"
-          >
-            O site airtonvancin.com coleta informações pessoais, como nome e
-            endereço de e-mail, por meio de formulários de contato e para
-            processamento de compras de produtos digitais.
+        <p>
+          Sua privacidade é importante para nós. É política do <strong
+            >airtonvancin.com</strong
+          > respeitar a sua privacidade em relação a qualquer informação sua que possamos
+          coletar no site, e outros sites que possuímos e operamos.
+        </p>
+
+        <h2>1. Coleta e Uso de Informações</h2>
+        <p>
+          Solicitamos informações pessoais apenas quando realmente precisamos
+          delas para lhe fornecer um serviço. Fazemo-lo por meios justos e
+          legais, com o seu conhecimento e consentimento. Também informamos por
+          que estamos coletando e como será usado.
+        </p>
+        <p>
+          Apenas retemos as informações coletadas pelo tempo necessário para
+          fornecer o serviço solicitado. Quando armazenamos dados, os protegemos
+          dentro de meios comercialmente aceitáveis ​​para evitar perdas e
+          roubos, bem como acesso, divulgação, cópia, uso ou modificação não
+          autorizados.
+        </p>
+
+        <h2>2. Google AdSense e Cookies</h2>
+        <div
+          class="bg-indigo-50/50 border border-indigo-100 p-8 rounded-[2rem] my-10 space-y-4"
+        >
+          <div class="flex items-center gap-3 text-indigo-600 font-bold mb-2">
+            <IconCookie className="w-6 h-6" />
+            <span>Divulgação AdSense</span>
+          </div>
+          <p class="text-sm leading-relaxed text-indigo-900/80">
+            O Google, como fornecedor terceirizado, utiliza cookies para exibir
+            anúncios em nosso site. Com o uso do cookie DART, o Google pode
+            exibir anúncios para você com base na sua visita a este e a outros
+            sites na Internet.
           </p>
-        </li>
-        <li>
-          <strong>Uso das Informações</strong>
-          <p
-            class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words"
+          <ul class="text-sm text-indigo-900/80 space-y-2 mb-0">
+            <li>
+              Terceiros, incluindo o Google, utilizam cookies para veicular
+              anúncios com base em visitas anteriores do usuário ao seu website
+              ou a outros websites.
+            </li>
+            <li>
+              Com o uso de cookies de publicidade, o Google e os parceiros dele
+              podem veicular anúncios para os usuários com base nas visitas
+              feitas aos seus sites e/ou a outros sites na Internet.
+            </li>
+            <li>
+              Os usuários podem desativar a publicidade personalizada acessando
+              as <a
+                href="https://www.google.com/settings/ads"
+                target="_blank"
+                class="text-indigo-600 font-bold underline"
+                >Configurações de anúncios</a
+              >.
+            </li>
+            <li>
+              Como alternativa, você pode acessar o site <a
+                href="https://www.aboutads.info"
+                target="_blank"
+                class="text-indigo-600 font-bold underline">www.aboutads.info</a
+              > para desativar o uso de cookies de publicidade personalizada de terceiros.
+            </li>
+          </ul>
+        </div>
+
+        <h2>3. Links para Terceiros</h2>
+        <p>
+          Nosso site pode ter links para sites externos que não são operados por
+          nós. Esteja ciente de que não temos controle sobre o conteúdo e
+          práticas desses sites e não podemos aceitar responsabilidade por suas
+          respectivas políticas de privacidade.
+        </p>
+
+        <h2>4. Compromisso do Usuário</h2>
+        <p>
+          O usuário se compromete a fazer uso adequado dos conteúdos e da
+          informação que o airtonvancin.com oferece no site e com caráter
+          enunciativo, mas não limitativo:
+        </p>
+        <ul>
+          <li>
+            A) Não se envolver em atividades que sejam ilegais ou contrárias à
+            boa fé a à ordem pública;
+          </li>
+          <li>
+            B) Não divulgar conteúdo ou propaganda de natureza racista,
+            xenofóbica, ou sobre cassinos, casas de apostas online (ex: betano),
+            jogos de sorte e azar, qualquer tipo de pornografia ilegal, de
+            apologia ao terrorismo ou contra os direitos humanos;
+          </li>
+          <li>
+            C) Não causar danos aos sistemas físicos (hardwares) e lógicos
+            (softwares) do airtonvancin.com, de seus fornecedores ou terceiros.
+          </li>
+        </ul>
+
+        <h2>5. Mais informações</h2>
+        <p>
+          Esperemos que esteja esclarecido e, como mencionado anteriormente, se
+          houver algo que você não tem certeza se precisa ou não, geralmente é
+          mais seguro deixar os cookies ativados, caso interaja com um dos
+          recursos que você usa em nosso site.
+        </p>
+
+        <div
+          class="flex flex-col sm:flex-row items-center gap-6 mt-16 p-10 bg-slate-900 rounded-[2.5rem] text-white"
+        >
+          <div
+            class="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center flex-shrink-0"
           >
-            As informações coletadas são utilizadas para fornecer conteúdos de
-            tecnologia, compartilhar projetos pessoais e facilitar a compra de
-            produtos digitais. Não compartilhamos essas informações com
-            terceiros sem consentimento.
-          </p>
-        </li>
-        <li>
-          <strong>Cookies</strong>
-          <p
-            class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words"
-          >
-            Utilizamos cookies para melhorar a experiência do usuário e analisar
-            o tráfego do site. Os usuários podem gerenciar as configurações de
-            cookies em seus navegadores.
-          </p>
-        </li>
-        <li>
-          <strong>Segurança</strong>
-          <p
-            class="text-slate-900 font-medium text-md mb-4 lg:mb-6 break-words"
-          >
-            Implementamos medidas de segurança para proteger as informações dos
-            usuários contra acesso não autorizado ou divulgação.
-          </p>
-        </li>
-      </ul>
+            <IconMail className="w-8 h-8 text-indigo-400" />
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1 text-white">
+              Dúvidas sobre privacidade?
+            </h3>
+            <p class="text-slate-400 text-sm mb-0 leading-relaxed">
+              Esta política é efetiva a partir de Dezembro/2025. Se tiver
+              dúvidas, entre em contato pelo e-mail <a
+                href="mailto:airtonvancin@gmail.com"
+                class="text-indigo-400 font-bold">airtonvancin@gmail.com</a
+              >.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </Layout>

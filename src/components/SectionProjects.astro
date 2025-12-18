@@ -14,18 +14,19 @@ import { projects } from "../data/projects";
       <div class="max-w-2xl">
         <div class="inline-flex items-center gap-2 text-indigo-600 font-medium text-sm tracking-wider uppercase mb-3 text-left">
           <IconCode className="w-4 h-4" />
-          Featured Work
+          Trabalhos em Destaque
         </div>
         <h2 class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 text-left">
-          Selected Projects
+        <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]">
+          Alguns cases de sucesso e projetos de código aberto.
         </h2>
         <p class="text-lg text-slate-500 font-serif italic text-left">
-          A collection of digital products and open-source initiatives built with precision and modern tech.
+          Uma coleção de produtos digitais e iniciativas open-source construídos com precisão e tecnologia moderna.
         </p>
       </div>
       <div class="hidden md:block">
         <p class="text-slate-400 text-sm max-w-[200px] text-right">
-          Showcasing expertise in full-stack development and UI/UX design.
+          Demonstrando expertise em desenvolvimento full-stack e design de UI/UX.
         </p>
       </div>
     </div>
@@ -38,8 +39,8 @@ import { projects } from "../data/projects";
             <Card className="h-full bg-white border-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05),0_10px_20px_-2px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] group-hover:-translate-y-2 transition-all duration-500 rounded-[2rem] overflow-hidden flex flex-col">
               <div class="relative aspect-[16/10] overflow-hidden">
                 <img
-                  src={`https://picsum.photos/id/${image}/800/500?grayscale`}
-                  alt={name}
+                  src={`/assets/images/projects/${image}`}
+                  alt={`Preview do projeto ${name}`}
                   class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity"></div>

@@ -1,0 +1,46 @@
+---
+title: "TypeScript: Como Parei de Correr Atrás de Bugs em Produção"
+description: "Confissões de um desenvolvedor que resistiu ao TypeScript e hoje não vive sem. Descubra como a tipagem estática mudou minha produtividade."
+date: "2025-09-20"
+image: "/assets/images/blog/typescript-bugs.jpg"
+tags: ["TypeScript", "JavaScript", "Quality"]
+---
+
+"Não consigo ler a propriedade 'map' de undefined". Se você é desenvolvedor JavaScript, essa frase provavelmente te causa calafrios. Durante anos, eu aceitei esses erros de runtime como parte "do jogo". Eu me achava um dev experiente o suficiente para não precisar de um compilador me dizendo o que fazer.
+
+Eu estava errado. O **TypeScript** não é sobre "restrição", é sobre **confiança**.
+
+## O Ponto de Virada
+
+O momento em que o TypeScript me ganhou não foi em um "Hello World", mas em um refactor de um sistema legado de grande escala. Eu precisava mudar o nome de um campo em uma API que era consumida por 50 componentes diferentes.
+
+No JS puro, eu teria que fazer um `grep` e torcer para não ter esquecido nada. Com TypeScript, o VS Code gritou em vermelho em todos os lugares que precisavam de ajuste. Foi ali que percebi: o TypeScript é um **documento vivo** do meu código.
+
+## Por que 15 anos de experiência me fazem amar o TS?
+
+Quanto mais tempo você trabalha com software, mais você valoriza a **manutenibilidade**.
+
+1.  **Autocomplete Inteligente**: Eu não preciso mais decorar qual é o formato do objeto que vem do banco. O TS me diz.
+2.  **Refactoring Seguro**: Você pode mudar a estrutura do seu código com a certeza de que o compilador vai te apontar os erros antes mesmo de você rodar o projeto.
+3.  **Documentação implícita**: Ver as interfaces de um projeto novo é a melhor maneira de entender como ele funciona rapidamente.
+
+## A "burocracia" vale a pena?
+
+Muitos devs reclamam que precisam escrever "mais código" com TS. No início, sim. Mas o tempo que você "perde" definindo um tipo, você ganha dez vezes mais não precisando debugar um erro bobo em produção às 2 da manhã.
+
+```typescript
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  role: "admin" | "user" | "editor"; // Garantia de que não haverá valores inesperados
+}
+```
+
+## Conclusão
+
+Hoje, escrever JavaScript puro pra mim parece uma aventura sem rede de proteção. O TypeScript se tornou o padrão da indústria por um motivo simples: ele funciona. Se você ainda não migrou, comece pequeno, mas comece. Sua saúde mental agradece.
+
+---
+
+**Qual foi o bug mais bizarro que o TypeScript (ou a falta dele) já te causou? Vamos rir da nossa própria desgraça nos comentários!**
