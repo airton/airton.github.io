@@ -9,6 +9,7 @@ export interface PluginData {
   features: string[];
   installation: string;
   faq: { question: string; answer: string }[];
+  video?: string;
 }
 
 export const plugins: PluginData[] = [
@@ -178,6 +179,7 @@ export const plugins: PluginData[] = [
       "Criação automática de usuários no primeiro login (JIT Provisioning).",
       "Logs de depuração para facilitar a configuração.",
     ],
+    video: "/assets/videos/jump-demo.mp4",
     installation: `
             <ol>
                 <li>Instale o plugin e ative-o.</li>

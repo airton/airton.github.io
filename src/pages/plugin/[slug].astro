@@ -107,6 +107,30 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
         <div set:html={plugin.fullDescription} />
       </section>
 
+      <!-- Video Demo -->
+      {
+        plugin.video && (
+          <section>
+            <div class="flex items-center gap-4 mb-10">
+              <h2 class="text-3xl font-bold text-slate-900">Demo Video</h2>
+              <div class="h-px flex-grow bg-slate-100" />
+            </div>
+            <div class="relative group">
+              <div class="absolute -inset-4 bg-gradient-to-tr from-blue-500/5 to-purple-500/5 rounded-[2.5rem] blur-2xl group-hover:opacity-100 transition-opacity opacity-0" />
+              <div class="relative overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-900 shadow-2xl">
+                <video
+                  src={plugin.video}
+                  controls
+                  class="w-full aspect-video object-cover"
+                >
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
       <!-- Features -->
       <section>
         <div class="flex items-center gap-4 mb-10">
