@@ -17,7 +17,8 @@ export const plugins: PluginData[] = [
     name: "Video Destacado",
     slug: "video-destacado",
     desc: "A plugin to set a featured video for posts.",
-    image: "",
+    image:
+      "https://via.placeholder.com/772x250/cccccc/ffffff?text=Video+Destacado+Banner",
     link: "https://wordpress.org/plugins/video-destacado/",
     fullDescription: `
             <p>O <strong>Video Destacado</strong> é uma solução robusta e intuitiva para editores e desenvolvedores WordPress que desejam ir além das imagens destacadas tradicionais. Com o crescimento exponencial do consumo de vídeo na web, ter a capacidade de destacar vídeos diretamente na listagem de posts ou no topo de seus artigos é fundamental para aumentar o engajamento.</p>
@@ -66,7 +67,8 @@ export const plugins: PluginData[] = [
     name: "Manage User Roles",
     slug: "manage-user-roles",
     desc: "A plugin to manage user roles and capabilities.",
-    image: "",
+    image:
+      "https://via.placeholder.com/772x250/cccccc/ffffff?text=Manage+User+Roles+Banner",
     link: "https://wordpress.org/plugins/manage-user-roles/",
     fullDescription: `
             <p>O <strong>Manage User Roles</strong> é a ferramenta definitiva para administradores de sites WordPress que precisam de controle granular sobre o que seus usuários podem ou não fazer. O sistema de funções (roles) e capacidades (capabilities) do WordPress é poderoso, mas muitas vezes difícil de gerenciar sem editar código. Este plugin resolve isso trazendo uma interface visual simples e poderosa.</p>
@@ -111,13 +113,14 @@ export const plugins: PluginData[] = [
     name: "Nudge SEO AI",
     slug: "nudge-seo-ai",
     desc: "An AI-powered SEO plugin to help you with your content.",
-    image: "",
+    image:
+      "https://via.placeholder.com/772x250/cccccc/ffffff?text=Nudge+SEO+AI+Banner",
     link: "https://wordpress.org/plugins/nudge-seo-ai/",
     fullDescription: `
             <p><strong>Nudge SEO AI</strong> revoluciona a maneira como você otimiza seu conteúdo para motores de busca. Em vez de apenas verificar checklists estáticos como plugins de SEO tradicionais, o Nudge utiliza inteligência artificial avançada para analisar seu texto e oferecer sugestões contextuais, criativas e estratégicas para melhorar seu ranking.</p>
 
             <p>A criação de conteúdo otimizado para SEO pode ser exaustiva. Encontrar as palavras-chave certas, manter a densidade adequada sem parecer robótico e garantir a legibilidade são desafios constantes. O Nudge SEO AI atua como um editor assistente inteligente, sugerindo melhorias em tempo real enquanto você escreve.</p>
-
+            
             <h3>Inteligência Artificial a seu Favor</h3>
             <p>O plugin analisa os "Top 10" resultados do Google para sua palavra-chave foco e identifica padrões que estão funcionando para seus concorrentes. Ele então sugere tópicos a serem cobertos, perguntas a serem respondidas e termos relacionados a serem incluídos, tudo para aumentar a relevância tópica do seu artigo.</p>
         `,
@@ -153,13 +156,14 @@ export const plugins: PluginData[] = [
   },
   {
     id: 4,
-    name: "JumpCloud SSO Connector",
-    slug: "jumpcloud-sso-connector",
+    name: "SSO Connector for JumpCloud",
+    slug: "sso-connector-for-jumpcloud",
     desc: "A plugin to connect your WordPress site with JumpCloud SSO.",
-    image: "",
-    link: "http://wordpress.org/plugins/search/jumpcloud-sso-connector/",
+    image:
+      "https://ps.w.org/sso-connector-for-jumpcloud/assets/banner-1544x500.png?rev=3421110",
+    link: "https://wordpress.org/plugins/sso-connector-for-jumpcloud/",
     fullDescription: `
-            <p>Segurança e facilidade de acesso são primordiais em ambientes corporativos. O <strong>JumpCloud SSO Connector</strong> permite que sua organização integre autenticação Single Sign-On (SSO) baseada em SAML 2.0 diretamente no seu site WordPress. Isso significa que seus funcionários ou membros podem fazer login no WordPress usando suas credenciais corporativas do JumpCloud, sem precisar memorizar mais uma senha.</p>
+            <p>Segurança e facilidade de acesso são primordiais em ambientes corporativos. O <strong>SSO Connector for JumpCloud</strong> permite que sua organização integre autenticação Single Sign-On (SSO) baseada em SAML 2.0 diretamente no seu site WordPress. Isso significa que seus funcionários ou membros podem fazer login no WordPress usando suas credenciais corporativas do JumpCloud, sem precisar memorizar mais uma senha.</p>
 
             <p>Este plugin foi projetado para simplificar a configuração complexa de SAML. Com campos claros e instruções passo-a-passo, você estabelece a relação de confiança entre o JumpCloud (Identity Provider) e seu WordPress (Service Provider) em minutos.</p>
 
@@ -167,7 +171,7 @@ export const plugins: PluginData[] = [
             <p>Ao centralizar a autenticação, você ganha controle total sobre quem acessa seu site. Se um funcionário deixa a empresa e é removido do JumpCloud, ele perde automaticamente o acesso ao WordPress, fechando brechas de segurança comuns.</p>
         `,
     features: [
-      "Suporte nativo a SAML 2.0.",
+      "Suporte a SAML 2.0.",
       "Mapeamento de atributos (Email, Nome, Sobrenome).",
       "Mapeamento de grupos do JumpCloud para funções do WordPress (Ex: Grupo 'Admins' -> Função 'Administrator').",
       "Login forçado (redirecionamento automático para SSO).",

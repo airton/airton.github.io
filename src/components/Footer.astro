@@ -117,13 +117,13 @@ const currentYear = new Date().getFullYear();
         <h3 class="font-bold text-lg">Projetos</h3>
         <ul class="space-y-2 text-sm">
           {
-            projects.map((project) => (
+            projects.map(({ slug, name }) => (
               <li>
                 <a
-                  href={`/project/${project.slug}`}
+                  href={new URL(`/project/${slug}`, Astro.url).toString()}
                   class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
                 >
-                  {project.name}
+                  {name}
                 </a>
               </li>
             ))
@@ -135,13 +135,13 @@ const currentYear = new Date().getFullYear();
         <h3 class="font-bold text-lg">Plugins WP</h3>
         <ul class="space-y-2 text-sm">
           {
-            plugins.map((plugin) => (
+            plugins.map(({ slug, name }) => (
               <li>
                 <a
-                  href={`/plugin/${plugin.slug}`}
+                  href={new URL(`/plugin/${slug}`, Astro.url).toString()}
                   class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
                 >
-                  {plugin.name}
+                  {name}
                 </a>
               </li>
             ))
