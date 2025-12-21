@@ -21,7 +21,7 @@ export function Navigation() {
   return (
     <>
       {/* Desktop Navigation */}
-      <Menubar className="hidden md:flex rounded-full border-foreground shadow-lg gap-4 opacity-95 bg-white dark:bg-gray-900 px-4">
+      <Menubar className="hidden md:flex rounded-full border-foreground shadow-lg gap-4 opacity-95 bg-white dark:bg-gray-900 pr-1">
         <UserAvatar />
         {navItems.map((item) => (
           <MenubarMenu key={item.href}>
