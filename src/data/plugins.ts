@@ -10,6 +10,11 @@ export interface PluginData {
   installation: string;
   faq: { question: string; answer: string }[];
   video?: string;
+  premium?: {
+    features: string[];
+    description: string;
+    howToActivate?: string[];
+  };
 }
 
 export const plugins: PluginData[] = [
@@ -201,5 +206,23 @@ export const plugins: PluginData[] = [
           "Existe uma URL de bypass de emergência que pode ser configurada para permitir login com credenciais locais do WordPress.",
       },
     ],
+    premium: {
+      description:
+        "Unlock the full power of your enterprise identity management with advanced features designed for scale and security.",
+      features: [
+        "Group-Based Access Control: Restrict login access to specific JumpCloud groups.",
+        "Role-Based Redirects: Define custom landing pages for different user roles.",
+        "Automated Role Mapping: Dynamically assign WordPress roles based on JumpCloud groups.",
+        "Comprehensive Audit Logs: Track every SSO login attempt with detailed metadata.",
+        "Enterprise Support: Priority assistance for complex deployments.",
+      ],
+      howToActivate: [
+        "Go to the Premium Features tab in the plugin settings.",
+        "If you don’t have a subscription yet, use the secure Stripe pricing table to subscribe.",
+        "Once subscribed, simply click the “Check Subscription Status” button.",
+        "The plugin will automatically verify your subscription using your administrator email and activate all premium features instantly.",
+        "You can manage your subscription at any time via the Stripe Customer Portal link provided in the same tab.",
+      ],
+    },
   },
 ];

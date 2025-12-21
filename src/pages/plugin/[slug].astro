@@ -9,6 +9,8 @@ import {
   IconDownload,
   IconCircleCheck,
   IconQuestionMark,
+  IconSparkles,
+  IconRocket,
 } from "@tabler/icons-react";
 
 export async function getStaticPaths() {
@@ -125,6 +127,104 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                 >
                   Your browser does not support the video tag.
                 </video>
+              </div>
+            </div>
+          </section>
+        )
+      }
+
+      <!-- Premium Features -->
+      {
+        plugin.premium && (
+          <section class="relative">
+            <div class="absolute -inset-1 bg-gradient-to-r from-blue-600 to-purple-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
+            <div class="relative bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-xl overflow-hidden">
+              <div class="absolute top-0 right-0 p-8 text-blue-100/20">
+                <IconSparkles size={120} />
+              </div>
+
+              <div class="relative">
+                <div class="flex items-center gap-3 mb-6">
+                  <div class="p-2 bg-blue-600 rounded-lg text-white">
+                    <IconSparkles className="w-6 h-6" />
+                  </div>
+                  <h2 class="text-3xl font-bold text-slate-900">
+                    Premium Features
+                  </h2>
+                </div>
+
+                <p class="text-lg text-slate-600 mb-10 leading-relaxed max-w-2xl">
+                  {plugin.premium.description}
+                </p>
+
+                <div class="grid sm:grid-cols-2 gap-x-12 gap-y-6">
+                  <div class="space-y-6">
+                    <h3 class="text-sm font-bold text-blue-600 uppercase tracking-widest flex items-center gap-2">
+                      <IconSparkles className="w-4 h-4" /> Features Included
+                    </h3>
+                    <div class="grid gap-4">
+                      {plugin.premium.features.map((feature) => (
+                        <div class="flex items-start gap-3">
+                          <div class="p-1 bg-blue-50 rounded-full text-blue-600 mt-0.5">
+                            <IconCircleCheck className="w-3.5 h-3.5" />
+                          </div>
+                          <span class="text-slate-700 font-medium leading-snug">
+                            {feature}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+
+                  {plugin.premium.howToActivate && (
+                    <div class="space-y-6">
+                      <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest flex items-center gap-2">
+                        <IconRocket className="w-4 h-4" /> How to Activate
+                      </h3>
+                      <div class="grid gap-4">
+                        {plugin.premium.howToActivate.map((step, index) => (
+                          <div class="flex items-start gap-4">
+                            <div class="flex-shrink-0 w-6 h-6 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-xs font-bold">
+                              {index + 1}
+                            </div>
+                            <span class="text-slate-600 text-sm leading-relaxed">
+                              {step}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div class="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-8">
+                  <div class="flex items-center gap-4">
+                    <div class="hidden sm:flex w-12 h-12 bg-green-50 rounded-full items-center justify-center text-green-600">
+                      <IconCircleCheck className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <p class="text-sm font-bold text-slate-900 mb-1">
+                        Premium Subscription
+                      </p>
+                      <p class="text-slate-500 text-sm">
+                        Monthly or annual plans available via Stripe
+                      </p>
+                    </div>
+                  </div>
+                  <Button
+                    className="rounded-full px-10 h-14 bg-blue-600 hover:bg-blue-700 text-base font-bold shadow-xl shadow-blue-500/20 transform hover:-translate-y-0.5 transition-all"
+                    asChild
+                  >
+                    <a
+                      href={plugin.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Upgrade to Premium{" "}
+                      <IconSparkles className="ml-2 w-5 h-5" />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </section>
