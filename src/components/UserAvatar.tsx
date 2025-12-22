@@ -5,7 +5,7 @@ export function UserAvatar() {
         href="/"
         className="w-[30px] h-[30px] rounded-full block overflow-hidden"
       >
-        <img src="https://github.com/airton.png" className="p-0 m-0 " />
+        <img src="/assets/images/profile-avatar.avif" className="p-0 m-0 " />
       </a>
     </div>
   );
