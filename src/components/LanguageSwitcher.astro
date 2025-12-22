@@ -1,0 +1,72 @@
+---
+
+---
+
+<div class="fixed top-6 right-6 z-50">
+  <div
+    class="bg-white/80 backdrop-blur-md border border-slate-200 rounded-full p-1 shadow-lg flex items-center gap-1"
+  >
+    <button
+      id="lang-en"
+      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 bg-blue-600 text-white"
+    >
+      EN
+    </button>
+    <button
+      id="lang-pt"
+      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 text-slate-400 hover:text-slate-600"
+    >
+      PT
+    </button>
+  </div>
+</div>
+
+<script is:inline>
+  const enBtn = document.getElementById("lang-en");
+  const ptBtn = document.getElementById("lang-pt");
+
+  const setLanguage = (lang) => {
+    document.documentElement.setAttribute("data-lang", lang);
+    localStorage.setItem("plugin-lang", lang);
+
+    if (lang === "en") {
+      enBtn.classList.add("bg-blue-600", "text-white");
+      enBtn.classList.remove("text-slate-400", "hover:text-slate-600");
+      ptBtn.classList.remove("bg-blue-600", "text-white");
+      ptBtn.classList.add("text-slate-400", "hover:text-slate-600");
+    } else {
+      ptBtn.classList.add("bg-blue-600", "text-white");
+      ptBtn.classList.remove("text-slate-400", "hover:text-slate-600");
+      enBtn.classList.remove("bg-blue-600", "text-white");
+      enBtn.classList.add("text-slate-400", "hover:text-slate-600");
+    }
+
+    // Update all elements with data-en and data-pt
+    document.querySelectorAll("[data-en]").forEach((el) => {
+      const content =
+        lang === "en" ? el.getAttribute("data-en") : el.getAttribute("data-pt");
+      if (el.tagName === "IMG") {
+        el.alt = content;
+      } else if (el.hasAttribute("set-html")) {
+        el.innerHTML = content;
+      } else {
+        el.textContent = content;
+      }
+    });
+
+    // Handle sections that are toggled entirely
+    document.querySelectorAll(".lang-en-only").forEach((el) => {
+      el.style.display = lang === "en" ? "" : "none";
+    });
+    document.querySelectorAll(".lang-pt-only").forEach((el) => {
+      el.style.display = lang === "pt" ? "" : "none";
+    });
+  };
+
+  enBtn?.addEventListener("click", () => setLanguage("en"));
+  ptBtn?.addEventListener("click", () => setLanguage("pt"));
+
+  // Initialize from localStorage or default to English
+  const savedLang = localStorage.getItem("plugin-lang") || "en";
+  setLanguage(savedLang);
+</script>

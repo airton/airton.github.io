@@ -33,7 +33,7 @@ import { plugins } from "../data/plugins";
     <!-- Plugins Grid -->
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
       {
-        plugins.map(({ name, desc, slug }) => (
+        plugins.map(({ name, pt, slug }) => (
           <a href={`/plugin/${slug}`} class="group block h-full">
             <Card className="h-full bg-white border-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] group-hover:-translate-y-1 transition-all duration-500 rounded-3xl overflow-hidden flex flex-col">
               <CardContent className="p-8 flex-grow flex flex-col">
@@ -50,7 +50,7 @@ import { plugins } from "../data/plugins";
                   {name}
                 </h3>
                 <p class="text-slate-500 text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
-                  {desc}
+                  {pt.desc}
                 </p>
                 
                 <!-- Footer -->
