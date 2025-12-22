@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import { IconHome, IconSearch, IconArrowLeft } from "@tabler/icons-react";
+import LanguageSwitcher from "../components/LanguageSwitcher.astro";
+
+const labels = {
+  title: { en: "404 - Page Not Found", pt: "404 - Página não encontrada" },
+  heading: { en: "Lost in space?", pt: "Perdido no espaço?" },
+  description: {
+    en: "The page you're looking for doesn't exist or has been moved to a different galaxy.",
+    pt: "A página que você está procurando não existe ou foi movida para uma galáxia diferente.",
+  },
+  back_home: { en: "Back to Home", pt: "Voltar para Início" },
+  search_plugins: { en: "Search Plugins", pt: "Ver Plugins" },
+  search_projects: { en: "Search Projects", pt: "Ver Projetos" },
+};
+---
+
+<Layout
+  title="404 - Page Not Found | Airton Vancin"
+  description="The page you are looking for does not exist."
+>
+  <div
+    class="min-h-[80vh] flex items-center justify-center p-4 relative overflow-hidden"
+  >
+    <!-- Abstract Background Decorations -->
+    <div
+      class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl animate-pulse"
+    >
+    </div>
+    <div
+      class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-100/50 rounded-full blur-3xl animate-pulse delay-700"
+    >
+    </div>
+
+    <div class="relative z-10 text-center max-w-2xl px-4">
+      <!-- 404 Visual -->
+      <div class="relative inline-block mb-8">
+        <h1
+          class="text-[12rem] md:text-[18rem] font-black leading-none tracking-tighter text-slate-100/80 dark:text-slate-800/50 select-none"
+        >
+          404
+        </h1>
+        <div class="absolute inset-0 flex items-center justify-center">
+          <div
+            class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl"
+          >
+            <span
+              class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
+              data-en={labels.heading.en}
+              data-pt={labels.heading.pt}
+            >
+              {labels.heading.en}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Text Content -->
+      <p
+        class="text-xl text-slate-600 dark:text-slate-400 mb-12 leading-relaxed font-serif italic"
+        data-en={labels.description.en}
+        data-pt={labels.description.pt}
+      >
+        {labels.description.en}
+      </p>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <Button
+          size="lg"
+          className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-blue-500/20 bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+          asChild
+        >
+          <a href="/">
+            <IconHome className="mr-2 h-5 w-5" />
+            <span data-en={labels.back_home.en} data-pt={labels.back_home.pt}
+              >{labels.back_home.en}</span
+            >
+          </a>
+        </Button>
+
+        <div class="flex gap-4 w-full sm:w-auto">
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full px-8 h-14 text-base font-bold border-slate-200 hover:bg-slate-50 flex-1 sm:flex-none"
+            asChild
+          >
+            <a href="/plugins">
+              <span
+                data-en={labels.search_plugins.en}
+                data-pt={labels.search_plugins.pt}
+                >{labels.search_plugins.en}</span
+              >
+            </a>
+          </Button>
+
+          <Button
+            variant="outline"
+            size="lg"
+            className="rounded-full px-8 h-14 text-base font-bold border-slate-200 hover:bg-slate-50 flex-1 sm:flex-none"
+            asChild
+          >
+            <a href="/projetos">
+              <span
+                data-en={labels.search_projects.en}
+                data-pt={labels.search_projects.pt}
+                >{labels.search_projects.en}</span
+              >
+            </a>
+          </Button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <LanguageSwitcher />
+</Layout>

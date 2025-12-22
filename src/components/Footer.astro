@@ -114,7 +114,14 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
-        <h3 class="font-bold text-lg">Projetos</h3>
+        <div class="flex items-center justify-between w-full">
+          <h3 class="font-bold text-lg">Projetos</h3>
+          <a
+            href="/projetos"
+            class="text-xs text-indigo-600 hover:underline font-medium"
+            >Ver todos</a
+          >
+        </div>
         <ul class="space-y-2 text-sm">
           {
             projects.map(({ slug, name }) => (
@@ -132,7 +139,14 @@ const currentYear = new Date().getFullYear();
       </div>
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
-        <h3 class="font-bold text-lg">Plugins WP</h3>
+        <div class="flex items-center justify-between w-full">
+          <h3 class="font-bold text-lg">Plugins WP</h3>
+          <a
+            href="/plugins"
+            class="text-xs text-blue-600 hover:underline font-medium"
+            >Ver todos</a
+          >
+        </div>
         <ul class="space-y-2 text-sm">
           {
             plugins.map(({ slug, name }) => (
