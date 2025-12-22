@@ -10,6 +10,7 @@ import {
   IconQuestionMark,
   IconLayersIntersect,
 } from "@tabler/icons-react";
+import { Image } from "astro:assets";
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -24,7 +25,7 @@ const { project } = Astro.props;
 <Layout
   title={`${project.name} - Case Study | Airton Vancin`}
   description={project.desc}
-  image={`/assets/images/projects/${project.image}`}
+  image={project.image.src}
 >
   <div class="bg-white border-b border-slate-100">
     <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
@@ -89,10 +90,12 @@ const { project } = Astro.props;
           <div
             class="relative overflow-hidden rounded-[2.5rem] border border-slate-100 shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
           >
-            <img
-              src={`/assets/images/projects/${project.image}`}
+            <Image
+              src={project.image}
               alt={project.name}
               class="w-full aspect-[4/3] object-cover grayscale transition-all duration-1000 group-hover:grayscale-0"
+              width={1200}
+              height={900}
             />
           </div>
         </div>

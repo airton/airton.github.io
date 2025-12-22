@@ -13,6 +13,17 @@ export default defineConfig({
   site: "https://airtonvancin.com",
   integrations: [mdx(), sitemap(), react()],
 
+  image: {
+    layout: "constrained",
+    responsiveStyles: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },

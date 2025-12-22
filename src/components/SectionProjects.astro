@@ -2,6 +2,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { IconCode, IconArrowRight, IconExternalLink } from "@tabler/icons-react";
 import { projects } from "../data/projects";
+import { Image } from "astro:assets";
 ---
 
 <section
@@ -38,10 +39,12 @@ import { projects } from "../data/projects";
           <a href={`/project/${slug}`} class="group block h-full">
             <Card className="h-full bg-white border-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05),0_10px_20px_-2px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] group-hover:-translate-y-2 transition-all duration-500 rounded-[2rem] overflow-hidden flex flex-col">
               <div class="relative aspect-[16/10] overflow-hidden">
-                <img
-                  src={`/assets/images/projects/${image}`}
+                <Image
+                  src={image}
                   alt={`Preview do projeto ${name}`}
                   class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:scale-105 group-hover:grayscale-0"
+                  width={800}
+                  height={500}
                 />
                 <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity"></div>
               </div>

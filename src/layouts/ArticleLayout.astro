@@ -3,6 +3,7 @@ import { dateFormat } from "@/helpers/dateFormat";
 import Layout from "@/layouts/Layout.astro";
 import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
 import RecentPosts from "@/components/RecentPosts.astro";
+import type { MarkdownInstance } from "astro";
 
 const { frontmatter } = Astro.props;
 const pageUrl = Astro.url.href;
@@ -10,20 +11,43 @@ const pageId = Astro.url.pathname;
 
 const postImports = import.meta.glob("../content/blog/*.mdx", { eager: true });
 const allPosts = Object.values(postImports).map((post) => {
-  const url = post.file.split("/src/content")[1].replace(".mdx", "");
+  const typedPost = post as MarkdownInstance<Record<string, any>> & {
+    file: string;
+  };
+  const url = typedPost.file.split("/src/content")[1].replace(".mdx", "");
   return {
-    ...post,
+    ...typedPost,
     url,
   };
 });
-const sortedPosts = allPosts.sort(
-  (a, b) =>
-    new Date(b.frontmatter.date).valueOf() -
-    new Date(a.frontmatter.date).valueOf()
-);
-const recentPosts = sortedPosts
-  .filter((post) => post.url !== Astro.url.pathname)
-  .slice(0, 3);
+
+const currentTags = frontmatter.tags || [];
+
+const scoredPosts = allPosts.map((post) => {
+  let score = 0;
+  const postTags = post.frontmatter.tags || [];
+
+  // Point for shared tags
+  postTags.forEach((tag: string) => {
+    if (currentTags.includes(tag)) score += 1;
+  });
+
+  return { ...post, score };
+});
+
+const sortedPosts = scoredPosts
+  .filter((post) => post.url !== Astro.url.pathname) // Remove current post
+  .sort((a, b) => {
+    // Sort by score first (descending)
+    if (b.score !== a.score) return b.score - a.score;
+    // Then by date (descending)
+    return (
+      new Date(b.frontmatter.date).valueOf() -
+      new Date(a.frontmatter.date).valueOf()
+    );
+  });
+
+const relatedPosts = sortedPosts.slice(0, 3);
 ---
 
 <Layout
@@ -93,7 +117,7 @@ const recentPosts = sortedPosts
     </article>
   </div>
 
-  <RecentPosts posts={recentPosts} />
+  <RecentPosts posts={relatedPosts} title="Posts Relacionados" />
 
   <!-- Disqus Comments Section -->
   <div

@@ -1,0 +1,89 @@
+---
+title: "Gerenciamento de Estado no React em 2025: Zustand, Context ou Redux?"
+description: "Um guia pragmático para escolher a ferramenta certa. Por que abandonei o Redux e por que o Context API não serve para tudo."
+date: "2025-09-02"
+image: "/assets/images/blog/react-state-2025.jpg"
+tags: ["React", "JavaScript", "Frontend", "Zustand"]
+---
+
+Se você está começando um projeto React em 2025, a primeira pergunta que surge é: _"Onde vou guardar meu estado?"_.
+
+A resposta "padrão" costumava ser Redux. Depois passou a ser "apenas use Context". Hoje, o cenário é muito mais nuançado e eficiente. Vamos analisar as opções modernas.
+
+## O problema com o Context API
+
+Muitos devs (eu incluso) caíram na armadilha de usar o React Context para tudo. Parece perfeito: é nativo, sem dependências.
+
+O problema? **Performance**.
+
+O Context não foi feito para estados que mudam com alta frequência. Toda vez que o valor do Provider muda, **todos** os componentes que consomem aquele contexto renderizam novamente. Se você tem um formulário complexo ou um dashboard em tempo real rodando no Context, você vai notar a lentidão.
+
+**Quando usar:**
+
+- Temas (Dark/Light mode)
+- Dados do Usuário Logado (Session)
+- Idioma/i18n
+
+## A Morte Lenta do Redux (Boilerplate)
+
+Redux ainda é poderoso e o Redux Toolkit (RTK) melhorou muito a DX (Developer Experience). Mas, para 90% das aplicações, ele ainda é "canhão para matar mosca". A complexidade de setup e a verbosidade muitas vezes não justificam o benefício.
+
+## O Novo Rei: Zustand
+
+[Zustand](https://github.com/pmndrs/zustand) se tornou minha go-to library. Por que?
+
+1.  **Simplicidade**: Zero boilerplate.
+2.  **Hooks**: API baseada em hooks, super natural para quem usa React.
+3.  **Seletores Automáticos**: Renderiza apenas o componente que precisa daquele pedaço específico do estado.
+
+```typescript
+// store.ts
+import { create } from "zustand";
+
+type Store = {
+  count: number;
+  inc: () => void;
+};
+
+const useStore = create<Store>()((set) => ({
+  count: 1,
+  inc: () => set((state) => ({ count: state.count + 1 })),
+}));
+
+// Component.tsx
+function Counter() {
+  // Este componente SÓ renderiza se 'count' mudar
+  const count = useStore((state) => state.count);
+  return <div>{count}</div>;
+}
+```
+
+Simples assim. Sem providers envolvendo a aplicação inteira (`<Provider>`), sem reducers complexos.
+
+## Server State vs Client State
+
+Um erro comum é tentar gerenciar dados da API (Server State) na sua store de UI (Client State).
+
+Para dados que vêm do servidor, use **TanStack Query** (antigo React Query). Ele resolve cache, revalidação, loading states e deduplicação de requests de graça.
+
+Deixe o Zustand (ou Context) apenas para o que é estritamente interface: "O modal está aberto?", "Qual o filtro ativo?", "O usuário digitou algo no search?".
+
+## Veredito 2025
+
+Minha heurística para novos projetos:
+
+1.  Os dados vêm da API? -> **TanStack Query**.
+2.  É um estado global simples (Tema)? -> **Context API**.
+3.  É um estado global complexo/frequente? -> **Zustand**.
+4.  Preciso de atomicidade extrema? -> **Jotai**.
+
+Escolha a ferramenta certa para o trabalho e mantenha sua aplicação leve.
+
+<a
+  href="https://zustand-demo.pmnd.rs/"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-6 py-3 text-sm font-medium !text-white shadow hover:bg-blue-700 transition-colors no-underline !mb-0"
+>
+  Ver Documentação do Zustand
+</a>

@@ -1,31 +1,150 @@
 ---
-title: "Efeito paralax com css puro"
-description: ""
+title: "Efeito Parallax com CSS Puro: O Guia Completo e Moderno"
+description: "Aprenda a criar efeitos de Parallax de alta performance usando apenas CSS. Sem JavaScript, sem jank, e totalmente responsivo."
 date: "2016-12-29"
 image: "/assets/images/blog/code-minimalist.jpg"
-tags: ["css"]
+tags: ["css", "frontend", "performance"]
 ---
 
-import { Button } from "@/components/ui/button";
+O efeito Parallax — onde o plano de fundo se move em uma velocidade diferente do conteúdo em primeiro plano — é uma das técnicas mais populares para adicionar profundidade e dinamismo a sites.
 
-Dimensionar os elementos com base nas dimensões da janela de visualização sem javascript. Utilizando as unidades de viewport vw e vh.
+Por muito tempo, alcançar esse efeito exigia bibliotecas JavaScript pesadas que ouviam o evento `scroll`. O resultado? Sites lentos, "jank" (travamentos) na rolagem e uma bateria de celular drenada.
+
+Felizmente, o CSS moderno evoluiu. Hoje, podemos criar efeitos de Parallax suaves, performáticos e acessíveis usando apenas propriedades nativas. Neste artigo, vamos mergulhar fundo em como fazer isso.
+
+## Por que CSS Puro?
+
+A principal razão é **performance**.
+
+Quando você usa JavaScript para Parallax, o navegador precisa executar cálculos complexos a cada pixel que a página rola. Isso muitas vezes acontece na thread principal, competindo com outras tarefas e causando engasgos visuais.
+
+Com CSS, especialmente usando transformações 3D (`transform: translateZ`), delegamos o trabalho pesado para a GPU (Placa de Vídeo). O navegador sabe como otimizar essas animações nativamente, resultando em uma experiência de 60 FPS (quadros por segundo) manteiga.
+
+## A Técnica Mágica: Perspective e TranslateZ
+
+O segredo do Parallax com CSS puro reside em simular um ambiente 3D dentro do navegador. Imagine que sua tela é uma janela. Se colocarmos objetos mais longe dessa janela (no eixo Z), eles parecerão se mover mais devagar quando você "mover a câmera" (rolar a página).
+
+Aqui está a estrutura HTML básica necessária:
+
+```html
+<div class="parallax-wrapper">
+  <div class="parallax-layer layer-back">
+    <!-- Imagem de fundo ou conteúdo distante -->
+  </div>
+  <div class="parallax-layer layer-base">
+    <!-- Conteúdo principal -->
+  </div>
+</div>
+```
+
+E o CSS que faz a mágica acontecer:
 
 ```css
-section {
-  width: 100vw;
+.parallax-wrapper {
+  /* Define a altura do container para ocupar a tela toda */
   height: 100vh;
+  /* Habilita a rolagem no eixo Y */
+  overflow-y: auto;
+  overflow-x: hidden;
+  /* 
+    A MÁGICA:
+    perspective: define a profundidade da cena.
+    1px é um valor comum para facilitar os cálculos.
+  */
+  perspective: 1px;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.layer-base {
+  /* O conteúdo normal fica no plano Z=0 */
+  transform: translateZ(0);
+}
+
+.layer-back {
+  /* 
+    Empurramos este layer para trás no eixo Z.
+    Quanto mais negativo, mais longe e mais lento o movimento.
+    O scale corrige o tamanho visual para preencher a tela.
+  */
+  transform: translateZ(-1px) scale(2);
 }
 ```
 
-- **vw**: largura da viewport
-- **vh**: altura da viewport
+### Entendendo a Matemática do `scale`
 
-<Button href="http://airtonvancin.com/paralax-com-css-puro/">Demo</Button>
+Você deve ter notado o `scale(2)`. Por que ele é necessário?
 
-## Referência
+Quando afastamos um objeto no mundo 3D (usando `translateZ(-1px)` com `perspective: 1px`), ele visualmente parece menor. Para que ele continue ocupando a largura total da tela, precisamos aumentá-lo (escalar) de volta.
 
-- Learn Advanced CSS Layout Techniques: [@egghead](https://egghead.io/lessons/css-dynamically-size-elements-with-pure-css)
+A fórmula para o fator de escala é:
 
-## Suporte
+`scale = 1 + (translateZ * -1) / perspective`
 
-- Suporte aos browsers: [Viewport units: vw, vh, vmin, vmax](http://caniuse.com/#search=vw)
+Se `perspective` é 1px e `translateZ` é -1px:
+`scale = 1 + ((-1 * -1) / 1) = 2`
+
+Se quiséssemos um efeito ainda mais lento (mais distante), poderíamos usar `translateZ(-2px)`. O scale seria:
+`scale = 1 + ((-2 * -1) / 1) = 3`
+
+## Unidades de Viewport: A Alternativa Simples
+
+Se você não precisa de um efeito 3D complexo e quer apenas dimensionar elementos com base na tela, as unidades de viewport são suas melhores amigas. Embora não criem o Parallax sozinhas, são essenciais para layouts responsivos full-screen.
+
+```css
+header {
+  width: 100vw; /* 100% da largura da viewport */
+  height: 100vh; /* 100% da altura da viewport */
+}
+```
+
+- **vw**: viewport width (1vw = 1% da largura da tela)
+- **vh**: viewport height (1vh = 1% da altura da tela)
+
+Isso garante que sua seção "hero" sempre preencha a tela inicial, independente do dispositivo.
+
+## Acessibilidade: O "Lado Sombrio" do Movimento
+
+Nem todo mundo gosta ou pode tolerar movimentos na tela. Para pessoas com distúrbios vestibulares, efeitos de Parallax podem causar tontura e náusea.
+
+Sempre use a media query `prefers-reduced-motion` para desligar o efeito se o usuário tiver solicitado essa preferência no sistema operacional.
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  .parallax-wrapper {
+    perspective: none; /* Desativa o 3D */
+    overflow-y: visible; /* Volta a rolagem para o body */
+  }
+
+  .layer-back {
+    transform: none; /* Remove o posicionamento 3D */
+  }
+}
+```
+
+## Conclusão
+
+O CSS puro oferece uma maneira robusta e performática de criar experiências imersivas. Ao evitar JavaScript para efeitos de scroll, garantimos que nossos sites rodem suavemente até em dispositivos móveis mais modestos.
+
+Experimente combinar essa técnica com imagens de alta qualidade (otimizadas, claro!) e veja seu design ganhar vida.
+
+<a
+  href="https://codepen.io/keithclark/pen/JycFw"
+  target="_blank"
+  rel="noopener noreferrer"
+  class="inline-flex items-center justify-center gap-2 rounded-md bg-blue-600 px-6 py-3 text-sm font-medium !text-white shadow hover:bg-blue-700 transition-colors no-underline !mb-0"
+>
+  Ver Demo no CodePen
+</a>
+
+## Referências e Leitura Adicional
+
+- [Google Developers: Performant Parallaxing](https://developers.google.com/web/updates/2016/12/performant-parallaxing)
+- [CSS-Tricks: The pure CSS Parallax](https://css-tricks.com/pure-css-parallax-websites/)
+- [MDN Web Docs: perspective](https://developer.mozilla.org/pt-BR/docs/Web/CSS/perspective)

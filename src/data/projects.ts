@@ -1,9 +1,16 @@
+import type { ImageMetadata } from "astro";
+
+// Import project images
+import balancewiseImg from "../assets/images/projects/balancewise.jpg";
+import timberoadImg from "../assets/images/projects/timberoad.jpg";
+import pabloEscobarImg from "../assets/images/projects/pablo-escobar.jpg";
+
 export interface ProjectData {
   id: number;
   name: string;
   slug: string;
   desc: string;
-  image: string;
+  image: ImageMetadata;
   link: string;
   fullDescription: string;
   features: string[];
@@ -17,7 +24,7 @@ export const projects: ProjectData[] = [
     name: "Balancewise.io",
     slug: "balancewise",
     desc: "Rebalanceie sua carteira de investimentos com o balancewise. Otimize seus investimentos com o balancewise. Rebalanceie sua carteira de forma simples e eficiente para maximizar seus ganhos.",
-    image: "balancewise.jpg",
+    image: balancewiseImg,
     link: "https://balancewise.io/",
     fullDescription: `
             <p>O <strong>Balancewise.io</strong> é uma ferramenta sofisticada de gestão de portfólio projetada para investidores que entendem a importância do rebalanceamento periódico. Manter a alocação de ativos alinhada com seus objetivos de risco e retorno é uma das estratégias mais eficazes para o sucesso a longo prazo, mas calcular manualmente quanto comprar ou vender de cada ativo pode ser trabalhoso e propenso a erros.</p>
@@ -65,7 +72,7 @@ export const projects: ProjectData[] = [
     name: "Timberoad",
     slug: "timberoad",
     desc: "Timberoad é sobre liberdade. Em um mundo cheio de regras, tudo o que buscamos é um pedaço de paraíso tranquilo para nos divertirmos. Ao projetar uma van, prezamos pela funcionalidade, conforto e confiabilidade.",
-    image: "timberoad.jpg",
+    image: timberoadImg,
     link: "https://timberoad.vercel.app/",
     fullDescription: `
             <p><strong>Timberoad</strong> não é apenas um projeto de conversão de vans; é um manifesto de liberdade sobre rodas. Nascido da paixão pela estrada e pelo estilo de vida minimalista, o Timberoad documenta e auxilia na transformação de veículos utilitários em casas móveis completas, funcionais e aconchegantes.</p>
@@ -112,7 +119,7 @@ export const projects: ProjectData[] = [
     name: "Pablo Escobar Ipsum",
     slug: "pablo-escobar-ipsum",
     desc: "Pablo Escobar Ipsum. O lorem ipsum do pablito. Ustedes pueden aceptar mi negocio o aceptar las consequências. ¿Plata o plomo?",
-    image: "pablo-escobar.jpg",
+    image: pabloEscobarImg,
     link: "https://www.pabloescobaripsum.com/",
     fullDescription: `
             <p><strong>Pablo Escobar Ipsum</strong> é um gerador de texto placeholder (Lorem Ipsum) com um toque de humor negro e história pop. Em vez do latim clássico e monótono, ele preenche seus layouts de design com as frases icônicas, gírias e diálogos memoráveis da série Narcos e da cultura pop que envolve a figura de Pablo Escobar.</p>

@@ -22,6 +22,9 @@ const { post, className } = Astro.props;
         src={post.data.image || "/assets/images/blog/code-minimalist.jpg"}
         alt={`Cover image for the article: ${post.data.title}`}
         class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+        loading="lazy"
+        width="800"
+        height="450"
       />
     </div>
     <CardContent className="p-6">
