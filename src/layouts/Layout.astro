@@ -33,11 +33,14 @@ const canonicalURL = new URL(
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
 
+    <!-- Preload Avatar -->
+    <link rel="preload" href="/assets/images/profile-avatar.avif" as="image" />
+
     <!-- Primary Meta Tags -->
     <title>{title}</title>
     <meta name="title" content={title} />
     <meta name="description" content={description} />
-    <meta name="author" content="Airton Vancin" />
+    <meta name="author" content="Airton Vancin Junior" />
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href={canonicalURL} />
 
@@ -48,7 +51,7 @@ const canonicalURL = new URL(
     <meta property="og:description" content={description} />
     <meta property="og:image" content={image} />
     <meta property="og:locale" content="pt_BR" />
-    <meta property="og:site_name" content="Airton Vancin" />
+    <meta property="og:site_name" content="Airton Vancin Junior" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -89,7 +92,7 @@ const canonicalURL = new URL(
       <header
         class="m-auto p-2 flex items-center justify-center fixed w-full z-50"
       >
-        <Navigation client:load />
+        <Navigation client:idle />
       </header>
       <main class="flex-1 pt-20">
         <slot />
