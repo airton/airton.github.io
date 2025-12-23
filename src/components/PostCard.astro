@@ -1,9 +1,9 @@
 ---
 import { Card, CardContent, CardFooter, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { IconArrowRight, IconCalendar } from "@tabler/icons-react";
 import { dateFormat } from "@/helpers/dateFormat";
 import type { CollectionEntry } from "astro:content";
+import { Image } from "astro:assets";
 
 interface Props {
   post: CollectionEntry<"blog">;
@@ -18,13 +18,14 @@ const { post, className } = Astro.props;
     className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-muted"
   >
     <div class="relative aspect-video overflow-hidden">
-      <img
+      <Image
         src={post.data.image || "/assets/images/blog/code-minimalist.jpg"}
         alt={`Cover image for the article: ${post.data.title}`}
         class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
-        loading="lazy"
-        width="800"
-        height="450"
+        width={800}
+        height={450}
+        format="avif"
+        quality={80}
       />
     </div>
     <CardContent className="p-6">
