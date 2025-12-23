@@ -1,0 +1,114 @@
+---
+title: "Como Melhorei a Performance do Meu Site Astro com Pequenas Melhorias"
+description: "Um guia prático mostrando como otimizei o First Contentful Paint (FCP) e outras métricas de performance no meu site Astro com ajustes simples como preload de imagens, otimização de JavaScript e o uso do componente Image do Astro."
+date: "2025-12-23"
+image: "/assets/images/blog/astro-portfolio.jpg"
+tags: ["astro", "performance", "webdev", "lighthouse"]
+---
+
+Meu site, construído com Astro, já era rápido. Eu estava orgulhoso das minhas notas no Google PageSpeed Insights, mas como todo desenvolvedor, eu sabia que sempre há espaço para melhorar. Meu desafio era aprimorar métricas específicas como o **First Contentful Paint (FCP)** e o **Largest Contentful Paint (LCP)**.
+
+Neste post, vou compartilhar as pequenas, mas impactantes, melhorias que fiz para levar a performance do meu site para o próximo nível.
+
+## O Diagnóstico: Entendendo os Gargalos
+
+O primeiro passo foi usar o **Google PageSpeed Insights** para obter um diagnóstico detalhado. O relatório apontou alguns problemas que, embora parecessem pequenos, estavam impactando o tempo de carregamento inicial.
+
+As principais áreas de foco eram:
+
+- **Imagens que bloqueavam a renderização:** Imagens na parte superior da página ("above the fold") que precisavam ser carregadas antes que qualquer outra coisa fosse exibida.
+- **JavaScript não essencial:** Scripts que eram executados imediatamente, competindo com a renderização do conteúdo principal.
+- **Tamanho das imagens:** Imagens que não estavam totalmente otimizadas.
+
+## 1. Otimizando Imagens Críticas
+
+A imagem do meu avatar, presente na barra de navegação, foi o primeiro alvo. Por estar no topo de todas as páginas, ela era um recurso crítico.
+
+### Pré-carregando a Imagem (Preload)
+
+A solução foi instruir o navegador a começar o download dessa imagem o mais cedo possível, usando uma tag `<link>` no `<head>` do meu layout principal.
+
+```html
+<!-- /src/layouts/Layout.astro -->
+<head>
+  ...
+  <!-- Preload Avatar -->
+  <link rel="preload" href="/assets/images/profile-avatar.avif" as="image" />
+  ...
+</head>
+```
+
+- `rel="preload"`: Diz ao navegador para buscar este recurso.
+- `as="image"`: Especifica que é uma imagem.
+
+Isso garante que, quando o HTML precisa renderizar a imagem, ela provavelmente já está no cache do navegador.
+
+### Usando o Componente `<Image />` do Astro
+
+Outro insight do PageSpeed foi que algumas imagens dos posts do blog estavam maiores do que o necessário. A solução aqui foi abandonar a tag `<img>` padrão e usar o componente `<Image />` nativo do Astro.
+
+Veja a mudança que fiz no meu `PostCard.astro`:
+
+**Antes:**
+
+```astro
+<img
+    src={post.data.image}
+    alt={`Imagem de capa para o artigo: ${post.data.title}`}
+    loading="lazy"
+    width="800"
+    height="450"
+/>
+```
+
+**Depois:**
+
+```astro
+import { Image } from "astro:assets";
+
+...
+
+<Image
+    src={post.data.image}
+    alt={`Imagem de capa para o artigo: ${post.data.title}`}
+    width={800}
+    height={450}
+    format="avif"
+    quality={80}
+/>
+```
+
+Com isso, o Astro automaticamente:
+
+- **Comprime a imagem** (`quality={80}`).
+- **Converte para formatos modernos** (`format="avif"`), que são muito mais leves.
+- **Gera diferentes tamanhos** para diferentes telas.
+
+## 2. Adiando JavaScript Não-Essencial
+
+O relatório também mostrou que o JavaScript do meu componente de navegação estava na "rota crítica" de renderização. Embora pequeno, ele não precisava ser executado imediatamente.
+
+A solução foi um simples ajuste em uma diretiva do Astro.
+
+**Antes:**
+
+```astro
+<!-- /src/layouts/Layout.astro -->
+<Navigation client:load />
+```
+
+**Depois:**
+
+```astro
+<!-- /src/layouts/Layout.astro -->
+<Navigation client:idle />
+```
+
+- `client:load`: Carrega o JavaScript do componente assim que a página carrega.
+- `client:idle`: Espera a página carregar completamente e o navegador ficar ocioso para então carregar o script. Para um menu, essa pequena demora na interatividade é imperceptível, mas o ganho no FCP é real.
+
+## Conclusão
+
+Nenhuma dessas mudanças foi uma refatoração massiva. Foram ajustes pontuais, focados nos gargalos que as ferramentas de diagnóstico apontaram. Com o Astro, fazer essas otimizações foi surpreendentemente simples.
+
+A lição é que a performance web é construída sobre pequenos detalhes. Monitorar constantemente e fazer melhorias incrementais é o segredo para um site rápido e uma ótima experiência do usuário.

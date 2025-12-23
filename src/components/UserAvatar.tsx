@@ -9,6 +9,8 @@ export function UserAvatar() {
           src="/assets/images/profile-avatar.avif"
           className="p-0 m-0"
           alt="Airton Vancin Junior"
+          width={30}
+          height={30}
         />
       </a>
     </div>
