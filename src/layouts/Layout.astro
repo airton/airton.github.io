@@ -11,7 +11,7 @@ interface Props {
 
 const {
   title = "airtonvancin.com",
-  description = "Desenvolvedor Full Stack apaixonado por criar soluções web modernas e escaláveis. Especializado em React, Node.js, TypeScript e arquitetura de software.",
+  description = "Software Engineer apaixonado por criar soluções web modernas e escaláveis. Especializado em React, Node.js, TypeScript e arquitetura de software.",
   image = "/web-app-manifest-512x512.png",
 } = Astro.props;
 
@@ -94,7 +94,7 @@ const canonicalURL = new URL(
       >
         <Navigation client:idle />
       </header>
-      <main class="flex-1 pt-20">
+      <main class="flex-1">
         <slot />
       </main>
       <Footer />
