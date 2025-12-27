@@ -1,0 +1,344 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { Button } from "@/components/ui/button";
+import LanguageSwitcher from "../../components/LanguageSwitcher.astro";
+import {
+  IconBrandWordpress,
+  IconArrowLeft,
+  IconDownload,
+  IconCircleCheck,
+  IconSparkles, // For features
+  IconRobot, // For AI/Chatbot
+  IconForms, // For forms (if available, otherwise generic)
+  IconDatabase, // For RAG
+} from "@tabler/icons-react";
+
+const plugin = {
+  name: "Notria AI Suite",
+  slug: "notria-ai-suite",
+  link: "#", // Not published yet
+  video: null,
+  en: {
+    desc: "Supercharge your WordPress site with AI. Automate content creation, add a support chatbot, and enhance forms with this all-in-one productivity suite.",
+    fullDescription: `
+      <p>Supercharge your WordPress site with AI. Automate content creation, add a support chatbot, and enhance forms with this all-in-one productivity suite. This plugin also leverages Retrieval-Augmented Generation (RAG) to provide more informed and context-aware AI responses.</p>
+      
+      <h3>External Services</h3>
+      <p>This plugin relies on the OpenAI API to provide its core AI functionalities, including content generation, chatbot responses, form analysis, and Retrieval-Augmented Generation (RAG).</p>
+      <ul>
+        <li><strong>Service:</strong> OpenAI API</li>
+        <li><strong>Used For:</strong>
+          <ul>
+            <li>Generating text responses for the Support Chatbot.</li>
+            <li>Creating content for posts and pages via the Content Generator.</li>
+            <li>Analyzing form submissions in the Form Enhancer.</li>
+            <li>Generating embeddings for RAG (indexing your site content to provide context-aware answers).</li>
+            <li>Generating images (if the image generation feature is used).</li>
+          </ul>
+        </li>
+        <li><strong>Data Sent:</strong>
+          <ul>
+            <li>Text prompts entered by users in the Chatbot or Content Generator.</li>
+            <li>Form submission data (when Form Enhancer is active).</li>
+            <li>Post and Page content (title and body) when running the RAG indexing process.</li>
+          </ul>
+        </li>
+        <li><strong>When:</strong> Data is sent only when you explicitly trigger an action (e.g., send a message, click "Generate", submit a form, or click "Index Content").</li>
+        <li><strong>Service Provider:</strong> OpenAI</li>
+        <li><strong>Terms of Service:</strong> <a href="https://openai.com/policies/terms-of-use" target="_blank">OpenAI Terms of Use</a></li>
+        <li><strong>Privacy Policy:</strong> <a href="https://openai.com/policies/privacy-policy" target="_blank">OpenAI Privacy Policy</a></li>
+      </ul>
+
+      <h3>Changelog</h3>
+      <h4>1.0.0</h4>
+      <ul>
+        <li>Initial release.</li>
+        <li>Implemented AI API integration.</li>
+        <li>Added Content Generator module.</li>
+        <li>Added Support Chatbot module with customizable color and welcome message.</li>
+        <li>Added Form Enhancer module.</li>
+        <li>Integrated RAG with site content indexing.</li>
+        <li>Improved settings page layout and sanitization.</li>
+        <li>Added i18n support (pt_BR, es_ES).</li>
+      </ul>
+    `,
+    features: [
+      "Content Generator: AI-powered content creation",
+      "Support Chatbot: Custom AI chatbot for your site",
+      "Form Enhancer: AI capabilities for your forms",
+      "RAG (Retrieval-Augmented Generation)",
+      "OpenAI Integration",
+    ],
+    installation: `
+      <ol>
+        <li><strong>Upload:</strong> Upload the <code>notria-ai-suite</code> folder to the <code>/wp-content/plugins/</code> directory.</li>
+        <li><strong>Activate:</strong> Activate the plugin through the 'Plugins' menu in WordPress.</li>
+      </ol>
+      <h3>Usage</h3>
+      <ol>
+        <li><strong>Access Settings:</strong> Go to <code>Notria AI Suite</code> under the <code>Settings</code> menu in your WordPress admin dashboard.</li>
+        <li><strong>Configure API Key:</strong> Enter your AI provider's API Key in the 'General' section.</li>
+        <li><strong>Select AI Model:</strong> Choose your preferred AI model for text generation (e.g., <code>gpt-3.5-turbo</code>, <code>gemini-pro</code>).</li>
+        <li><strong>Enable Modules:</strong> Activate Content Generator, Support Chatbot, or Form Enhancer in the 'Modules' section.</li>
+        <li><strong>RAG:</strong> Enable RAG and click "Index All Posts & Pages" for context-aware responses.</li>
+      </ol>
+    `,
+    faq: [],
+  },
+  pt: {
+    desc: "Potencialize seu site WordPress com IA. Automatize a criação de conteúdo, adicione um chatbot de suporte e aprimore formulários com esta suíte de produtividade tudo-em-um.",
+    fullDescription: `
+      <p>Potencialize seu site WordPress com IA. Automatize a criação de conteúdo, adicione um chatbot de suporte e aprimore formulários com esta suíte de produtividade tudo-em-um. Este plugin utiliza RAG (Geração Aumentada por Recuperação) para fornecer respostas de IA mais informadas e cientes do contexto.</p>
+      
+      <h3>Serviços Externos</h3>
+      <p>Este plugin depende da API da OpenAI para fornecer suas principais funcionalidades de IA, incluindo geração de conteúdo, respostas de chatbot, análise de formulários e RAG.</p>
+      <ul>
+        <li><strong>Serviço:</strong> OpenAI API</li>
+        <li><strong>Usado Para:</strong>
+          <ul>
+            <li>Gerar respostas de texto para o Chatbot de Suporte.</li>
+            <li>Criar conteúdo para posts e páginas via Gerador de Conteúdo.</li>
+            <li>Analisar envios de formulários no Aprimorador de Formulários.</li>
+            <li>Gerar embeddings para RAG (indexando o conteúdo do seu site).</li>
+            <li>Gerar imagens (se o recurso de geração de imagem for usado).</li>
+          </ul>
+        </li>
+        <li><strong>Dados Enviados:</strong>
+          <ul>
+            <li>Prompts de texto inseridos pelos usuários no Chatbot ou Gerador de Conteúdo.</li>
+            <li>Dados de envio de formulário (quando o Aprimorador de Formulários está ativo).</li>
+            <li>Conteúdo de Posts e Páginas (título e corpo) ao executar o processo de indexação RAG.</li>
+          </ul>
+        </li>
+        <li><strong>Quando:</strong> Os dados são enviados apenas quando você aciona explicitamente uma ação (ex: enviar mensagem, clicar em "Gerar", enviar formulário).</li>
+        <li><strong>Provedor de Serviço:</strong> OpenAI</li>
+        <li><strong>Termos de Serviço:</strong> <a href="https://openai.com/policies/terms-of-use" target="_blank">Termos de Uso da OpenAI</a></li>
+        <li><strong>Política de Privacidade:</strong> <a href="https://openai.com/policies/privacy-policy" target="_blank">Política de Privacidade da OpenAI</a></li>
+      </ul>
+
+      <h3>Changelog</h3>
+      <h4>1.0.0</h4>
+      <ul>
+        <li>Lançamento inicial.</li>
+        <li>Implementada integração com API de IA.</li>
+        <li>Adicionado módulo Gerador de Conteúdo.</li>
+        <li>Adicionado módulo Chatbot de Suporte personalizável.</li>
+        <li>Adicionado módulo Aprimorador de Formulários.</li>
+        <li>Integrado RAG com indexação de conteúdo do site.</li>
+        <li>Layout da página de configurações melhorado.</li>
+        <li>Adicionado suporte a i18n (pt_BR, es_ES).</li>
+      </ul>
+    `,
+    features: [
+      "Gerador de Conteúdo: Criação de conteúdo com IA",
+      "Chatbot de Suporte: Chatbot de IA personalizado",
+      "Aprimorador de Formulários: Recursos de IA para formulários",
+      "RAG (Geração Aumentada por Recuperação)",
+      "Integração OpenAI",
+    ],
+    installation: `
+      <ol>
+        <li><strong>Upload:</strong> Envie a pasta <code>notria-ai-suite</code> para o diretório <code>/wp-content/plugins/</code>.</li>
+        <li><strong>Ativar:</strong> Ative o plugin através do menu 'Plugins' no WordPress.</li>
+      </ol>
+      <h3>Uso</h3>
+      <ol>
+        <li><strong>Acessar Configurações:</strong> Vá para <code>Notria AI Suite</code> no menu <code>Configurações</code> do painel admin.</li>
+        <li><strong>Configurar Chave da API:</strong> Insira sua Chave da API na seção 'Geral'.</li>
+        <li><strong>Selecionar Modelo de IA:</strong> Escolha seu modelo preferido (ex: <code>gpt-3.5-turbo</code>).</li>
+        <li><strong>Habilitar Módulos:</strong> Ative Gerador de Conteúdo, Chatbot ou Aprimorador de Formulários.</li>
+        <li><strong>RAG:</strong> Habilite RAG e clique em "Indexar Todos os Posts & Páginas".</li>
+      </ol>
+    `,
+    faq: [],
+  },
+};
+
+const labels = {
+  back: { en: "Back to plugins", pt: "Voltar para plugins" },
+  wp_plugin: { en: "WordPress Plugin", pt: "Plugin WordPress" },
+  download: { en: "Download", pt: "Baixar" },
+  coming_soon: { en: "Coming Soon", pt: "Em Breve" },
+  verified: { en: "Verified & Safe", pt: "Verificado & Seguro" },
+  key_features: { en: "Key Features", pt: "Principais Recursos" },
+  installation: { en: "Installation Guide", pt: "Guia de Instalação" },
+  faq: { en: "FAQ", pt: "Perguntas Frequentes" },
+};
+
+const pluginImageUrl = "/assets/notria-ai-suite-banner.png";
+---
+
+<Layout
+  title={`${plugin.name} - WordPress Plugin | Airton Vancin`}
+  description={plugin.en.desc}
+  image={pluginImageUrl}
+>
+  <div class="bg-slate-50/50 border-b border-slate-100">
+    <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
+      <a
+        href="/#wp-plugins"
+        class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-blue-600 mb-12 transition-colors group"
+      >
+        <IconArrowLeft
+          className="mr-2 h-4 w-4 transform group-hover:-translate-x-1 transition-transform"
+        />
+        <span data-en={labels.back.en} data-pt={labels.back.pt}
+          >{labels.back.en}</span
+        >
+      </a>
+
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div class="space-y-6">
+          <div
+            class="inline-flex items-center gap-2 bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+          >
+            <IconBrandWordpress className="w-3.5 h-3.5" />
+            <span data-en={labels.wp_plugin.en} data-pt={labels.wp_plugin.pt}
+              >{labels.wp_plugin.en}</span
+            >
+          </div>
+          <h1
+            class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight"
+          >
+            {plugin.name}
+          </h1>
+          <p
+            class="text-xl text-slate-600 leading-relaxed font-serif italic"
+            data-en={plugin.en.desc}
+            data-pt={plugin.pt.desc}
+          >
+            {plugin.en.desc}
+          </p>
+          <div class="flex flex-wrap gap-4 pt-4">
+            <Button
+              size="lg"
+              className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-blue-500/20 opacity-80 cursor-not-allowed"
+              disabled
+            >
+              <span
+                data-en={labels.coming_soon.en}
+                data-pt={labels.coming_soon.pt}>{labels.coming_soon.en}</span
+              >
+            </Button>
+            {
+              /* 
+            <div
+              class="flex items-center px-4 py-2 bg-white border border-slate-200 rounded-full text-sm text-slate-500 font-medium"
+            >
+              <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"
+              ></span>
+              <span data-en={labels.verified.en} data-pt={labels.verified.pt}
+                >{labels.verified.en}</span
+              >
+            </div>
+            */
+            }
+          </div>
+        </div>
+
+        <div class="relative group">
+          <div
+            class="absolute -inset-4 bg-gradient-to-tr from-blue-500/10 to-purple-500/10 rounded-[2rem] blur-2xl group-hover:opacity-75 transition-opacity"
+          >
+          </div>
+          <div
+            class="relative overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-2xl skew-y-1 group-hover:skew-y-0 transition-transform duration-700"
+          >
+            <img
+              src={pluginImageUrl}
+              alt={plugin.name}
+              class="w-full aspect-[772/250] object-cover"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-4 md:px-6 py-20 max-w-4xl mx-auto">
+    <div class="grid gap-24">
+      <!-- Description -->
+      <section
+        class="prose prose-slate dark:prose-invert max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600"
+      >
+        <div class="lang-en-only" set:html={plugin.en.fullDescription} />
+        <div class="lang-pt-only" set:html={plugin.pt.fullDescription} />
+      </section>
+
+      <!-- Features -->
+      <section>
+        <div class="flex items-center gap-4 mb-10">
+          <h2
+            class="text-3xl font-bold text-slate-900"
+            data-en={labels.key_features.en}
+            data-pt={labels.key_features.pt}
+          >
+            {labels.key_features.en}
+          </h2>
+          <div class="h-px flex-grow bg-slate-100"></div>
+        </div>
+        <div class="grid sm:grid-cols-2 gap-6 lang-en-only">
+          {
+            plugin.en.features.map((feature) => (
+              <div class="group p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-100 transition-all flex items-start gap-4">
+                <div class="p-2 bg-blue-50 rounded-lg text-blue-500">
+                  <IconCircleCheck className="w-5 h-5" />
+                </div>
+                <span class="text-slate-600 font-medium leading-tight pt-1">
+                  {feature}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+        <div class="grid sm:grid-cols-2 gap-6 lang-pt-only">
+          {
+            plugin.pt.features.map((feature) => (
+              <div class="group p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-blue-100 transition-all flex items-start gap-4">
+                <div class="p-2 bg-blue-50 rounded-lg text-blue-500">
+                  <IconCircleCheck className="w-5 h-5" />
+                </div>
+                <span class="text-slate-600 font-medium leading-tight pt-1">
+                  {feature}
+                </span>
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      <!-- Installation -->
+      <section class="relative">
+        <div class="flex items-center gap-4 mb-10">
+          <h2
+            class="text-3xl font-bold text-slate-900"
+            data-en={labels.installation.en}
+            data-pt={labels.installation.pt}
+          >
+            {labels.installation.en}
+          </h2>
+          <div class="h-px flex-grow bg-slate-100"></div>
+        </div>
+
+        <div
+          class="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-12 shadow-sm relative overflow-hidden group"
+        >
+          <div
+            class="absolute top-0 right-0 w-32 h-32 bg-blue-50/50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"
+          >
+          </div>
+
+          <div
+            class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-slate-600 prose-li:marker:text-blue-500 prose-li:marker:font-bold prose-strong:text-slate-900 lang-en-only"
+            set:html={plugin.en.installation}
+          />
+          <div
+            class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-slate-600 prose-li:marker:text-blue-500 prose-li:marker:font-bold prose-strong:text-slate-900 lang-pt-only"
+            set:html={plugin.pt.installation}
+          />
+        </div>
+      </section>
+    </div>
+  </div>
+  <LanguageSwitcher />
+</Layout>
