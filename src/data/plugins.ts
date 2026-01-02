@@ -420,4 +420,145 @@ export const plugins: PluginData[] = [
       },
     },
   },
+  {
+    id: 5,
+    name: "Notria AI Suite",
+    slug: "notria-ai-suite",
+    image: "https://ps.w.org/notria-ai-suite/assets/banner-772x250.png",
+    link: "https://wordpress.org/plugins/notria-ai-suite/",
+    en: {
+      desc: "Supercharge your WordPress site with AI. Automate content creation, add a support chatbot, and enhance forms with this all-in-one productivity suite.",
+      fullDescription: `
+              <p>Supercharge your WordPress site with AI. Automate content creation, add a support chatbot, and enhance forms with this all-in-one productivity suite. This plugin also leverages Retrieval-Augmented Generation (RAG) to provide more informed and context-aware AI responses.</p>
+              
+              <h3>External Services</h3>
+              <p>This plugin relies on the OpenAI API to provide its core AI functionalities, including content generation, chatbot responses, form analysis, and Retrieval-Augmented Generation (RAG).</p>
+              <ul>
+                <li><strong>Service:</strong> OpenAI API</li>
+                <li><strong>Used For:</strong>
+                  <ul>
+                    <li>Generating text responses for the Support Chatbot.</li>
+                    <li>Creating content for posts and pages via the Content Generator.</li>
+                    <li>Analyzing form submissions in the Form Enhancer.</li>
+                    <li>Generating embeddings for RAG (indexing your site content to provide context-aware answers).</li>
+                    <li>Generating images (if the image generation feature is used).</li>
+                  </ul>
+                </li>
+                <li><strong>Data Sent:</strong>
+                  <ul>
+                    <li>Text prompts entered by users in the Chatbot or Content Generator.</li>
+                    <li>Form submission data (when Form Enhancer is active).</li>
+                    <li>Post and Page content (title and body) when running the RAG indexing process.</li>
+                  </ul>
+                </li>
+                <li><strong>When:</strong> Data is sent only when you explicitly trigger an action (e.g., send a message, click "Generate", submit a form, or click "Index Content").</li>
+                <li><strong>Service Provider:</strong> OpenAI</li>
+                <li><strong>Terms of Service:</strong> <a href="https://openai.com/policies/terms-of-use" target="_blank">OpenAI Terms of Use</a></li>
+                <li><strong>Privacy Policy:</strong> <a href="https://openai.com/policies/privacy-policy" target="_blank">OpenAI Privacy Policy</a></li>
+              </ul>
+    
+              <h3>Changelog</h3>
+              <h4>1.0.0</h4>
+              <ul>
+                <li>Initial release.</li>
+                <li>Implemented AI API integration.</li>
+                <li>Added Content Generator module.</li>
+                <li>Added Support Chatbot module with customizable color and welcome message.</li>
+                <li>Added Form Enhancer module.</li>
+                <li>Integrated RAG with site content indexing.</li>
+                <li>Improved settings page layout and sanitization.</li>
+                <li>Added i18n support (pt_BR, es_ES).</li>
+              </ul>
+          `,
+      features: [
+        "Content Generator: AI-powered content creation",
+        "Support Chatbot: Custom AI chatbot for your site",
+        "Form Enhancer: AI capabilities for your forms",
+        "RAG (Retrieval-Augmented Generation)",
+        "OpenAI Integration",
+      ],
+      installation: `
+              <ol>
+                <li><strong>Upload:</strong> Upload the <code>notria-ai-suite</code> folder to the <code>/wp-content/plugins/</code> directory.</li>
+                <li><strong>Activate:</strong> Activate the plugin through the 'Plugins' menu in WordPress.</li>
+              </ol>
+              <h3>Usage</h3>
+              <ol>
+                <li><strong>Access Settings:</strong> Go to <code>Notria AI Suite</code> under the <code>Settings</code> menu in your WordPress admin dashboard.</li>
+                <li><strong>Configure API Key:</strong> Enter your AI provider's API Key in the 'General' section.</li>
+                <li><strong>Select AI Model:</strong> Choose your preferred AI model for text generation (e.g., <code>gpt-3.5-turbo</code>, <code>gemini-pro</code>).</li>
+                <li><strong>Enable Modules:</strong> Activate Content Generator, Support Chatbot, or Form Enhancer in the 'Modules' section.</li>
+                <li><strong>RAG:</strong> Enable RAG and click "Index All Posts & Pages" for context-aware responses.</li>
+              </ol>
+          `,
+      faq: [],
+    },
+    pt: {
+      desc: "Potencialize seu site WordPress com IA. Automatize a criação de conteúdo, adicione um chatbot de suporte e aprimore formulários com esta suíte de produtividade tudo-em-um.",
+      fullDescription: `
+              <p>Potencialize seu site WordPress com IA. Automatize a criação de conteúdo, adicione um chatbot de suporte e aprimore formulários com esta suíte de produtividade tudo-em-um. Este plugin utiliza RAG (Geração Aumentada por Recuperação) para fornecer respostas de IA mais informadas e cientes do contexto.</p>
+              
+              <h3>Serviços Externos</h3>
+              <p>Este plugin depende da API da OpenAI para fornecer suas principais funcionalidades de IA, incluindo geração de conteúdo, respostas de chatbot, análise de formulários e RAG.</p>
+              <ul>
+                <li><strong>Serviço:</strong> OpenAI API</li>
+                <li><strong>Usado Para:</strong>
+                  <ul>
+                    <li>Gerar respostas de texto para o Chatbot de Suporte.</li>
+                    <li>Criar conteúdo para posts e páginas via Gerador de Conteúdo.</li>
+                    <li>Analisar envios de formulários no Aprimorador de Formulários.</li>
+                    <li>Gerar embeddings para RAG (indexando o conteúdo do seu site).</li>
+                    <li>Gerar imagens (se o recurso de geração de imagem for usado).</li>
+                  </ul>
+                </li>
+                <li><strong>Dados Enviados:</strong>
+                  <ul>
+                    <li>Prompts de texto inseridos pelos usuários no Chatbot ou Gerador de Conteúdo.</li>
+                    <li>Dados de envio de formulário (quando o Aprimorador de Formulários está ativo).</li>
+                    <li>Conteúdo de Posts e Páginas (título e corpo) ao executar o processo de indexação RAG.</li>
+                  </ul>
+                </li>
+                <li><strong>Quando:</strong> Os dados são enviados apenas quando você aciona explicitamente uma ação (ex: enviar mensagem, clicar em "Gerar", enviar formulário).</li>
+                <li><strong>Provedor de Serviço:</strong> OpenAI</li>
+                <li><strong>Termos de Serviço:</strong> <a href="https://openai.com/policies/terms-of-use" target="_blank">Termos de Uso da OpenAI</a></li>
+                <li><strong>Política de Privacidade:</strong> <a href="https://openai.com/policies/privacy-policy" target="_blank">Política de Privacidade da OpenAI</a></li>
+              </ul>
+    
+              <h3>Changelog</h3>
+              <h4>1.0.0</h4>
+              <ul>
+                <li>Lançamento inicial.</li>
+                <li>Implementada integração com API de IA.</li>
+                <li>Adicionado módulo Gerador de Conteúdo.</li>
+                <li>Adicionado módulo Chatbot de Suporte personalizável.</li>
+                <li>Adicionado módulo Aprimorador de Formulários.</li>
+                <li>Integrado RAG com indexação de conteúdo do site.</li>
+                <li>Layout da página de configurações melhorado.</li>
+                <li>Adicionado suporte a i18n (pt_BR, es_ES).</li>
+              </ul>
+          `,
+      features: [
+        "Gerador de Conteúdo: Criação de conteúdo com IA",
+        "Chatbot de Suporte: Chatbot de IA personalizado",
+        "Aprimorador de Formulários: Recursos de IA para formulários",
+        "RAG (Geração Aumentada por Recuperação)",
+        "Integração OpenAI",
+      ],
+      installation: `
+              <ol>
+                <li><strong>Upload:</strong> Envie a pasta <code>notria-ai-suite</code> para o diretório <code>/wp-content/plugins/</code>.</li>
+                <li><strong>Ativar:</strong> Ative o plugin através do menu 'Plugins' no WordPress.</li>
+              </ol>
+              <h3>Uso</h3>
+              <ol>
+                <li><strong>Acessar Configurações:</strong> Vá para <code>Notria AI Suite</code> no menu <code>Configurações</code> do painel admin.</li>
+                <li><strong>Configurar Chave da API:</strong> Insira sua Chave da API na seção 'Geral'.</li>
+                <li><strong>Selecionar Modelo de IA:</strong> Escolha seu modelo preferido (ex: <code>gpt-3.5-turbo</code>).</li>
+                <li><strong>Habilitar Módulos:</strong> Ative Gerador de Conteúdo, Chatbot ou Aprimorador de Formulários.</li>
+                <li><strong>RAG:</strong> Habilite RAG e clique em "Indexar Todos os Posts & Páginas".</li>
+              </ol>
+          `,
+      faq: [],
+    },
+  },
 ];
