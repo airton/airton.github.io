@@ -1,0 +1,85 @@
+---
+import { IconBrandChrome, IconArrowRight, IconDownload } from "@tabler/icons-react";
+
+const extensions = [
+  {
+    name: "Download em Massa de Imagens do Gemini Flow",
+    desc: "Extensão para Chrome que baixa todas as imagens geradas no Google Gemini / Flow em um clique, empacotadas em um único .zip.",
+    href: "/gemini-flow-downloader",
+    image: "/assets/images/gemini-flow-downloader-og.png",
+    cta: "Baixar extensão",
+  },
+];
+---
+
+<section
+  id="browser-extensions"
+  class="w-full py-20 md:py-32 bg-white flex justify-center border-t border-slate-100"
+>
+  <div class="container px-4 md:px-6 max-w-7xl">
+    <!-- Header -->
+    <div
+      class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+    >
+      <div class="max-w-2xl">
+        <div
+          class="inline-flex items-center gap-2 text-blue-600 font-medium text-sm tracking-wider uppercase mb-3"
+        >
+          <IconBrandChrome className="w-4 h-4" />
+          Extensões para Chrome
+        </div>
+        <h2
+          class="text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4"
+        >
+          Ferramentas para o navegador
+        </h2>
+        <p class="text-lg text-slate-500 italic font-serif">
+          Extensões gratuitas e de código aberto para automatizar tarefas do dia a dia.
+        </p>
+      </div>
+    </div>
+
+    <!-- Extensions Grid -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      {
+        extensions.map(({ name, desc, href, image, cta }) => (
+          <a href={href} class="group block h-full">
+            <article class="h-full bg-white border border-slate-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] group-hover:-translate-y-1 transition-all duration-500 rounded-3xl overflow-hidden flex flex-col">
+              <div class="relative aspect-[1200/630] overflow-hidden bg-slate-900">
+                <img
+                  src={image}
+                  alt={`Banner da extensão ${name}`}
+                  width={1200}
+                  height={630}
+                  loading="lazy"
+                  class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <div class="p-8 flex-grow flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="inline-flex items-center gap-1.5 text-[10px] uppercase tracking-widest font-bold text-slate-300">
+                    <IconBrandChrome className="w-3.5 h-3.5" /> Chrome
+                  </span>
+                  <span class="inline-flex items-center gap-1 text-[10px] uppercase tracking-widest font-bold text-green-500">
+                    Grátis
+                  </span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors duration-300">
+                  {name}
+                </h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-6 flex-grow">
+                  {desc}
+                </p>
+                <div class="flex items-center text-sm font-semibold text-slate-900 mt-auto">
+                  <IconDownload className="w-4 h-4 mr-2 text-blue-500" />
+                  <span class="mr-2">{cta}</span>
+                  <IconArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300 text-blue-500" />
+                </div>
+              </div>
+            </article>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
