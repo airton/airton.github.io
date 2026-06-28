@@ -15,6 +15,31 @@ import {
 const DOWNLOAD_URL = "/downloads/gemini-flow-downloader.zip";
 const ICON_URL = "/assets/images/gemini-flow-downloader-icon.png";
 
+// SEO: título/descrição otimizados para busca em PT-BR e imagem OG absoluta
+const SEO_TITLE =
+  "Download em Massa de Imagens do Gemini Flow — Extensão Chrome (.zip)";
+const SEO_DESC =
+  "Extensão gratuita para Chrome que baixa em massa todas as imagens geradas no Google Gemini / Flow em um clique, empacotadas em um único arquivo .zip.";
+const OG_IMAGE = new URL(
+  "/assets/images/gemini-flow-downloader-og.png",
+  Astro.site
+).toString();
+const PAGE_URL = new URL("/gemini-flow-downloader", Astro.site).toString();
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: "Gemini Flow Bulk Image Downloader",
+  applicationCategory: "BrowserApplication",
+  operatingSystem: "Chrome",
+  description: SEO_DESC,
+  image: OG_IMAGE,
+  url: PAGE_URL,
+  downloadUrl: new URL(DOWNLOAD_URL, Astro.site).toString(),
+  offers: { "@type": "Offer", price: "0", priceCurrency: "BRL" },
+  author: { "@type": "Person", name: "Airton Vancin Junior" },
+};
+
 const t = {
   badge: { en: "Chrome Extension", pt: "Extensão do Chrome" },
   title: { en: "Bulk Image Downloader for Gemini Flow", pt: "Download em Massa de Imagens do Gemini Flow" },
@@ -73,11 +98,12 @@ const t = {
 const iconMap = { photo: IconPhoto, zip: IconFileZip, bolt: IconBolt, check: IconCircleCheck };
 ---
 
-<Layout
-  title={`${t.title.en} | Airton Vancin`}
-  description={t.tagline.en}
-  image={ICON_URL}
->
+<Layout title={SEO_TITLE} description={SEO_DESC} image={OG_IMAGE}>
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  />
   <!-- Hero -->
   <div class="bg-slate-50/50 border-b border-slate-100">
     <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
