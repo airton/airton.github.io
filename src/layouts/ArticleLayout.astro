@@ -48,13 +48,48 @@ const sortedPosts = scoredPosts
   });
 
 const relatedPosts = sortedPosts.slice(0, 3);
+
+const site = Astro.site || new URL("https://airtonvancin.com");
+const publishedDate = new Date(frontmatter.date);
+const modifiedDate = frontmatter.updatedDate
+  ? new Date(frontmatter.updatedDate)
+  : undefined;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  headline: frontmatter.title,
+  description: frontmatter.description,
+  datePublished: publishedDate.toISOString(),
+  dateModified: (modifiedDate ?? publishedDate).toISOString(),
+  image: frontmatter.image
+    ? new URL(frontmatter.image, site).toString()
+    : undefined,
+  inLanguage: "pt-BR",
+  keywords: currentTags.length ? currentTags.join(", ") : undefined,
+  mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
+  author: {
+    "@type": "Person",
+    name: "Airton Vancin Junior",
+    url: new URL("/sobre/", site).toString(),
+  },
+  publisher: {
+    "@type": "Person",
+    name: "Airton Vancin Junior",
+    url: site.toString(),
+  },
+};
 ---
 
 <Layout
   title={`${frontmatter.title} | Blog Airton Vancin Junior`}
   description={frontmatter.description}
   image={frontmatter.image}
+  type="article"
+  publishedDate={publishedDate}
+  modifiedDate={modifiedDate}
 >
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   <div
     class="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-100 to-slate-200 flex justify-center"
   >
