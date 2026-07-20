@@ -6,6 +6,7 @@ import {
   IconMail,
   IconNews,
   IconArrowUp,
+  IconArrowUpRight,
 } from "@tabler/icons-react";
 import { plugins } from "../data/plugins";
 import { projects } from "../data/projects";
@@ -115,18 +116,16 @@ const siteLinks = [
       </div>
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
-        <div class="flex items-center justify-between w-full">
-          <h3
-            class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"
-          >
-            Projetos
-          </h3>
-          <a
-            href="/projetos"
-            class="text-xs text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
-            >Ver todos</a
-          >
-        </div>
+        <a
+          href="/projetos"
+          class="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+        >
+          Projetos
+          <IconArrowUpRight
+            className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            stroke={2}
+          />
+        </a>
         <ul class="space-y-2.5 text-sm">
           {
             projects.map(({ slug, name }) => (
@@ -144,18 +143,16 @@ const siteLinks = [
       </div>
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
-        <div class="flex items-center justify-between w-full">
-          <h3
-            class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"
-          >
-            Plugins WP
-          </h3>
-          <a
-            href="/plugins"
-            class="text-xs text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
-            >Ver todos</a
-          >
-        </div>
+        <a
+          href="/plugins"
+          class="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+        >
+          Plugins WP
+          <IconArrowUpRight
+            className="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            stroke={2}
+          />
+        </a>
         <ul class="space-y-2.5 text-sm">
           {
             plugins.map(({ slug, name }) => (
