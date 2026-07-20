@@ -1,0 +1,64 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import PostCard from "@/components/PostCard.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "@/helpers/slugify";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths = (async () => {
+  const posts = await getCollection("blog");
+
+  const tagMap = new Map<string, { label: string; posts: typeof posts }>();
+
+  posts.forEach((post) => {
+    (post.data.tags || []).forEach((tag) => {
+      const tagSlug = slugify(tag);
+      const entry = tagMap.get(tagSlug);
+      if (entry) {
+        entry.posts.push(post);
+      } else {
+        tagMap.set(tagSlug, { label: tag, posts: [post] });
+      }
+    });
+  });
+
+  return Array.from(tagMap.entries()).map(([tagSlug, { label, posts }]) => ({
+    params: { tag: tagSlug },
+    props: {
+      label,
+      posts: posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}) satisfies GetStaticPaths;
+
+const { label, posts } = Astro.props;
+---
+
+<Layout
+  title={`Artigos sobre ${label} | Blog Airton Vancin`}
+  description={`Confira todos os artigos sobre ${label} no blog de Airton Vancin: desenvolvimento web, arquitetura de software e tecnologia.`}
+>
+  <section
+    class="w-full py-12 md:py-24 lg:py-32 bg-background flex flex-col items-center"
+  >
+    <div class="container px-4 md:px-6">
+      <div class="max-w-3xl mx-auto text-center mb-12 lg:mb-20">
+        <p class="text-sm font-medium text-primary mb-2">
+          <a href="/blog/tags" class="hover:underline">Tags</a>
+        </p>
+        <h1
+          class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6"
+        >
+          #{label}
+        </h1>
+        <p class="text-xl text-muted-foreground">
+          {posts.length} {posts.length === 1 ? "artigo encontrado" : "artigos encontrados"}
+        </p>
+      </div>
+
+      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {posts.map((post) => <PostCard post={post} />)}
+      </div>
+    </div>
+  </section>
+</Layout>

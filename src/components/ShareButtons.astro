@@ -1,0 +1,81 @@
+---
+interface Props {
+  url: string;
+  title: string;
+}
+
+const { url, title } = Astro.props;
+
+const encodedUrl = encodeURIComponent(url);
+const encodedTitle = encodeURIComponent(title);
+
+const links = [
+  {
+    label: "WhatsApp",
+    href: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
+    icon: "M20.52 3.48A11.93 11.93 0 0 0 12.04 0C5.5 0 .2 5.3.2 11.85c0 2.09.55 4.13 1.6 5.93L0 24l6.4-1.68a11.9 11.9 0 0 0 5.63 1.43h.01c6.54 0 11.85-5.3 11.85-11.85 0-3.17-1.23-6.14-3.37-8.42ZM12.04 21.5h-.01a9.6 9.6 0 0 1-4.9-1.34l-.35-.21-3.8 1 1.01-3.7-.23-.38a9.55 9.55 0 0 1-1.47-5.02c0-5.28 4.3-9.58 9.6-9.58 2.56 0 4.97 1 6.78 2.81a9.53 9.53 0 0 1 2.81 6.78c0 5.29-4.3 9.64-9.44 9.64Zm5.26-7.19c-.29-.14-1.7-.84-1.96-.93-.26-.1-.46-.14-.65.14-.19.29-.75.93-.92 1.12-.17.19-.34.22-.63.07-.29-.14-1.21-.45-2.3-1.42-.85-.76-1.42-1.7-1.59-1.99-.17-.29-.02-.45.13-.6.13-.13.29-.34.43-.5.14-.17.19-.29.29-.48.1-.19.05-.36-.02-.5-.07-.14-.65-1.58-.9-2.16-.24-.57-.48-.5-.65-.5-.17-.01-.36-.01-.55-.01-.19 0-.5.07-.76.36-.26.29-1 1-1 2.42 0 1.43 1.03 2.82 1.18 3.01.14.19 2.03 3.1 4.92 4.35.69.3 1.22.48 1.64.61.69.22 1.31.19 1.81.11.55-.08 1.7-.7 1.94-1.37.24-.67.24-1.25.17-1.37-.07-.12-.26-.19-.55-.34Z",
+  },
+  {
+    label: "LinkedIn",
+    href: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
+    icon: "M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.38-1.85 3.61 0 4.28 2.38 4.28 5.47v6.27ZM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12ZM7.12 20.45H3.56V9h3.56v11.45ZM22.22 0H1.77C.8 0 0 .78 0 1.75v20.5C0 23.22.8 24 1.77 24h20.45c.98 0 1.78-.78 1.78-1.75V1.75C24 .78 23.2 0 22.22 0Z",
+  },
+  {
+    label: "X",
+    href: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    icon: "M18.9 1.15h3.68l-8.04 9.19L24 22.85h-7.41l-5.8-7.58-6.64 7.58H.46l8.6-9.83L0 1.15h7.6l5.24 6.93 6.06-6.93Zm-1.29 19.5h2.04L6.5 3.24H4.3l13.31 17.41Z",
+  },
+];
+---
+
+<div class="flex items-center gap-3 flex-wrap">
+  <span class="text-sm font-medium text-muted-foreground">Compartilhar:</span>
+  {
+    links.map((link) => (
+      <a
+        href={link.href}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`Compartilhar no ${link.label}`}
+        class="inline-flex items-center justify-center w-9 h-9 rounded-full border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+      >
+        <svg viewBox="0 0 24 24" class="w-4 h-4 fill-current">
+          <path d={link.icon} />
+        </svg>
+      </a>
+    ))
+  }
+  <button
+    type="button"
+    id="copy-link-btn"
+    data-url={url}
+    aria-label="Copiar link do artigo"
+    class="inline-flex items-center justify-center w-9 h-9 rounded-full border bg-card hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+  >
+    <svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2">
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M13.19 8.688a4.5 4.5 0 0 1 1.242 7.244l-4.5 4.5a4.5 4.5 0 0 1-6.364-6.364l1.757-1.757m13.35-.622 1.757-1.757a4.5 4.5 0 0 0-6.364-6.364l-4.5 4.5a4.5 4.5 0 0 0 1.242 7.244"
+      />
+    </svg>
+  </button>
+</div>
+
+<script>
+  const copyBtn = document.getElementById("copy-link-btn");
+  copyBtn?.addEventListener("click", async () => {
+    const url = copyBtn.getAttribute("data-url") || window.location.href;
+    try {
+      await navigator.clipboard.writeText(url);
+      const original = copyBtn.innerHTML;
+      copyBtn.innerHTML =
+        '<svg viewBox="0 0 24 24" class="w-4 h-4 fill-none stroke-current stroke-2"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" /></svg>';
+      setTimeout(() => {
+        copyBtn.innerHTML = original;
+      }, 1500);
+    } catch {
+      // Clipboard API unavailable; nothing to fall back to silently.
+    }
+  });
+</script>

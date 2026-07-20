@@ -1,11 +1,13 @@
 ---
 import { dateFormat } from "@/helpers/dateFormat";
+import { slugify } from "@/helpers/slugify";
 import Layout from "@/layouts/Layout.astro";
 import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
 import RecentPosts from "@/components/RecentPosts.astro";
+import ShareButtons from "@/components/ShareButtons.astro";
 import type { MarkdownInstance } from "astro";
 
-const { frontmatter } = Astro.props;
+const { frontmatter, readingTime } = Astro.props;
 const pageUrl = Astro.url.href;
 const pageId = Astro.url.pathname;
 
@@ -113,7 +115,22 @@ const jsonLd = {
               class="mx-auto max-w-[700px] text-slate-900 md:text-sm dark:text-slate-900"
             >
               {dateFormat(frontmatter.date)}
+              {readingTime && ` · ${readingTime} min de leitura`}
             </p>
+            {
+              currentTags.length > 0 && (
+                <div class="flex flex-wrap justify-center gap-2 pt-2">
+                  {currentTags.map((tag: string) => (
+                    <a
+                      href={`/blog/tag/${slugify(tag)}`}
+                      class="inline-flex items-center rounded-full bg-slate-900/5 hover:bg-slate-900/10 px-3 py-1 text-xs font-medium text-slate-700 transition-colors"
+                    >
+                      #{tag}
+                    </a>
+                  ))}
+                </div>
+              )
+            }
           </div>
         </div>
       </div>
@@ -150,6 +167,12 @@ const jsonLd = {
     >
       <slot />
     </article>
+  </div>
+
+  <div class="w-full px-4 md:px-6 pb-8 flex justify-center bg-white">
+    <div class="max-w-4xl w-full border-t border-slate-200 pt-8">
+      <ShareButtons url={pageUrl} title={frontmatter.title} />
+    </div>
   </div>
 
   <RecentPosts posts={relatedPosts} title="Posts Relacionados" />

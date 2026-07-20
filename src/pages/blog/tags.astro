@@ -1,0 +1,63 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { slugify } from "@/helpers/slugify";
+
+const posts = await getCollection("blog");
+
+const tagMap = new Map<string, { label: string; count: number }>();
+
+posts.forEach((post) => {
+  (post.data.tags || []).forEach((tag) => {
+    const tagSlug = slugify(tag);
+    const entry = tagMap.get(tagSlug);
+    if (entry) {
+      entry.count += 1;
+    } else {
+      tagMap.set(tagSlug, { label: tag, count: 1 });
+    }
+  });
+});
+
+const tags = Array.from(tagMap.entries())
+  .map(([tagSlug, { label, count }]) => ({ tagSlug, label, count }))
+  .sort((a, b) => b.count - a.count || a.label.localeCompare(b.label));
+---
+
+<Layout
+  title="Tags | Blog Airton Vancin"
+  description="Explore todos os assuntos abordados no blog de Airton Vancin: React, TypeScript, AWS, arquitetura de software e mais."
+>
+  <section
+    class="w-full py-12 md:py-24 lg:py-32 bg-background flex flex-col items-center"
+  >
+    <div class="container px-4 md:px-6">
+      <div class="max-w-3xl mx-auto text-center mb-12 lg:mb-20">
+        <h1
+          class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6"
+        >
+          Tags
+        </h1>
+        <p class="text-xl text-muted-foreground">
+          Navegue pelos artigos por assunto.
+        </p>
+      </div>
+
+      <div class="flex flex-wrap justify-center gap-3 max-w-3xl mx-auto">
+        {
+          tags.map(({ tagSlug, label, count }) => (
+            <a
+              href={`/blog/tag/${tagSlug}`}
+              class="group inline-flex items-center gap-2 rounded-full border bg-card px-4 py-2 text-sm font-medium hover:bg-primary hover:text-primary-foreground hover:border-primary transition-colors"
+            >
+              #{label}
+              <span class="text-xs text-muted-foreground group-hover:text-primary-foreground">
+                {count}
+              </span>
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+</Layout>
