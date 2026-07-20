@@ -5,130 +5,135 @@ import {
   IconBrandWordpress,
   IconMail,
   IconNews,
+  IconArrowUp,
 } from "@tabler/icons-react";
 import { plugins } from "../data/plugins";
 import { projects } from "../data/projects";
 
 const currentYear = new Date().getFullYear();
+
+const socialLinks = [
+  {
+    href: "https://github.com/airton",
+    label: "GitHub",
+    icon: IconBrandGithub,
+  },
+  {
+    href: "https://linkedin.com/in/airtonvancin",
+    label: "LinkedIn",
+    icon: IconBrandLinkedin,
+  },
+  {
+    href: "https://profiles.wordpress.org/airtonvancin/",
+    label: "WordPress",
+    icon: IconBrandWordpress,
+  },
+  {
+    href: "mailto:airtonvancin@gmail.com",
+    label: "Email",
+    icon: IconMail,
+    external: false,
+  },
+  {
+    href: "https://nichesignal.substack.com/?utm_campaign=airtonvancin.com",
+    label: "Substack",
+    icon: IconNews,
+  },
+];
+
+const siteLinks = [
+  { href: "/", label: "Home" },
+  { href: "/blog", label: "Blog" },
+  { href: "/previas", label: "Prévias" },
+  { href: "/sobre", label: "Sobre" },
+  { href: "/contato", label: "Contato" },
+  { href: "/zero-downtime", label: "Zero Downtime" },
+];
 ---
 
 <footer
-  class="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800"
+  class="relative bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"
 >
-  <div class="container mx-auto px-4 md:px-6 py-12 md:py-16">
+  <div
+    class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent"
+  >
+  </div>
+
+  <div class="container mx-auto px-4 md:px-6 py-16 md:py-20">
     <div
-      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8 text-center md:text-left"
+      class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12 text-center md:text-left"
     >
-      <div class="space-y-4 flex flex-col items-center md:items-start">
-        <h3 class="font-bold text-lg">Airton Vancin</h3>
-        <p class="text-sm text-stone-500 dark:text-stone-400">
-          Sou apenas um desenvolvedor de software com mais de 15 anos de
-          experiência lidando com diversas tecnologias.
+      <div class="space-y-5 flex flex-col items-center md:items-start">
+        <a href="/" class="font-bold text-xl tracking-tight text-stone-900 dark:text-stone-100">
+          Airton Vancin
+        </a>
+        <p class="text-sm leading-relaxed text-stone-500 dark:text-stone-400 max-w-xs">
+          Desenvolvedor de software com mais de 15 anos de experiência,
+          construindo produtos web modernos e escaláveis.
         </p>
-        <div class="flex gap-4">
-          <a
-            href="https://github.com/airton"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-          >
-            <IconBrandGithub className="h-5 w-5" />
-            <span class="sr-only">GitHub</span>
-          </a>
-          <a
-            href="https://linkedin.com/in/airtonvancin"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-          >
-            <IconBrandLinkedin className="h-5 w-5" />
-            <span class="sr-only">LinkedIn</span>
-          </a>
-          <a
-            href="https://profiles.wordpress.org/airtonvancin/"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-          >
-            <IconBrandWordpress className="h-5 w-5" />
-            <span class="sr-only">WordPress</span>
-          </a>
-          <a
-            href="mailto:airtonvancin@gmail.com"
-            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-          >
-            <IconMail className="h-5 w-5" />
-            <span class="sr-only">Email</span>
-          </a>
-          <a
-            href="https://nichesignal.substack.com/?utm_campaign=airtonvancin.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-          >
-            <IconNews className="h-5 w-5" />
-            <span class="sr-only">Substack</span>
-          </a>
+        <div class="flex gap-2">
+          {
+            socialLinks.map((social) => (
+              <a
+                href={social.href}
+                target={social.href.startsWith("http") ? "_blank" : undefined}
+                rel={
+                  social.href.startsWith("http")
+                    ? "noopener noreferrer"
+                    : undefined
+                }
+                class="flex items-center justify-center h-9 w-9 rounded-full text-stone-500 dark:text-stone-400 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 hover:bg-white dark:hover:bg-gray-900 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
+              >
+                <social.icon className="h-[18px] w-[18px]" stroke={1.75} />
+                <span class="sr-only">{social.label}</span>
+              </a>
+            ))
+          }
         </div>
       </div>
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
-        <h3 class="font-bold text-lg">Mapa do Site</h3>
-        <ul class="space-y-2 text-sm">
-          <li>
-            <a
-              href="/"
-              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-              >Home</a
-            >
-          </li>
-          <li>
-            <a
-              href="/blog"
-              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-              >Blog</a
-            >
-          </li>
-          <li>
-            <a
-              href="/sobre"
-              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-              >Sobre</a
-            >
-          </li>
-          <li>
-            <a
-              href="/contato"
-              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-              >Contato</a
-            >
-          </li>
-          <li>
-            <a
-              href="/zero-downtime"
-              class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
-              >Zero Downtime</a
-            >
-          </li>
+        <h3
+          class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"
+        >
+          Mapa do Site
+        </h3>
+        <ul class="space-y-2.5 text-sm">
+          {
+            siteLinks.map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  class="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
         </ul>
       </div>
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
         <div class="flex items-center justify-between w-full">
-          <h3 class="font-bold text-lg">Projetos</h3>
+          <h3
+            class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"
+          >
+            Projetos
+          </h3>
           <a
             href="/projetos"
-            class="text-xs text-indigo-600 hover:underline font-medium"
+            class="text-xs text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
             >Ver todos</a
           >
         </div>
-        <ul class="space-y-2 text-sm">
+        <ul class="space-y-2.5 text-sm">
           {
             projects.map(({ slug, name }) => (
               <li>
                 <a
                   href={new URL(`/project/${slug}`, Astro.url).toString()}
-                  class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+                  class="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
                 >
                   {name}
                 </a>
@@ -140,20 +145,24 @@ const currentYear = new Date().getFullYear();
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
         <div class="flex items-center justify-between w-full">
-          <h3 class="font-bold text-lg">Plugins WP</h3>
+          <h3
+            class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"
+          >
+            Plugins WP
+          </h3>
           <a
             href="/plugins"
-            class="text-xs text-blue-600 hover:underline font-medium"
+            class="text-xs text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 font-medium transition-colors"
             >Ver todos</a
           >
         </div>
-        <ul class="space-y-2 text-sm">
+        <ul class="space-y-2.5 text-sm">
           {
             plugins.map(({ slug, name }) => (
               <li>
                 <a
                   href={new URL(`/plugin/${slug}`, Astro.url).toString()}
-                  class="text-stone-500 hover:text-stone-900 dark:hover:text-stone-100"
+                  class="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
                 >
                   {name}
                 </a>
@@ -168,22 +177,32 @@ const currentYear = new Date().getFullYear();
       class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
     >
       <p class="text-xs text-stone-500 dark:text-stone-400">
-        © {currentYear} Airton Vancin. All rights reserved.
+        &copy; {currentYear} Airton Vancin. Todos os direitos reservados.
       </p>
-      <nav class="flex gap-4 sm:gap-6">
+
+      <div class="flex items-center gap-6">
+        <nav class="flex gap-4 sm:gap-6">
+          <a
+            class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+            href="/termos"
+          >
+            Termos de Uso
+          </a>
+          <a
+            class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+            href="/politicas"
+          >
+            Políticas de Privacidade
+          </a>
+        </nav>
         <a
-          class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400"
-          href="/termos"
+          href="#top"
+          aria-label="Voltar ao topo"
+          class="flex items-center justify-center h-8 w-8 rounded-full border border-gray-200 dark:border-gray-800 text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-800 transition-colors"
         >
-          Termos de Uso
+          <IconArrowUp className="h-4 w-4" stroke={1.75} />
         </a>
-        <a
-          class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400"
-          href="/politicas"
-        >
-          Políticas de Privacidade
-        </a>
-      </nav>
+      </div>
     </div>
   </div>
 </footer>

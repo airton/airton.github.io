@@ -10,7 +10,6 @@ export function Navigation() {
   const navItems = [
     { label: "Blog", href: "/blog" },
     { label: "Plugins", href: "/plugins" },
-    { label: "Prévias", href: "/previas" },
     { label: "Projetos", href: "/projetos" },
     { label: "Sobre", href: "/sobre" },
     { label: "Contato", href: "/contato" },
