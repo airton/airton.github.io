@@ -120,6 +120,16 @@
 
 <style>
   .hero-headline {
+    /*
+      The aurora, the particles, the gradient headline and the primary pill all
+      draw from these two hues only — the luminous indigo DESIGN.md reserves for
+      hero atmosphere, and the violet that terminates its gradients. Keeping the
+      field to a two-hue span is what holds the One Indigo Rule at the one place
+      on the site allowed to glow.
+    */
+    --aurora-indigo: var(--color-indigo-accent-bright);
+    --aurora-violet: var(--color-accent-violet);
+
     position: relative;
     min-height: calc(100vh - 5rem);
     display: flex;
@@ -127,11 +137,19 @@
     justify-content: center;
     overflow: hidden;
     padding: 6rem 1.5rem 4rem;
-    background: linear-gradient(180deg, #fafafa 0%, #f5f5f5 100%);
+    background: linear-gradient(
+      180deg,
+      var(--color-gallery-floor) 0%,
+      var(--color-hairline-faint) 100%
+    );
   }
 
   :global(.dark) .hero-headline {
-    background: linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+    background: linear-gradient(
+      180deg,
+      var(--color-night-floor) 0%,
+      var(--color-night-wall) 100%
+    );
   }
 
   /* Aurora Background */
@@ -166,8 +184,8 @@
     right: -15%;
     background: radial-gradient(
       ellipse,
-      rgba(99, 102, 241, 0.25) 0%,
-      rgba(139, 92, 246, 0.15) 40%,
+      color-mix(in oklab, var(--aurora-indigo) 25%, transparent) 0%,
+      color-mix(in oklab, var(--aurora-violet) 15%, transparent) 40%,
       transparent 70%
     );
     animation: auroraMove1 15s ease-in-out infinite;
@@ -181,8 +199,8 @@
     left: -10%;
     background: radial-gradient(
       ellipse,
-      rgba(168, 85, 247, 0.2) 0%,
-      rgba(236, 72, 153, 0.1) 50%,
+      color-mix(in oklab, var(--aurora-violet) 20%, transparent) 0%,
+      color-mix(in oklab, var(--aurora-indigo) 10%, transparent) 50%,
       transparent 70%
     );
     animation: auroraMove2 18s ease-in-out infinite;
@@ -196,41 +214,46 @@
     left: 30%;
     background: radial-gradient(
       ellipse,
-      rgba(59, 130, 246, 0.15) 0%,
-      rgba(99, 102, 241, 0.1) 50%,
+      color-mix(in oklab, var(--aurora-indigo) 15%, transparent) 0%,
+      color-mix(in oklab, var(--aurora-violet) 10%, transparent) 50%,
       transparent 70%
     );
     animation: auroraMove3 12s ease-in-out infinite;
   }
 
+  /*
+    Dark mode keeps the same two hues and only raises their strength — the
+    aurora reads as the same light source dimmed up, not a different palette.
+  */
+  :global(.dark) .aurora-layer {
+    opacity: 0.7;
+  }
+
   :global(.dark) .aurora-layer--1 {
     background: radial-gradient(
       ellipse,
-      rgba(99, 102, 241, 0.35) 0%,
-      rgba(139, 92, 246, 0.2) 40%,
+      color-mix(in oklab, var(--aurora-indigo) 35%, transparent) 0%,
+      color-mix(in oklab, var(--aurora-violet) 20%, transparent) 40%,
       transparent 70%
     );
-    opacity: 0.7;
   }
 
   :global(.dark) .aurora-layer--2 {
     background: radial-gradient(
       ellipse,
-      rgba(168, 85, 247, 0.3) 0%,
-      rgba(236, 72, 153, 0.15) 50%,
+      color-mix(in oklab, var(--aurora-violet) 30%, transparent) 0%,
+      color-mix(in oklab, var(--aurora-indigo) 15%, transparent) 50%,
       transparent 70%
     );
-    opacity: 0.7;
   }
 
   :global(.dark) .aurora-layer--3 {
     background: radial-gradient(
       ellipse,
-      rgba(59, 130, 246, 0.25) 0%,
-      rgba(99, 102, 241, 0.15) 50%,
+      color-mix(in oklab, var(--aurora-indigo) 25%, transparent) 0%,
+      color-mix(in oklab, var(--aurora-violet) 15%, transparent) 50%,
       transparent 70%
     );
-    opacity: 0.7;
   }
 
   @keyframes auroraMove1 {
@@ -284,7 +307,7 @@
     top: var(--y);
     width: var(--size);
     height: var(--size);
-    background: #6366f1;
+    background: var(--aurora-indigo);
     border-radius: 50%;
     opacity: 0.4;
     animation: particleFloat var(--duration) ease-in-out infinite;
@@ -292,7 +315,7 @@
   }
 
   :global(.dark) .particle {
-    background: #a5b4fc;
+    background: var(--color-indigo-accent-lifted);
     opacity: 0.5;
   }
 
@@ -351,18 +374,25 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #6366f1;
+    /* Indigo Accent, not the bright variant: indigo-500 on this near-white
+       ground computes 4.07:1 and fails AA for text this size. */
+    color: var(--color-indigo-accent);
     margin-bottom: 1.5rem;
     animation: fadeInUp 0.6s ease-out;
+  }
+
+  :global(.dark) .hero-eyebrow {
+    color: var(--color-indigo-accent-lifted);
   }
 
   .hero-eyebrow-dot {
     width: 8px;
     height: 8px;
-    background: #22c55e;
+    background: var(--color-live-signal);
     border-radius: 50%;
     animation: pulse 2s ease-in-out infinite;
-    box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
+    box-shadow: 0 0 10px
+      color-mix(in oklab, var(--color-live-signal) 50%, transparent);
   }
 
   @keyframes pulse {
@@ -383,13 +413,13 @@
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.02em;
-    color: #0f172a;
+    color: var(--color-ink);
     margin-bottom: 1.5rem;
     animation: fadeInUp 0.6s ease-out 0.1s both;
   }
 
   :global(.dark) .hero-title {
-    color: #f8fafc;
+    color: var(--color-gallery-floor);
   }
 
   .hero-title-highlight {
@@ -397,13 +427,30 @@
     margin-top: 0.25rem;
   }
 
+  /*
+    The one gradient text in the system. DESIGN.md assigns the hero headline to
+    Indigo Accent Bright, so the ramp spans only that indigo to the accent
+    violet — the previous purple-to-pink run introduced two hues the palette
+    does not contain. The solid indigo underneath is what shows if
+    background-clip: text is unsupported, so the headline is never invisible.
+  */
   .hero-title-gradient {
-    background: linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+    color: var(--aurora-indigo);
+    background: linear-gradient(
+      135deg,
+      var(--aurora-indigo) 0%,
+      var(--aurora-violet) 100%
+    );
     background-size: 200% 200%;
     animation: gradientShift 5s ease infinite;
+  }
+
+  @supports (background-clip: text) or (-webkit-background-clip: text) {
+    .hero-title-gradient {
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
   }
 
   @keyframes gradientShift {
@@ -417,9 +464,11 @@
   }
 
   /* Subtitle */
+  /* The Deck role: 1.125rem / 1.6 in Quiet. Previously ran to 1.375rem, a step
+     the type ramp does not define. */
   .hero-subtitle {
-    font-size: clamp(1.125rem, 3vw, 1.375rem);
-    color: #64748b;
+    font-size: 1.125rem;
+    color: var(--color-quiet);
     max-width: 36rem;
     margin: 0 auto 2.5rem;
     line-height: 1.6;
@@ -427,18 +476,18 @@
   }
 
   :global(.dark) .hero-subtitle {
-    color: #94a3b8;
+    color: var(--color-quiet-faint);
   }
 
   .hero-subtitle-emphasis {
     display: block;
     font-weight: 600;
-    color: #475569;
+    color: var(--color-ink-secondary);
     margin-top: 0.5rem;
   }
 
   :global(.dark) .hero-subtitle-emphasis {
-    color: #cbd5e1;
+    color: var(--color-quiet-lifted);
   }
 
   /* CTA Buttons */
@@ -456,7 +505,8 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.75rem;
-    font-size: 1rem;
+    /* Label role — the control-text step, same as the nav links. */
+    font-size: 0.875rem;
     font-weight: 600;
     border-radius: 9999px;
     text-decoration: none;
@@ -465,14 +515,20 @@
   }
 
   .hero-btn--primary {
-    background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
-    color: #fff;
-    box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+    background: linear-gradient(
+      135deg,
+      var(--aurora-indigo) 0%,
+      var(--aurora-violet) 100%
+    );
+    color: var(--color-wall);
+    box-shadow: 0 4px 20px
+      color-mix(in oklab, var(--aurora-indigo) 40%, transparent);
   }
 
   .hero-btn--primary:hover {
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px rgba(99, 102, 241, 0.5);
+    box-shadow: 0 8px 30px
+      color-mix(in oklab, var(--aurora-indigo) 50%, transparent);
   }
 
   .hero-btn-icon {
@@ -486,25 +542,25 @@
   }
 
   .hero-btn--secondary {
-    background: rgba(255, 255, 255, 0.8);
+    background: color-mix(in oklab, var(--color-wall) 80%, transparent);
     backdrop-filter: blur(10px);
-    color: #475569;
-    border: 1px solid rgba(0, 0, 0, 0.08);
+    color: var(--color-ink-secondary);
+    border: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
   }
 
   :global(.dark) .hero-btn--secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: #e2e8f0;
-    border-color: rgba(255, 255, 255, 0.1);
+    background: color-mix(in oklab, var(--color-wall) 10%, transparent);
+    color: var(--color-quiet-lifted);
+    border-color: color-mix(in oklab, var(--color-wall) 10%, transparent);
   }
 
   .hero-btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.95);
+    background: color-mix(in oklab, var(--color-wall) 95%, transparent);
     transform: translateY(-2px);
   }
 
   :global(.dark) .hero-btn--secondary:hover {
-    background: rgba(255, 255, 255, 0.15);
+    background: color-mix(in oklab, var(--color-wall) 15%, transparent);
   }
 
   /* Tech stack */
@@ -516,12 +572,19 @@
     animation: fadeInUp 0.6s ease-out 0.4s both;
   }
 
+  /* Micro role. Was slate-400, which is 2.63:1 here — below AA on any light
+     ground. Quiet carries it at 4.6:1; the slate-400 step returns in dark mode,
+     where DESIGN.md records it at 6.8:1 over a night surface. */
   .hero-stack-label {
     font-size: 0.75rem;
-    font-weight: 500;
+    font-weight: 600;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #94a3b8;
+    color: var(--color-quiet);
+  }
+
+  :global(.dark) .hero-stack-label {
+    color: var(--color-quiet-faint);
   }
 
   .hero-stack-items {
@@ -531,32 +594,38 @@
     justify-content: center;
   }
 
+  /*
+    The lit chip variant. Micro type, and Indigo Accent rather than the bright
+    variant — indigo-500 over this translucent white reads 4.07:1, Accent reads
+    6.5:1. Casing is left alone so "TypeScript" and "Node.js" keep their own.
+  */
   .hero-stack-badge {
     padding: 0.375rem 0.875rem;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    background: rgba(255, 255, 255, 0.7);
+    font-size: 0.75rem;
+    font-weight: 600;
+    background: color-mix(in oklab, var(--color-wall) 70%, transparent);
     backdrop-filter: blur(10px);
-    color: #6366f1;
+    color: var(--color-indigo-accent);
     border-radius: 9999px;
-    border: 1px solid rgba(99, 102, 241, 0.15);
+    border: 1px solid
+      color-mix(in oklab, var(--aurora-indigo) 15%, transparent);
     transition: all 0.2s ease;
   }
 
   :global(.dark) .hero-stack-badge {
-    background: rgba(99, 102, 241, 0.15);
-    color: #a5b4fc;
-    border-color: rgba(99, 102, 241, 0.25);
+    background: color-mix(in oklab, var(--aurora-indigo) 15%, transparent);
+    color: var(--color-indigo-accent-lifted);
+    border-color: color-mix(in oklab, var(--aurora-indigo) 25%, transparent);
   }
 
   .hero-stack-badge:hover {
-    background: rgba(99, 102, 241, 0.1);
+    background: color-mix(in oklab, var(--aurora-indigo) 10%, transparent);
     transform: translateY(-1px);
-    border-color: rgba(99, 102, 241, 0.3);
+    border-color: color-mix(in oklab, var(--aurora-indigo) 30%, transparent);
   }
 
   :global(.dark) .hero-stack-badge:hover {
-    background: rgba(99, 102, 241, 0.25);
+    background: color-mix(in oklab, var(--aurora-indigo) 25%, transparent);
   }
 
   /* Fade in animation */
@@ -568,6 +637,64 @@
     to {
       opacity: 1;
       transform: translateY(0);
+    }
+  }
+
+  /*
+    The hero runs six infinite animations. Rather than kill them outright —
+    which would strip the entrance hierarchy and leave the aurora as flat
+    blocks — hold each one at a composed position: the blobs stay where their
+    keyframes place them, the gradient headline keeps its colour, the status
+    dot keeps its glow, and the staggered entrance resolves immediately.
+  */
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-layer--1 {
+      transform: translate(-5%, 8%) rotate(5deg) scale(1.05);
+    }
+
+    .aurora-layer--2 {
+      transform: translate(8%, -6%) rotate(-5deg) scale(1.08);
+    }
+
+    .aurora-layer--3 {
+      transform: translate(15%, -10%) scale(1.1);
+    }
+
+    .aurora-layer,
+    .particle,
+    .hero-eyebrow-dot,
+    .hero-title-gradient,
+    .hero-eyebrow,
+    .hero-title,
+    .hero-subtitle,
+    .hero-cta,
+    .hero-stack {
+      animation: none;
+    }
+
+    .hero-title-gradient {
+      background-position: 50% 50%;
+    }
+
+    /* The entrance keyframes end at full opacity; without them the content
+       would otherwise inherit `both` fill and stay invisible. */
+    .hero-eyebrow,
+    .hero-title,
+    .hero-subtitle,
+    .hero-cta,
+    .hero-stack {
+      opacity: 1;
+      transform: none;
+    }
+
+    .particle {
+      opacity: 0.4;
+    }
+
+    .hero-btn,
+    .hero-btn-icon,
+    .hero-stack-badge {
+      transition-duration: 0.01ms;
     }
   }
 

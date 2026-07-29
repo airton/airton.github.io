@@ -1,39 +1,112 @@
 ---
-const COLORS = ['#FFD980', '#FF8480', '#81FF80', '#80EAFF'];
+/**
+ * Interactive lattice behind the Zero Downtime CTA.
+ *
+ * The grid itself is a repeating CSS gradient (zero DOM nodes). Lit cells come
+ * from a small recycled pool positioned on pointer move, so the whole effect
+ * costs ~12 nodes and one listener instead of 3,000 divs each carrying its own
+ * mouseenter handler. This renders on every article page, so the difference is
+ * not academic.
+ */
+const CELL = 32;
+const POOL = 12;
 ---
 
-<div
-  class="absolute top-0 left-0 w-full h-full grid bg-[#050505]"
-  style={{
-    gridTemplateColumns: 'repeat(auto-fill, 32px)',
-    gridTemplateRows: 'repeat(auto-fill, 32px)',
-  }}
->
-  {[...Array(3000)].map(() => (
-    <div
-      class="w-8 h-8 border cell"
-      style={{
-        background: '#050505',
-        border: 'solid 0.5px #20202099',
-      }}
-    />
-  ))}
-</div>
+<div class="zd-grid" aria-hidden="true" data-cell={CELL} data-pool={POOL}></div>
+
+<style define:vars={{ cell: `${CELL}px` }}>
+  .zd-grid {
+    /* The lattice rule: Night Wall lifted just far enough off Night Floor to
+       register as a grid without becoming a visible border. */
+    --zd-line: color-mix(in oklab, var(--color-quiet) 22%, transparent);
+
+    position: absolute;
+    inset: 0;
+    background-color: var(--color-night-floor);
+    background-image:
+      linear-gradient(to right, var(--zd-line) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--zd-line) 1px, transparent 1px);
+    background-size: var(--cell) var(--cell);
+    overflow: hidden;
+  }
+
+  .zd-grid :global(.zd-cell) {
+    position: absolute;
+    width: var(--cell);
+    height: var(--cell);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 1s ease-out;
+    will-change: opacity;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .zd-grid :global(.zd-cell) {
+      transition: opacity 0.01ms;
+    }
+  }
+</style>
 
 <script>
-  const COLORS = ['#FFD980', '#FF8480', '#81FF80', '#80EAFF'];
-  const cells = document.querySelectorAll('.cell');
+  const COLORS = ["#FFD980", "#FF8480", "#81FF80", "#80EAFF"];
 
-  cells.forEach(cell => {
-    cell.addEventListener('mouseenter', () => {
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
-      cell.style.background = `${color}1a`;
-      cell.style.border = `solid 1px ${color}`;
+  document.querySelectorAll<HTMLElement>(".zd-grid").forEach((grid) => {
+    const cell = Number(grid.dataset.cell) || 32;
+    const poolSize = Number(grid.dataset.pool) || 12;
 
-      setTimeout(() => {
-        cell.style.background = '#050505';
-        cell.style.border = 'solid 0.5px #20202099';
-      }, 1000);
+    const pool: HTMLElement[] = Array.from({ length: poolSize }, () => {
+      const el = document.createElement("div");
+      el.className = "zd-cell";
+      grid.appendChild(el);
+      return el;
     });
+
+    let next = 0;
+    let lastCol = -1;
+    let lastRow = -1;
+    let queued: { col: number; row: number } | null = null;
+    let frame = 0;
+
+    const light = ({ col, row }: { col: number; row: number }) => {
+      const el = pool[next];
+      next = (next + 1) % poolSize;
+
+      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
+      el.style.transition = "none";
+      el.style.left = `${col * cell}px`;
+      el.style.top = `${row * cell}px`;
+      el.style.background = `${color}1a`;
+      el.style.boxShadow = `inset 0 0 0 1px ${color}`;
+      el.style.opacity = "1";
+
+      // Two frames: one to commit the un-transitioned position, one to start
+      // the fade. Without this the browser coalesces both and nothing animates.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          el.style.transition = "";
+          el.style.opacity = "0";
+        });
+      });
+    };
+
+    const onMove = (event: PointerEvent) => {
+      const rect = grid.getBoundingClientRect();
+      const col = Math.floor((event.clientX - rect.left) / cell);
+      const row = Math.floor((event.clientY - rect.top) / cell);
+      if (col === lastCol && row === lastRow) return;
+      lastCol = col;
+      lastRow = row;
+
+      // Coalesce to one paint per frame; pointermove can fire far more often.
+      queued = { col, row };
+      if (frame) return;
+      frame = requestAnimationFrame(() => {
+        frame = 0;
+        if (queued) light(queued);
+        queued = null;
+      });
+    };
+
+    grid.addEventListener("pointermove", onMove, { passive: true });
   });
 </script>

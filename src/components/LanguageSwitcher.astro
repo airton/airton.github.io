@@ -5,68 +5,98 @@
 <div class="fixed top-2 right-20 md:right-4 z-[60]">
   <div
     class="bg-white/80 backdrop-blur-md border border-slate-200 rounded-full p-1 shadow-lg flex items-center gap-1"
+    role="group"
+    aria-label="Idioma da página / Page language"
   >
     <button
-      id="lang-en"
-      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 bg-blue-600 text-white"
-    >
-      EN
-    </button>
-    <button
       id="lang-pt"
-      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 text-slate-400 hover:text-slate-600"
+      type="button"
+      lang="pt-BR"
+      aria-pressed="true"
+      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 bg-indigo-600 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
     >
       PT
+    </button>
+    <button
+      id="lang-en"
+      type="button"
+      lang="en"
+      aria-pressed="false"
+      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 text-slate-500 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+    >
+      EN
     </button>
   </div>
 </div>
 
 <script is:inline>
-  const enBtn = document.getElementById("lang-en");
-  const ptBtn = document.getElementById("lang-pt");
+  (() => {
+    const enBtn = document.getElementById("lang-en");
+    const ptBtn = document.getElementById("lang-pt");
+    if (!enBtn || !ptBtn) return;
 
-  const setLanguage = (lang) => {
-    document.documentElement.setAttribute("data-lang", lang);
-    localStorage.setItem("plugin-lang", lang);
+    const ACTIVE = ["bg-indigo-600", "text-white"];
+    const IDLE = ["text-slate-500", "hover:text-slate-700"];
 
-    if (lang === "en") {
-      enBtn.classList.add("bg-blue-600", "text-white");
-      enBtn.classList.remove("text-slate-400", "hover:text-slate-600");
-      ptBtn.classList.remove("bg-blue-600", "text-white");
-      ptBtn.classList.add("text-slate-400", "hover:text-slate-600");
-    } else {
-      ptBtn.classList.add("bg-blue-600", "text-white");
-      ptBtn.classList.remove("text-slate-400", "hover:text-slate-600");
-      enBtn.classList.remove("bg-blue-600", "text-white");
-      enBtn.classList.add("text-slate-400", "hover:text-slate-600");
-    }
+    const setLanguage = (lang) => {
+      const isEn = lang === "en";
 
-    // Update all elements with data-en and data-pt
-    document.querySelectorAll("[data-en]").forEach((el) => {
-      const content =
-        lang === "en" ? el.getAttribute("data-en") : el.getAttribute("data-pt");
-      if (el.tagName === "IMG") {
-        el.alt = content;
-      } else if (el.hasAttribute("set-html")) {
-        el.innerHTML = content;
-      } else {
-        el.textContent = content;
+      // The document language has to actually change, or a screen reader keeps
+      // reading English content with Portuguese phonetics (WCAG 3.1.1).
+      document.documentElement.lang = isEn ? "en" : "pt-BR";
+      document.documentElement.setAttribute("data-lang", isEn ? "en" : "pt");
+
+      try {
+        localStorage.setItem("plugin-lang", isEn ? "en" : "pt");
+      } catch {
+        // Private mode or blocked storage: the toggle still works for this visit.
       }
-    });
 
-    // Handle sections that are toggled entirely
-    document.querySelectorAll(".lang-en-only").forEach((el) => {
-      el.style.display = lang === "en" ? "" : "none";
-    });
-    document.querySelectorAll(".lang-pt-only").forEach((el) => {
-      el.style.display = lang === "pt" ? "" : "none";
-    });
-  };
+      const on = isEn ? enBtn : ptBtn;
+      const off = isEn ? ptBtn : enBtn;
+      on.classList.add(...ACTIVE);
+      on.classList.remove(...IDLE);
+      on.setAttribute("aria-pressed", "true");
+      off.classList.remove(...ACTIVE);
+      off.classList.add(...IDLE);
+      off.setAttribute("aria-pressed", "false");
 
-  enBtn?.addEventListener("click", () => setLanguage("en"));
-  ptBtn?.addEventListener("click", () => setLanguage("pt"));
+      document.querySelectorAll("[data-en]").forEach((el) => {
+        const content = el.getAttribute(isEn ? "data-en" : "data-pt");
+        // A missing counterpart must leave the rendered text alone rather than
+        // blanking the element.
+        if (content === null) return;
+        if (el.tagName === "IMG") {
+          el.alt = content;
+        } else if (el.hasAttribute("set-html")) {
+          el.innerHTML = content;
+        } else {
+          el.textContent = content;
+        }
+      });
 
-  // Initialize from localStorage or default to English
-  const savedLang = localStorage.getItem("plugin-lang") || "en";
-  setLanguage(savedLang);
+      // `hidden` removes the section from the a11y tree too; display:none via
+      // inline style did not.
+      document.querySelectorAll(".lang-en-only").forEach((el) => {
+        el.hidden = !isEn;
+      });
+      document.querySelectorAll(".lang-pt-only").forEach((el) => {
+        el.hidden = isEn;
+      });
+    };
+
+    enBtn.addEventListener("click", () => setLanguage("en"));
+    ptBtn.addEventListener("click", () => setLanguage("pt"));
+
+    // PT-BR is the site's primary language and is what the server rendered, so
+    // it stays untouched by default. Only a stored preference moves the page
+    // off it — which also removes the PT→EN flash every visitor used to get.
+    let saved = null;
+    try {
+      saved = localStorage.getItem("plugin-lang");
+    } catch {
+      // Ignore and keep the rendered default.
+    }
+    if (saved === "en") setLanguage("en");
+  })();
 </script>

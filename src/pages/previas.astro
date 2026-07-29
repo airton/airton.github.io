@@ -89,7 +89,7 @@ const grouped = previaCategories
         </div>
         <div class="hidden md:block">
           <p
-            class="text-slate-400 text-sm max-w-[200px] text-right font-bold uppercase tracking-widest"
+            class="text-slate-500 text-sm max-w-[200px] text-right font-bold uppercase tracking-widest"
             data-en={labels.count.en}
             data-pt={labels.count.pt}
           >
@@ -116,7 +116,7 @@ const grouped = previaCategories
                   >
                     {group.labelPt}
                   </h2>
-                  <span class="text-sm font-bold text-slate-300 tabular-nums">
+                  <span class="text-sm font-bold text-slate-600 tabular-nums">
                     {String(group.items.length).padStart(2, "0")}
                   </span>
                   <div class="h-px flex-grow bg-slate-100 ml-2" />
@@ -136,7 +136,7 @@ const grouped = previaCategories
                             <h3 class="text-xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors duration-300 leading-snug">
                               {previa.name}
                             </h3>
-                            <div class="shrink-0 p-2 bg-slate-50 rounded-full text-slate-400 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all duration-300">
+                            <div class="shrink-0 p-2 bg-slate-50 rounded-full text-slate-500 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all duration-300">
                               <IconArrowUpRight className="w-5 h-5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
                             </div>
                           </div>
@@ -146,7 +146,7 @@ const grouped = previaCategories
                               {previa.niche}
                             </span>
                             {previa.location && (
-                              <span class="text-xs text-slate-400 uppercase tracking-wider">
+                              <span class="text-xs text-slate-500 uppercase tracking-wider">
                                 {previa.location}
                               </span>
                             )}

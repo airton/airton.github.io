@@ -30,6 +30,47 @@
   --radius-sm: calc(var(--radius) - 4px);
 }
 
+/*
+  Design system palette — see DESIGN.md ("The Quiet Gallery").
+  Each token equals a Tailwind default shade, noted alongside it, so utility
+  classes and these variables stay interchangeable. Components written with
+  Tailwind utilities keep using `text-slate-900`; scoped <style> blocks that
+  cannot reach a utility class use `var(--color-ink)` instead of a raw hex.
+*/
+@theme {
+  --color-indigo-accent: oklch(51.1% 0.262 276.966); /* indigo-600 */
+  --color-indigo-accent-bright: oklch(58.5% 0.233 277.117); /* indigo-500 */
+  --color-indigo-accent-lifted: oklch(67.3% 0.182 276.935); /* indigo-400 */
+  --color-indigo-edge: oklch(93% 0.034 272.788); /* indigo-100 */
+  --color-indigo-wash: oklch(96.2% 0.018 272.314); /* indigo-50 */
+
+  /* The violet terminating the hero pill and headline gradients (DESIGN.md,
+     Components → Buttons). The only non-indigo hue in the accent range. */
+  --color-accent-violet: oklch(60.6% 0.25 292.717); /* violet-500 */
+
+  --color-ink: oklch(20.8% 0.042 265.755); /* slate-900 */
+  --color-ink-secondary: oklch(37.2% 0.044 257.287); /* slate-700 */
+  --color-quiet: oklch(55.4% 0.046 257.417); /* slate-500 */
+  --color-quiet-faint: oklch(70.4% 0.04 256.788); /* slate-400 — non-text only */
+  /* slate-300. Text only on night surfaces, where DESIGN.md records it at 12:1.
+     On any light ground it is 1.48:1 and must never carry text. */
+  --color-quiet-lifted: oklch(86.9% 0.022 252.894);
+  --color-hairline: oklch(92.9% 0.013 255.508); /* slate-200 */
+  --color-hairline-faint: oklch(96.8% 0.007 247.896); /* slate-100 */
+  --color-gallery-floor: oklch(98.4% 0.003 247.858); /* slate-50 */
+  --color-wall: #ffffff;
+
+  --color-reading-link: oklch(54.6% 0.245 262.881); /* blue-600 */
+  --color-code-magenta: oklch(52.5% 0.223 3.958); /* pink-700 */
+  --color-live-signal: oklch(72.3% 0.219 149.579); /* green-500 — fill only */
+  --color-status-ground: oklch(98.2% 0.018 155.826); /* green-50 */
+  --color-status-edge: oklch(96.2% 0.044 156.743); /* green-100 */
+  --color-status-ink: oklch(44.8% 0.119 151.328); /* green-800 */
+
+  --color-night-wall: oklch(21% 0.034 264.665); /* gray-900 */
+  --color-night-floor: oklch(13% 0.028 261.692); /* gray-950 */
+}
+
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
@@ -136,7 +177,7 @@
   }
 
   .prose blockquote {
-    @apply border-l-4 border-blue-500 bg-slate-50 py-4 px-6 my-6 rounded-r-lg italic text-slate-600;
+    @apply border-l-4 border-blue-600 bg-slate-50 py-4 px-6 my-6 rounded-r-lg italic text-slate-600;
   }
 
   .prose pre {
@@ -144,15 +185,31 @@
   }
 
   .prose code {
-    @apply bg-slate-200 text-pink-600 px-1.5 py-0.5 rounded text-sm font-mono;
+    /* Code Magenta on Hairline Faint — the ground DESIGN.md computes the
+       5.38:1 figure against. On slate-200 the pair lands slightly under it. */
+    @apply bg-slate-100 text-pink-700 px-1.5 py-0.5 rounded-md text-sm font-mono;
   }
 
   .prose pre code {
     @apply bg-transparent text-slate-100 p-0;
   }
 
+  /* Injected by rehypeScrollableTables so a wide table scrolls instead of
+     being clipped on narrow viewports. */
+  .table-scroll {
+    @apply w-full overflow-x-auto my-6;
+  }
+
+  .table-scroll:focus-visible {
+    @apply outline-none ring-2 ring-indigo-600 ring-offset-2 rounded-lg;
+  }
+
   .prose table {
     @apply w-full my-6 border-collapse;
+  }
+
+  .table-scroll > table {
+    @apply my-0;
   }
 
   .prose th {
