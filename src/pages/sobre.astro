@@ -1,5 +1,7 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import { Image } from "astro:assets";
+import avatar from "../assets/images/profile-avatar.png";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -31,9 +33,14 @@ import {
           <div
             class="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-1"
           >
-            <img
-              src="/assets/images/profile-avatar.png"
+            <Image
+              src={avatar}
               alt="Airton Vancin"
+              width={416}
+              height={416}
+              format="avif"
+              quality={80}
+              loading="eager"
               class="w-full h-full rounded-full object-cover"
             />
           </div>

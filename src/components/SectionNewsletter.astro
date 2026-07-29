@@ -1,47 +1,127 @@
 ---
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+
+const SUBSTACK_SUBSCRIBE = "https://nichesignal.substack.com/subscribe";
 ---
 
 <div
   class="w-full bg-gradient-to-r from-blue-700 to-blue-800 py-8 px-2 sm:px-4 lg:px-6 mb-8"
 >
   <div class="container max-w-4xl mx-auto">
+    {/*
+      A plain GET form: with JavaScript disabled the browser navigates straight
+      to Substack with the address prefilled, so the control never lies about
+      working. The script below only adds validation and a pending state.
+    */}
     <form
       id="newsletter-form"
-      class="flex flex-col sm:flex-row gap-4 items-center"
+      action={SUBSTACK_SUBSCRIBE}
+      method="get"
+      target="_blank"
+      rel="noopener"
+      novalidate
+      class="flex flex-col sm:flex-row gap-4 sm:items-end"
     >
-      <label for="email" class="text-white">
-        Deixe seu email para ser avisado sobre as atualizações
-      </label>
-      <Input
-        type="email"
-        placeholder="Seu melhor e-mail"
-        required
-        class="flex-grow bg-white"
-        aria-label="Endereço de e-mail"
-        id="newsletter-email"
-      />
+      <div class="flex-grow w-full">
+        <label for="newsletter-email" class="block text-white font-medium mb-2">
+          Deixe seu e-mail para ser avisado sobre as atualizações
+        </label>
+        <Input
+          type="email"
+          name="email"
+          id="newsletter-email"
+          placeholder="Seu melhor e-mail"
+          required
+          autocomplete="email"
+          inputmode="email"
+          maxlength="254"
+          spellcheck="false"
+          aria-describedby="newsletter-hint newsletter-status"
+          class="w-full bg-white"
+        />
+        <p id="newsletter-hint" class="mt-2 text-sm text-blue-100">
+          A inscrição é concluída no Substack. Sem spam, cancele quando quiser.
+        </p>
+      </div>
+
       <Button
         type="submit"
         size="lg"
-        class="w-full sm:w-auto bg-primary text-white hover:bg-primary-600"
+        id="newsletter-submit"
+        class="w-full sm:w-auto shrink-0 bg-white text-blue-800 font-semibold hover:bg-blue-50 disabled:opacity-60"
       >
-        Salvar
+        Inscrever-se
       </Button>
     </form>
+
+    {/*
+      Always present so assistive tech has the region before the first message;
+      polite so it never interrupts what the visitor is already doing.
+    */}
+    <p
+      id="newsletter-status"
+      role="status"
+      aria-live="polite"
+      class="mt-3 min-h-[1.25rem] text-sm font-medium text-white empty:mt-0 empty:min-h-0"
+    >
+    </p>
   </div>
 </div>
 
 <script>
-  document
-    .getElementById("newsletter-form")
-    ?.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const emailInput = document.getElementById(
-        "newsletter-email"
-      ) as HTMLInputElement;
-      console.log("E-mail enviado:", emailInput.value);
-      emailInput.value = "";
+  const form = document.getElementById("newsletter-form") as HTMLFormElement | null;
+  const input = document.getElementById("newsletter-email") as HTMLInputElement | null;
+  const submit = document.getElementById("newsletter-submit") as HTMLButtonElement | null;
+  const status = document.getElementById("newsletter-status");
+
+  if (form && input && submit && status) {
+    const setStatus = (message: string, invalid: boolean) => {
+      status.textContent = message;
+      input.setAttribute("aria-invalid", invalid ? "true" : "false");
+      input.classList.toggle("ring-2", invalid);
+      input.classList.toggle("ring-red-300", invalid);
+    };
+
+    const clearStatus = () => {
+      if (status.textContent) setStatus("", false);
+    };
+
+    input.addEventListener("input", clearStatus);
+
+    form.addEventListener("submit", (event) => {
+      const value = input.value.trim();
+
+      if (!value) {
+        event.preventDefault();
+        setStatus("Digite seu e-mail para continuar.", true);
+        input.focus();
+        return;
+      }
+
+      // checkValidity covers the type="email" rules the browser already knows,
+      // without us shipping a fragile hand-rolled pattern.
+      if (!input.checkValidity()) {
+        event.preventDefault();
+        setStatus(
+          "Esse e-mail parece incompleto. Confira se está no formato nome@dominio.com.",
+          true
+        );
+        input.focus();
+        return;
+      }
+
+      // Normalise before it goes into the query string.
+      input.value = value;
+
+      setStatus("Abrindo o Substack para você confirmar a inscrição…", false);
+      submit.disabled = true;
+
+      // The form opens a new tab, so this one stays put — re-enable it or the
+      // visitor is stuck if they come back to correct the address.
+      window.setTimeout(() => {
+        submit.disabled = false;
+      }, 4000);
     });
+  }
 </script>

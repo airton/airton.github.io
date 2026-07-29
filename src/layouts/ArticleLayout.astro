@@ -155,9 +155,9 @@ const jsonLd = {
         prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-ol:space-y-2
         prose-li:text-slate-700 prose-li:leading-relaxed
         prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-slate-50 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-6 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-slate-600
-        prose-code:bg-slate-100 prose-code:text-pink-600 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+        prose-code:bg-slate-100 prose-code:text-pink-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
         prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:my-6 prose-pre:overflow-x-auto
-        prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:rounded-lg prose-table:overflow-hidden
+        prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:rounded-lg
         prose-thead:bg-slate-100
         prose-th:text-left prose-th:font-semibold prose-th:text-slate-900 prose-th:p-3 prose-th:border prose-th:border-slate-200
         prose-td:p-3 prose-td:border prose-td:border-slate-200 prose-td:text-slate-700
@@ -178,12 +178,11 @@ const jsonLd = {
   <RecentPosts posts={relatedPosts} title="Posts Relacionados" />
 
   <!-- Disqus Comments Section -->
-  <div
-    class="w-full bg-white py-12"
-    style="color: #333; background-color: #fff;"
-  >
+  <!-- Disqus injects its own theming, so this block pins itself to the light
+       reading surface rather than inheriting it. -->
+  <div class="w-full bg-white text-slate-700 py-12" style="color-scheme: light;">
     <div class="container px-4 md:px-6 max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-6" style="color: #1e293b;">
+      <h2 class="text-2xl font-bold mb-6 text-slate-900">
         Comentários
       </h2>
       <div id="disqus_thread" style="color-scheme: light;"></div>
