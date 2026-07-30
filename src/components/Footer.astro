@@ -53,10 +53,10 @@ const siteLinks = [
 ---
 
 <footer
-  class="relative bg-gray-50 dark:bg-gray-950 border-t border-gray-200 dark:border-gray-800"
+  class="relative bg-gallery-floor dark:bg-night-floor border-t border-hairline dark:border-night-edge"
 >
   <div
-    class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-indigo-500/40 to-transparent"
+    class="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-brand-bright/40 to-transparent"
   >
   </div>
 
@@ -65,10 +65,10 @@ const siteLinks = [
       class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8 mb-12 text-center md:text-left"
     >
       <div class="space-y-5 flex flex-col items-center md:items-start">
-        <a href="/" class="font-bold text-xl tracking-tight text-stone-900 dark:text-stone-100">
+        <a href="/" class="font-bold text-xl tracking-tight text-ink dark:text-gallery-floor">
           Airton Vancin
         </a>
-        <p class="text-sm leading-relaxed text-stone-500 dark:text-stone-400 max-w-xs">
+        <p class="text-sm leading-relaxed text-quiet dark:text-quiet-faint max-w-xs">
           Desenvolvedor de software com mais de 15 anos de experiência,
           construindo produtos web modernos e escaláveis.
         </p>
@@ -83,7 +83,7 @@ const siteLinks = [
                     ? "noopener noreferrer"
                     : undefined
                 }
-                class="flex items-center justify-center h-9 w-9 rounded-full text-stone-500 dark:text-stone-400 border border-transparent hover:border-gray-200 dark:hover:border-gray-700 hover:bg-white dark:hover:bg-gray-900 hover:text-indigo-600 dark:hover:text-indigo-400 transition-all duration-200"
+                class="flex items-center justify-center h-9 w-9 rounded-full text-quiet dark:text-quiet-faint border border-transparent hover:border-hairline dark:hover:border-night-edge hover:bg-wall dark:hover:bg-night-wall hover:text-brand dark:hover:text-brand-lifted transition-all duration-200"
               >
                 <social.icon className="h-[18px] w-[18px]" stroke={1.75} />
                 <span class="sr-only">{social.label}</span>
@@ -95,7 +95,7 @@ const siteLinks = [
 
       <div class="space-y-4 flex flex-col items-center md:items-start">
         <h3
-          class="text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400"
+          class="text-xs font-semibold uppercase tracking-wider text-brand dark:text-brand-lifted"
         >
           Mapa do Site
         </h3>
@@ -105,7 +105,7 @@ const siteLinks = [
               <li>
                 <a
                   href={href}
-                  class="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+                  class="text-quiet dark:text-quiet-faint hover:text-ink dark:hover:text-gallery-floor transition-colors"
                 >
                   {label}
                 </a>
@@ -118,7 +118,7 @@ const siteLinks = [
       <div class="space-y-4 flex flex-col items-center md:items-start">
         <a
           href="/projetos"
-          class="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+          class="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand dark:text-brand-lifted hover:text-brand-deep dark:hover:text-brand-lifted transition-colors"
         >
           Projetos
           <IconArrowUpRight
@@ -132,7 +132,7 @@ const siteLinks = [
               <li>
                 <a
                   href={new URL(`/project/${slug}`, Astro.url).toString()}
-                  class="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+                  class="text-quiet dark:text-quiet-faint hover:text-ink dark:hover:text-gallery-floor transition-colors"
                 >
                   {name}
                 </a>
@@ -145,7 +145,7 @@ const siteLinks = [
       <div class="space-y-4 flex flex-col items-center md:items-start">
         <a
           href="/plugins"
-          class="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors"
+          class="group inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wider text-brand dark:text-brand-lifted hover:text-brand-deep dark:hover:text-brand-lifted transition-colors"
         >
           Plugins WP
           <IconArrowUpRight
@@ -159,7 +159,7 @@ const siteLinks = [
               <li>
                 <a
                   href={new URL(`/plugin/${slug}`, Astro.url).toString()}
-                  class="text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+                  class="text-quiet dark:text-quiet-faint hover:text-ink dark:hover:text-gallery-floor transition-colors"
                 >
                   {name}
                 </a>
@@ -171,22 +171,22 @@ const siteLinks = [
     </div>
 
     <div
-      class="pt-8 border-t border-gray-200 dark:border-gray-800 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
+      class="pt-8 border-t border-hairline dark:border-night-edge flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left"
     >
-      <p class="text-xs text-stone-500 dark:text-stone-400">
+      <p class="text-xs text-quiet dark:text-quiet-faint">
         &copy; {currentYear} Airton Vancin. Todos os direitos reservados.
       </p>
 
       <div class="flex items-center gap-6">
         <nav class="flex gap-4 sm:gap-6">
           <a
-            class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+            class="text-xs hover:underline underline-offset-4 text-quiet dark:text-quiet-faint hover:text-ink dark:hover:text-gallery-floor transition-colors"
             href="/termos"
           >
             Termos de Uso
           </a>
           <a
-            class="text-xs hover:underline underline-offset-4 text-stone-500 dark:text-stone-400 hover:text-stone-900 dark:hover:text-stone-100 transition-colors"
+            class="text-xs hover:underline underline-offset-4 text-quiet dark:text-quiet-faint hover:text-ink dark:hover:text-gallery-floor transition-colors"
             href="/politicas"
           >
             Políticas de Privacidade
@@ -195,7 +195,7 @@ const siteLinks = [
         <a
           href="#top"
           aria-label="Voltar ao topo"
-          class="flex items-center justify-center h-8 w-8 rounded-full border border-gray-200 dark:border-gray-800 text-stone-500 dark:text-stone-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:border-indigo-200 dark:hover:border-indigo-800 transition-colors"
+          class="flex items-center justify-center h-8 w-8 rounded-full border border-hairline dark:border-night-edge text-quiet dark:text-quiet-faint hover:text-brand dark:hover:text-brand-lifted hover:border-brand-edge dark:hover:border-brand-deep transition-colors"
         >
           <IconArrowUp className="h-4 w-4" stroke={1.75} />
         </a>

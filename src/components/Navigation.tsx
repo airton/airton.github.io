@@ -23,7 +23,7 @@ function isCurrent(pathname: string, href: string) {
 }
 
 const focusRing =
-  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-gray-900";
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-night-wall";
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,13 +58,13 @@ export function Navigation() {
   return (
     <>
       {/* Desktop Navigation */}
-      <Menubar className="hidden md:flex rounded-full border-foreground shadow-lg gap-4 opacity-95 bg-white dark:bg-gray-900 pr-1">
+      <Menubar className="hidden md:flex rounded-full border-foreground shadow-lg gap-4 opacity-95 bg-wall dark:bg-night-wall pr-1">
         <UserAvatar />
         {navItems.map((item) => (
           <MenubarMenu key={item.href}>
             <MenubarTrigger
               className={cn(
-                "rounded-full cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors",
+                "rounded-full cursor-pointer hover:bg-hairline-faint dark:hover:bg-night-edge transition-colors",
                 focusRing
               )}
               asChild
@@ -74,7 +74,7 @@ export function Navigation() {
                 aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
                 // Weight carries the current-page cue alongside colour, so it
                 // survives greyscale and colour-vision deficiency (WCAG 1.4.1).
-                className="flex items-center gap-1 aria-[current=page]:font-semibold aria-[current=page]:text-indigo-600 dark:aria-[current=page]:text-indigo-400"
+                className="flex items-center gap-1 aria-[current=page]:font-semibold aria-[current=page]:text-brand dark:aria-[current=page]:text-brand-lifted"
               >
                 {item.icon} {item.label}
               </a>
@@ -91,7 +91,7 @@ export function Navigation() {
           type="button"
           onClick={() => setIsOpen((open) => !open)}
           className={cn(
-            "p-2 rounded-full bg-white dark:bg-gray-900 border border-foreground shadow-lg text-foreground transition-all active:scale-95",
+            "p-2 rounded-full bg-wall dark:bg-night-wall border border-foreground shadow-lg text-foreground transition-all active:scale-95",
             focusRing
           )}
           aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
@@ -110,7 +110,7 @@ export function Navigation() {
         // while the overlay is still painted for its fade transition.
         inert={!isOpen}
         className={cn(
-          "fixed inset-0 top-[72px] z-40 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md transition-all duration-300 ease-in-out md:hidden flex flex-col items-center pt-8 gap-6 px-4",
+          "fixed inset-0 top-[72px] z-40 bg-wall/80 dark:bg-night-wall/80 backdrop-blur-md transition-all duration-300 ease-in-out md:hidden flex flex-col items-center pt-8 gap-6 px-4",
           isOpen
             ? "opacity-100 pointer-events-auto"
             : "opacity-0 pointer-events-none -translate-y-4"
@@ -123,7 +123,7 @@ export function Navigation() {
             aria-current={isCurrent(pathname, item.href) ? "page" : undefined}
             onClick={() => setIsOpen(false)}
             className={cn(
-              "text-2xl font-medium text-foreground hover:text-stone-600 dark:hover:text-stone-300 transition-colors flex items-center gap-3 rounded-full px-4 py-1 aria-[current=page]:font-bold aria-[current=page]:text-indigo-600 dark:aria-[current=page]:text-indigo-400",
+              "text-2xl font-medium text-foreground hover:text-ink-secondary dark:hover:text-quiet-lifted transition-colors flex items-center gap-3 rounded-full px-4 py-1 aria-[current=page]:font-bold aria-[current=page]:text-brand dark:aria-[current=page]:text-brand-lifted",
               focusRing
             )}
           >

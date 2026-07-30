@@ -1,80 +1,32 @@
 ---
 /**
- * HeroHeadline - Modern, minimalist headline section
- * Elegant aurora wave animation background
+ * HeroHeadline — the site's one Display headline.
+ *
+ * What used to be here: three morphing aurora blobs, seven floating particles,
+ * an animated indigo→violet gradient on the headline text, and a gradient pill
+ * carrying a coloured glow. All of it is gone. That composition is the reason
+ * the site read as generic AI marketing, and none of it was carrying meaning —
+ * it was atmosphere standing in for a point of view.
+ *
+ * What replaces it is the room itself: warm ink on a white wall, one flat
+ * accent, and a single authored moment — the eyebrow, headline, deck, CTAs and
+ * stack arriving in sequence, once, on load. Everything else is still.
  */
 ---
 
 <section class="hero-headline">
-  <!-- Aurora wave animated background -->
-  <div class="hero-bg" aria-hidden="true">
-    <!-- Morphing gradient blobs -->
-    <div class="aurora">
-      <div class="aurora-layer aurora-layer--1"></div>
-      <div class="aurora-layer aurora-layer--2"></div>
-      <div class="aurora-layer aurora-layer--3"></div>
-    </div>
-
-    <!-- Subtle particle dots -->
-    <div class="particles">
-      <div
-        class="particle"
-        style="--x: 10%; --y: 20%; --size: 3px; --duration: 20s; --delay: 0s;"
-      >
-      </div>
-      <div
-        class="particle"
-        style="--x: 85%; --y: 15%; --size: 2px; --duration: 25s; --delay: 2s;"
-      >
-      </div>
-      <div
-        class="particle"
-        style="--x: 25%; --y: 70%; --size: 2px; --duration: 22s; --delay: 5s;"
-      >
-      </div>
-      <div
-        class="particle"
-        style="--x: 75%; --y: 65%; --size: 3px; --duration: 18s; --delay: 3s;"
-      >
-      </div>
-      <div
-        class="particle"
-        style="--x: 50%; --y: 30%; --size: 2px; --duration: 24s; --delay: 1s;"
-      >
-      </div>
-      <div
-        class="particle"
-        style="--x: 90%; --y: 50%; --size: 2px; --duration: 21s; --delay: 4s;"
-      >
-      </div>
-      <div
-        class="particle"
-        style="--x: 15%; --y: 45%; --size: 3px; --duration: 23s; --delay: 6s;"
-      >
-      </div>
-    </div>
-
-    <!-- Noise texture overlay -->
-    <div class="noise-overlay"></div>
-  </div>
-
   <div class="hero-container">
     <div class="hero-content">
-      <!-- Eyebrow text -->
       <span class="hero-eyebrow">
         <span class="hero-eyebrow-dot"></span>
         Software Engineer
       </span>
 
-      <!-- Main headline with animated text -->
       <h1 class="hero-title">
         Transformando ideias em
-        <span class="hero-title-highlight">
-          <span class="hero-title-gradient">experiências digitais</span>
-        </span>
+        <span class="hero-title-highlight">experiências digitais</span>
       </h1>
 
-      <!-- Subheadline -->
       <p class="hero-subtitle">
         +15 anos criando soluções que importam.
         <span class="hero-subtitle-emphasis"
@@ -82,7 +34,6 @@
         >
       </p>
 
-      <!-- CTA buttons -->
       <div class="hero-cta">
         <a href="#projects" class="hero-btn hero-btn--primary">
           Ver Projetos
@@ -92,6 +43,7 @@
             fill="none"
             stroke="currentColor"
             stroke-width="2"
+            aria-hidden="true"
           >
             <path d="M5 12h14M12 5l7 7-7 7"></path>
           </svg>
@@ -101,7 +53,6 @@
         </a>
       </div>
 
-      <!-- Tech stack badges -->
       <div class="hero-stack">
         <span class="hero-stack-label">Stack atual:</span>
         <div class="hero-stack-items">
@@ -120,249 +71,39 @@
 
 <style>
   .hero-headline {
-    /*
-      The aurora, the particles, the gradient headline and the primary pill all
-      draw from these two hues only — the luminous indigo DESIGN.md reserves for
-      hero atmosphere, and the violet that terminates its gradients. Keeping the
-      field to a two-hue span is what holds the One Indigo Rule at the one place
-      on the site allowed to glow.
-    */
-    --aurora-indigo: var(--color-indigo-accent-bright);
-    --aurora-violet: var(--color-accent-violet);
-
     position: relative;
     min-height: calc(100vh - 5rem);
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
     padding: 6rem 1.5rem 4rem;
-    background: linear-gradient(
-      180deg,
-      var(--color-gallery-floor) 0%,
-      var(--color-hairline-faint) 100%
-    );
+    /* A flat wall. The section used to carry a two-stop gradient; a room lit
+       evenly is what lets the type be the only event in the viewport. */
+    background: var(--color-wall);
+    border-bottom: 1px solid var(--color-hairline);
   }
 
   :global(.dark) .hero-headline {
-    background: linear-gradient(
-      180deg,
-      var(--color-night-floor) 0%,
-      var(--color-night-wall) 100%
-    );
-  }
-
-  /* Aurora Background */
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 0;
-    overflow: hidden;
-  }
-
-  .aurora {
-    position: absolute;
-    inset: -50%;
-    width: 200%;
-    height: 200%;
-  }
-
-  .aurora-layer {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(80px);
-    opacity: 0.5;
-    mix-blend-mode: normal;
-  }
-
-  /* First blob - large, slow moving */
-  .aurora-layer--1 {
-    width: 60%;
-    height: 60%;
-    top: -10%;
-    right: -15%;
-    background: radial-gradient(
-      ellipse,
-      color-mix(in oklab, var(--aurora-indigo) 25%, transparent) 0%,
-      color-mix(in oklab, var(--aurora-violet) 15%, transparent) 40%,
-      transparent 70%
-    );
-    animation: auroraMove1 15s ease-in-out infinite;
-  }
-
-  /* Second blob - medium, diagonal */
-  .aurora-layer--2 {
-    width: 50%;
-    height: 50%;
-    bottom: -5%;
-    left: -10%;
-    background: radial-gradient(
-      ellipse,
-      color-mix(in oklab, var(--aurora-violet) 20%, transparent) 0%,
-      color-mix(in oklab, var(--aurora-indigo) 10%, transparent) 50%,
-      transparent 70%
-    );
-    animation: auroraMove2 18s ease-in-out infinite;
-  }
-
-  /* Third blob - smaller, accent */
-  .aurora-layer--3 {
-    width: 40%;
-    height: 40%;
-    top: 30%;
-    left: 30%;
-    background: radial-gradient(
-      ellipse,
-      color-mix(in oklab, var(--aurora-indigo) 15%, transparent) 0%,
-      color-mix(in oklab, var(--aurora-violet) 10%, transparent) 50%,
-      transparent 70%
-    );
-    animation: auroraMove3 12s ease-in-out infinite;
-  }
-
-  /*
-    Dark mode keeps the same two hues and only raises their strength — the
-    aurora reads as the same light source dimmed up, not a different palette.
-  */
-  :global(.dark) .aurora-layer {
-    opacity: 0.7;
-  }
-
-  :global(.dark) .aurora-layer--1 {
-    background: radial-gradient(
-      ellipse,
-      color-mix(in oklab, var(--aurora-indigo) 35%, transparent) 0%,
-      color-mix(in oklab, var(--aurora-violet) 20%, transparent) 40%,
-      transparent 70%
-    );
-  }
-
-  :global(.dark) .aurora-layer--2 {
-    background: radial-gradient(
-      ellipse,
-      color-mix(in oklab, var(--aurora-violet) 30%, transparent) 0%,
-      color-mix(in oklab, var(--aurora-indigo) 15%, transparent) 50%,
-      transparent 70%
-    );
-  }
-
-  :global(.dark) .aurora-layer--3 {
-    background: radial-gradient(
-      ellipse,
-      color-mix(in oklab, var(--aurora-indigo) 25%, transparent) 0%,
-      color-mix(in oklab, var(--aurora-violet) 15%, transparent) 50%,
-      transparent 70%
-    );
-  }
-
-  @keyframes auroraMove1 {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(0deg) scale(1);
-    }
-    25% {
-      transform: translate(-5%, 8%) rotate(5deg) scale(1.05);
-    }
-    50% {
-      transform: translate(-10%, 5%) rotate(-3deg) scale(0.95);
-    }
-    75% {
-      transform: translate(-3%, -5%) rotate(2deg) scale(1.02);
-    }
-  }
-
-  @keyframes auroraMove2 {
-    0%,
-    100% {
-      transform: translate(0, 0) rotate(0deg) scale(1);
-    }
-    33% {
-      transform: translate(8%, -6%) rotate(-5deg) scale(1.08);
-    }
-    66% {
-      transform: translate(5%, 8%) rotate(3deg) scale(0.92);
-    }
-  }
-
-  @keyframes auroraMove3 {
-    0%,
-    100% {
-      transform: translate(0, 0) scale(1);
-    }
-    50% {
-      transform: translate(15%, -10%) scale(1.1);
-    }
-  }
-
-  /* Floating particles */
-  .particles {
-    position: absolute;
-    inset: 0;
-  }
-
-  .particle {
-    position: absolute;
-    left: var(--x);
-    top: var(--y);
-    width: var(--size);
-    height: var(--size);
-    background: var(--aurora-indigo);
-    border-radius: 50%;
-    opacity: 0.4;
-    animation: particleFloat var(--duration) ease-in-out infinite;
-    animation-delay: var(--delay);
-  }
-
-  :global(.dark) .particle {
-    background: var(--color-indigo-accent-lifted);
-    opacity: 0.5;
-  }
-
-  @keyframes particleFloat {
-    0%,
-    100% {
-      transform: translate(0, 0);
-      opacity: 0.4;
-    }
-    25% {
-      transform: translate(10px, -20px);
-      opacity: 0.6;
-    }
-    50% {
-      transform: translate(-5px, -35px);
-      opacity: 0.3;
-    }
-    75% {
-      transform: translate(15px, -15px);
-      opacity: 0.5;
-    }
-  }
-
-  /* Noise texture */
-  .noise-overlay {
-    position: absolute;
-    inset: 0;
-    opacity: 0.03;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    pointer-events: none;
-  }
-
-  :global(.dark) .noise-overlay {
-    opacity: 0.05;
+    background: var(--color-night-wall);
+    border-bottom-color: var(--color-night-edge);
   }
 
   .hero-container {
-    position: relative;
     max-width: 72rem;
     margin: 0 auto;
     width: 100%;
-    z-index: 10;
   }
 
+  /* Left-aligned from `md` up, matching the showcase sections below it, and
+     centred only where a single narrow column has nowhere else to go. */
   .hero-content {
-    position: relative;
     text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero-content {
+      text-align: left;
+    }
   }
 
   /* Eyebrow */
@@ -374,105 +115,95 @@
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    /* Indigo Accent, not the bright variant: indigo-500 on this near-white
-       ground computes 4.07:1 and fails AA for text this size. */
-    color: var(--color-indigo-accent);
+    color: var(--color-brand); /* 5.17:1 on Wall */
     margin-bottom: 1.5rem;
-    animation: fadeInUp 0.6s ease-out;
+    animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
   }
 
   :global(.dark) .hero-eyebrow {
-    color: var(--color-indigo-accent-lifted);
+    color: var(--color-brand-lifted); /* 7.38:1 on Night Wall */
   }
 
+  /* The availability signal. A fill, never text — 3.30:1. */
   .hero-eyebrow-dot {
-    width: 8px;
-    height: 8px;
+    width: 7px;
+    height: 7px;
     background: var(--color-live-signal);
     border-radius: 50%;
-    animation: pulse 2s ease-in-out infinite;
-    box-shadow: 0 0 10px
-      color-mix(in oklab, var(--color-live-signal) 50%, transparent);
   }
 
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-      transform: scale(1);
-    }
-    50% {
-      opacity: 0.7;
-      transform: scale(1.15);
-    }
-  }
-
-  /* Main title */
+  /* Display role. */
   .hero-title {
     font-size: clamp(2.5rem, 8vw, 4.5rem);
     font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.02em;
     color: var(--color-ink);
+    max-width: 20ch;
     margin-bottom: 1.5rem;
-    animation: fadeInUp 0.6s ease-out 0.1s both;
+    text-wrap: balance;
+    animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.08s both;
   }
 
   :global(.dark) .hero-title {
     color: var(--color-gallery-floor);
   }
 
-  .hero-title-highlight {
-    display: block;
-    margin-top: 0.25rem;
+  @media (min-width: 768px) {
+    .hero-title {
+      text-wrap: pretty;
+    }
   }
 
   /*
-    The one gradient text in the system. DESIGN.md assigns the hero headline to
-    Indigo Accent Bright, so the ramp spans only that indigo to the accent
-    violet — the previous purple-to-pink run introduced two hues the palette
-    does not contain. The solid indigo underneath is what shows if
-    background-clip: text is unsupported, so the headline is never invisible.
+    The old gradient span. Emphasis now comes from the line break and the
+    accent underline that draws itself once on load — a mark made under the
+    phrase rather than a colour poured into it.
   */
-  .hero-title-gradient {
-    color: var(--aurora-indigo);
-    background: linear-gradient(
-      135deg,
-      var(--aurora-indigo) 0%,
-      var(--aurora-violet) 100%
-    );
-    background-size: 200% 200%;
-    animation: gradientShift 5s ease infinite;
+  .hero-title-highlight {
+    display: block;
+    position: relative;
+    width: fit-content;
+    margin-top: 0.25rem;
   }
 
-  @supports (background-clip: text) or (-webkit-background-clip: text) {
-    .hero-title-gradient {
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
+  @media (max-width: 767px) {
+    .hero-title-highlight {
+      margin-inline: auto;
     }
   }
 
-  @keyframes gradientShift {
-    0%,
-    100% {
-      background-position: 0% 50%;
-    }
-    50% {
-      background-position: 100% 50%;
-    }
+  .hero-title-highlight::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -0.1em;
+    height: 3px;
+    background: var(--color-brand);
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: drawRule 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.55s both;
   }
 
-  /* Subtitle */
-  /* The Deck role: 1.125rem / 1.6 in Quiet. Previously ran to 1.375rem, a step
-     the type ramp does not define. */
+  :global(.dark) .hero-title-highlight::after {
+    background: var(--color-brand-lifted);
+  }
+
+  /* Deck role: 1.125rem / 1.6 in Quiet. */
   .hero-subtitle {
     font-size: 1.125rem;
     color: var(--color-quiet);
     max-width: 36rem;
     margin: 0 auto 2.5rem;
     line-height: 1.6;
-    animation: fadeInUp 0.6s ease-out 0.2s both;
+    animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.16s both;
+  }
+
+  @media (min-width: 768px) {
+    .hero-subtitle {
+      margin-inline: 0;
+    }
   }
 
   :global(.dark) .hero-subtitle {
@@ -497,7 +228,13 @@
     gap: 1rem;
     justify-content: center;
     margin-bottom: 3rem;
-    animation: fadeInUp 0.6s ease-out 0.3s both;
+    animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.24s both;
+  }
+
+  @media (min-width: 768px) {
+    .hero-cta {
+      justify-content: flex-start;
+    }
   }
 
   .hero-btn {
@@ -505,30 +242,37 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.875rem 1.75rem;
-    /* Label role — the control-text step, same as the nav links. */
     font-size: 0.875rem;
     font-weight: 600;
     border-radius: 9999px;
     text-decoration: none;
-    transition: all 0.3s ease;
-    cursor: pointer;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease,
+      border-color 0.3s ease,
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
+  .hero-btn:focus-visible {
+    outline: 2px solid var(--color-brand);
+    outline-offset: 3px;
+  }
+
+  /*
+    Flat accent, no gradient and no coloured halo. The shadow is the room's
+    own tinted shadow, so the button sits on the wall like everything else.
+  */
   .hero-btn--primary {
-    background: linear-gradient(
-      135deg,
-      var(--aurora-indigo) 0%,
-      var(--aurora-violet) 100%
-    );
-    color: var(--color-wall);
-    box-shadow: 0 4px 20px
-      color-mix(in oklab, var(--aurora-indigo) 40%, transparent);
+    background: var(--color-brand);
+    color: var(--color-wall); /* 5.17:1 */
+    box-shadow: var(--shadow-resting);
   }
 
   .hero-btn--primary:hover {
+    background: var(--color-brand-deep); /* 6.70:1 */
     transform: translateY(-2px);
-    box-shadow: 0 8px 30px
-      color-mix(in oklab, var(--aurora-indigo) 50%, transparent);
+    box-shadow: var(--shadow-approach);
   }
 
   .hero-btn-icon {
@@ -542,25 +286,24 @@
   }
 
   .hero-btn--secondary {
-    background: color-mix(in oklab, var(--color-wall) 80%, transparent);
-    backdrop-filter: blur(10px);
+    background: var(--color-wall);
     color: var(--color-ink-secondary);
-    border: 1px solid color-mix(in oklab, var(--color-ink) 8%, transparent);
+    border: 1px solid var(--color-hairline);
   }
 
   :global(.dark) .hero-btn--secondary {
-    background: color-mix(in oklab, var(--color-wall) 10%, transparent);
+    background: transparent;
     color: var(--color-quiet-lifted);
-    border-color: color-mix(in oklab, var(--color-wall) 10%, transparent);
+    border-color: var(--color-night-edge);
   }
 
   .hero-btn--secondary:hover {
-    background: color-mix(in oklab, var(--color-wall) 95%, transparent);
+    border-color: var(--color-ink);
     transform: translateY(-2px);
   }
 
   :global(.dark) .hero-btn--secondary:hover {
-    background: color-mix(in oklab, var(--color-wall) 15%, transparent);
+    border-color: var(--color-quiet-faint);
   }
 
   /* Tech stack */
@@ -569,12 +312,16 @@
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
-    animation: fadeInUp 0.6s ease-out 0.4s both;
+    animation: riseIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.32s both;
   }
 
-  /* Micro role. Was slate-400, which is 2.63:1 here — below AA on any light
-     ground. Quiet carries it at 4.6:1; the slate-400 step returns in dark mode,
-     where DESIGN.md records it at 6.8:1 over a night surface. */
+  @media (min-width: 768px) {
+    .hero-stack {
+      align-items: flex-start;
+    }
+  }
+
+  /* Micro role in Quiet — 5.15:1. */
   .hero-stack-label {
     font-size: 0.75rem;
     font-weight: 600;
@@ -594,45 +341,51 @@
     justify-content: center;
   }
 
+  @media (min-width: 768px) {
+    .hero-stack-items {
+      justify-content: flex-start;
+    }
+  }
+
   /*
-    The lit chip variant. Micro type, and Indigo Accent rather than the bright
-    variant — indigo-500 over this translucent white reads 4.07:1, Accent reads
-    6.5:1. Casing is left alone so "TypeScript" and "Node.js" keep their own.
+    Chip spec: pale ground, dark text — metadata recedes through its ground,
+    never through faded ink. Ink Secondary on Hairline Faint is 9.48:1.
   */
   .hero-stack-badge {
     padding: 0.375rem 0.875rem;
     font-size: 0.75rem;
     font-weight: 600;
-    background: color-mix(in oklab, var(--color-wall) 70%, transparent);
-    backdrop-filter: blur(10px);
-    color: var(--color-indigo-accent);
+    background: var(--color-hairline-faint);
+    color: var(--color-ink-secondary);
     border-radius: 9999px;
-    border: 1px solid
-      color-mix(in oklab, var(--aurora-indigo) 15%, transparent);
-    transition: all 0.2s ease;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease;
   }
 
   :global(.dark) .hero-stack-badge {
-    background: color-mix(in oklab, var(--aurora-indigo) 15%, transparent);
-    color: var(--color-indigo-accent-lifted);
-    border-color: color-mix(in oklab, var(--aurora-indigo) 25%, transparent);
+    background: var(--color-night-edge);
+    color: var(--color-quiet-lifted);
   }
 
   .hero-stack-badge:hover {
-    background: color-mix(in oklab, var(--aurora-indigo) 10%, transparent);
-    transform: translateY(-1px);
-    border-color: color-mix(in oklab, var(--aurora-indigo) 30%, transparent);
+    background: var(--color-brand-wash);
+    color: var(--color-brand-deep); /* 5.49:1 on the wash */
   }
 
   :global(.dark) .hero-stack-badge:hover {
-    background: color-mix(in oklab, var(--aurora-indigo) 25%, transparent);
+    background: var(--color-night-edge);
+    color: var(--color-brand-lifted);
   }
 
-  /* Fade in animation */
-  @keyframes fadeInUp {
+  /*
+    The one authored moment: content rises into place once, on load, on an
+    exponential ease-out from an already-composed layout. Nothing loops.
+  */
+  @keyframes riseIn {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(14px);
     }
     to {
       opacity: 1;
@@ -640,55 +393,34 @@
     }
   }
 
+  @keyframes drawRule {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+
   /*
-    The hero runs six infinite animations. Rather than kill them outright —
-    which would strip the entrance hierarchy and leave the aurora as flat
-    blocks — hold each one at a composed position: the blobs stay where their
-    keyframes place them, the gradient headline keeps its colour, the status
-    dot keeps its glow, and the staggered entrance resolves immediately.
+    With motion reduced there is nothing left to hold in place — the entrance
+    is the only animation in the section. Everything resolves to its composed
+    state immediately.
   */
   @media (prefers-reduced-motion: reduce) {
-    .aurora-layer--1 {
-      transform: translate(-5%, 8%) rotate(5deg) scale(1.05);
-    }
-
-    .aurora-layer--2 {
-      transform: translate(8%, -6%) rotate(-5deg) scale(1.08);
-    }
-
-    .aurora-layer--3 {
-      transform: translate(15%, -10%) scale(1.1);
-    }
-
-    .aurora-layer,
-    .particle,
-    .hero-eyebrow-dot,
-    .hero-title-gradient,
     .hero-eyebrow,
     .hero-title,
     .hero-subtitle,
     .hero-cta,
     .hero-stack {
       animation: none;
-    }
-
-    .hero-title-gradient {
-      background-position: 50% 50%;
-    }
-
-    /* The entrance keyframes end at full opacity; without them the content
-       would otherwise inherit `both` fill and stay invisible. */
-    .hero-eyebrow,
-    .hero-title,
-    .hero-subtitle,
-    .hero-cta,
-    .hero-stack {
       opacity: 1;
       transform: none;
     }
 
-    .particle {
-      opacity: 0.4;
+    .hero-title-highlight::after {
+      animation: none;
+      transform: scaleX(1);
     }
 
     .hero-btn,
@@ -698,7 +430,6 @@
     }
   }
 
-  /* Responsive adjustments */
   @media (max-width: 640px) {
     .hero-headline {
       min-height: calc(100vh - 4rem);
@@ -714,10 +445,6 @@
       width: 100%;
       max-width: 280px;
       justify-content: center;
-    }
-
-    .aurora-layer {
-      filter: blur(60px);
     }
   }
 </style>

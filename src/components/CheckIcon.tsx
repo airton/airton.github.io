@@ -12,7 +12,7 @@ export const CheckIcon = ({ className }: CheckIconProps) => {
       fill="currentColor"
       viewBox="0 0 20 20"
       className={clsx(
-        "w-3.5 h-3.5 text-gray-500 dark:text-gray-400 shrink-0",
+        "w-3.5 h-3.5 text-quiet dark:text-quiet-faint shrink-0",
         className
       )}
     >

@@ -29,24 +29,24 @@ const labels = {
   title={title.pt}
   description={description.pt}
 >
-  <section class="w-full py-24 md:py-32 bg-white flex justify-center min-h-screen">
+  <section class="w-full py-24 md:py-32 bg-wall flex justify-center min-h-screen">
     <div class="container px-4 md:px-6 max-w-7xl">
       <!-- Header -->
       <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 text-left">
         <div class="max-w-2xl">
-          <div class="inline-flex items-center gap-2 text-indigo-600 font-medium text-sm tracking-wider uppercase mb-3 text-left">
+          <div class="inline-flex items-center gap-2 text-brand font-medium text-sm tracking-wider uppercase mb-3 text-left">
             <IconCode className="w-4 h-4" />
             <span data-en={labels.featured.en} data-pt={labels.featured.pt}>{labels.featured.pt}</span>
           </div>
-          <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6 leading-[1.1]" data-en={labels.title.en} data-pt={labels.title.pt}>
+          <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-ink mb-6 leading-[1.1]" data-en={labels.title.en} data-pt={labels.title.pt}>
             {labels.title.pt}
           </h1>
-          <p class="text-lg text-slate-500 font-serif italic text-left" data-en={labels.subtitle.en} data-pt={labels.subtitle.pt}>
+          <p class="text-lg text-quiet font-serif italic text-left" data-en={labels.subtitle.en} data-pt={labels.subtitle.pt}>
             {labels.subtitle.pt}
           </p>
         </div>
         <div class="hidden md:block">
-          <p class="text-slate-500 text-sm max-w-[200px] text-right" data-en={labels.expertise.en} data-pt={labels.expertise.pt}>
+          <p class="text-quiet text-sm max-w-[200px] text-right" data-en={labels.expertise.en} data-pt={labels.expertise.pt}>
             {labels.expertise.pt}
           </p>
         </div>
@@ -57,7 +57,7 @@ const labels = {
         {
           projects.map(({ name, desc, slug, image }) => (
             <a href={`/project/${slug}`} class="group block h-full">
-              <Card className="h-full bg-white border-transparent shadow-[0_2px_15px_-3px_rgba(0,0,0,0.05),0_10px_20px_-2px_rgba(0,0,0,0.02)] hover:shadow-[0_20px_40px_-10px_rgba(0,0,0,0.1)] group-hover:-translate-y-2 transition-all duration-500 rounded-[2rem] overflow-hidden flex flex-col">
+              <Card className="h-full bg-wall border-transparent shadow-resting hover:shadow-approach group-hover:-translate-y-2 transition-all duration-500 rounded-[2rem] overflow-hidden flex flex-col">
                 <div class="relative aspect-[16/10] overflow-hidden">
                   <Image
                     src={image}
@@ -66,28 +66,28 @@ const labels = {
                     width={800}
                     height={500}
                   />
-                  <div class="absolute inset-0 bg-gradient-to-t from-slate-900/40 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity"></div>
+                  <div class="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity"></div>
                 </div>
                 
                 <CardContent className="p-8 flex-grow flex flex-col">
                   <div class="flex items-center justify-between mb-4">
-                    <h3 class="text-2xl font-bold text-slate-900 group-hover:text-indigo-600 transition-colors duration-300">
+                    <h3 class="text-2xl font-bold text-ink group-hover:text-brand transition-colors duration-300">
                       {name}
                     </h3>
-                    <div class="p-2 bg-slate-50 rounded-full text-slate-500 group-hover:bg-indigo-50 group-hover:text-indigo-600 transition-all duration-300 transform group-hover:rotate-12">
+                    <div class="p-2 bg-gallery-floor rounded-full text-quiet group-hover:bg-brand-wash group-hover:text-brand transition-all duration-300 transform group-hover:rotate-12">
                       <IconExternalLink className="w-5 h-5" />
                     </div>
                   </div>
                   
-                  <p class="text-slate-500 text-sm leading-relaxed line-clamp-2 mb-8 flex-grow">
+                  <p class="text-quiet text-sm leading-relaxed line-clamp-2 mb-8 flex-grow">
                     {desc}
                   </p>
                   
                   <!-- Footer -->
-                  <div class="flex items-center text-sm font-bold text-slate-900 mt-auto tracking-tight uppercase">
+                  <div class="flex items-center text-sm font-bold text-ink mt-auto tracking-tight uppercase">
                     <span class="mr-2" data-en={labels.case_study.en} data-pt={labels.case_study.pt}>{labels.case_study.pt}</span>
-                    <div class="h-px flex-grow bg-slate-100 mx-4 group-hover:bg-indigo-100 transition-colors"></div>
-                    <IconArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300 text-indigo-500" />
+                    <div class="h-px flex-grow bg-hairline-faint mx-4 group-hover:bg-brand-edge transition-colors"></div>
+                    <IconArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300 text-brand-bright" />
                   </div>
                 </CardContent>
               </Card>

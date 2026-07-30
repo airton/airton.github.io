@@ -93,7 +93,7 @@ const jsonLd = {
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   <div
-    class="w-full py-12 md:py-24 lg:py-32 bg-gradient-to-r from-slate-100 to-slate-200 flex justify-center"
+    class="w-full py-12 md:py-24 lg:py-32 bg-gallery-floor flex justify-center"
   >
     <div class="container px-4 md:px-6 max-w-4xl">
       <div
@@ -102,17 +102,17 @@ const jsonLd = {
         <div class="flex flex-col items-center space-y-4 text-center">
           <div class="space-y-2">
             <h1
-              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-slate-900"
+              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-ink"
             >
               {frontmatter.title}
             </h1>
             <p
-              class="mx-auto max-w-[700px] text-slate-900 md:text-xl dark:text-slate-900"
+              class="mx-auto max-w-[700px] text-ink md:text-xl dark:text-ink"
             >
               {frontmatter.description}
             </p>
             <p
-              class="mx-auto max-w-[700px] text-slate-900 md:text-sm dark:text-slate-900"
+              class="mx-auto max-w-[700px] text-ink md:text-sm dark:text-ink"
             >
               {dateFormat(frontmatter.date)}
               {readingTime && ` · ${readingTime} min de leitura`}
@@ -123,7 +123,7 @@ const jsonLd = {
                   {currentTags.map((tag: string) => (
                     <a
                       href={`/blog/tag/${slugify(tag)}`}
-                      class="inline-flex items-center rounded-full bg-slate-900/5 hover:bg-slate-900/10 px-3 py-1 text-xs font-medium text-slate-700 transition-colors"
+                      class="inline-flex items-center rounded-full bg-ink/5 hover:bg-ink/10 px-3 py-1 text-xs font-medium text-ink-secondary transition-colors"
                     >
                       #{tag}
                     </a>
@@ -137,40 +137,40 @@ const jsonLd = {
     </div>
   </div>
   <div
-    class="w-full px-4 md:px-6 py-8 md:py-12 lg:py-16 flex justify-center bg-white"
+    class="w-full px-4 md:px-6 py-8 md:py-12 lg:py-16 flex justify-center bg-wall"
   >
     <article
       class="prose prose-slate prose-lg max-w-4xl w-full
-        prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-slate-900
-        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-slate-200 prose-h2:pb-2
+        prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-ink
+        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-hairline prose-h2:pb-2
         prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
         prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-2
         prose-h5:text-lg prose-h5:mt-4 prose-h5:mb-2
         prose-h6:text-base prose-h6:mt-4 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wide
-        prose-p:text-slate-700 prose-p:leading-relaxed prose-p:mb-4
-        prose-a:text-blue-600 prose-a:font-medium prose-a:no-underline hover:prose-a:underline hover:prose-a:text-blue-800
-        prose-strong:font-bold prose-strong:text-slate-900
-        prose-em:italic prose-em:text-slate-700
+        prose-p:text-ink-secondary prose-p:leading-relaxed prose-p:mb-4
+        prose-a:text-brand prose-a:font-medium prose-a:no-underline hover:prose-a:underline hover:prose-a:text-brand-deep
+        prose-strong:font-bold prose-strong:text-ink
+        prose-em:italic prose-em:text-ink-secondary
         prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ul:space-y-2
         prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-ol:space-y-2
-        prose-li:text-slate-700 prose-li:leading-relaxed
-        prose-blockquote:border-l-4 prose-blockquote:border-blue-500 prose-blockquote:bg-slate-50 prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-6 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-slate-600
-        prose-code:bg-slate-100 prose-code:text-pink-700 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
-        prose-pre:bg-slate-900 prose-pre:text-slate-100 prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:my-6 prose-pre:overflow-x-auto
+        prose-li:text-ink-secondary prose-li:leading-relaxed
+        prose-blockquote:border-l-4 prose-blockquote:border-brand prose-blockquote:bg-gallery-floor prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-6 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-ink-secondary
+        prose-code:bg-hairline-faint prose-code:text-code-magenta prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
+        prose-pre:bg-ink prose-pre:text-gallery-floor prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:my-6 prose-pre:overflow-x-auto
         prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:rounded-lg
-        prose-thead:bg-slate-100
-        prose-th:text-left prose-th:font-semibold prose-th:text-slate-900 prose-th:p-3 prose-th:border prose-th:border-slate-200
-        prose-td:p-3 prose-td:border prose-td:border-slate-200 prose-td:text-slate-700
-        prose-tr:even:bg-slate-50
+        prose-thead:bg-hairline-faint
+        prose-th:text-left prose-th:font-semibold prose-th:text-ink prose-th:p-3 prose-th:border prose-th:border-hairline
+        prose-td:p-3 prose-td:border prose-td:border-hairline prose-td:text-ink-secondary
+        prose-tr:even:bg-gallery-floor
         prose-img:rounded-xl prose-img:shadow-lg prose-img:my-6
-        prose-hr:border-slate-200 prose-hr:my-8"
+        prose-hr:border-hairline prose-hr:my-8"
     >
       <slot />
     </article>
   </div>
 
-  <div class="w-full px-4 md:px-6 pb-8 flex justify-center bg-white">
-    <div class="max-w-4xl w-full border-t border-slate-200 pt-8">
+  <div class="w-full px-4 md:px-6 pb-8 flex justify-center bg-wall">
+    <div class="max-w-4xl w-full border-t border-hairline pt-8">
       <ShareButtons url={pageUrl} title={frontmatter.title} />
     </div>
   </div>
@@ -180,9 +180,9 @@ const jsonLd = {
   <!-- Disqus Comments Section -->
   <!-- Disqus injects its own theming, so this block pins itself to the light
        reading surface rather than inheriting it. -->
-  <div class="w-full bg-white text-slate-700 py-12" style="color-scheme: light;">
+  <div class="w-full bg-wall text-ink-secondary py-12" style="color-scheme: light;">
     <div class="container px-4 md:px-6 max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-6 text-slate-900">
+      <h2 class="text-2xl font-bold mb-6 text-ink">
         Comentários
       </h2>
       <div id="disqus_thread" style="color-scheme: light;"></div>

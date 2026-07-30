@@ -22,3 +22,7 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# agent tooling — vendored skill scripts and session state, not site code
+.claude/
+.impeccable/
