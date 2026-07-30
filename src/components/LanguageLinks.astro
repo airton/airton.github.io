@@ -1,0 +1,51 @@
+---
+/*
+  Language switching between URLs.
+
+  This replaced a component that swapped text in the DOM, which meant one URL
+  carried both translations: a crawler fetching a plugin page received the
+  complete English and the complete Portuguese prose in a single document
+  declared `lang="pt-BR"`, with no way to tell which language the page was for.
+  On the page carrying most of this site's search impressions, for queries that
+  are entirely English, that was the wrong trade.
+
+  This instead assumes each language has its own URL, and is a plain pair of
+  anchors between them — crawlable, shareable, no JavaScript, and the page it
+  lands on declares a single honest `lang`.
+*/
+interface Props {
+  lang: "en" | "pt";
+  ptHref: string;
+  enHref: string;
+}
+
+const { lang, ptHref, enHref } = Astro.props;
+
+const ACTIVE = "bg-brand text-wall";
+const IDLE = "text-quiet hover:text-ink-secondary";
+---
+
+<div class="fixed top-2 right-20 md:right-4 z-[60]">
+  <div
+    class="bg-wall/80 backdrop-blur-md border border-hairline rounded-full p-1 shadow-lg flex items-center gap-1"
+    role="group"
+    aria-label="Idioma da página / Page language"
+  >
+    <a
+      href={ptHref}
+      lang="pt-BR"
+      hreflang="pt-BR"
+      aria-current={lang === "pt" ? "page" : undefined}
+      class={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${lang === "pt" ? ACTIVE : IDLE}`}
+      >PT</a
+    >
+    <a
+      href={enHref}
+      lang="en"
+      hreflang="en"
+      aria-current={lang === "en" ? "page" : undefined}
+      class={`px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2 ${lang === "en" ? ACTIVE : IDLE}`}
+      >EN</a
+    >
+  </div>
+</div>

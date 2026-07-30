@@ -1,5 +1,6 @@
 ---
 import type { MarkdownInstance } from "astro";
+import LangBadge from "@/components/LangBadge.astro";
 
 interface Props {
   posts: MarkdownInstance<Record<string, any>>[];
@@ -7,6 +8,9 @@ interface Props {
 }
 
 const { posts, title = "Últimos Posts" } = Astro.props;
+
+const langOf = (post: MarkdownInstance<Record<string, any>>) =>
+  post.frontmatter.lang ?? "pt-BR";
 ---
 
 <div class="w-full bg-wall py-12">
@@ -21,10 +25,21 @@ const { posts, title = "Últimos Posts" } = Astro.props;
             href={post.url}
             class="block p-4 border border-hairline rounded-lg hover:bg-gallery-floor transition-colors"
           >
-            <h3 class="text-xl font-semibold text-ink mb-2">
-              {post.frontmatter.title}
-            </h3>
-            <p class="text-ink-secondary">{post.frontmatter.description}</p>
+            <div class="flex items-start gap-3 mb-2">
+              <h3
+                class="text-xl font-semibold text-ink"
+                lang={langOf(post) === "pt-BR" ? undefined : langOf(post)}
+              >
+                {post.frontmatter.title}
+              </h3>
+              <LangBadge lang={langOf(post)} class="ml-auto mt-1" />
+            </div>
+            <p
+              class="text-ink-secondary"
+              lang={langOf(post) === "pt-BR" ? undefined : langOf(post)}
+            >
+              {post.frontmatter.description}
+            </p>
           </a>
         ))
       }

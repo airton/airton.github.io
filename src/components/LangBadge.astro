@@ -1,0 +1,31 @@
+---
+/*
+  Marks a post written in a language other than the blog's Portuguese. A few
+  posts are English, to reach search demand no Portuguese post can; an English
+  title sitting unmarked among Portuguese ones reads as an oversight rather than
+  a decision. Renders nothing for Portuguese posts, so it is safe to drop into
+  any listing.
+*/
+interface Props {
+  lang?: string;
+  class?: string;
+}
+
+const { lang, class: className } = Astro.props;
+const postLang = lang ?? "pt-BR";
+---
+
+{
+  postLang !== "pt-BR" && (
+    <span
+      class:list={[
+        "shrink-0 px-2 py-0.5 rounded-full bg-hairline-faint text-quiet text-xs font-bold tracking-widest uppercase",
+        className,
+      ]}
+      title="Artigo em inglês"
+      lang="pt-BR"
+    >
+      {postLang}
+    </span>
+  )
+}
