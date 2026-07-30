@@ -18,6 +18,16 @@ export interface PluginData {
   image: string;
   link: string;
   video?: string;
+  /**
+   * The meta description for the plugin's page. Written in English on purpose:
+   * the page body swaps language client-side, but there is only ever one
+   * `<meta name="description">` in the served HTML, and every search query
+   * these pages surface for is English (Search Console, 3 months to
+   * 2026-07-30 — "jumpcloud sso", "wordpress nextcloud sso", and ten more).
+   * Falls back to `en.desc`, which is a one-liner and usually too thin to earn
+   * a click; prefer writing this field.
+   */
+  seoDescription?: string;
   en: TranslatedContent;
   pt: TranslatedContent;
 }
@@ -30,6 +40,8 @@ export const plugins: PluginData[] = [
     image:
       "https://via.placeholder.com/772x250/cccccc/ffffff?text=Video+Destacado+Banner",
     link: "https://wordpress.org/plugins/video-destacado/",
+    seoDescription:
+      "Replace the WordPress featured image with a video from YouTube, Vimeo, Dailymotion or a self-hosted MP4. Responsive, autoplay optional, Gutenberg compatible.",
     en: {
       desc: "A plugin to set a featured video for posts.",
       fullDescription: `
@@ -126,6 +138,8 @@ export const plugins: PluginData[] = [
     image:
       "https://via.placeholder.com/772x250/cccccc/ffffff?text=Manage+User+Roles+Banner",
     link: "https://wordpress.org/plugins/manage-user-roles/",
+    seoDescription:
+      "A WordPress user role manager with no code required. Create and clone roles, edit capabilities one checkbox at a time, and reset to defaults. Multisite ready.",
     en: {
       desc: "A plugin to manage user roles and capabilities.",
       fullDescription: `
@@ -214,6 +228,8 @@ export const plugins: PluginData[] = [
     image:
       "https://via.placeholder.com/772x250/cccccc/ffffff?text=Nudge+SEO+AI+Banner",
     link: "https://wordpress.org/plugins/nudge-seo-ai/",
+    seoDescription:
+      "An AI SEO plugin for WordPress that reads the top 10 results for your keyword and suggests topics, long-tail terms, internal links and ALT text as you write.",
     en: {
       desc: "An AI-powered SEO plugin to help you with your content.",
       fullDescription: `
@@ -303,6 +319,8 @@ export const plugins: PluginData[] = [
       "https://ps.w.org/sso-connector-for-jumpcloud/assets/banner-1544x500.png?rev=3421110",
     link: "https://wordpress.org/plugins/sso-connector-for-jumpcloud/",
     video: "/assets/videos/jump-demo.mp4",
+    seoDescription:
+      "Log in to WordPress with JumpCloud credentials over SAML 2.0. Map JumpCloud groups to WordPress roles, create users on first login, and force SSO redirect.",
     en: {
       desc: "A plugin to connect your WordPress site with JumpCloud SSO.",
       fullDescription: `
@@ -426,6 +444,8 @@ export const plugins: PluginData[] = [
     slug: "notria-ai-suite",
     image: "https://ps.w.org/notria-ai-suite/assets/banner-772x250.png",
     link: "https://wordpress.org/plugins/notria-ai-suite/",
+    seoDescription:
+      "An all-in-one AI suite for WordPress: a RAG-grounded support chatbot that answers from your own content, a post generator, and AI analysis of form submissions.",
     en: {
       desc: "Supercharge your WordPress site with AI. Automate content creation, add a support chatbot, and enhance forms with this all-in-one productivity suite.",
       fullDescription: `

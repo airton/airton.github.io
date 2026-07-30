@@ -54,13 +54,67 @@ const getPluginBannerImageUrl = (slug: string) =>
   `https://ps.w.org/${slug}/assets/banner-772x250.png`;
 
 const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
+
+/*
+  `plugin.desc` used to be read here, but PluginData has no such field — the
+  copy lives under `en`/`pt` — so every plugin page silently served the
+  site-wide bio as its meta description, including the one page carrying most
+  of the site's search impressions.
+*/
+const metaDescription = plugin.seoDescription ?? plugin.en.desc;
+
+/*
+  SoftwareApplication tells Google this page is about a piece of software
+  rather than a person's portfolio entry, and is what makes the page eligible
+  for the software rich result. Deliberately no `aggregateRating`: inventing
+  one would be a structured-data violation, and the real ratings live on
+  wordpress.org, which `sameAs` points at.
+*/
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  name: plugin.name,
+  description: metaDescription,
+  url: new URL(Astro.url.pathname, Astro.site).href,
+  applicationCategory: "BusinessApplication",
+  operatingSystem: "WordPress",
+  image: pluginImageUrl,
+  sameAs: plugin.link,
+  author: {
+    "@type": "Person",
+    name: "Airton Vancin",
+    url: "https://airtonvancin.com/sobre",
+  },
+  /*
+    Only the plugins with no paid tier get a zero-price Offer. A freemium
+    plugin is free to install but has a Stripe subscription behind it, so
+    asserting price "0" for the product as a whole would be false — and a
+    wrong price is exactly the kind of structured-data mismatch that gets
+    rich results pulled. Absent an Offer, Google just skips the price row.
+  */
+  ...(plugin.en.premium
+    ? {}
+    : {
+        isAccessibleForFree: true,
+        offers: {
+          "@type": "Offer",
+          price: "0",
+          priceCurrency: "USD",
+        },
+      }),
+};
 ---
 
 <Layout
-  title={`${plugin.name} - WordPress Plugin | Airton Vancin`}
-  description={plugin.desc}
+  title={`${plugin.name} — WordPress Plugin | Airton Vancin`}
+  description={metaDescription}
   image={pluginImageUrl}
 >
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(jsonLd)}
+  />
   <div class="bg-gallery-floor/50 border-b border-hairline-faint">
     <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
       <a
