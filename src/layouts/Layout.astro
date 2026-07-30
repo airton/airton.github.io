@@ -10,6 +10,13 @@ interface Props {
   type?: "website" | "article";
   publishedDate?: Date;
   modifiedDate?: Date;
+  /**
+   * BCP-47 tag for the page's main content. The site is Portuguese, so that is
+   * the default — but a page whose body is English has to say so, or `lang`
+   * and the text disagree and both screen readers and search engines take the
+   * attribute's word over the content's.
+   */
+  lang?: string;
 }
 
 const {
@@ -19,15 +26,27 @@ const {
   type = "website",
   publishedDate,
   modifiedDate,
+  lang = "pt-BR",
 } = Astro.props;
 
 const site = Astro.site || new URL("https://airtonvancin.com");
 const canonicalURL = new URL(Astro.url.pathname, site);
 const socialImage = new URL(image, site);
+
+/*
+  Open Graph wants a language_TERRITORY locale — `pt_BR`, not the `pt-BR` of
+  the lang attribute, and never a bare `en`, which crawlers ignore. A bare
+  language tag is the right value for `lang` though, so the territory is
+  supplied here rather than forced into the frontmatter.
+*/
+const OG_TERRITORY: Record<string, string> = { pt: "pt_BR", en: "en_US" };
+const ogLocale = lang.includes("-")
+  ? lang.replace("-", "_")
+  : (OG_TERRITORY[lang] ?? lang);
 ---
 
 <!doctype html>
-<html lang="pt-BR">
+<html lang={lang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -84,7 +103,7 @@ const socialImage = new URL(image, site);
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:locale" content={ogLocale} />
     <meta property="og:site_name" content="Airton Vancin Junior" />
     {
       publishedDate && (
