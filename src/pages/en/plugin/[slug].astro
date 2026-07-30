@@ -1,8 +1,8 @@
 ---
 /*
-  Portuguese plugin page. The URL is unchanged from before the language split —
-  it is the one Google has indexed and the one carrying the site's search
-  impressions, so it keeps its path and the English version takes /en/.
+  English plugin page. Every search query these pages surface for is English,
+  so this is the version that has to be indexable on its own URL rather than
+  buried in a Portuguese document.
 */
 import Layout from "@/layouts/Layout.astro";
 import PluginArticle from "@/components/PluginArticle.astro";
@@ -20,14 +20,14 @@ const { plugin } = Astro.props;
 
 const ptPath = `/plugin/${plugin.slug}/`;
 const enPath = `/en/plugin/${plugin.slug}/`;
-const metaDescription = plugin.seoDescriptionPt ?? plugin.pt.desc;
+const metaDescription = plugin.seoDescription ?? plugin.en.desc;
 ---
 
 <Layout
-  title={`${plugin.name} — Plugin WordPress | Airton Vancin`}
+  title={`${plugin.name} — WordPress Plugin | Airton Vancin`}
   description={metaDescription}
   image={`https://ps.w.org/${plugin.slug}/assets/banner-772x250.png`}
-  lang="pt-BR"
+  lang="en"
   alternates={[
     { hreflang: "pt-BR", path: ptPath },
     { hreflang: "en", path: enPath },
@@ -40,11 +40,11 @@ const metaDescription = plugin.seoDescriptionPt ?? plugin.pt.desc;
     set:html={JSON.stringify(
       pluginJsonLd({
         plugin,
-        lang: "pt",
+        lang: "en",
         description: metaDescription,
-        url: new URL(ptPath, Astro.site).href,
+        url: new URL(enPath, Astro.site).href,
       })
     )}
   />
-  <PluginArticle plugin={plugin} lang="pt" />
+  <PluginArticle plugin={plugin} lang="en" />
 </Layout>

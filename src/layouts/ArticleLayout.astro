@@ -117,8 +117,23 @@ const jsonLd = {
               class="mx-auto max-w-[700px] text-ink md:text-sm dark:text-ink"
             >
               {dateFormat(frontmatter.date)}
-              {readingTime && ` · ${readingTime} min de leitura`}
+              {
+                readingTime &&
+                  ` · ${readingTime} ${lang === "pt-BR" ? "min de leitura" : "min read"}`
+              }
             </p>
+            {
+              lang !== "pt-BR" && (
+                <p
+                  class="mx-auto max-w-[700px] pt-2 text-sm text-quiet"
+                  lang="pt-BR"
+                >
+                  Este artigo está em inglês. Ele responde a buscas técnicas que
+                  chegam nesse idioma, e traduzir só a interface ao redor
+                  deixaria o leitor sem aviso.
+                </p>
+              )
+            }
             {
               currentTags.length > 0 && (
                 <div class="flex flex-wrap justify-center gap-2 pt-2">

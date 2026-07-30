@@ -1,0 +1,478 @@
+---
+/*
+  One plugin page, in one language.
+
+  This used to live in `pages/plugin/[slug].astro` and render both translations
+  into the same document, with LanguageSwitcher hiding one of them client-side.
+  Nothing was hidden in the served HTML, so every crawl saw both languages at a
+  single URL. Now the language is a parameter and each one gets its own route —
+  see LanguageLinks.astro for the reasoning.
+*/
+import { Button } from "@/components/ui/button";
+import LanguageLinks from "@/components/LanguageLinks.astro";
+import type { PluginData } from "@/data/plugins";
+import {
+  IconBrandWordpress,
+  IconArrowLeft,
+  IconDownload,
+  IconCircleCheck,
+  IconQuestionMark,
+  IconSparkles,
+  IconRocket,
+} from "@tabler/icons-react";
+
+interface Props {
+  plugin: PluginData;
+  lang: "en" | "pt";
+}
+
+const { plugin, lang } = Astro.props;
+
+const LABELS = {
+  en: {
+    back: "Back to plugins",
+    wp_plugin: "WordPress Plugin",
+    download: "Download on WP.org",
+    verified: "Verified & Safe",
+    demo: "Demo Video",
+    premium: "Premium Features",
+    features_included: "Features Included",
+    how_to_activate: "How to Activate",
+    premium_sub: "Premium Subscription",
+    monthly_annual: "Monthly or annual plans available via Stripe",
+    upgrade: "Upgrade to Premium",
+    key_features: "Key Features",
+    installation: "Installation Guide",
+    faq: "FAQ",
+    modal_title: "You're almost there!",
+    modal_desc:
+      "Thank you for choosing my plugin. If you find it useful, consider supporting my work with a coffee. It helps me keep building and maintaining open-source tools!",
+    modal_continue: "Continue to Download",
+    modal_maybe: "Maybe later",
+    video_unsupported: "Your browser does not support the video tag.",
+  },
+  pt: {
+    back: "Voltar para plugins",
+    wp_plugin: "Plugin WordPress",
+    download: "Baixar no WP.org",
+    verified: "Verificado & Seguro",
+    demo: "Vídeo de Demonstração",
+    premium: "Recursos Premium",
+    features_included: "Recursos Incluídos",
+    how_to_activate: "Como Ativar",
+    premium_sub: "Assinatura Premium",
+    monthly_annual: "Planos mensais ou anuais disponíveis via Stripe",
+    upgrade: "Mudar para Premium",
+    key_features: "Principais Recursos",
+    installation: "Guia de Instalação",
+    faq: "Perguntas Frequentes",
+    modal_title: "Você está quase lá!",
+    modal_desc:
+      "Obrigado por escolher meu plugin. Se você o achar útil, considere apoiar meu trabalho com um café. Isso me ajuda a continuar construindo e mantendo ferramentas de código aberto!",
+    modal_continue: "Continuar para Download",
+    modal_maybe: "Talvez depois",
+    video_unsupported: "Seu navegador não suporta o elemento de vídeo.",
+  },
+} as const;
+
+const t = LABELS[lang];
+const content = plugin[lang];
+
+const pluginImageUrl = `https://ps.w.org/${plugin.slug}/assets/banner-772x250.png`;
+
+/*
+  The FAQ section was previously guarded on `plugin.faq`, a field PluginData
+  does not have — the copy is under `en`/`pt`. So the guard was always falsy
+  and all 17 authored questions across the five plugins never rendered.
+*/
+const faq = content.faq ?? [];
+const backHref = lang === "en" ? "/plugins/" : "/#wp-plugins";
+---
+
+<div class="bg-gallery-floor/50 border-b border-hairline-faint">
+  <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
+    <a
+      href={backHref}
+      class="inline-flex items-center text-sm font-medium text-quiet hover:text-brand mb-12 transition-colors group"
+    >
+      <IconArrowLeft
+        className="mr-2 h-4 w-4 transform group-hover:-translate-x-1 transition-transform"
+      />
+      <span>{t.back}</span>
+    </a>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <div
+          class="inline-flex items-center gap-2 bg-brand-wash text-brand px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+        >
+          <IconBrandWordpress className="w-3.5 h-3.5" />
+          <span>{t.wp_plugin}</span>
+        </div>
+        <h1
+          class="text-4xl md:text-6xl font-bold tracking-tight text-ink leading-tight"
+        >
+          {plugin.name}
+        </h1>
+        <p
+          class="text-xl text-ink-secondary leading-relaxed font-serif italic"
+        >
+          {content.desc}
+        </p>
+        <div class="flex flex-wrap gap-4 pt-4">
+          <Button
+            size="lg"
+            className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-brand-bright/20"
+            asChild
+          >
+            <a href={plugin.link} target="_blank" rel="noopener noreferrer">
+              <span>{t.download}</span>
+              <IconDownload className="ml-2 h-5 w-5" />
+            </a>
+          </Button>
+          <div
+            class="flex items-center px-4 py-2 bg-wall border border-hairline rounded-full text-sm text-quiet font-medium"
+          >
+            <span class="w-2 h-2 bg-live-signal rounded-full mr-2 animate-pulse"
+            ></span>
+            <span>{t.verified}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="relative group">
+        <div
+          class="relative overflow-hidden rounded-[1.5rem] border border-hairline shadow-2xl skew-y-1 group-hover:skew-y-0 transition-transform duration-700"
+        >
+          <img
+            src={pluginImageUrl}
+            alt={plugin.name}
+            class="w-full aspect-[772/250] object-cover"
+          />
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container px-4 md:px-6 py-20 max-w-4xl mx-auto">
+  <div class="grid gap-24">
+    <!-- Description -->
+    <section
+      class="prose prose-slate dark:prose-invert max-w-none prose-headings:text-ink prose-p:text-ink-secondary prose-p:leading-relaxed prose-li:text-ink-secondary"
+      set:html={content.fullDescription}
+    />
+
+    <!-- Video Demo -->
+    {
+      plugin.video && (
+        <section>
+          <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-3xl font-bold text-ink">{t.demo}</h2>
+            <div class="h-px flex-grow bg-hairline-faint" />
+          </div>
+          <div class="relative group">
+            <div class="relative overflow-hidden rounded-[2rem] border border-hairline-faint bg-ink shadow-2xl">
+              <video
+                src={plugin.video}
+                controls
+                class="w-full aspect-video object-cover"
+              >
+                {t.video_unsupported}
+              </video>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Premium Features -->
+    {
+      content.premium && (
+        <section class="relative">
+          <div class="relative bg-wall border border-hairline-faint rounded-[2.5rem] p-8 md:p-12 shadow-xl overflow-hidden">
+            <div class="absolute top-0 right-0 p-8 text-brand-edge/20">
+              <IconSparkles size={120} />
+            </div>
+
+            <div class="relative">
+              <div class="flex items-center gap-3 mb-6">
+                <div class="p-2 bg-brand rounded-lg text-wall">
+                  <IconSparkles className="w-6 h-6" />
+                </div>
+                <h2 class="text-3xl font-bold text-ink">{t.premium}</h2>
+              </div>
+
+              <p class="text-lg text-ink-secondary mb-10 leading-relaxed max-w-2xl">
+                {content.premium.description}
+              </p>
+
+              <div class="grid sm:grid-cols-2 gap-x-12 gap-y-6">
+                <div class="space-y-6">
+                  <h3 class="text-sm font-bold text-brand uppercase tracking-widest flex items-center gap-2">
+                    <IconSparkles className="w-4 h-4" />{" "}
+                    <span>{t.features_included}</span>
+                  </h3>
+                  <div class="grid gap-4">
+                    {content.premium.features.map((feature) => (
+                      <div class="flex items-start gap-3">
+                        <div class="p-1 bg-brand-wash rounded-full text-brand mt-0.5">
+                          <IconCircleCheck className="w-3.5 h-3.5" />
+                        </div>
+                        <span class="text-ink-secondary font-medium leading-snug">
+                          {feature}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {content.premium.howToActivate && (
+                  <div class="space-y-6">
+                    <h3 class="text-sm font-bold text-ink uppercase tracking-widest flex items-center gap-2">
+                      <IconRocket className="w-4 h-4" />{" "}
+                      <span>{t.how_to_activate}</span>
+                    </h3>
+                    <div class="grid gap-4">
+                      {content.premium.howToActivate.map((step, index) => (
+                        <div class="flex items-start gap-4">
+                          <div class="flex-shrink-0 w-6 h-6 bg-hairline-faint text-quiet rounded-full flex items-center justify-center text-xs font-bold">
+                            {index + 1}
+                          </div>
+                          <span class="text-ink-secondary text-sm leading-relaxed">
+                            {step}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              <div class="mt-12 pt-8 border-t border-hairline-faint flex flex-col sm:flex-row items-center justify-between gap-8">
+                <div class="flex items-center gap-4">
+                  <div class="hidden sm:flex w-12 h-12 bg-status-ground rounded-full items-center justify-center text-status-ink">
+                    <IconCircleCheck className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <p class="text-sm font-bold text-ink mb-1">
+                      {t.premium_sub}
+                    </p>
+                    <p class="text-quiet text-sm">{t.monthly_annual}</p>
+                  </div>
+                </div>
+                <Button
+                  className="rounded-full px-10 h-14 bg-brand hover:bg-brand-deep text-base font-bold shadow-xl shadow-brand-bright/20 transform hover:-translate-y-0.5 transition-all"
+                  asChild
+                >
+                  <a href={plugin.link} target="_blank" rel="noopener noreferrer">
+                    <span>{t.upgrade}</span> <IconSparkles className="ml-2 w-5 h-5" />
+                  </a>
+                </Button>
+              </div>
+            </div>
+          </div>
+        </section>
+      )
+    }
+
+    <!-- Features -->
+    <section>
+      <div class="flex items-center gap-4 mb-10">
+        <h2 class="text-3xl font-bold text-ink">{t.key_features}</h2>
+        <div class="h-px flex-grow bg-hairline-faint"></div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6">
+        {
+          content.features.map((feature) => (
+            <div class="group p-6 bg-wall border border-hairline-faint rounded-2xl shadow-sm hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-4">
+              <div class="p-2 bg-brand-wash rounded-lg text-brand-bright">
+                <IconCircleCheck className="w-5 h-5" />
+              </div>
+              <span class="text-ink-secondary font-medium leading-tight pt-1">
+                {feature}
+              </span>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <!-- Installation -->
+    <section class="relative">
+      <div class="flex items-center gap-4 mb-10">
+        <h2 class="text-3xl font-bold text-ink">{t.installation}</h2>
+        <div class="h-px flex-grow bg-hairline-faint"></div>
+      </div>
+
+      <div
+        class="bg-wall border border-hairline-faint rounded-[2rem] p-8 md:p-12 shadow-sm relative overflow-hidden group"
+      >
+        <div
+          class="absolute top-0 right-0 w-32 h-32 bg-brand-wash/50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"
+        >
+        </div>
+
+        <div
+          class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-ink-secondary prose-li:marker:text-brand-bright prose-li:marker:font-bold prose-strong:text-ink"
+          set:html={content.installation}
+        />
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    {
+      faq.length > 0 && (
+        <section>
+          <div class="flex items-center gap-4 mb-10">
+            <h2 class="text-3xl font-bold text-ink">{t.faq}</h2>
+            <div class="h-px flex-grow bg-hairline-faint" />
+          </div>
+          <div class="grid gap-6">
+            {faq.map((item) => (
+              <div class="bg-wall border border-hairline-faint p-8 rounded-3xl hover:border-brand-edge transition-colors shadow-sm">
+                <div class="flex items-start gap-4 mb-4">
+                  <div class="w-10 h-10 shrink-0 bg-gallery-floor flex items-center justify-center rounded-xl text-quiet">
+                    <IconQuestionMark className="w-5 h-5" />
+                  </div>
+                  <h3 class="text-xl font-bold text-ink pt-1">
+                    {item.question}
+                  </h3>
+                </div>
+                <p class="text-ink-secondary leading-relaxed ml-14">
+                  {item.answer}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+      )
+    }
+  </div>
+</div>
+
+<!-- Buy Me a Coffee Interstitial Modal -->
+<div
+  id="bmc-modal"
+  class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-ink/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+>
+  <div
+    class="bg-wall w-full max-w-lg rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-center relative overflow-hidden transform scale-95 transition-transform duration-300"
+  >
+    <!-- Decoration -->
+    <div class="absolute top-0 left-0 w-full h-px bg-brand"></div>
+    <div
+      class="absolute -top-12 -right-12 w-48 h-48 bg-brand-wash rounded-full blur-3xl opacity-50"
+    >
+    </div>
+
+    <div class="relative">
+      <div
+        class="w-20 h-20 bg-brand-wash rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner"
+      >
+        <IconDownload className="w-10 h-10 text-brand" />
+      </div>
+
+      <h2 class="text-3xl font-bold text-ink mb-4">{t.modal_title}</h2>
+      <p class="text-lg text-ink-secondary mb-8 leading-relaxed">
+        {t.modal_desc}
+      </p>
+
+      <div class="flex flex-col gap-4 items-center">
+        <!-- BMC Button -->
+        <div class="min-h-[50px] flex items-center justify-center">
+          <a href="https://www.buymeacoffee.com/airton" target="_blank"
+            ><img
+              src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png"
+              alt="Buy Me A Coffee"
+              style="height: 60px !important;width: 217px !important;"
+            /></a
+          >
+        </div>
+
+        <div class="w-full flex flex-col gap-4">
+          <Button
+            id="continue-download"
+            size="lg"
+            className="w-full rounded-full h-14 text-lg font-bold"
+          >
+            <span>{t.modal_continue}</span>
+            <IconArrowLeft className="ml-2 h-5 w-5 rotate-180" />
+          </Button>
+
+          <button
+            id="close-modal"
+            class="text-quiet hover:text-ink-secondary font-medium text-sm transition-colors"
+          >
+            {t.modal_maybe}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<LanguageLinks
+  lang={lang}
+  ptHref={`/plugin/${plugin.slug}/`}
+  enHref={`/en/plugin/${plugin.slug}/`}
+/>
+
+<script is:inline>
+  const downloadBtn = document.querySelector(
+    'a[href*="wordpress.org/plugins/"]'
+  );
+  const modal = document.getElementById("bmc-modal");
+  const continueBtn = document.getElementById("continue-download");
+  const closeBtn = document.getElementById("close-modal");
+
+  if (downloadBtn && modal) {
+    const pluginUrl = downloadBtn.getAttribute("href");
+
+    downloadBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Show modal
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+
+      // Animate in
+      setTimeout(() => {
+        modal.classList.remove("opacity-0");
+        modal.querySelector("div").classList.remove("scale-95");
+      }, 10);
+    });
+
+    const closeModal = () => {
+      modal.classList.add("opacity-0");
+      modal.querySelector("div").classList.add("scale-95");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }, 300);
+    };
+
+    continueBtn?.addEventListener("click", () => {
+      window.open(pluginUrl, "_blank");
+      closeModal();
+    });
+
+    closeBtn?.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+</script>
+
+<script
+  data-name="BMC-Widget"
+  data-cfasync="false"
+  src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js"
+  data-id="airton"
+  data-description="Support me on Buy me a coffee!"
+  data-message="Hi 👋!"
+  data-color="#5F7FFF"
+  data-position="Right"
+  data-x_margin="18"
+  data-y_margin="18"></script>

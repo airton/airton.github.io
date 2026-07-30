@@ -19,15 +19,19 @@ export interface PluginData {
   link: string;
   video?: string;
   /**
-   * The meta description for the plugin's page. Written in English on purpose:
-   * the page body swaps language client-side, but there is only ever one
-   * `<meta name="description">` in the served HTML, and every search query
-   * these pages surface for is English (Search Console, 3 months to
-   * 2026-07-30 — "jumpcloud sso", "wordpress nextcloud sso", and ten more).
-   * Falls back to `en.desc`, which is a one-liner and usually too thin to earn
-   * a click; prefer writing this field.
+   * The meta description for the English route, `/en/plugin/<slug>/`. This is
+   * the one that matters most: every search query these pages surface for is
+   * English (Search Console, 3 months to 2026-07-30 — "jumpcloud sso",
+   * "wordpress nextcloud sso", and ten more). Falls back to `en.desc`, which is
+   * a one-liner and usually too thin to earn a click; prefer writing this field.
    */
   seoDescription?: string;
+  /**
+   * The meta description for the Portuguese route, `/plugin/<slug>/`. Falls
+   * back to `pt.desc`. Each language has its own URL now, so each one gets its
+   * own description rather than sharing one and contradicting half the page.
+   */
+  seoDescriptionPt?: string;
   en: TranslatedContent;
   pt: TranslatedContent;
 }
@@ -42,6 +46,8 @@ export const plugins: PluginData[] = [
     link: "https://wordpress.org/plugins/video-destacado/",
     seoDescription:
       "Replace the WordPress featured image with a video from YouTube, Vimeo, Dailymotion or a self-hosted MP4. Responsive, autoplay optional, Gutenberg compatible.",
+    seoDescriptionPt:
+      "Troque a imagem destacada do WordPress por um vídeo do YouTube, Vimeo, Dailymotion ou MP4 próprio. Responsivo, autoplay opcional, compatível com Gutenberg.",
     en: {
       desc: "A plugin to set a featured video for posts.",
       fullDescription: `
@@ -140,6 +146,8 @@ export const plugins: PluginData[] = [
     link: "https://wordpress.org/plugins/manage-user-roles/",
     seoDescription:
       "A WordPress user role manager with no code required. Create and clone roles, edit capabilities one checkbox at a time, and reset to defaults. Multisite ready.",
+    seoDescriptionPt:
+      "Gerencie papéis e capacidades do WordPress sem código. Crie e clone papéis, edite capacidades uma a uma e restaure os padrões. Compatível com multisite.",
     en: {
       desc: "A plugin to manage user roles and capabilities.",
       fullDescription: `
@@ -230,6 +238,8 @@ export const plugins: PluginData[] = [
     link: "https://wordpress.org/plugins/nudge-seo-ai/",
     seoDescription:
       "An AI SEO plugin for WordPress that reads the top 10 results for your keyword and suggests topics, long-tail terms, internal links and ALT text as you write.",
+    seoDescriptionPt:
+      "Plugin de SEO com IA para WordPress: lê os 10 primeiros resultados da sua palavra-chave e sugere tópicos, termos long-tail, links internos e texto ALT.",
     en: {
       desc: "An AI-powered SEO plugin to help you with your content.",
       fullDescription: `
@@ -321,6 +331,8 @@ export const plugins: PluginData[] = [
     video: "/assets/videos/jump-demo.mp4",
     seoDescription:
       "Log in to WordPress with JumpCloud credentials over SAML 2.0. Map JumpCloud groups to WordPress roles, create users on first login, and force SSO redirect.",
+    seoDescriptionPt:
+      "Login no WordPress com credenciais JumpCloud via SAML 2.0. Mapeie grupos para papéis, crie usuários no primeiro acesso e force o redirecionamento de SSO.",
     en: {
       desc: "A plugin to connect your WordPress site with JumpCloud SSO.",
       fullDescription: `
@@ -446,6 +458,8 @@ export const plugins: PluginData[] = [
     link: "https://wordpress.org/plugins/notria-ai-suite/",
     seoDescription:
       "An all-in-one AI suite for WordPress: a RAG-grounded support chatbot that answers from your own content, a post generator, and AI analysis of form submissions.",
+    seoDescriptionPt:
+      "Suíte de IA tudo-em-um para WordPress: chatbot de suporte com RAG que responde a partir do seu conteúdo, gerador de posts e análise de formulários com IA.",
     en: {
       desc: "Supercharge your WordPress site with AI. Automate content creation, add a support chatbot, and enhance forms with this all-in-one productivity suite.",
       fullDescription: `
