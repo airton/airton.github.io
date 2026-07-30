@@ -48,7 +48,11 @@ const POOL = 12;
 </style>
 
 <script>
-  const COLORS = ["#FFD980", "#FF8480", "#81FF80", "#80EAFF"];
+  // One accent, not a random four-hue rainbow. The trace the pointer leaves is
+  // the brand mark; picking a colour at random per cell made it decoration.
+  // Read from the token so a re-tone reaches this too — no raw hex here.
+  const CELL_FILL = "color-mix(in oklab, var(--color-brand-lifted) 12%, transparent)";
+  const CELL_EDGE = "inset 0 0 0 1px var(--color-brand-lifted)";
 
   document.querySelectorAll<HTMLElement>(".zd-grid").forEach((grid) => {
     const cell = Number(grid.dataset.cell) || 32;
@@ -71,12 +75,11 @@ const POOL = 12;
       const el = pool[next];
       next = (next + 1) % poolSize;
 
-      const color = COLORS[Math.floor(Math.random() * COLORS.length)];
       el.style.transition = "none";
       el.style.left = `${col * cell}px`;
       el.style.top = `${row * cell}px`;
-      el.style.background = `${color}1a`;
-      el.style.boxShadow = `inset 0 0 0 1px ${color}`;
+      el.style.background = CELL_FILL;
+      el.style.boxShadow = CELL_EDGE;
       el.style.opacity = "1";
 
       // Two frames: one to commit the un-transitioned position, one to start

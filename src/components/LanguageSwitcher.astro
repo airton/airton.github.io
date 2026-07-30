@@ -4,7 +4,7 @@
 
 <div class="fixed top-2 right-20 md:right-4 z-[60]">
   <div
-    class="bg-white/80 backdrop-blur-md border border-slate-200 rounded-full p-1 shadow-lg flex items-center gap-1"
+    class="bg-wall/80 backdrop-blur-md border border-hairline rounded-full p-1 shadow-lg flex items-center gap-1"
     role="group"
     aria-label="Idioma da página / Page language"
   >
@@ -13,7 +13,7 @@
       type="button"
       lang="pt-BR"
       aria-pressed="true"
-      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 bg-indigo-600 text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 bg-brand text-wall focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >
       PT
     </button>
@@ -22,7 +22,7 @@
       type="button"
       lang="en"
       aria-pressed="false"
-      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 text-slate-500 hover:text-slate-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-600 focus-visible:ring-offset-2"
+      class="px-3 py-1.5 rounded-full text-xs font-bold transition-all duration-200 text-quiet hover:text-ink-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-brand focus-visible:ring-offset-2"
     >
       EN
     </button>
@@ -35,8 +35,8 @@
     const ptBtn = document.getElementById("lang-pt");
     if (!enBtn || !ptBtn) return;
 
-    const ACTIVE = ["bg-indigo-600", "text-white"];
-    const IDLE = ["text-slate-500", "hover:text-slate-700"];
+    const ACTIVE = ["bg-brand", "text-wall"];
+    const IDLE = ["text-quiet", "hover:text-ink-secondary"];
 
     const setLanguage = (lang) => {
       const isEn = lang === "en";

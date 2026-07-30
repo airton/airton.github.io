@@ -25,29 +25,20 @@ const labels = {
     class="min-h-[80vh] flex items-center justify-center p-4 relative overflow-hidden"
   >
     <!-- Abstract Background Decorations -->
-    <div
-      class="absolute top-1/4 left-1/4 w-64 h-64 bg-blue-100/50 rounded-full blur-3xl animate-pulse"
-    >
-    </div>
-    <div
-      class="absolute bottom-1/4 right-1/4 w-96 h-96 bg-indigo-100/50 rounded-full blur-3xl animate-pulse delay-700"
-    >
-    </div>
-
     <div class="relative z-10 text-center max-w-2xl px-4">
       <!-- 404 Visual -->
       <div class="relative inline-block mb-8">
         <h1
-          class="text-[12rem] md:text-[18rem] font-black leading-none tracking-tighter text-slate-100/80 dark:text-slate-800/50 select-none"
+          class="text-[12rem] md:text-[18rem] font-black leading-none tracking-tighter text-gallery-floor/80 dark:text-ink/50 select-none"
         >
           404
         </h1>
         <div class="absolute inset-0 flex items-center justify-center">
           <div
-            class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md px-6 py-2 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xl"
+            class="bg-wall/80 dark:bg-ink/80 backdrop-blur-md px-6 py-2 rounded-2xl border border-hairline dark:border-ink-secondary shadow-xl"
           >
             <span
-              class="text-2xl md:text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"
+              class="text-2xl md:text-3xl font-bold text-ink dark:text-gallery-floor"
               data-en={labels.heading.en}
               data-pt={labels.heading.pt}
             >
@@ -59,7 +50,7 @@ const labels = {
 
       <!-- Text Content -->
       <p
-        class="text-xl text-slate-600 dark:text-slate-400 mb-12 leading-relaxed font-serif italic"
+        class="text-xl text-ink-secondary dark:text-quiet-faint mb-12 leading-relaxed font-serif italic"
         data-en={labels.description.en}
         data-pt={labels.description.pt}
       >
@@ -70,7 +61,7 @@ const labels = {
       <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
         <Button
           size="lg"
-          className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-blue-500/20 bg-blue-600 hover:bg-blue-700 w-full sm:w-auto"
+          className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-blue-500/20 bg-brand hover:bg-brand-deep w-full sm:w-auto"
           asChild
         >
           <a href="/">
@@ -85,7 +76,7 @@ const labels = {
           <Button
             variant="outline"
             size="lg"
-            className="rounded-full px-8 h-14 text-base font-bold border-slate-200 hover:bg-slate-50 flex-1 sm:flex-none"
+            className="rounded-full px-8 h-14 text-base font-bold border-hairline hover:bg-gallery-floor flex-1 sm:flex-none"
             asChild
           >
             <a href="/plugins">
@@ -100,7 +91,7 @@ const labels = {
           <Button
             variant="outline"
             size="lg"
-            className="rounded-full px-8 h-14 text-base font-bold border-slate-200 hover:bg-slate-50 flex-1 sm:flex-none"
+            className="rounded-full px-8 h-14 text-base font-bold border-hairline hover:bg-gallery-floor flex-1 sm:flex-none"
             asChild
           >
             <a href="/projetos">

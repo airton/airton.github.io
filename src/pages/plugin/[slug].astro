@@ -61,11 +61,11 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
   description={plugin.desc}
   image={pluginImageUrl}
 >
-  <div class="bg-slate-50/50 border-b border-slate-100">
+  <div class="bg-gallery-floor/50 border-b border-hairline-faint">
     <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
       <a
         href="/#wp-plugins"
-        class="inline-flex items-center text-sm font-medium text-slate-500 hover:text-indigo-600 mb-12 transition-colors group"
+        class="inline-flex items-center text-sm font-medium text-quiet hover:text-brand mb-12 transition-colors group"
       >
         <IconArrowLeft
           className="mr-2 h-4 w-4 transform group-hover:-translate-x-1 transition-transform"
@@ -78,7 +78,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
       <div class="grid lg:grid-cols-2 gap-12 items-center">
         <div class="space-y-6">
           <div
-            class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+            class="inline-flex items-center gap-2 bg-brand-wash text-brand px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
           >
             <IconBrandWordpress className="w-3.5 h-3.5" />
             <span data-en={labels.wp_plugin.en} data-pt={labels.wp_plugin.pt}
@@ -86,12 +86,12 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
             >
           </div>
           <h1
-            class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 leading-tight"
+            class="text-4xl md:text-6xl font-bold tracking-tight text-ink leading-tight"
           >
             {plugin.name}
           </h1>
           <p
-            class="text-xl text-slate-600 leading-relaxed font-serif italic"
+            class="text-xl text-ink-secondary leading-relaxed font-serif italic"
             data-en={plugin.en.desc}
             data-pt={plugin.pt.desc}
           >
@@ -100,7 +100,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
           <div class="flex flex-wrap gap-4 pt-4">
             <Button
               size="lg"
-              className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-indigo-500/20"
+              className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-brand-bright/20"
               asChild
             >
               <a href={plugin.link} target="_blank" rel="noopener noreferrer">
@@ -111,9 +111,9 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
               </a>
             </Button>
             <div
-              class="flex items-center px-4 py-2 bg-white border border-slate-200 rounded-full text-sm text-slate-500 font-medium"
+              class="flex items-center px-4 py-2 bg-wall border border-hairline rounded-full text-sm text-quiet font-medium"
             >
-              <span class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"
+              <span class="w-2 h-2 bg-live-signal rounded-full mr-2 animate-pulse"
               ></span>
               <span data-en={labels.verified.en} data-pt={labels.verified.pt}
                 >{labels.verified.pt}</span
@@ -124,11 +124,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
 
         <div class="relative group">
           <div
-            class="absolute -inset-4 bg-gradient-to-tr from-indigo-500/10 to-purple-500/10 rounded-[2rem] blur-2xl group-hover:opacity-75 transition-opacity"
-          >
-          </div>
-          <div
-            class="relative overflow-hidden rounded-[1.5rem] border border-slate-200 shadow-2xl skew-y-1 group-hover:skew-y-0 transition-transform duration-700"
+            class="relative overflow-hidden rounded-[1.5rem] border border-hairline shadow-2xl skew-y-1 group-hover:skew-y-0 transition-transform duration-700"
           >
             <img
               src={pluginImageUrl}
@@ -145,7 +141,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
     <div class="grid gap-24">
       <!-- Description -->
       <section
-        class="prose prose-slate dark:prose-invert max-w-none prose-headings:text-slate-900 prose-p:text-slate-600 prose-p:leading-relaxed prose-li:text-slate-600"
+        class="prose prose-slate dark:prose-invert max-w-none prose-headings:text-ink prose-p:text-ink-secondary prose-p:leading-relaxed prose-li:text-ink-secondary"
       >
         <div class="lang-en-only" set:html={plugin.en.fullDescription} />
         <div class="lang-pt-only" set:html={plugin.pt.fullDescription} />
@@ -157,17 +153,16 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
           <section>
             <div class="flex items-center gap-4 mb-10">
               <h2
-                class="text-3xl font-bold text-slate-900"
+                class="text-3xl font-bold text-ink"
                 data-en={labels.demo.en}
                 data-pt={labels.demo.pt}
               >
                 {labels.demo.pt}
               </h2>
-              <div class="h-px flex-grow bg-slate-100" />
+              <div class="h-px flex-grow bg-hairline-faint" />
             </div>
             <div class="relative group">
-              <div class="absolute -inset-4 bg-gradient-to-tr from-indigo-500/5 to-purple-500/5 rounded-[2.5rem] blur-2xl group-hover:opacity-100 transition-opacity opacity-0" />
-              <div class="relative overflow-hidden rounded-[2rem] border border-slate-100 bg-slate-900 shadow-2xl">
+              <div class="relative overflow-hidden rounded-[2rem] border border-hairline-faint bg-ink shadow-2xl">
                 <video
                   src={plugin.video}
                   controls
@@ -185,19 +180,18 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
       {
         plugin.en.premium && (
           <section class="relative">
-            <div class="absolute -inset-1 bg-gradient-to-r from-indigo-600 to-purple-600 rounded-[2.5rem] blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200" />
-            <div class="relative bg-white border border-slate-100 rounded-[2.5rem] p-8 md:p-12 shadow-xl overflow-hidden">
-              <div class="absolute top-0 right-0 p-8 text-indigo-100/20">
+            <div class="relative bg-wall border border-hairline-faint rounded-[2.5rem] p-8 md:p-12 shadow-xl overflow-hidden">
+              <div class="absolute top-0 right-0 p-8 text-brand-edge/20">
                 <IconSparkles size={120} />
               </div>
 
               <div class="relative">
                 <div class="flex items-center gap-3 mb-6">
-                  <div class="p-2 bg-indigo-600 rounded-lg text-white">
+                  <div class="p-2 bg-brand rounded-lg text-wall">
                     <IconSparkles className="w-6 h-6" />
                   </div>
                   <h2
-                    class="text-3xl font-bold text-slate-900"
+                    class="text-3xl font-bold text-ink"
                     data-en={labels.premium.en}
                     data-pt={labels.premium.pt}
                   >
@@ -205,7 +199,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                   </h2>
                 </div>
 
-                <p class="text-lg text-slate-600 mb-10 leading-relaxed max-w-2xl">
+                <p class="text-lg text-ink-secondary mb-10 leading-relaxed max-w-2xl">
                   <span class="lang-en-only">
                     {plugin.en.premium?.description}
                   </span>
@@ -216,7 +210,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
 
                 <div class="grid sm:grid-cols-2 gap-x-12 gap-y-6">
                   <div class="space-y-6">
-                    <h3 class="text-sm font-bold text-indigo-600 uppercase tracking-widest flex items-center gap-2">
+                    <h3 class="text-sm font-bold text-brand uppercase tracking-widest flex items-center gap-2">
                       <IconSparkles className="w-4 h-4" />{" "}
                       <span
                         data-en={labels.features_included.en}
@@ -228,10 +222,10 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                     <div class="grid gap-4 lang-en-only">
                       {plugin.en.premium?.features.map((feature) => (
                         <div class="flex items-start gap-3">
-                          <div class="p-1 bg-indigo-50 rounded-full text-indigo-600 mt-0.5">
+                          <div class="p-1 bg-brand-wash rounded-full text-brand mt-0.5">
                             <IconCircleCheck className="w-3.5 h-3.5" />
                           </div>
-                          <span class="text-slate-700 font-medium leading-snug">
+                          <span class="text-ink-secondary font-medium leading-snug">
                             {feature}
                           </span>
                         </div>
@@ -240,10 +234,10 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                     <div class="grid gap-4 lang-pt-only">
                       {plugin.pt.premium?.features.map((feature) => (
                         <div class="flex items-start gap-3">
-                          <div class="p-1 bg-indigo-50 rounded-full text-indigo-600 mt-0.5">
+                          <div class="p-1 bg-brand-wash rounded-full text-brand mt-0.5">
                             <IconCircleCheck className="w-3.5 h-3.5" />
                           </div>
-                          <span class="text-slate-700 font-medium leading-snug">
+                          <span class="text-ink-secondary font-medium leading-snug">
                             {feature}
                           </span>
                         </div>
@@ -253,7 +247,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
 
                   {plugin.en.premium?.howToActivate && (
                     <div class="space-y-6">
-                      <h3 class="text-sm font-bold text-slate-800 uppercase tracking-widest flex items-center gap-2">
+                      <h3 class="text-sm font-bold text-ink uppercase tracking-widest flex items-center gap-2">
                         <IconRocket className="w-4 h-4" />{" "}
                         <span
                           data-en={labels.how_to_activate.en}
@@ -265,10 +259,10 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                       <div class="grid gap-4 lang-en-only">
                         {plugin.en.premium.howToActivate.map((step, index) => (
                           <div class="flex items-start gap-4">
-                            <div class="flex-shrink-0 w-6 h-6 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-xs font-bold">
+                            <div class="flex-shrink-0 w-6 h-6 bg-hairline-faint text-quiet rounded-full flex items-center justify-center text-xs font-bold">
                               {index + 1}
                             </div>
-                            <span class="text-slate-600 text-sm leading-relaxed">
+                            <span class="text-ink-secondary text-sm leading-relaxed">
                               {step}
                             </span>
                           </div>
@@ -278,10 +272,10 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                         {plugin.pt.premium?.howToActivate?.map(
                           (step, index) => (
                             <div class="flex items-start gap-4">
-                              <div class="flex-shrink-0 w-6 h-6 bg-slate-100 text-slate-500 rounded-full flex items-center justify-center text-xs font-bold">
+                              <div class="flex-shrink-0 w-6 h-6 bg-hairline-faint text-quiet rounded-full flex items-center justify-center text-xs font-bold">
                                 {index + 1}
                               </div>
-                              <span class="text-slate-600 text-sm leading-relaxed">
+                              <span class="text-ink-secondary text-sm leading-relaxed">
                                 {step}
                               </span>
                             </div>
@@ -292,21 +286,21 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                   )}
                 </div>
 
-                <div class="mt-12 pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-8">
+                <div class="mt-12 pt-8 border-t border-hairline-faint flex flex-col sm:flex-row items-center justify-between gap-8">
                   <div class="flex items-center gap-4">
-                    <div class="hidden sm:flex w-12 h-12 bg-green-50 rounded-full items-center justify-center text-green-700">
+                    <div class="hidden sm:flex w-12 h-12 bg-status-ground rounded-full items-center justify-center text-status-ink">
                       <IconCircleCheck className="w-6 h-6" />
                     </div>
                     <div>
                       <p
-                        class="text-sm font-bold text-slate-900 mb-1"
+                        class="text-sm font-bold text-ink mb-1"
                         data-en={labels.premium_sub.en}
                         data-pt={labels.premium_sub.pt}
                       >
                         {labels.premium_sub.pt}
                       </p>
                       <p
-                        class="text-slate-500 text-sm"
+                        class="text-quiet text-sm"
                         data-en={labels.monthly_annual.en}
                         data-pt={labels.monthly_annual.pt}
                       >
@@ -315,7 +309,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
                     </div>
                   </div>
                   <Button
-                    className="rounded-full px-10 h-14 bg-indigo-600 hover:bg-indigo-700 text-base font-bold shadow-xl shadow-indigo-500/20 transform hover:-translate-y-0.5 transition-all"
+                    className="rounded-full px-10 h-14 bg-brand hover:bg-brand-deep text-base font-bold shadow-xl shadow-brand-bright/20 transform hover:-translate-y-0.5 transition-all"
                     asChild
                   >
                     <a
@@ -343,22 +337,22 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
       <section>
         <div class="flex items-center gap-4 mb-10">
           <h2
-            class="text-3xl font-bold text-slate-900"
+            class="text-3xl font-bold text-ink"
             data-en={labels.key_features.en}
             data-pt={labels.key_features.pt}
           >
             {labels.key_features.pt}
           </h2>
-          <div class="h-px flex-grow bg-slate-100"></div>
+          <div class="h-px flex-grow bg-hairline-faint"></div>
         </div>
         <div class="grid sm:grid-cols-2 gap-6 lang-en-only">
           {
             plugin.en.features.map((feature) => (
-              <div class="group p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-indigo-100 transition-all flex items-start gap-4">
-                <div class="p-2 bg-indigo-50 rounded-lg text-indigo-500">
+              <div class="group p-6 bg-wall border border-hairline-faint rounded-2xl shadow-sm hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-4">
+                <div class="p-2 bg-brand-wash rounded-lg text-brand-bright">
                   <IconCircleCheck className="w-5 h-5" />
                 </div>
-                <span class="text-slate-600 font-medium leading-tight pt-1">
+                <span class="text-ink-secondary font-medium leading-tight pt-1">
                   {feature}
                 </span>
               </div>
@@ -368,11 +362,11 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
         <div class="grid sm:grid-cols-2 gap-6 lang-pt-only">
           {
             plugin.pt.features.map((feature) => (
-              <div class="group p-6 bg-white border border-slate-100 rounded-2xl shadow-sm hover:shadow-md hover:border-indigo-100 transition-all flex items-start gap-4">
-                <div class="p-2 bg-indigo-50 rounded-lg text-indigo-500">
+              <div class="group p-6 bg-wall border border-hairline-faint rounded-2xl shadow-sm hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-4">
+                <div class="p-2 bg-brand-wash rounded-lg text-brand-bright">
                   <IconCircleCheck className="w-5 h-5" />
                 </div>
-                <span class="text-slate-600 font-medium leading-tight pt-1">
+                <span class="text-ink-secondary font-medium leading-tight pt-1">
                   {feature}
                 </span>
               </div>
@@ -385,29 +379,29 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
       <section class="relative">
         <div class="flex items-center gap-4 mb-10">
           <h2
-            class="text-3xl font-bold text-slate-900"
+            class="text-3xl font-bold text-ink"
             data-en={labels.installation.en}
             data-pt={labels.installation.pt}
           >
             {labels.installation.pt}
           </h2>
-          <div class="h-px flex-grow bg-slate-100"></div>
+          <div class="h-px flex-grow bg-hairline-faint"></div>
         </div>
 
         <div
-          class="bg-white border border-slate-100 rounded-[2rem] p-8 md:p-12 shadow-sm relative overflow-hidden group"
+          class="bg-wall border border-hairline-faint rounded-[2rem] p-8 md:p-12 shadow-sm relative overflow-hidden group"
         >
           <div
-            class="absolute top-0 right-0 w-32 h-32 bg-indigo-50/50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"
+            class="absolute top-0 right-0 w-32 h-32 bg-brand-wash/50 rounded-full -mr-16 -mt-16 transition-transform group-hover:scale-110 duration-700"
           >
           </div>
 
           <div
-            class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-slate-600 prose-li:marker:text-indigo-500 prose-li:marker:font-bold prose-strong:text-slate-900 lang-en-only"
+            class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-ink-secondary prose-li:marker:text-brand-bright prose-li:marker:font-bold prose-strong:text-ink lang-en-only"
             set:html={plugin.en.installation}
           />
           <div
-            class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-slate-600 prose-li:marker:text-indigo-500 prose-li:marker:font-bold prose-strong:text-slate-900 lang-pt-only"
+            class="prose prose-slate max-w-none relative prose-ol:list-decimal prose-ol:pl-6 prose-li:mb-6 prose-li:text-ink-secondary prose-li:marker:text-brand-bright prose-li:marker:font-bold prose-strong:text-ink lang-pt-only"
             set:html={plugin.pt.installation}
           />
         </div>
@@ -419,26 +413,26 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
           <section>
             <div class="flex items-center gap-4 mb-10">
               <h2
-                class="text-3xl font-bold text-slate-900"
+                class="text-3xl font-bold text-ink"
                 data-en={labels.faq.en}
                 data-pt={labels.faq.pt}
               >
                 {labels.faq.pt}
               </h2>
-              <div class="h-px flex-grow bg-slate-100" />
+              <div class="h-px flex-grow bg-hairline-faint" />
             </div>
             <div class="grid gap-6 lang-en-only">
               {plugin.en.faq.map((item) => (
-                <div class="bg-white border border-slate-100 p-8 rounded-3xl hover:border-indigo-100 transition-colors shadow-sm">
+                <div class="bg-wall border border-hairline-faint p-8 rounded-3xl hover:border-brand-edge transition-colors shadow-sm">
                   <div class="flex items-start gap-4 mb-4">
-                    <div class="w-10 h-10 shrink-0 bg-slate-50 flex items-center justify-center rounded-xl text-slate-500">
+                    <div class="w-10 h-10 shrink-0 bg-gallery-floor flex items-center justify-center rounded-xl text-quiet">
                       <IconQuestionMark className="w-5 h-5" />
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 pt-1">
+                    <h3 class="text-xl font-bold text-ink pt-1">
                       {item.question}
                     </h3>
                   </div>
-                  <p class="text-slate-600 leading-relaxed ml-14">
+                  <p class="text-ink-secondary leading-relaxed ml-14">
                     {item.answer}
                   </p>
                 </div>
@@ -446,16 +440,16 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
             </div>
             <div class="grid gap-6 lang-pt-only">
               {plugin.pt.faq.map((item) => (
-                <div class="bg-white border border-slate-100 p-8 rounded-3xl hover:border-indigo-100 transition-colors shadow-sm">
+                <div class="bg-wall border border-hairline-faint p-8 rounded-3xl hover:border-brand-edge transition-colors shadow-sm">
                   <div class="flex items-start gap-4 mb-4">
-                    <div class="w-10 h-10 shrink-0 bg-slate-50 flex items-center justify-center rounded-xl text-slate-500">
+                    <div class="w-10 h-10 shrink-0 bg-gallery-floor flex items-center justify-center rounded-xl text-quiet">
                       <IconQuestionMark className="w-5 h-5" />
                     </div>
-                    <h3 class="text-xl font-bold text-slate-900 pt-1">
+                    <h3 class="text-xl font-bold text-ink pt-1">
                       {item.question}
                     </h3>
                   </div>
-                  <p class="text-slate-600 leading-relaxed ml-14">
+                  <p class="text-ink-secondary leading-relaxed ml-14">
                     {item.answer}
                   </p>
                 </div>
@@ -470,37 +464,37 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
   <!-- Buy Me a Coffee Interstitial Modal -->
   <div
     id="bmc-modal"
-    class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+    class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-ink/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"
   >
     <div
-      class="bg-white w-full max-w-lg rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-center relative overflow-hidden transform scale-95 transition-transform duration-300"
+      class="bg-wall w-full max-w-lg rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-center relative overflow-hidden transform scale-95 transition-transform duration-300"
     >
       <!-- Decoration -->
       <div
-        class="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-indigo-400 via-indigo-600 to-purple-500"
+        class="absolute top-0 left-0 w-full h-px bg-brand"
       >
       </div>
       <div
-        class="absolute -top-12 -right-12 w-48 h-48 bg-indigo-50 rounded-full blur-3xl opacity-50"
+        class="absolute -top-12 -right-12 w-48 h-48 bg-brand-wash rounded-full blur-3xl opacity-50"
       >
       </div>
 
       <div class="relative">
         <div
-          class="w-20 h-20 bg-indigo-50 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner"
+          class="w-20 h-20 bg-brand-wash rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner"
         >
-          <IconDownload className="w-10 h-10 text-indigo-600" />
+          <IconDownload className="w-10 h-10 text-brand" />
         </div>
 
         <h2
-          class="text-3xl font-bold text-slate-900 mb-4"
+          class="text-3xl font-bold text-ink mb-4"
           data-en={labels.modal_title.en}
           data-pt={labels.modal_title.pt}
         >
           {labels.modal_title.pt}
         </h2>
         <p
-          class="text-lg text-slate-600 mb-8 leading-relaxed"
+          class="text-lg text-ink-secondary mb-8 leading-relaxed"
           data-en={labels.modal_desc.en}
           data-pt={labels.modal_desc.pt}
         >
@@ -535,7 +529,7 @@ const pluginImageUrl = getPluginBannerImageUrl(plugin.slug);
 
             <button
               id="close-modal"
-              class="text-slate-500 hover:text-slate-700 font-medium text-sm transition-colors"
+              class="text-quiet hover:text-ink-secondary font-medium text-sm transition-colors"
               data-en={labels.modal_maybe.en}
               data-pt={labels.modal_maybe.pt}
             >

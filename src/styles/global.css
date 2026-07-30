@@ -1,5 +1,18 @@
 @import "tailwindcss";
 
+/*
+  Tailwind v4 scans the whole project for class-name candidates, which means
+  prose that *talks about* classes ships them. DESIGN.md quoting
+  `from-slate-100 to-slate-200` as a banned pattern was emitting those exact
+  utilities into the bundle. Documentation and tooling are not templates.
+  src/content stays in scope — blog MDX carries real markup.
+*/
+@source not "../../DESIGN.md";
+@source not "../../PRODUCT.md";
+@source not "../../README.md";
+@source not "../../.claude";
+@source not "../../.impeccable";
+
 @theme {
   --color-background: hsl(var(--background));
   --color-foreground: hsl(var(--foreground));
@@ -32,48 +45,171 @@
 
 /*
   Design system palette — see DESIGN.md ("The Quiet Gallery").
-  Each token equals a Tailwind default shade, noted alongside it, so utility
-  classes and these variables stay interchangeable. Components written with
-  Tailwind utilities keep using `text-slate-900`; scoped <style> blocks that
-  cannot reach a utility class use `var(--color-ink)` instead of a raw hex.
+
+  Every token is named for the job it does, never for the hue or shade that
+  currently fills it. `text-ink`, `bg-gallery-floor`, `text-brand` — a bare
+  Tailwind colour anywhere in this project (`text-slate-900`, `text-blue-600`)
+  is drift, and so is a raw hex. This is what lets the room be re-toned by
+  editing this block and nothing else.
+
+  Two properties of the ramp below carry most of the character:
+
+  1. The neutrals are WARM (hue ~100, chroma 0.005–0.015). The previous ramp
+     was slate, which is blue at every step — so even black text pulled cold
+     and stacked with a blue-family accent into the generic "AI" register. A
+     warm ink against a cool accent is the tension the whole palette rests on;
+     lose the warmth and the accent has nothing to play against.
+  2. The accent is FLAT. One blue, no gradient anywhere. Emphasis in this
+     system comes from weight, size and space.
+
+  Every pair is computed, not estimated — 28 of them, 0 failures. The figures
+  in the comments are the measured ratio on the ground the token actually sits
+  on. Re-run the audit before changing any value here.
 */
 @theme {
-  --color-indigo-accent: oklch(51.1% 0.262 276.966); /* indigo-600 */
-  --color-indigo-accent-bright: oklch(58.5% 0.233 277.117); /* indigo-500 */
-  --color-indigo-accent-lifted: oklch(67.3% 0.182 276.935); /* indigo-400 */
-  --color-indigo-edge: oklch(93% 0.034 272.788); /* indigo-100 */
-  --color-indigo-wash: oklch(96.2% 0.018 272.314); /* indigo-50 */
-
-  /* The violet terminating the hero pill and headline gradients (DESIGN.md,
-     Components → Buttons). The only non-indigo hue in the accent range. */
-  --color-accent-violet: oklch(60.6% 0.25 292.717); /* violet-500 */
-
-  --color-ink: oklch(20.8% 0.042 265.755); /* slate-900 */
-  --color-ink-secondary: oklch(37.2% 0.044 257.287); /* slate-700 */
-  --color-quiet: oklch(55.4% 0.046 257.417); /* slate-500 */
-  --color-quiet-faint: oklch(70.4% 0.04 256.788); /* slate-400 — non-text only */
-  /* slate-300. Text only on night surfaces, where DESIGN.md records it at 12:1.
-     On any light ground it is 1.48:1 and must never carry text. */
-  --color-quiet-lifted: oklch(86.9% 0.022 252.894);
-  --color-hairline: oklch(92.9% 0.013 255.508); /* slate-200 */
-  --color-hairline-faint: oklch(96.8% 0.007 247.896); /* slate-100 */
-  --color-gallery-floor: oklch(98.4% 0.003 247.858); /* slate-50 */
+  /* Neutral — the warm room. */
+  --color-ink: oklch(21.7% 0.006 106.9); /* #1A1A17 — headlines, card titles: 17.44:1 on Wall */
+  --color-ink-secondary: oklch(35.8% 0.008 106.8); /* #3D3D38 — article body: 10.92:1 */
+  --color-quiet: oklch(53.5% 0.015 106.9); /* #6E6E64 — decks, descriptions, metadata: 5.15:1 */
+  --color-quiet-faint: oklch(68.4% 0.012 106.7); /* #9A9A92 — NON-TEXT: 2.83:1 on Wall, decorative tint only */
+  --color-quiet-lifted: oklch(83.1% 0.011 100.9); /* #C9C8C0 — NIGHT ONLY: 11.17:1 on Night Wall, 1.6:1 on Wall */
+  --color-hairline: oklch(91.2% 0.009 100.0); /* #E3E2DB — rules, table borders, footer edge */
+  --color-hairline-faint: oklch(95.1% 0.008 98.9); /* #F0EFE9 — card borders, inline-code ground */
+  --color-gallery-floor: oklch(97.3% 0.005 95.1); /* #F7F6F2 — the alternating band; the only off-white */
   --color-wall: #ffffff;
+  --color-night-wall: oklch(18.1% 0.004 106.8); /* #121210 — dark-mode page */
+  --color-night-floor: oklch(14.4% 0.005 107.0); /* #0A0A08 — dark-mode footer */
+  --color-night-edge: oklch(28.4% 0.007 106.8); /* #2A2A26 — the Hairline of night surfaces */
 
-  --color-reading-link: oklch(54.6% 0.245 262.881); /* blue-600 */
-  --color-code-magenta: oklch(52.5% 0.223 3.958); /* pink-700 */
-  --color-live-signal: oklch(72.3% 0.219 149.579); /* green-500 — fill only */
-  --color-status-ground: oklch(98.2% 0.018 155.826); /* green-50 */
-  --color-status-edge: oklch(96.2% 0.044 156.743); /* green-100 */
-  --color-status-ink: oklch(44.8% 0.119 151.328); /* green-800 */
+  /*
+    Accent — one flat blue. `brand` carries text on Wall and Gallery Floor;
+    on ANY tinted ground it steps to `brand-deep`, because `brand` lands at
+    4.49:1 on Hairline Faint and 4.24:1 on Brand Edge and fails there.
+  */
+  --color-brand: oklch(54.6% 0.215 262.9); /* #2563EB — eyebrows, links, card-hover titles: 5.17:1 on Wall */
+  --color-brand-deep: oklch(48.8% 0.217 264.4); /* #1D4ED8 — hover, and accent text on tinted grounds: 6.70:1 */
+  --color-brand-bright: oklch(62.3% 0.188 259.8); /* #3B82F6 — NON-TEXT: arrows and fills, 3.68:1 */
+  --color-brand-lifted: oklch(71.4% 0.143 254.6); /* #60A5FA — NIGHT ONLY: 7.38:1 on Night Wall */
+  --color-brand-edge: oklch(93.2% 0.032 255.6); /* #DBEAFE — the border a card takes on hover */
+  --color-brand-wash: oklch(97.0% 0.014 254.6); /* #EFF6FF — hovered icon chip, callout ground */
 
-  --color-night-wall: oklch(21% 0.034 264.665); /* gray-900 */
-  --color-night-floor: oklch(13% 0.028 261.692); /* gray-950 */
+  /*
+    State and job-specific. Green means state, never brand, and appears at most
+    once per card. There is no separate reading-link token any more: the accent
+    IS blue now, so prose links use `brand` like everything else and the old
+    "Reading Blue Exception" is retired rather than duplicated.
+  */
+  --color-live-signal: oklch(62.7% 0.170 149.2); /* #16A34A — availability dot, FILL ONLY: 3.30:1 */
+  --color-status-ground: oklch(98.2% 0.018 155.8); /* #F0FDF4 — affirmative pill ground */
+  --color-status-edge: oklch(96.2% 0.043 156.7); /* #DCFCE7 — its 1px inset ring */
+  --color-status-ink: oklch(44.8% 0.108 151.3); /* #166534 — its text: 6.81:1 */
+  --color-code-magenta: oklch(52.5% 0.199 4.0); /* #BE185D — inline code only: 5.24:1 on Hairline Faint */
+
+  /* Error. Unambiguous now that the accent is blue — red means one thing on
+     this site. Colour is never the only cue: an invalid field also carries a
+     message naming the problem. */
+  --color-danger: oklch(57.7% 0.245 27.325); /* #DC2626 — error text: 4.83:1 on Wall */
+  --color-danger-edge: oklch(80.8% 0.114 19.571); /* #FCA5A5 — the invalid-field ring */
+
+  /*
+    Shadows are tinted navy rather than pure black. A neutral-black shadow
+    reads as a cutout; a tinted one reads as a surface sitting in a lit room,
+    which is the whole premise of the gallery. Resting is deliberately below
+    the threshold of notice — see the Approach Rule in DESIGN.md.
+  */
+  --shadow-resting: 0 2px 15px -3px rgb(40 55 110 / 0.06),
+    0 10px 20px -2px rgb(40 55 110 / 0.03);
+  --shadow-resting-dense: 0 2px 15px -3px rgb(40 55 110 / 0.08),
+    0 10px 20px -2px rgb(40 55 110 / 0.05);
+  --shadow-approach: 0 20px 40px -10px rgb(40 55 110 / 0.12);
+}
+
+/*
+  Type. Three self-hosted variable faces, latin subset, woff2 — 111KB total for
+  the whole weight range, versus a static family per weight. Self-hosted rather
+  than CDN-linked because this site argues about performance in its own posts:
+  no third-party connection, no render-blocking stylesheet, no CLS from a late
+  swap on a font we control.
+
+  `size-adjust` is deliberately absent — both faces are close enough to the
+  system fallback that the swap does not reflow noticeably, and a wrong
+  adjustment is worse than none.
+*/
+@font-face {
+  font-family: "Space Grotesk";
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url("/fonts/space-grotesk-latin-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url("/fonts/inter-latin-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-style: normal;
+  font-weight: 100 800;
+  font-display: swap;
+  src: url("/fonts/jetbrains-mono-latin-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@theme {
+  /* Display — headlines and card titles. A geometric grotesk: it holds the
+     tight negative tracking the Display and Headline roles ask for without the
+     letterforms softening the way a neutral UI sans does at 4.5rem. */
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  /* Body — everything a visitor actually reads. */
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Code, and only code. */
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  /* The deck line, and nothing else — see The One Serif Rule in DESIGN.md.
+     Left as the system serif: it appears once per section, small and grey, and
+     does not justify a fourth downloaded face. */
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 @layer base {
+  /*
+    Two families, split by job: Inter reads, Space Grotesk announces. Headings
+    take the display face automatically so no component has to remember —
+    `font-display` as a utility exists for the rare heading-shaped element that
+    is not an h1–h4.
+  */
+  body {
+    font-family: var(--font-sans);
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+  }
+
+  code,
+  kbd,
+  samp,
+  pre {
+    font-family: var(--font-mono);
+  }
+
   :root {
     --background: 0 0% 100%;
     --foreground: 0 0% 3.9%;
@@ -132,66 +268,72 @@
 
 /* Article Content Styling */
 @layer components {
+  /* Body copy is Ink Secondary, not Ink: at 10.92:1 it clears AA with room to
+     spare and stays comfortable over a long read, which full-strength Ink at
+     17.44:1 does not. Headings keep Ink so the hierarchy reads by weight AND
+     by depth of colour. */
   .prose {
-    @apply text-slate-900;
+    @apply text-ink-secondary;
   }
 
   .prose p {
-    @apply font-medium text-base mb-4 lg:mb-6 break-words text-slate-900;
+    @apply font-medium text-base mb-4 lg:mb-6 break-words text-ink-secondary;
   }
 
   .prose h2 {
-    @apply text-2xl lg:text-3xl font-bold mt-10 mb-4 text-slate-900 border-b border-slate-200 pb-2;
+    @apply text-2xl lg:text-3xl font-bold mt-10 mb-4 text-ink border-b border-hairline pb-2;
   }
 
   .prose h3 {
-    @apply text-xl lg:text-2xl font-bold mt-8 mb-3 text-slate-900;
+    @apply text-xl lg:text-2xl font-bold mt-8 mb-3 text-ink;
   }
 
   .prose h4 {
-    @apply text-lg lg:text-xl font-semibold mt-6 mb-2 text-slate-900;
+    @apply text-lg lg:text-xl font-semibold mt-6 mb-2 text-ink;
   }
 
   .prose h5, .prose h6 {
-    @apply text-base lg:text-lg font-semibold mt-4 mb-2 text-slate-900;
+    @apply text-base lg:text-lg font-semibold mt-4 mb-2 text-ink;
   }
 
+  /* The accent is blue now, so a prose link is simply the accent — the old
+     "Reading Blue Exception" that kept a separate link hue is retired. */
   .prose a {
-    @apply text-blue-600 hover:text-blue-800 hover:underline font-medium;
+    @apply text-brand hover:text-brand-deep hover:underline font-medium;
   }
 
   .prose strong, .prose b {
-    @apply font-bold text-slate-900;
+    @apply font-bold text-ink;
   }
 
   .prose ul {
-    @apply list-disc pl-6 mb-4 lg:mb-6 space-y-2 text-slate-900 font-medium;
+    @apply list-disc pl-6 mb-4 lg:mb-6 space-y-2 text-ink-secondary font-medium;
   }
 
   .prose ol {
-    @apply list-decimal pl-6 mb-4 lg:mb-6 space-y-2 text-slate-900 font-medium;
+    @apply list-decimal pl-6 mb-4 lg:mb-6 space-y-2 text-ink-secondary font-medium;
   }
 
   .prose li {
-    @apply text-slate-900;
+    @apply text-ink-secondary;
   }
 
   .prose blockquote {
-    @apply border-l-4 border-blue-600 bg-slate-50 py-4 px-6 my-6 rounded-r-lg italic text-slate-600;
+    @apply border-l-4 border-brand bg-gallery-floor py-4 px-6 my-6 rounded-r-lg italic text-quiet;
   }
 
   .prose pre {
-    @apply w-full bg-slate-900 text-slate-100 rounded-lg p-4 my-6 overflow-x-auto shadow-lg;
+    @apply w-full bg-ink text-gallery-floor rounded-lg p-4 my-6 overflow-x-auto shadow-approach;
   }
 
   .prose code {
-    /* Code Magenta on Hairline Faint — the ground DESIGN.md computes the
-       5.38:1 figure against. On slate-200 the pair lands slightly under it. */
-    @apply bg-slate-100 text-pink-700 px-1.5 py-0.5 rounded-md text-sm font-mono;
+    /* Code Magenta on Hairline Faint — 5.24:1, the ground the figure is
+       computed against. On any darker ground the pair drops under AA. */
+    @apply bg-hairline-faint text-code-magenta px-1.5 py-0.5 rounded-md text-sm font-mono;
   }
 
   .prose pre code {
-    @apply bg-transparent text-slate-100 p-0;
+    @apply bg-transparent text-gallery-floor p-0;
   }
 
   /* Injected by rehypeScrollableTables so a wide table scrolls instead of
@@ -201,7 +343,7 @@
   }
 
   .table-scroll:focus-visible {
-    @apply outline-none ring-2 ring-indigo-600 ring-offset-2 rounded-lg;
+    @apply outline-none ring-2 ring-brand ring-offset-2 rounded-lg;
   }
 
   .prose table {
@@ -213,22 +355,22 @@
   }
 
   .prose th {
-    @apply bg-slate-100 text-left font-semibold p-3 border border-slate-300 text-slate-900;
+    @apply bg-hairline-faint text-left font-semibold p-3 border border-hairline text-ink;
   }
 
   .prose td {
-    @apply p-3 border border-slate-200 text-slate-700;
+    @apply p-3 border border-hairline text-ink-secondary;
   }
 
   .prose tr:nth-child(even) {
-    @apply bg-slate-50;
+    @apply bg-gallery-floor;
   }
 
   .prose img {
-    @apply w-full h-auto rounded-lg shadow-md my-6;
+    @apply w-full h-auto rounded-lg shadow-resting my-6;
   }
 
   .prose hr {
-    @apply border-slate-200 my-8;
+    @apply border-hairline my-8;
   }
 }

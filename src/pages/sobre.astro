@@ -24,14 +24,14 @@ import {
 >
   <!-- Hero Section -->
   <section
-    class="w-full py-16 md:py-24 lg:py-32 bg-gradient-to-r from-slate-100 to-slate-200 flex justify-center"
+    class="w-full py-16 md:py-24 lg:py-32 bg-gallery-floor flex justify-center"
   >
     <div class="container px-4 md:px-6 max-w-5xl">
       <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
         <!-- Avatar -->
         <div class="flex-shrink-0">
           <div
-            class="w-40 h-40 md:w-52 md:h-52 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 p-1"
+            class="w-40 h-40 md:w-52 md:h-52 rounded-full bg-hairline p-px"
           >
             <Image
               src={avatar}
@@ -49,11 +49,11 @@ import {
         <!-- Intro -->
         <div class="text-center md:text-left">
           <h1
-            class="text-3xl md:text-4xl lg:text-5xl font-bold text-slate-900 mb-4"
+            class="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4"
           >
             Olá, eu sou Airton Vancin
           </h1>
-          <p class="text-xl text-slate-600 mb-6 max-w-2xl">
+          <p class="text-xl text-ink-secondary mb-6 max-w-2xl">
             Software Engineer apaixonado por criar soluções web modernas,
             escaláveis e de alta performance. Com mais de 15 anos de experiência
             em desenvolvimento de software.
@@ -81,7 +81,7 @@ import {
               </Button>
             </a>
             <a href="mailto:airtonvancin@gmail.com">
-              <Button className="gap-2 bg-blue-600 hover:bg-blue-700">
+              <Button className="gap-2 bg-brand hover:bg-brand-deep">
                 <IconMail className="w-4 h-4" />
                 Contato
               </Button>
@@ -93,52 +93,52 @@ import {
   </section>
 
   <!-- Skills Section -->
-  <section class="w-full py-16 md:py-24 bg-white flex justify-center">
+  <section class="w-full py-16 md:py-24 bg-wall flex justify-center">
     <div class="container px-4 md:px-6 max-w-5xl">
-      <h2 class="text-3xl font-bold text-slate-900 mb-8 text-center">
+      <h2 class="text-3xl font-bold text-ink mb-8 text-center">
         Minhas Especialidades
       </h2>
 
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-slate-200 hover:shadow-lg transition-shadow">
+        <Card className="border-hairline hover:shadow-lg transition-shadow">
           <CardContent className="p-6 text-center">
-            <IconCode className="w-12 h-12 text-blue-600 mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-slate-900 mb-2">Front-end</h3>
-            <p class="text-sm text-slate-600">
+            <IconCode className="w-12 h-12 text-ink mx-auto mb-4" />
+            <h3 class="font-semibold text-lg text-ink mb-2">Front-end</h3>
+            <p class="text-sm text-ink-secondary">
               React, Next.js, TypeScript, Tailwind CSS, Astro
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 hover:shadow-lg transition-shadow">
+        <Card className="border-hairline hover:shadow-lg transition-shadow">
           <CardContent className="p-6 text-center">
-            <IconServer className="w-12 h-12 text-green-600 mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-slate-900 mb-2">Back-end</h3>
-            <p class="text-sm text-slate-600">
+            <IconServer className="w-12 h-12 text-ink mx-auto mb-4" />
+            <h3 class="font-semibold text-lg text-ink mb-2">Back-end</h3>
+            <p class="text-sm text-ink-secondary">
               Node.js, Express, PHP, WordPress, APIs REST
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 hover:shadow-lg transition-shadow">
+        <Card className="border-hairline hover:shadow-lg transition-shadow">
           <CardContent className="p-6 text-center">
-            <IconDatabase className="w-12 h-12 text-purple-600 mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-slate-900 mb-2">
+            <IconDatabase className="w-12 h-12 text-ink mx-auto mb-4" />
+            <h3 class="font-semibold text-lg text-ink mb-2">
               Banco de Dados
             </h3>
-            <p class="text-sm text-slate-600">
+            <p class="text-sm text-ink-secondary">
               PostgreSQL, MySQL, MongoDB, Supabase, Firebase
             </p>
           </CardContent>
         </Card>
 
-        <Card className="border-slate-200 hover:shadow-lg transition-shadow">
+        <Card className="border-hairline hover:shadow-lg transition-shadow">
           <CardContent className="p-6 text-center">
-            <IconCloud className="w-12 h-12 text-orange-600 mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-slate-900 mb-2">
+            <IconCloud className="w-12 h-12 text-ink mx-auto mb-4" />
+            <h3 class="font-semibold text-lg text-ink mb-2">
               Cloud & DevOps
             </h3>
-            <p class="text-sm text-slate-600">
+            <p class="text-sm text-ink-secondary">
               AWS, Docker, CI/CD, GitHub Actions, Vercel
             </p>
           </CardContent>
@@ -148,9 +148,9 @@ import {
   </section>
 
   <!-- Experience Section -->
-  <section class="w-full py-16 md:py-24 bg-slate-50 flex justify-center">
+  <section class="w-full py-16 md:py-24 bg-gallery-floor flex justify-center">
     <div class="container px-4 md:px-6 max-w-5xl">
-      <h2 class="text-3xl font-bold text-slate-900 mb-8 text-center">
+      <h2 class="text-3xl font-bold text-ink mb-8 text-center">
         Experiência & Formação
       </h2>
 
@@ -158,31 +158,31 @@ import {
         <!-- Experience -->
         <div>
           <div class="flex items-center gap-3 mb-6">
-            <IconBriefcase className="w-6 h-6 text-blue-600" />
-            <h3 class="text-xl font-semibold text-slate-900">Experiência</h3>
+            <IconBriefcase className="w-6 h-6 text-brand" />
+            <h3 class="text-xl font-semibold text-ink">Experiência</h3>
           </div>
 
           <div class="space-y-6">
-            <Card className="border-l-4 border-l-blue-500">
+            <Card className="border-hairline">
               <CardContent className="p-4">
-                <h4 class="font-semibold text-slate-900">
+                <h4 class="font-semibold text-ink">
                   Software Engineer Senior
                 </h4>
-                <p class="text-sm text-slate-500 mb-2">2018 - Presente</p>
-                <p class="text-slate-600 text-sm">
+                <p class="text-sm text-quiet mb-2">2018 - Presente</p>
+                <p class="text-ink-secondary text-sm">
                   Desenvolvimento de aplicações web complexas, liderança técnica
                   e implementação de arquiteturas escaláveis.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-green-500">
+            <Card className="border-hairline">
               <CardContent className="p-4">
-                <h4 class="font-semibold text-slate-900">
+                <h4 class="font-semibold text-ink">
                   Desenvolvedor WordPress
                 </h4>
-                <p class="text-sm text-slate-500 mb-2">2014 - 2018</p>
-                <p class="text-slate-600 text-sm">
+                <p class="text-sm text-quiet mb-2">2014 - 2018</p>
+                <p class="text-ink-secondary text-sm">
                   Criação de temas e plugins personalizados para WordPress,
                   otimização de performance e SEO.
                 </p>
@@ -194,29 +194,29 @@ import {
         <!-- Education -->
         <div>
           <div class="flex items-center gap-3 mb-6">
-            <IconSchool className="w-6 h-6 text-purple-600" />
-            <h3 class="text-xl font-semibold text-slate-900">Formação</h3>
+            <IconSchool className="w-6 h-6 text-brand" />
+            <h3 class="text-xl font-semibold text-ink">Formação</h3>
           </div>
 
           <div class="space-y-6">
-            <Card className="border-l-4 border-l-purple-500">
+            <Card className="border-hairline">
               <CardContent className="p-4">
-                <h4 class="font-semibold text-slate-900">
+                <h4 class="font-semibold text-ink">
                   Análise e Desenvolvimento de Sistemas
                 </h4>
-                <p class="text-sm text-slate-500 mb-2">Graduação</p>
-                <p class="text-slate-600 text-sm">
+                <p class="text-sm text-quiet mb-2">Graduação</p>
+                <p class="text-ink-secondary text-sm">
                   Formação técnica em desenvolvimento de software, banco de
                   dados e arquitetura de sistemas.
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="border-l-4 border-l-orange-500">
+            <Card className="border-hairline">
               <CardContent className="p-4">
-                <h4 class="font-semibold text-slate-900">Certificações AWS</h4>
-                <p class="text-sm text-slate-500 mb-2">Cloud Computing</p>
-                <p class="text-slate-600 text-sm">
+                <h4 class="font-semibold text-ink">Certificações AWS</h4>
+                <p class="text-sm text-quiet mb-2">Cloud Computing</p>
+                <p class="text-ink-secondary text-sm">
                   Certificações em arquitetura de soluções e desenvolvimento na
                   nuvem AWS.
                 </p>
@@ -229,17 +229,17 @@ import {
   </section>
 
   <!-- CTA Section -->
-  <section class="w-full py-16 md:py-24 bg-slate-900 flex justify-center">
+  <section class="w-full py-16 md:py-24 bg-ink flex justify-center">
     <div class="container px-4 md:px-6 max-w-3xl text-center">
-      <h2 class="text-3xl font-bold text-white mb-4">
+      <h2 class="text-3xl font-bold text-wall mb-4">
         Vamos trabalhar juntos?
       </h2>
-      <p class="text-slate-300 mb-8 text-lg">
+      <p class="text-quiet-lifted mb-8 text-lg">
         Estou sempre aberto a novos projetos e oportunidades. Entre em contato
         para discutirmos como posso ajudar.
       </p>
       <a href="/contato">
-        <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+        <Button size="lg" className="bg-brand hover:bg-brand-deep text-wall">
           Entre em Contato
         </Button>
       </a>
