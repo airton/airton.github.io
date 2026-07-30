@@ -1,0 +1,122 @@
+---
+/*
+  The plugins listing, in one language.
+
+  Same reasoning as PluginArticle.astro: this page used to render both
+  translations into one document and swap them client-side after a click, which
+  meant a crawler saw English and Portuguese at a single URL. Now the language
+  is a parameter and each one has its own route.
+*/
+import { Card, CardContent } from "@/components/ui/card";
+import { IconBrandWordpress, IconArrowRight } from "@tabler/icons-react";
+import LanguageLinks from "@/components/LanguageLinks.astro";
+import { plugins } from "@/data/plugins";
+
+interface Props {
+  lang: "en" | "pt";
+}
+
+const { lang } = Astro.props;
+
+const LABELS = {
+  en: {
+    wp_ecosystem: "WordPress Ecosystem",
+    open_source: "Open Source Plugins",
+    extending:
+      "Extending WordPress with performance-driven and user-centric solutions.",
+    installations:
+      "Over thousands of active installations across the WP directory.",
+    explore: "Explore details",
+    plugin: "Plugin",
+  },
+  pt: {
+    wp_ecosystem: "Ecossistema WordPress",
+    open_source: "Plugins Open Source",
+    extending:
+      "Expandindo o WordPress com soluções focadas em performance e no usuário.",
+    installations:
+      "Mais de milhares de instalações ativas no diretório do WP.",
+    explore: "Ver detalhes",
+    plugin: "Plugin",
+  },
+} as const;
+
+const t = LABELS[lang];
+
+/* Each card links to the plugin page in the language the visitor is reading. */
+const pluginHref = (slug: string) =>
+  lang === "en" ? `/en/plugin/${slug}/` : `/plugin/${slug}/`;
+---
+
+<section
+  class="w-full py-20 md:py-32 bg-gallery-floor/50 flex justify-center border-t border-hairline-faint min-h-screen"
+>
+  <div class="container px-4 md:px-6 max-w-7xl">
+    <!-- Header -->
+    <div
+      class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+    >
+      <div class="max-w-2xl">
+        <div
+          class="inline-flex items-center gap-2 text-brand font-medium text-sm tracking-wider uppercase mb-3"
+        >
+          <IconBrandWordpress className="w-4 h-4" />
+          <span>{t.wp_ecosystem}</span>
+        </div>
+        <h1
+          class="text-4xl md:text-5xl font-bold tracking-tight text-ink mb-4"
+        >
+          {t.open_source}
+        </h1>
+        <p class="text-lg text-quiet italic font-serif">{t.extending}</p>
+      </div>
+      <div class="hidden md:block">
+        <p class="text-quiet text-sm max-w-[200px] text-right">
+          {t.installations}
+        </p>
+      </div>
+    </div>
+
+    <!-- Plugins Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      {
+        plugins.map((plugin) => (
+          <a href={pluginHref(plugin.slug)} class="group block h-full">
+            <Card className="h-full bg-wall border-transparent shadow-resting-dense hover:shadow-approach group-hover:-translate-y-1 transition-all duration-500 rounded-3xl overflow-hidden flex flex-col">
+              <CardContent className="p-8 flex-grow flex flex-col">
+                {/* Icon & Category */}
+                <div class="flex items-center justify-between mb-8">
+                  <div class="w-12 h-12 bg-gallery-floor rounded-2xl flex items-center justify-center group-hover:bg-brand-wash transition-colors duration-500">
+                    <IconBrandWordpress
+                      className="w-6 h-6 text-quiet group-hover:text-brand transition-colors duration-500"
+                      aria-label="WordPress Logo"
+                    />
+                  </div>
+                  <span class="rounded-full bg-hairline-faint px-2.5 py-1 text-xs uppercase tracking-widest font-bold text-ink-secondary">
+                    {t.plugin}
+                  </span>
+                </div>
+
+                {/* Content */}
+                <h3 class="text-xl font-bold text-ink mb-3 group-hover:text-brand transition-colors duration-300 decoration-brand/30 underline-offset-4 group-hover:underline">
+                  {plugin.name}
+                </h3>
+                <p class="text-quiet text-sm leading-relaxed line-clamp-3 mb-6 flex-grow">
+                  {plugin[lang].desc}
+                </p>
+
+                {/* Footer */}
+                <div class="flex items-center text-sm font-semibold text-ink mt-auto">
+                  <span class="mr-2">{t.explore}</span>
+                  <IconArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform duration-300 text-brand-bright" />
+                </div>
+              </CardContent>
+            </Card>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<LanguageLinks lang={lang} ptHref="/plugins/" enHref="/en/plugins/" />

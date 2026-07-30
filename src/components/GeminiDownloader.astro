@@ -1,0 +1,371 @@
+---
+/*
+  The Gemini Flow downloader page, in one language. Same split as
+  PluginArticle.astro — see LanguageLinks.astro for why one URL carrying two
+  languages was worth undoing.
+
+  This is the best-performing page on the site (position 6.8, and one of only
+  three pages that has ever been clicked), so it is worth the same care as the
+  plugin pages even though it draws fewer impressions.
+*/
+import { Button } from "@/components/ui/button";
+import LanguageLinks from "@/components/LanguageLinks.astro";
+import {
+  IconArrowLeft,
+  IconDownload,
+  IconCircleCheck,
+  IconBrandChrome,
+  IconPhoto,
+  IconFileZip,
+  IconBolt,
+} from "@tabler/icons-react";
+
+interface Props {
+  lang: "en" | "pt";
+}
+
+const { lang } = Astro.props;
+
+const DOWNLOAD_URL = "/downloads/gemini-flow-downloader.zip";
+const ICON_URL = "/assets/images/gemini-flow-downloader-icon.png";
+
+const LABELS = {
+  en: {
+    badge: "Chrome Extension",
+    title: "Bulk Image Downloader for Gemini Flow",
+    tagline:
+      "Save every AI-generated image from your Gemini / Flow gallery in one click — packed into a single .zip.",
+    download: "Download (.zip)",
+    free: "Free & open",
+    back: "Back to home",
+    manual_note:
+      "Manual install (developer mode). Chrome Web Store version coming soon.",
+    features_title: "What it does",
+    features: [
+      {
+        icon: "photo",
+        title: "Bulk download",
+        desc: "Grabs every image loaded in your Gemini / Flow gallery automatically.",
+      },
+      {
+        icon: "zip",
+        title: "Single .zip",
+        desc: "Packs all images into one zip file — no multi-download prompt.",
+      },
+      {
+        icon: "bolt",
+        title: "Auto-scroll",
+        desc: "Scrolls the page for you to load every image before downloading.",
+      },
+      {
+        icon: "check",
+        title: "Progress bar",
+        desc: "Live progress with success / failure count while it runs.",
+      },
+    ],
+    install_title: "How to install",
+    install: [
+      "Download and unzip the file above.",
+      "Open <strong>chrome://extensions</strong> in Chrome.",
+      "Enable <strong>Developer mode</strong> (top-right toggle).",
+      "Click <strong>Load unpacked</strong> and select the unzipped folder.",
+      "Open your Gemini / Flow gallery, click the extension icon, then <strong>Scan</strong> → <strong>Download all</strong>.",
+    ],
+    modal_title: "You're almost there!",
+    modal_desc:
+      "Thank you for trying my extension. If you find it useful, consider supporting my work with a coffee — it keeps the free tools coming!",
+    modal_continue: "Continue to download",
+    modal_maybe: "Maybe later",
+  },
+  pt: {
+    badge: "Extensão do Chrome",
+    title: "Download em Massa de Imagens do Gemini Flow",
+    tagline:
+      "Salve todas as imagens geradas na sua galeria do Gemini / Flow em um clique — empacotadas em um único .zip.",
+    download: "Baixar (.zip)",
+    free: "Grátis e aberto",
+    back: "Voltar para o início",
+    manual_note:
+      "Instalação manual (modo desenvolvedor). Versão na Chrome Web Store em breve.",
+    features_title: "O que ela faz",
+    features: [
+      {
+        icon: "photo",
+        title: "Download em massa",
+        desc: "Captura automaticamente todas as imagens carregadas na sua galeria do Gemini / Flow.",
+      },
+      {
+        icon: "zip",
+        title: "Único .zip",
+        desc: "Empacota todas as imagens em um único arquivo zip — sem prompt de múltiplos downloads.",
+      },
+      {
+        icon: "bolt",
+        title: "Auto-scroll",
+        desc: "Rola a página por você para carregar todas as imagens antes de baixar.",
+      },
+      {
+        icon: "check",
+        title: "Barra de progresso",
+        desc: "Progresso ao vivo com contagem de sucesso / falha durante a execução.",
+      },
+    ],
+    install_title: "Como instalar",
+    install: [
+      "Baixe e descompacte o arquivo acima.",
+      "Abra <strong>chrome://extensions</strong> no Chrome.",
+      "Ative o <strong>Modo do desenvolvedor</strong> (botão no canto superior direito).",
+      "Clique em <strong>Carregar sem compactação</strong> e selecione a pasta descompactada.",
+      "Abra a galeria do Gemini / Flow, clique no ícone da extensão e então <strong>Procurar</strong> → <strong>Baixar tudo</strong>.",
+    ],
+    modal_title: "Você está quase lá!",
+    modal_desc:
+      "Obrigado por testar minha extensão. Se ela for útil, considere apoiar meu trabalho com um café — é o que mantém as ferramentas grátis vindo!",
+    modal_continue: "Continuar para o download",
+    modal_maybe: "Talvez depois",
+  },
+} as const;
+
+const t = LABELS[lang];
+const iconMap = {
+  photo: IconPhoto,
+  zip: IconFileZip,
+  bolt: IconBolt,
+  check: IconCircleCheck,
+};
+/* There is no English home page, so both languages point at the site root. */
+const homeHref = "/";
+---
+
+<!-- Hero -->
+<div class="bg-gallery-floor/50 border-b border-hairline-faint">
+  <div class="container px-4 md:px-6 pt-24 pb-12 md:py-20 max-w-6xl mx-auto">
+    <a
+      href={homeHref}
+      class="inline-flex items-center text-sm font-medium text-quiet hover:text-brand mb-12 transition-colors group"
+    >
+      <IconArrowLeft
+        className="mr-2 h-4 w-4 transform group-hover:-translate-x-1 transition-transform"
+      />
+      <span>{t.back}</span>
+    </a>
+
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6">
+        <div
+          class="inline-flex items-center gap-2 bg-brand-wash text-brand px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+        >
+          <IconBrandChrome className="w-3.5 h-3.5" />
+          <span>{t.badge}</span>
+        </div>
+        <h1
+          class="text-4xl md:text-6xl font-bold tracking-tight text-ink leading-tight"
+        >
+          {t.title}
+        </h1>
+        <p class="text-xl text-ink-secondary leading-relaxed">{t.tagline}</p>
+        <div class="flex flex-wrap gap-4 pt-4 items-center">
+          <Button
+            id="download-btn"
+            size="lg"
+            className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-brand-bright/20"
+          >
+            <span>{t.download}</span>
+            <IconDownload className="ml-2 h-5 w-5" />
+          </Button>
+          <div
+            class="flex items-center px-4 py-2 bg-wall border border-hairline rounded-full text-sm text-quiet font-medium"
+          >
+            <span class="w-2 h-2 bg-live-signal rounded-full mr-2 animate-pulse"
+            ></span>
+            <span>{t.free}</span>
+          </div>
+        </div>
+        <p class="text-sm text-quiet">{t.manual_note}</p>
+      </div>
+
+      <div class="relative group flex justify-center">
+        <img
+          src={ICON_URL}
+          alt={t.title}
+          width="220"
+          height="220"
+          class="relative w-44 h-44 md:w-56 md:h-56 drop-shadow-2xl group-hover:scale-105 transition-transform duration-500"
+        />
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container px-4 md:px-6 py-20 max-w-4xl mx-auto">
+  <div class="grid gap-24">
+    <!-- Features -->
+    <section>
+      <div class="flex items-center gap-4 mb-10">
+        <h2 class="text-3xl font-bold text-ink">{t.features_title}</h2>
+        <div class="h-px flex-grow bg-hairline-faint"></div>
+      </div>
+      <div class="grid sm:grid-cols-2 gap-6">
+        {
+          t.features.map(({ icon, title, desc }) => {
+            const Icon = iconMap[icon as keyof typeof iconMap];
+            return (
+              <div class="group p-6 bg-wall border border-hairline-faint rounded-2xl shadow-sm hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-4">
+                <div class="p-2 bg-brand-wash rounded-lg text-brand-bright">
+                  <Icon className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 class="font-semibold text-ink mb-1">{title}</h3>
+                  <p class="text-sm text-ink-secondary leading-snug">{desc}</p>
+                </div>
+              </div>
+            );
+          })
+        }
+      </div>
+    </section>
+
+    <!-- Installation -->
+    <section>
+      <div class="flex items-center gap-4 mb-10">
+        <h2 class="text-3xl font-bold text-ink">{t.install_title}</h2>
+        <div class="h-px flex-grow bg-hairline-faint"></div>
+      </div>
+      <div
+        class="bg-wall border border-hairline-faint rounded-[2rem] p-8 md:p-12 shadow-sm"
+      >
+        <ol class="grid gap-6">
+          {
+            t.install.map((step, i) => (
+              <li class="flex items-start gap-4">
+                <span class="flex-shrink-0 w-7 h-7 bg-brand-wash text-brand rounded-full flex items-center justify-center text-sm font-bold">
+                  {i + 1}
+                </span>
+                <span
+                  class="text-ink-secondary leading-relaxed pt-0.5"
+                  set:html={step}
+                />
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+    </section>
+  </div>
+</div>
+
+<!-- Buy Me a Coffee Interstitial Modal -->
+<div
+  id="bmc-modal"
+  class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-ink/60 backdrop-blur-sm transition-opacity duration-300 opacity-0"
+>
+  <div
+    class="bg-wall w-full max-w-lg rounded-[2.5rem] shadow-2xl p-8 md:p-12 text-center relative overflow-hidden transform scale-95 transition-transform duration-300"
+  >
+    <div class="absolute top-0 left-0 w-full h-px bg-brand"></div>
+    <div
+      class="absolute -top-12 -right-12 w-48 h-48 bg-brand-wash rounded-full blur-3xl opacity-50"
+    >
+    </div>
+
+    <div class="relative">
+      <div
+        class="w-20 h-20 bg-brand-wash rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner"
+      >
+        <IconDownload className="w-10 h-10 text-brand" />
+      </div>
+
+      <h2 class="text-3xl font-bold text-ink mb-4">{t.modal_title}</h2>
+      <p class="text-lg text-ink-secondary mb-8 leading-relaxed">
+        {t.modal_desc}
+      </p>
+
+      <div class="flex flex-col gap-4 items-center">
+        <div class="min-h-[50px] flex items-center justify-center">
+          <a
+            href="https://www.buymeacoffee.com/airton"
+            target="_blank"
+            rel="noopener noreferrer"
+            ><img
+              src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png"
+              alt="Buy Me A Coffee"
+              style="height: 60px !important;width: 217px !important;"
+            /></a
+          >
+        </div>
+
+        <div class="w-full flex flex-col gap-4">
+          <Button
+            id="continue-download"
+            size="lg"
+            className="w-full rounded-full h-14 text-lg font-bold"
+          >
+            <span>{t.modal_continue}</span>
+            <IconDownload className="ml-2 h-5 w-5" />
+          </Button>
+
+          <button
+            id="close-modal"
+            class="text-quiet hover:text-ink-secondary font-medium text-sm transition-colors"
+          >
+            {t.modal_maybe}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<LanguageLinks
+  lang={lang}
+  ptHref="/gemini-flow-downloader/"
+  enHref="/en/gemini-flow-downloader/"
+/>
+
+<script is:inline define:vars={{ DOWNLOAD_URL }}>
+  const downloadBtn = document.getElementById("download-btn");
+  const modal = document.getElementById("bmc-modal");
+  const continueBtn = document.getElementById("continue-download");
+  const closeBtn = document.getElementById("close-modal");
+
+  const triggerDownload = () => {
+    const a = document.createElement("a");
+    a.href = DOWNLOAD_URL;
+    a.download = "gemini-flow-downloader.zip";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+  };
+
+  if (downloadBtn && modal) {
+    downloadBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      modal.classList.remove("hidden");
+      modal.classList.add("flex");
+      setTimeout(() => {
+        modal.classList.remove("opacity-0");
+        modal.querySelector("div").classList.remove("scale-95");
+      }, 10);
+    });
+
+    const closeModal = () => {
+      modal.classList.add("opacity-0");
+      modal.querySelector("div").classList.add("scale-95");
+      setTimeout(() => {
+        modal.classList.add("hidden");
+        modal.classList.remove("flex");
+      }, 300);
+    };
+
+    continueBtn?.addEventListener("click", () => {
+      triggerDownload();
+      closeModal();
+    });
+
+    closeBtn?.addEventListener("click", closeModal);
+
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeModal();
+    });
+  }
+</script>

@@ -4,9 +4,9 @@ import GeminiDownloader from "@/components/GeminiDownloader.astro";
 import { geminiJsonLd, GEMINI_ALTERNATES } from "@/helpers/geminiSeo";
 
 const SEO_TITLE =
-  "Download em Massa de Imagens do Gemini Flow — Extensão Chrome (.zip)";
+  "Bulk Image Downloader for Gemini Flow — Chrome Extension (.zip)";
 const SEO_DESC =
-  "Extensão gratuita para Chrome que baixa em massa todas as imagens geradas no Google Gemini / Flow em um clique, empacotadas em um único arquivo .zip.";
+  "Free Chrome extension that bulk-downloads every image generated in Google Gemini / Flow in one click, packed into a single .zip file.";
 const OG_IMAGE = new URL(
   "/assets/images/gemini-flow-downloader-og.png",
   Astro.site
@@ -17,7 +17,7 @@ const OG_IMAGE = new URL(
   title={SEO_TITLE}
   description={SEO_DESC}
   image={OG_IMAGE}
-  lang="pt-BR"
+  lang="en"
   alternates={GEMINI_ALTERNATES}
 >
   <script
@@ -25,12 +25,12 @@ const OG_IMAGE = new URL(
     is:inline
     set:html={JSON.stringify(
       geminiJsonLd({
-        lang: "pt",
+        lang: "en",
         description: SEO_DESC,
         image: OG_IMAGE,
         site: Astro.site!,
       })
     )}
   />
-  <GeminiDownloader lang="pt" />
+  <GeminiDownloader lang="en" />
 </Layout>

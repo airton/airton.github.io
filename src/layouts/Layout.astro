@@ -27,6 +27,12 @@ interface Props {
    * nothing.
    */
   alternates?: { hreflang: string; path: string }[];
+  /**
+   * Keeps the page out of the index while still letting crawlers follow its
+   * links. For the 404 page, which is a real URL a crawler can reach and has
+   * no business ranking for anything.
+   */
+  noindex?: boolean;
 }
 
 const {
@@ -38,6 +44,7 @@ const {
   modifiedDate,
   lang = "pt-BR",
   alternates = [],
+  noindex = false,
 } = Astro.props;
 
 const site = Astro.site || new URL("https://airtonvancin.com");
@@ -97,7 +104,7 @@ const ogLocale = lang.includes("-")
     <meta name="title" content={title} />
     <meta name="description" content={description} />
     <meta name="author" content="Airton Vancin Junior" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content={noindex ? "noindex, follow" : "index, follow"} />
     <link rel="canonical" href={canonicalURL} />
     {
       alternates.map((alt) => (
