@@ -52,6 +52,7 @@ const sortedPosts = scoredPosts
 const relatedPosts = sortedPosts.slice(0, 3);
 
 const site = Astro.site || new URL("https://airtonvancin.com");
+const lang = frontmatter.lang ?? "pt-BR";
 const publishedDate = new Date(frontmatter.date);
 const modifiedDate = frontmatter.updatedDate
   ? new Date(frontmatter.updatedDate)
@@ -67,7 +68,7 @@ const jsonLd = {
   image: frontmatter.image
     ? new URL(frontmatter.image, site).toString()
     : undefined,
-  inLanguage: "pt-BR",
+  inLanguage: lang,
   keywords: currentTags.length ? currentTags.join(", ") : undefined,
   mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
   author: {
@@ -90,6 +91,7 @@ const jsonLd = {
   type="article"
   publishedDate={publishedDate}
   modifiedDate={modifiedDate}
+  lang={lang}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
   <div
