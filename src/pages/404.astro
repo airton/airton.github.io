@@ -2,24 +2,22 @@
 import Layout from "../layouts/Layout.astro";
 import { Button } from "@/components/ui/button";
 import { IconHome, IconSearch, IconArrowLeft } from "@tabler/icons-react";
-import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 
 const labels = {
-  title: { en: "404 - Page Not Found", pt: "404 - Página não encontrada" },
-  heading: { en: "Lost in space?", pt: "Perdido no espaço?" },
-  description: {
-    en: "The page you're looking for doesn't exist or has been moved to a different galaxy.",
-    pt: "A página que você está procurando não existe ou foi movida para uma galáxia diferente.",
-  },
-  back_home: { en: "Back to Home", pt: "Voltar para Início" },
-  search_plugins: { en: "Search Plugins", pt: "Ver Plugins" },
-  search_projects: { en: "Search Projects", pt: "Ver Projetos" },
+  title: "404 - Página não encontrada",
+  heading: "Perdido no espaço?",
+  description:
+    "A página que você está procurando não existe ou foi movida para uma galáxia diferente.",
+  back_home: "Voltar para Início",
+  search_plugins: "Ver Plugins",
+  search_projects: "Ver Projetos",
 };
 ---
 
 <Layout
-  title="404 - Page Not Found | Airton Vancin"
-  description="The page you are looking for does not exist."
+  title="404 - Página não encontrada | Airton Vancin"
+  description="A página que você está procurando não existe."
+  noindex
 >
   <div
     class="min-h-[80vh] flex items-center justify-center p-4 relative overflow-hidden"
@@ -39,10 +37,8 @@ const labels = {
           >
             <span
               class="text-2xl md:text-3xl font-bold text-ink dark:text-gallery-floor"
-              data-en={labels.heading.en}
-              data-pt={labels.heading.pt}
             >
-              {labels.heading.pt}
+              {labels.heading}
             </span>
           </div>
         </div>
@@ -51,10 +47,8 @@ const labels = {
       <!-- Text Content -->
       <p
         class="text-xl text-ink-secondary dark:text-quiet-faint mb-12 leading-relaxed font-serif italic"
-        data-en={labels.description.en}
-        data-pt={labels.description.pt}
       >
-        {labels.description.pt}
+        {labels.description}
       </p>
 
       <!-- Action Buttons -->
@@ -66,8 +60,8 @@ const labels = {
         >
           <a href="/">
             <IconHome className="mr-2 h-5 w-5" />
-            <span data-en={labels.back_home.en} data-pt={labels.back_home.pt}
-              >{labels.back_home.pt}</span
+            <span
+              >{labels.back_home}</span
             >
           </a>
         </Button>
@@ -81,9 +75,7 @@ const labels = {
           >
             <a href="/plugins">
               <span
-                data-en={labels.search_plugins.en}
-                data-pt={labels.search_plugins.pt}
-                >{labels.search_plugins.pt}</span
+                >{labels.search_plugins}</span
               >
             </a>
           </Button>
@@ -96,9 +88,7 @@ const labels = {
           >
             <a href="/projetos">
               <span
-                data-en={labels.search_projects.en}
-                data-pt={labels.search_projects.pt}
-                >{labels.search_projects.pt}</span
+                >{labels.search_projects}</span
               >
             </a>
           </Button>
@@ -106,5 +96,4 @@ const labels = {
       </div>
     </div>
   </div>
-  <LanguageSwitcher />
 </Layout>

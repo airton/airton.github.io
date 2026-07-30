@@ -3,31 +3,24 @@ import Layout from "../layouts/Layout.astro";
 import { projects } from "../data/projects";
 import { Card, CardContent } from "@/components/ui/card";
 import { IconCode, IconArrowRight, IconExternalLink } from "@tabler/icons-react";
-import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 import { Image } from "astro:assets";
 
-const title = {
-  en: "Projects & Cases - Airton Vancin",
-  pt: "Projetos & Cases - Airton Vancin"
-};
+const title = "Projetos & Cases - Airton Vancin";
 
-const description = {
-  en: "A collection of digital products and open-source initiatives built with precision.",
-  pt: "Uma coleção de produtos digitais e iniciativas open-source construídos com precisão."
-};
+const description = "Uma coleção de produtos digitais e iniciativas open-source construídos com precisão.";
 
 const labels = {
-  featured: { en: "Featured Works", pt: "Trabalhos em Destaque" },
-  title: { en: "Success cases and open source projects.", pt: "Alguns cases de sucesso e projetos de código aberto." },
-  subtitle: { en: "A collection of digital products and open-source initiatives built with modern technology.", pt: "Uma coleção de produtos digitais e iniciativas open-source construídos com tecnologia moderna." },
-  expertise: { en: "Demonstrating expertise in full-stack development and UI/UX design.", pt: "Demonstrando expertise em desenvolvimento full-stack e design de UI/UX." },
-  case_study: { en: "Case Study", pt: "Estudo de Caso" }
+  featured: "Trabalhos em Destaque",
+  title: "Alguns cases de sucesso e projetos de código aberto.",
+  subtitle: "Uma coleção de produtos digitais e iniciativas open-source construídos com tecnologia moderna.",
+  expertise: "Demonstrando expertise em desenvolvimento full-stack e design de UI/UX.",
+  case_study: "Estudo de Caso"
 };
 ---
 
 <Layout
-  title={title.pt}
-  description={description.pt}
+  title={title}
+  description={description}
 >
   <section class="w-full py-24 md:py-32 bg-wall flex justify-center min-h-screen">
     <div class="container px-4 md:px-6 max-w-7xl">
@@ -36,18 +29,18 @@ const labels = {
         <div class="max-w-2xl">
           <div class="inline-flex items-center gap-2 text-brand font-medium text-sm tracking-wider uppercase mb-3 text-left">
             <IconCode className="w-4 h-4" />
-            <span data-en={labels.featured.en} data-pt={labels.featured.pt}>{labels.featured.pt}</span>
+            <span>{labels.featured}</span>
           </div>
-          <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-ink mb-6 leading-[1.1]" data-en={labels.title.en} data-pt={labels.title.pt}>
-            {labels.title.pt}
+          <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-ink mb-6 leading-[1.1]">
+            {labels.title}
           </h1>
-          <p class="text-lg text-quiet font-serif italic text-left" data-en={labels.subtitle.en} data-pt={labels.subtitle.pt}>
-            {labels.subtitle.pt}
+          <p class="text-lg text-quiet font-serif italic text-left">
+            {labels.subtitle}
           </p>
         </div>
         <div class="hidden md:block">
-          <p class="text-quiet text-sm max-w-[200px] text-right" data-en={labels.expertise.en} data-pt={labels.expertise.pt}>
-            {labels.expertise.pt}
+          <p class="text-quiet text-sm max-w-[200px] text-right">
+            {labels.expertise}
           </p>
         </div>
       </div>
@@ -85,7 +78,7 @@ const labels = {
                   
                   <!-- Footer -->
                   <div class="flex items-center text-sm font-bold text-ink mt-auto tracking-tight uppercase">
-                    <span class="mr-2" data-en={labels.case_study.en} data-pt={labels.case_study.pt}>{labels.case_study.pt}</span>
+                    <span class="mr-2">{labels.case_study}</span>
                     <div class="h-px flex-grow bg-hairline-faint mx-4 group-hover:bg-brand-edge transition-colors"></div>
                     <IconArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300 text-brand-bright" />
                   </div>
@@ -97,5 +90,4 @@ const labels = {
       </div>
     </div>
   </section>
-  <LanguageSwitcher />
 </Layout>

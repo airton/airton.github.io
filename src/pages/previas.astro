@@ -10,33 +10,19 @@ import {
   IconPaw,
   IconTool,
 } from "@tabler/icons-react";
-import LanguageSwitcher from "../components/LanguageSwitcher.astro";
 
-const title = {
-  en: "Website Previews Portfolio - Airton Vancin",
-  pt: "Portfólio de Prévias - Airton Vancin",
-};
+const title = "Portfólio de Prévias - Airton Vancin";
 
-const description = {
-  en: "A collection of live website previews built for local businesses across refrigeration, beauty, pet and B2B niches.",
-  pt: "Uma coleção de prévias de sites publicadas para negócios locais nos nichos de refrigeração, beleza, pet e B2B.",
-};
+const description =
+  "Uma coleção de prévias de sites publicadas para negócios locais nos nichos de refrigeração, beleza, pet e B2B.";
 
 const labels = {
-  eyebrow: { en: "Live Previews", pt: "Prévias ao Vivo" },
-  title: {
-    en: "Website previews built for real businesses.",
-    pt: "Prévias de sites construídas para negócios reais.",
-  },
-  subtitle: {
-    en: "Each link is a fully functional preview, delivered fast for local businesses to see their brand online before going live.",
-    pt: "Cada link é uma prévia totalmente funcional, entregue com agilidade para o negócio ver sua marca no ar antes do lançamento.",
-  },
-  count: {
-    en: `${previas.length} live previews`,
-    pt: `${previas.length} prévias publicadas`,
-  },
-  visit: { en: "View preview", pt: "Ver prévia" },
+  eyebrow: "Prévias ao Vivo",
+  title: "Prévias de sites construídas para negócios reais.",
+  subtitle:
+    "Cada link é uma prévia totalmente funcional, entregue com agilidade para o negócio ver sua marca no ar antes do lançamento.",
+  count: `${previas.length} prévias publicadas`,
+  visit: "Ver prévia",
 };
 
 const categoryIcons = {
@@ -54,7 +40,7 @@ const grouped = previaCategories
   .filter((g) => g.items.length > 0);
 ---
 
-<Layout title={title.pt} description={description.pt}>
+<Layout title={title} description={description}>
   <section
     class="w-full py-24 md:py-32 bg-wall flex justify-center min-h-screen"
   >
@@ -68,32 +54,26 @@ const grouped = previaCategories
             class="inline-flex items-center gap-2 text-brand font-medium text-sm tracking-wider uppercase mb-3 text-left"
           >
             <IconLayoutGrid className="w-4 h-4" />
-            <span data-en={labels.eyebrow.en} data-pt={labels.eyebrow.pt}
-              >{labels.eyebrow.pt}</span
+            <span
+              >{labels.eyebrow}</span
             >
           </div>
           <h1
             class="text-4xl md:text-6xl font-bold tracking-tight text-ink mb-6 leading-[1.1]"
-            data-en={labels.title.en}
-            data-pt={labels.title.pt}
           >
-            {labels.title.pt}
+            {labels.title}
           </h1>
           <p
             class="text-lg text-quiet font-serif italic text-left"
-            data-en={labels.subtitle.en}
-            data-pt={labels.subtitle.pt}
           >
-            {labels.subtitle.pt}
+            {labels.subtitle}
           </p>
         </div>
         <div class="hidden md:block">
           <p
             class="text-quiet text-sm max-w-[200px] text-right font-bold uppercase tracking-widest"
-            data-en={labels.count.en}
-            data-pt={labels.count.pt}
           >
-            {labels.count.pt}
+            {labels.count}
           </p>
         </div>
       </div>
@@ -111,8 +91,6 @@ const grouped = previaCategories
                   </div>
                   <h2
                     class="text-2xl font-bold tracking-tight text-ink"
-                    data-en={group.labelEn}
-                    data-pt={group.labelPt}
                   >
                     {group.labelPt}
                   </h2>
@@ -163,5 +141,4 @@ const grouped = previaCategories
       </div>
     </div>
   </section>
-  <LanguageSwitcher />
 </Layout>

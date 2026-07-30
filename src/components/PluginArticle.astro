@@ -3,10 +3,10 @@
   One plugin page, in one language.
 
   This used to live in `pages/plugin/[slug].astro` and render both translations
-  into the same document, with LanguageSwitcher hiding one of them client-side.
-  Nothing was hidden in the served HTML, so every crawl saw both languages at a
-  single URL. Now the language is a parameter and each one gets its own route —
-  see LanguageLinks.astro for the reasoning.
+  into the same document, hiding one of them client-side. Nothing was hidden in
+  the served HTML, so every crawl saw both languages at a single URL. Now the
+  language is a parameter and each one gets its own route — see
+  LanguageLinks.astro for the reasoning.
 */
 import { Button } from "@/components/ui/button";
 import LanguageLinks from "@/components/LanguageLinks.astro";
@@ -83,10 +83,10 @@ const pluginImageUrl = `https://ps.w.org/${plugin.slug}/assets/banner-772x250.pn
 /*
   The FAQ section was previously guarded on `plugin.faq`, a field PluginData
   does not have — the copy is under `en`/`pt`. So the guard was always falsy
-  and all 17 authored questions across the five plugins never rendered.
+  and all 16 authored questions across four plugins never rendered.
 */
 const faq = content.faq ?? [];
-const backHref = lang === "en" ? "/plugins/" : "/#wp-plugins";
+const backHref = lang === "en" ? "/en/plugins/" : "/#wp-plugins";
 ---
 
 <div class="bg-gallery-floor/50 border-b border-hairline-faint">
