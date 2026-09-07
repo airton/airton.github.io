@@ -5,14 +5,14 @@ import { IconWashDrycleanOff, IconMenu2, IconX } from "@tabler/icons-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { label: "Blog", href: "/blog" },
-  { label: "Plugins", href: "/plugins" },
-  { label: "Projetos", href: "/projetos" },
-  { label: "Sobre", href: "/sobre" },
-  { label: "Contato", href: "/contato" },
+  { label: "Blog", href: "/blog/" },
+  { label: "Plugins", href: "/plugins/" },
+  { label: "Projetos", href: "/projetos/" },
+  { label: "Sobre", href: "/sobre/" },
+  { label: "Contato", href: "/contato/" },
   {
     label: "Zero Downtime",
-    href: "/zero-downtime",
+    href: "/zero-downtime/",
     icon: <IconWashDrycleanOff className="h-4 w-4" />,
   },
 ];

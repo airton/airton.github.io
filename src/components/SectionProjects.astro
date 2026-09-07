@@ -35,7 +35,7 @@ import { Image } from "astro:assets";
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
       {
         projects.map(({ name, desc, slug, image }) => (
-          <a href={`/project/${slug}`} class="group block h-full">
+          <a href={`/project/${slug}/`} class="group block h-full">
             <Card className="h-full bg-wall border-transparent shadow-resting hover:shadow-approach group-hover:-translate-y-2 transition-all duration-500 rounded-[2rem] overflow-hidden flex flex-col">
               <div class="relative aspect-[16/10] overflow-hidden">
                 <Image
