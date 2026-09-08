@@ -5,6 +5,7 @@ import Layout from "@/layouts/Layout.astro";
 import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
 import RecentPosts from "@/components/RecentPosts.astro";
 import ShareButtons from "@/components/ShareButtons.astro";
+import { breadcrumbJsonLd, PERSON_ID } from "@/helpers/siteIdentity";
 import type { MarkdownInstance } from "astro";
 
 const { frontmatter, readingTime } = Astro.props;
@@ -16,7 +17,13 @@ const allPosts = Object.values(postImports).map((post) => {
   const typedPost = post as MarkdownInstance<Record<string, any>> & {
     file: string;
   };
-  const url = typedPost.file.split("/src/content")[1].replace(".mdx", "");
+  /*
+    Trailing slash matters twice here: the site serves trailing-slash URLs, so
+    without it every related-post link 308-redirects — and the self-filter below
+    compares this against Astro.url.pathname, which always has one. Mismatched,
+    the comparison never fired and every post listed itself as related to itself.
+  */
+  const url = `${typedPost.file.split("/src/content")[1].replace(".mdx", "")}/`;
   return {
     ...typedPost,
     url,
@@ -58,6 +65,15 @@ const modifiedDate = frontmatter.updatedDate
   ? new Date(frontmatter.updatedDate)
   : undefined;
 
+/*
+  `frontmatter.image` is ImageMetadata now that the collection schema declares
+  it with `image()`, so the absolute URL comes from `.src` — the build-hashed
+  path of the optimized asset — rather than from the frontmatter string.
+*/
+const socialImage = frontmatter.image
+  ? new URL(frontmatter.image.src, site).toString()
+  : undefined;
+
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
@@ -65,35 +81,53 @@ const jsonLd = {
   description: frontmatter.description,
   datePublished: publishedDate.toISOString(),
   dateModified: (modifiedDate ?? publishedDate).toISOString(),
-  image: frontmatter.image
-    ? new URL(frontmatter.image, site).toString()
-    : undefined,
+  image: socialImage,
   inLanguage: lang,
   keywords: currentTags.length ? currentTags.join(", ") : undefined,
   mainEntityOfPage: { "@type": "WebPage", "@id": pageUrl },
-  author: {
-    "@type": "Person",
-    name: "Airton Vancin Junior",
-    url: new URL("/sobre/", site).toString(),
-  },
-  publisher: {
-    "@type": "Person",
-    name: "Airton Vancin Junior",
-    url: site.toString(),
-  },
+  /*
+    Author and publisher are `@id` references to the single Person node emitted
+    site-wide by Layout, not fresh literals. Repeating the literal here is what
+    previously described a new anonymous person on every post.
+  */
+  author: { "@id": new URL(PERSON_ID, site).toString() },
+  publisher: { "@id": new URL(PERSON_ID, site).toString() },
 };
+
+const breadcrumb = breadcrumbJsonLd(
+  [
+    { name: "Home", path: "/" },
+    { name: "Blog", path: "/blog/" },
+    { name: frontmatter.title, path: pageId },
+  ],
+  site,
+  pageUrl,
+);
+
+/*
+  Long editorial headlines get a short `seoTitle` for the <title> tag. The brand
+  suffix is deliberately terse: at 28 characters the old
+  "| Blog Airton Vancin Junior" left roughly 32 for the headline itself, which
+  truncated every post in the SERP.
+*/
+const pageTitle = `${frontmatter.seoTitle ?? frontmatter.title} | Airton Vancin`;
 ---
 
 <Layout
-  title={`${frontmatter.title} | Blog Airton Vancin Junior`}
+  title={pageTitle}
   description={frontmatter.description}
-  image={frontmatter.image}
+  image={socialImage}
   type="article"
   publishedDate={publishedDate}
   modifiedDate={modifiedDate}
   lang={lang}
 >
   <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+  <script
+    type="application/ld+json"
+    is:inline
+    set:html={JSON.stringify(breadcrumb)}
+  />
   <div
     class="w-full py-12 md:py-24 lg:py-32 bg-gallery-floor flex justify-center"
   >
@@ -139,7 +173,7 @@ const jsonLd = {
                 <div class="flex flex-wrap justify-center gap-2 pt-2">
                   {currentTags.map((tag: string) => (
                     <a
-                      href={`/blog/tag/${slugify(tag)}`}
+                      href={`/blog/tag/${slugify(tag)}/`}
                       class="inline-flex items-center rounded-full bg-ink/5 hover:bg-ink/10 px-3 py-1 text-xs font-medium text-ink-secondary transition-colors"
                     >
                       #{tag}

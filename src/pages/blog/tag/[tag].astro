@@ -3,6 +3,7 @@ import Layout from "@/layouts/Layout.astro";
 import PostCard from "@/components/PostCard.astro";
 import { getCollection } from "astro:content";
 import { slugify } from "@/helpers/slugify";
+import { TAG_INDEX_MIN_POSTS } from "@/data/tags";
 import type { GetStaticPaths } from "astro";
 
 export const getStaticPaths = (async () => {
@@ -32,11 +33,19 @@ export const getStaticPaths = (async () => {
 }) satisfies GetStaticPaths;
 
 const { label, posts } = Astro.props;
+
+/*
+  A tag holding one or two posts is an archive with nothing in it. Keeping it
+  crawlable but out of the index preserves reader navigation without offering
+  Google a ~140-word page to compete with the articles themselves.
+*/
+const thin = posts.length < TAG_INDEX_MIN_POSTS;
 ---
 
 <Layout
   title={`Artigos sobre ${label} | Blog Airton Vancin`}
   description={`Confira todos os artigos sobre ${label} no blog de Airton Vancin: desenvolvimento web, arquitetura de software e tecnologia.`}
+  noindex={thin}
 >
   <section
     class="w-full py-12 md:py-24 lg:py-32 bg-background flex flex-col items-center"
@@ -44,7 +53,7 @@ const { label, posts } = Astro.props;
     <div class="container px-4 md:px-6">
       <div class="max-w-3xl mx-auto text-center mb-12 lg:mb-20">
         <p class="text-sm font-medium text-primary mb-2">
-          <a href="/blog/tags" class="hover:underline">Tags</a>
+          <a href="/blog/tags/" class="hover:underline">Tags</a>
         </p>
         <h1
           class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6"

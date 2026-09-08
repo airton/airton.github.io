@@ -1,6 +1,7 @@
 ---
 import Footer from "@/components/Footer.astro";
 import { Navigation } from "@/components/Navigation";
+import { siteIdentityJsonLd } from "@/helpers/siteIdentity";
 import "../styles/global.css";
 
 interface Props {
@@ -50,6 +51,7 @@ const {
 const site = Astro.site || new URL("https://airtonvancin.com");
 const canonicalURL = new URL(Astro.url.pathname, site);
 const socialImage = new URL(image, site);
+const identityJsonLd = siteIdentityJsonLd(site);
 
 /*
   Open Graph wants a language_TERRITORY locale — `pt_BR`, not the `pt-BR` of
@@ -155,6 +157,17 @@ const ogLocale = lang.includes("-")
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={socialImage} />
+
+    <!--
+      Site identity: one WebSite and one Person, emitted on every page and
+      referenced by `@id` from page-level nodes. See helpers/siteIdentity.ts
+      for why this is centralised rather than repeated per page.
+    -->
+    <script
+      type="application/ld+json"
+      is:inline
+      set:html={JSON.stringify(identityJsonLd)}
+    />
 
     <!-- Theme Color -->
     <meta name="theme-color" content="#1A1A17" />

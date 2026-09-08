@@ -4,6 +4,12 @@ import { IconArrowRight, IconCalendar } from "@tabler/icons-react";
 import { dateFormat } from "@/helpers/dateFormat";
 import type { CollectionEntry } from "astro:content";
 import { Image } from "astro:assets";
+/*
+  Fallback cover as an import, not a public/ path string: <Image> can only
+  optimize an imported asset, so a string fallback would silently ship the
+  original file at full size.
+*/
+import fallbackCover from "@/assets/images/blog/code-minimalist.jpg";
 import LangBadge from "@/components/LangBadge.astro";
 
 interface Props {
@@ -17,13 +23,13 @@ const postLang = post.data.lang ?? "pt-BR";
 const isForeign = postLang !== "pt-BR";
 ---
 
-<a href={`/blog/${post.id}`} class:list={["group block h-full", className]}>
+<a href={`/blog/${post.id}/`} class:list={["group block h-full", className]}>
   <Card
     className="h-full overflow-hidden transition-all duration-300 hover:shadow-lg hover:-translate-y-1 border-muted"
   >
     <div class="relative aspect-video overflow-hidden">
       <Image
-        src={post.data.image || "/assets/images/blog/code-minimalist.jpg"}
+        src={post.data.image ?? fallbackCover}
         alt={`Cover image for the article: ${post.data.title}`}
         class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
         width={800}
