@@ -1,0 +1,79 @@
+---
+title: "Nextcloud SSO with Keycloak: SAML Without the Lockout"
+seoTitle: "Nextcloud SSO with Keycloak (SAML Guide)"
+description: "Wiring Nextcloud to Keycloak over SAML: import the metadata instead of typing endpoints, map the UID to something permanent, and set the one toggle that stops you locking yourself out."
+date: "2026-09-21"
+image: "../../assets/images/blog/software-architecture.jpg"
+tags: ["Nextcloud", "SSO", "Security", "Architecture"]
+lang: "en"
+faq:
+  - question: "Does Nextcloud support Keycloak SSO natively?"
+    answer: "Nextcloud does not ship SAML in core, but its official SSO & SAML authentication app (user_saml) is a first-party app from the app store and speaks standard SAML 2.0, which Keycloak serves. No Keycloak-specific plugin exists or is needed."
+  - question: "Should I use SAML or OIDC between Nextcloud and Keycloak?"
+    answer: "Keycloak speaks both. SAML via user_saml is the better-trodden path and has the richer attribute-mapping UI in Nextcloud, so it is what most guides and most production installs use. OIDC via the user_oidc app is lighter to configure and worth preferring if the rest of your estate is already OIDC. Pick the protocol the rest of your systems use rather than the one a tutorial used."
+  - question: "How do I avoid locking myself out of Nextcloud when enabling SAML?"
+    answer: "Turn on 'Allow the use of multiple user back-ends' in the user_saml global settings before you save a configuration. That keeps the local Nextcloud login reachable at /login?direct=1 as a fallback. Confirm you also have shell access to run `occ app:disable user_saml`, which is the only recovery path if the toggle is off and the configuration is wrong."
+  - question: "What should the Nextcloud UID be mapped to in Keycloak?"
+    answer: "Map it to an immutable Keycloak attribute such as the user's ID, not to their email address or username. The UID becomes the Nextcloud account name and is what ties a returning user to their existing files. If email is the UID and someone changes their surname, they come back as a brand new user with an empty drive while their files sit under the old identifier."
+---
+
+Most Keycloak-to-Nextcloud guides walk you through typing six endpoint URLs and pasting a certificate by hand. You do not have to. Both ends speak SAML metadata, and moving the XML between them removes the entire class of mistakes where a trailing slash in an endpoint costs you an afternoon.
+
+This is Architecture A from my [WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/) — a shared identity provider that both applications trust — narrowed to the case where that provider is Keycloak.
+
+## Before you touch anything: the lockout toggle
+
+Do this first, because it is the step that determines whether a mistake costs you thirty seconds or an SSH session.
+
+Install **SSO & SAML authentication** (`user_saml`) from the Nextcloud app store. Open **Administration settings → SSO & SAML authentication**, and in the global settings enable **"Allow the use of multiple user back-ends"**.
+
+With that on, the local Nextcloud login stays reachable at `/login?direct=1` even when SAML is misconfigured. With it off, a bad configuration replaces the login form with a redirect to an identity provider that will not let you in, and the only way back is:
+
+```bash
+sudo -u www-data php occ app:disable user_saml
+```
+
+Verify you can actually run that — right now, on this server — before you continue. If you cannot, configure this on a staging instance first.
+
+## Register Nextcloud in Keycloak by importing its metadata
+
+Nextcloud publishes its own service-provider metadata. On the **SSO & SAML authentication** settings page, find the metadata XML link in the Service Provider Data section and download it.
+
+Then in the Keycloak admin console:
+
+1. Select the realm your users live in — not `master`, which is for administering Keycloak itself.
+2. Go to **Clients → Import client**.
+3. Upload the `metadata.xml` you just downloaded.
+
+Keycloak reads the entity ID, the assertion consumer service URL and the signing certificate straight out of the file. Leave the client ID as the URL it imported; it is supposed to look like that. Set the **Root URL** to your Nextcloud base URL and the valid redirect URIs to `/*` under it.
+
+That is the half of the job that guides usually spend a page on.
+
+## Map the attributes, and think hard about one of them
+
+Back in Keycloak, add the client scope mappers that put username, email and name into the assertion. Then, in Nextcloud, fill in the attribute-mapping fields so it knows which assertion attribute is which.
+
+| Nextcloud field | Map it to | Why |
+| --- | --- | --- |
+| UID | An immutable Keycloak user ID | Becomes the account name; ties a user to their files |
+| Display name | Full name | Cosmetic, safe to change later |
+| Email | Email | Used for sharing and notifications |
+| Groups | Group membership claim | Only if you want group sync |
+
+**The UID is the one that matters, and it is the one every guide gets casually wrong** by mapping it to `username` or to email.
+
+The UID becomes the Nextcloud account identifier. Nextcloud stores files under it. Map it to something a human can change — an email address, a username — and the day that person changes their surname, the assertion arrives with a new UID, Nextcloud sees a user it has never met, provisions a fresh empty account, and the old files sit in a directory nobody is logged into any more. Map it to Keycloak's immutable user ID and the display name can change as often as it likes.
+
+The cost is cosmetic: Nextcloud account names become UUIDs rather than readable handles. That shows up in a few admin screens. It is a cheap price for never having to migrate a user's files between two accounts that are supposed to be the same person.
+
+## What SSO does not give you
+
+**Single logout is a separate feature.** Ending a Nextcloud session does not end the Keycloak session, or the sessions Keycloak opened elsewhere. SAML Single Logout has to be configured on both ends and support for it is uneven across service providers. If someone has told a compliance auditor that logging out ends every session, test that exact claim before it is written down.
+
+**Group changes sync on login, not immediately.** Remove someone from a Keycloak group and their mapped Nextcloud group membership usually persists until their next authentication. Removing access is the operation that has to be reliable, so measure the actual propagation delay on your setup rather than assuming it is instant.
+
+**Existing local accounts collide.** If `someone@example.com` already has a local Nextcloud account and then arrives through SAML, what happens depends on your back-end configuration and is rarely what you assumed. Create a deliberate duplicate on staging and watch what it does before you roll this out to people who have files to lose.
+
+## If WordPress is in this picture too
+
+Keycloak fronting Nextcloud is half of a setup — the other half is pointing WordPress at the same realm as a second SAML service provider, at which point one login covers both. The decision of whether that is even the right shape, versus letting one of your two applications own identity directly, is what I work through in [the full WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/).

@@ -1,0 +1,112 @@
+---
+title: "Making WordPress an OpenID Connect Provider"
+seoTitle: "WordPress as an OpenID Connect Provider"
+description: "Your members already live in wp_users. Here is how to let WordPress issue identity to other applications over OIDC, which plugin to pick, and the discovery-endpoint trap that breaks the setup halfway through."
+date: "2026-09-21"
+image: "../../assets/images/blog/wordpress-setup.jpg"
+tags: ["WordPress", "SSO", "Security", "Architecture"]
+lang: "en"
+faq:
+  - question: "Can WordPress act as an identity provider?"
+    answer: "Yes. With an OIDC server plugin, WordPress issues ID tokens for other applications and `wp_users` becomes the source of truth. It is a genuinely good fit when the people logging in are your site's members rather than employees, because those accounts already exist in WordPress alongside subscription state."
+  - question: "What is the difference between an OAuth2 server plugin and an OIDC server plugin for WordPress?"
+    answer: "OAuth 2.0 answers 'is this client allowed to call the API on someone's behalf'. OpenID Connect adds an identity layer on top: a signed ID token describing who the user is, plus a discovery document at /.well-known/openid-configuration. Many clients — including Nextcloud's user_oidc app — need the OIDC layer and will not work against a plain OAuth2 plugin."
+  - question: "Does the OpenID Connect Server plugin have an admin UI?"
+    answer: "No. It is configured entirely through PHP constants and filters. You generate an RSA key pair with OpenSSL, define OIDC_PRIVATE_KEY and OIDC_PUBLIC_KEY before WordPress loads, and register each client through the oidc_registered_clients filter. If you want a settings screen instead of code, a commercial plugin such as miniOrange's OAuth server is the alternative."
+  - question: "Why does my OIDC client say it cannot find the discovery document?"
+    answer: "Because not every WordPress OIDC plugin publishes one. Clients that auto-configure — Nextcloud's user_oidc among them — fetch /.well-known/openid-configuration and fail outright when it is missing. Request that URL on your own install before committing to a plugin. If it does not return JSON describing your authorization, token and userinfo endpoints, either configure the client's endpoints by hand or choose a different plugin."
+---
+
+There is a specific situation where making WordPress an identity provider is the right call, and a lot of situations where it is not. Start with the distinction, because it decides everything after it.
+
+**If the people logging in are employees**, they belong in a directory — Entra ID, JumpCloud, Keycloak, Okta — and that directory should stay the source of truth. Offboarding has to revoke access everywhere at once, and only a central provider gives you that.
+
+**If the people logging in are your site's members**, they already exist in `wp_users`, next to their subscription state, their orders, their roles. Copying them into an identity provider just so they can log back into your own stack adds a system to maintain and a sync to get wrong.
+
+For the second case, WordPress issuing identity directly is the smaller, more honest architecture. This post is how to do it.
+
+## OAuth 2.0 is not enough — you need the OIDC layer
+
+This is the trap that costs people an evening, so it goes first.
+
+OAuth 2.0 answers a delegation question: *may this client act on this user's behalf?* It hands back an access token and says nothing reliable about who the user is. OpenID Connect sits on top and answers the identity question: it issues a signed **ID token** describing the user, and it publishes a **discovery document** at `/.well-known/openid-configuration` listing every endpoint, supported scope and signing key.
+
+Plenty of WordPress plugins advertise "OAuth server" and stop there. Meanwhile a large share of clients — [Nextcloud's `user_oidc` app](/blog/wordpress-nextcloud-sso/) among them — are built to self-configure from that discovery URL and simply refuse to proceed without it.
+
+**So before you commit to any plugin, request the discovery endpoint on your own install:**
+
+```bash
+curl -s https://yoursite.com/.well-known/openid-configuration | jq .
+```
+
+If that returns JSON naming your `authorization_endpoint`, `token_endpoint` and `jwks_uri`, you are in good shape. If it 404s, you have a plain OAuth2 server, and you will be configuring every client by hand — assuming the client even allows it.
+
+## The two plugins worth considering
+
+### OpenID Connect Server — free, no admin UI
+
+The [OpenID Connect Server](https://wordpress.org/plugins/openid-connect-server/) plugin is free and small. It is also configured **entirely in code** — there is no settings screen, by design.
+
+Generate a key pair:
+
+```bash
+openssl genrsa -out oidc.key 2048
+openssl rsa -in oidc.key -pubout -out oidc.pub
+```
+
+Then define both keys as constants before WordPress loads — in `wp-config.php`, reading from files kept **outside the webroot**:
+
+```php
+define( 'OIDC_PRIVATE_KEY', file_get_contents( '/etc/oidc/oidc.key' ) );
+define( 'OIDC_PUBLIC_KEY',  file_get_contents( '/etc/oidc/oidc.pub' ) );
+```
+
+Do not paste the private key inline into a file that lives in `wp-content`. It is the key that signs every identity assertion your site makes; anyone who reads it can mint a token claiming to be any of your users.
+
+Clients are registered through the `oidc_registered_clients` filter — name, secret, redirect URI, grant types and scope, in a small must-use plugin:
+
+```php
+add_filter( 'oidc_registered_clients', function ( $clients ) {
+    $clients['nextcloud'] = [
+        'name'          => 'Nextcloud',
+        'secret'        => getenv( 'NEXTCLOUD_OIDC_SECRET' ),
+        'redirect_uri'  => 'https://cloud.example.com/apps/user_oidc/code',
+        'grant_types'   => [ 'authorization_code' ],
+        'scope'         => 'openid profile email',
+    ];
+    return $clients;
+} );
+```
+
+Check the current readme for the exact array keys before you copy that — this plugin has moved between major versions, and version 2.0.0 added an option for clients that do not require a consent screen.
+
+**Verify the redirect URI character for character.** A mismatched trailing slash is rejected by spec, and the error surfaces at the client as something unhelpfully generic.
+
+### miniOrange OAuth/OIDC Server — commercial, has a UI
+
+If configuring an identity provider through `wp-config.php` constants is not something you want to hand to whoever maintains this site next, miniOrange's OAuth server plugin covers the same ground with an admin interface, registers clients through a form, and publishes a discovery endpoint. It is the pragmatic choice for a site where the person running it is not the person who set it up.
+
+## Authentication is not entitlement
+
+Here is the part that actually distinguishes a working membership integration from one that quietly leaks access.
+
+A lapsed member can still log in to WordPress. Their account is fine; their subscription is not. OpenID Connect will happily authenticate them and say nothing at all about whether they should still reach whatever they are logging into — that is not what the protocol is for.
+
+The clean fix is to make entitlement a claim rather than a chore. Derive it from subscription state at token-issue time and let the client map it to a group or role:
+
+```php
+add_filter( 'oidc_userinfo_claims', function ( $claims, $user ) {
+    $claims['groups'] = user_has_active_subscription( $user->ID )
+        ? [ 'members-active' ]
+        : [ 'members-lapsed' ];
+    return $claims;
+}, 10, 2 );
+```
+
+The filter name varies by plugin — look it up for yours. The principle does not: entitlement should flow through the token on every single login, so that a cancelled subscription revokes access on its own. The alternative is a manual deprovisioning step in a runbook, and manual deprovisioning steps are the ones that get skipped.
+
+Note the ceiling, though. A token is checked when it is issued, so access dies at the next login, not at the moment of cancellation. If you need immediate revocation, you need short token lifetimes and a client that actually re-validates — decide which of those two you need before someone asks you to prove it.
+
+## Where this fits
+
+Making WordPress the provider is Architecture B in my [WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/), which compares it against the two alternatives: a shared external provider, or letting the other application own identity instead. If you are still deciding which shape you want, start there. If you already know WordPress is your source of truth, everything above is the build.
