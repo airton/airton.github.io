@@ -40,6 +40,16 @@ const blog = defineCollection({
         right tag — see the `lang` prop on Layout.astro for why it matters.
       */
       lang: z.string().default("pt-BR"),
+      /*
+        Authored once, used twice: ArticleLayout renders these at the foot of
+        the article and emits the same pairs as FAQPage structured data. Keeping
+        the questions in frontmatter rather than in the body is what stops the
+        visible copy and the schema from drifting — Google drops an FAQ rich
+        result whose answers it cannot find on the page.
+      */
+      faq: z
+        .array(z.object({ question: z.string(), answer: z.string() }))
+        .optional(),
     }),
 });
 

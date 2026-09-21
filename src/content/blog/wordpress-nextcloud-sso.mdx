@@ -1,11 +1,25 @@
 ---
 title: "WordPress and Nextcloud SSO: A Practical Guide to Single Sign-On"
 seoTitle: "WordPress and Nextcloud SSO Setup Guide"
-description: "Two ways to wire single sign-on between WordPress and Nextcloud: a shared SAML provider, or WordPress as the OIDC provider. When to pick which, and the traps."
+description: "Three ways to wire single sign-on between WordPress and Nextcloud: a shared SAML provider, WordPress as the OIDC provider, or Nextcloud's built-in OAuth2 server. Which plugin each needs, when to pick which, and the traps."
 date: "2026-07-30"
+updatedDate: "2026-09-21"
 image: "../../assets/images/blog/wordpress-setup.jpg"
 tags: ["WordPress", "Nextcloud", "SSO", "Security", "Architecture"]
 lang: "en"
+faq:
+  - question: "Can I log into Nextcloud with my WordPress account?"
+    answer: "Yes, and it is the cheapest of the three setups if your users live in WordPress. Run an OIDC server plugin on WordPress — OpenID Connect Server or miniOrange's OAuth server — register Nextcloud as a client, and point Nextcloud's user_oidc app at your discovery document. No third system is involved. The catch is that the WordPress plugin must speak full OpenID Connect, not plain OAuth2: user_oidc needs a /.well-known/openid-configuration endpoint, and if the plugin does not publish one you have to fall back to the Social Login app."
+  - question: "Does WordPress and Nextcloud SSO require a paid identity provider like Okta or JumpCloud?"
+    answer: "No. You only need a dedicated identity provider when the users are employees and an HR-adjacent directory must stay the source of truth. If the users are your site's members, either application can act as the provider for the other, with free plugins on both sides."
+  - question: "Which plugin should I use for WordPress Nextcloud SSO?"
+    answer: "It depends on which direction people log in. For Nextcloud users signing into WordPress, Tim's Nextcloud SSO OAuth2 is a free WordPress plugin that talks to Nextcloud's built-in OAuth2 server, so nothing extra is installed on Nextcloud. For WordPress users signing into Nextcloud, pair an OIDC server plugin on WordPress with the user_oidc app on Nextcloud. For a shared external provider, use the user_saml app on Nextcloud plus any SAML service-provider plugin on WordPress."
+  - question: "Does Nextcloud have a built-in OAuth2 server?"
+    answer: "Yes. Administration settings → Security lets you register an OAuth2 client with a name and a redirect URL, and returns a client identifier and secret. It is plain OAuth 2.0 with no OpenID Connect discovery, and it currently does not support scoped access — an issued token carries full read and write access to that user's files, so treat every registered client as fully trusted."
+  - question: "Will logging out of WordPress also log me out of Nextcloud?"
+    answer: "No. Single sign-on is not single logout. Ending one session leaves the other open. Single Logout is a separate SAML feature that has to be configured on both ends and is unevenly supported, so if your compliance story depends on one logout ending every session, test that specific claim rather than assuming it."
+  - question: "What happens if I lock myself out of Nextcloud by misconfiguring SSO?"
+    answer: "You recover from the command line with `occ app:disable user_saml` or `occ app:disable user_oidc`. Confirm you have working shell access before you enable SSO, and turn on the option to allow multiple user back-ends so the local Nextcloud login survives as a fallback."
 ---
 
 Search for "WordPress Nextcloud SSO" and you get a pile of tutorials that all answer the same question: how to put both applications behind a corporate identity provider. That is a fine answer. It is usually not the question.
@@ -14,15 +28,30 @@ Most people asking already have a WordPress site with real users in it — membe
 
 So the useful question is not "which plugin?" It is **who owns identity?** Answer that and the architecture picks itself.
 
-## Two architectures, one decision
+## Three architectures, one decision
 
 **Architecture A — a shared identity provider.** An external IdP (JumpCloud, Keycloak, Entra ID) authenticates both applications. WordPress and Nextcloud are peers, each one a SAML Service Provider; neither trusts the other, both trust the IdP.
 
 **Architecture B — WordPress owns identity.** WordPress *is* the provider, speaking OpenID Connect. Nextcloud is a client that delegates login to it. There is no third system.
 
-The rule of thumb I use: **if the humans in question are employees, pick A. If they are your site's members, pick B.**
+**Architecture C — Nextcloud owns identity.** The mirror of B, and the one nobody writes about even though it is the least work of the three: Nextcloud already ships an OAuth 2.0 server, so WordPress becomes the client and no server-side component is installed anywhere.
+
+The rule of thumb I use: **if the humans are employees, pick A. If they are your site's members, pick B. If they are already Nextcloud users and WordPress is the newer, smaller system, pick C.**
 
 Employees already exist in an HR-adjacent directory, and that directory should stay the source of truth — an offboarded employee must lose access everywhere at once, which is exactly what a central IdP gives you. Members exist in WordPress, in `wp_users`, alongside their subscription state. Copying them into an IdP just to log them back into your own stack adds a system to maintain and a sync to get wrong.
+
+B and C differ only in which side you were going to maintain anyway. Point the arrow at the system that already holds the accounts you trust, and at the one whose login page you would rather people see.
+
+### Pick the row that matches your users
+
+| | A — shared IdP | B — WordPress is the provider | C — Nextcloud is the provider |
+| --- | --- | --- | --- |
+| Users live in | An external directory | `wp_users` | Nextcloud |
+| Protocol | SAML 2.0 | OpenID Connect | Plain OAuth 2.0 |
+| On Nextcloud | `user_saml` app | `user_oidc` app | Nothing — it is built in |
+| On WordPress | A SAML SP plugin | An OIDC server plugin | Tim's Nextcloud SSO OAuth2 |
+| Third system | Yes | No | No |
+| Typical cost | Per-seat | Free | Free |
 
 ## Architecture A: both apps behind one provider
 
@@ -55,7 +84,7 @@ The UID mapping deserves real thought. It becomes the Nextcloud username and it 
 
 WordPress needs a SAML SP plugin. If your provider is JumpCloud, I maintain one: [SSO Connector for JumpCloud](/plugin/sso-connector-for-jumpcloud/). Create a SAML 2.0 application in the JumpCloud console, then in WordPress go to **Settings → JumpCloud SSO** and paste the JumpCloud metadata URL. It handles group-to-role mapping (a JumpCloud group `Admins` becomes the WordPress role `Administrator`), JIT provisioning so users are created on first login, and optional forced redirect so `wp-login.php` goes straight to SSO.
 
-For other providers the shape is identical — exchange metadata, map attributes, map groups to roles — only the plugin changes.
+For other providers the shape is identical — exchange metadata, map attributes, map groups to roles — only the plugin changes. If yours is Keycloak, I walk the whole exchange through in [Nextcloud SSO with Keycloak](/blog/nextcloud-keycloak-sso/), including the metadata import that saves you transcribing endpoints by hand.
 
 ## Architecture B: WordPress as the identity provider
 
@@ -68,7 +97,7 @@ Here WordPress speaks OpenID Connect and Nextcloud is just a client. This is the
 5. Nextcloud exchanges that code for tokens **server to server** — the client secret never touches the browser.
 6. Nextcloud reads the ID token, and opens a session.
 
-**On WordPress**, install an OIDC/OAuth2 server plugin — the *OpenID Connect Server* plugin and miniOrange's OAuth server are the two common choices. Register Nextcloud as a client, note the client ID and secret, and confirm the plugin exposes a discovery document at `/.well-known/openid-configuration`. That endpoint saves you transcribing four URLs by hand, so check for it before you commit to a plugin.
+**On WordPress**, install an OIDC/OAuth2 server plugin — the *OpenID Connect Server* plugin and miniOrange's OAuth server are the two common choices. Register Nextcloud as a client, note the client ID and secret, and confirm the plugin exposes a discovery document at `/.well-known/openid-configuration`. That endpoint saves you transcribing four URLs by hand, so check for it before you commit to a plugin — [Making WordPress an OpenID Connect Provider](/blog/wordpress-openid-connect-provider/) covers the key generation, client registration and the entitlement claim in full.
 
 **On Nextcloud**, use the **OpenID Connect user backend** app (`user_oidc`). It can be configured from the admin UI, or from the CLI:
 
@@ -88,6 +117,24 @@ If your WordPress plugin only offers plain OAuth2 rather than full OIDC, `user_o
 An authenticated user is not automatically an entitled one. A lapsed member can still log in to WordPress; whether they should still reach Nextcloud is a separate question, and OIDC alone will not answer it.
 
 The clean way: have the WordPress side emit a claim derived from subscription state — a group claim like `nextcloud-active` — and map that to a Nextcloud group. Then entitlement is data flowing through the token on every login, not a manual deprovisioning chore you will forget.
+
+## Architecture C: Nextcloud as the identity provider
+
+This is the one the tutorials miss entirely, and it is the shortest path to a working setup — because the server half already exists. Nextcloud ships an OAuth 2.0 authorization server; you do not install an app for it.
+
+**On Nextcloud**, go to **Administration settings → Security** and add a new OAuth2 client. You give it a name and a redirect URL pointing at your WordPress site, and you get back a **Client Identifier** and a **Secret**. That is the entire server-side configuration.
+
+**On WordPress**, install [Tim's Nextcloud SSO OAuth2](https://wordpress.org/plugins/tims-nextcloud-sso-oauth2/) and paste in the client ID, the secret and your Nextcloud URL. It adds a login button to `wp-login.php`, maps Nextcloud groups to WordPress roles, and lets you set the landing page after a successful login. At the time of writing it is tested against Nextcloud 20.0.14 through 34.0.4 and requires PHP 8.0 or newer.
+
+The flow is the plain authorization code grant. The user clicks the button on WordPress, authenticates at Nextcloud, comes back with a code, and WordPress exchanges it for a bearer token server to server.
+
+### The caveat that decides whether you should do this
+
+Nextcloud's OAuth2 implementation **does not support scoped access**. There is no way to ask for "just the user's name and email" — the token a client receives carries full read and write access to that user's account, files included.
+
+So the trade is explicit: Architecture C costs you the least setup and gives away the most authority. That is fine when WordPress and Nextcloud are two faces of the same system, run by the same people, on infrastructure you control. It is not fine for a WordPress install with a large plugin surface you do not audit, because every one of those plugins now sits in the same process as a token that can read every file in someone's drive. If that sentence made you uncomfortable, use Architecture B instead and keep the authority flowing the other way.
+
+Note also the direction of travel. C signs Nextcloud users **into WordPress**. If what you actually want is your WordPress members reaching Nextcloud, C is the wrong arrow and B is your answer.
 
 ## The traps
 
@@ -112,15 +159,19 @@ Verify you have working shell access to run that *before* you turn SSO on. Confi
 
 ## Which one to pick
 
-| | Architecture A — shared IdP | Architecture B — WordPress owns identity |
-| --- | --- | --- |
-| Best for | Employees, companies with a directory | Site members, customers, subscribers |
-| Source of truth | The identity provider | `wp_users` |
-| Third system to run | Yes | No |
-| Offboarding | Central, one place | Follows WordPress |
-| Protocol | SAML 2.0 | OpenID Connect |
-| Cost | Usually per-seat | Plugin only |
+| | A — shared IdP | B — WordPress owns identity | C — Nextcloud owns identity |
+| --- | --- | --- | --- |
+| Best for | Employees, companies with a directory | Site members, customers, subscribers | A team already living in Nextcloud |
+| Source of truth | The identity provider | `wp_users` | Nextcloud accounts |
+| Login direction | Both apps ← IdP | WordPress → Nextcloud | Nextcloud → WordPress |
+| Third system to run | Yes | No | No |
+| Offboarding | Central, one place | Follows WordPress | Follows Nextcloud |
+| Protocol | SAML 2.0 | OpenID Connect | Plain OAuth 2.0 |
+| Token authority | Scoped by the IdP | Scoped by claims | **Unscoped — full file access** |
+| Cost | Usually per-seat | Plugin only | Nothing to install server-side |
 
 If you are already paying for JumpCloud, Entra ID or Okta because you have staff, put both applications behind it and stop there. You have the hard part already.
 
 If WordPress is where your people actually live, do not introduce an identity provider to mediate between your own two applications. Let WordPress own identity, let Nextcloud consume it, and put the effort into making the entitlement claim honest — because that mapping, not the login itself, is where this kind of integration usually fails.
+
+And if the accounts you trust are the Nextcloud ones, take the built-in OAuth2 server — just go in knowing you traded scope for convenience, and keep the WordPress side small enough that the trade stays sane.

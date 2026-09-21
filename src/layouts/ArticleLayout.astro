@@ -94,6 +94,30 @@ const jsonLd = {
   publisher: { "@id": new URL(PERSON_ID, site).toString() },
 };
 
+/*
+  FAQPage is bound to a `#faq` fragment rather than to the page URL: the page's
+  primary entity is the BlogPosting, and two nodes both claiming the bare URL as
+  their @id is the ambiguity that makes Google keep one and discard the other.
+  Same reasoning as helpers/pluginJsonLd.ts.
+*/
+const faq = frontmatter.faq ?? [];
+const faqJsonLd = faq.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      inLanguage: lang,
+      mainEntity: faq.map((item: { question: string; answer: string }) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    }
+  : undefined;
+
+const faqHeading =
+  lang === "pt-BR" ? "Perguntas frequentes" : "Frequently asked questions";
+
 const breadcrumb = breadcrumbJsonLd(
   [
     { name: "Home", path: "/" },
@@ -128,6 +152,15 @@ const pageTitle = `${frontmatter.seoTitle ?? frontmatter.title} | Airton Vancin`
     is:inline
     set:html={JSON.stringify(breadcrumb)}
   />
+  {
+    faqJsonLd && (
+      <script
+        type="application/ld+json"
+        is:inline
+        set:html={JSON.stringify(faqJsonLd)}
+      />
+    )
+  }
   <div
     class="w-full py-12 md:py-24 lg:py-32 bg-gallery-floor flex justify-center"
   >
@@ -217,6 +250,19 @@ const pageTitle = `${frontmatter.seoTitle ?? frontmatter.title} | Airton Vancin`
         prose-hr:border-hairline prose-hr:my-8"
     >
       <slot />
+      {
+        faq.length > 0 && (
+          <section id="faq">
+            <h2>{faqHeading}</h2>
+            {faq.map((item: { question: string; answer: string }) => (
+              <>
+                <h3>{item.question}</h3>
+                <p>{item.answer}</p>
+              </>
+            ))}
+          </section>
+        )
+      }
     </article>
   </div>
 
