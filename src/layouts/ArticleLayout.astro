@@ -299,11 +299,42 @@ const pageTitle = `${frontmatter.seoTitle ?? frontmatter.title} | Airton Vancin`
     this.page.identifier = pageId;
   };
 
+  /*
+    Disqus is loaded only when the thread is about to scroll into view. Most
+    readers arrive from search, read one post and leave without reaching the
+    comments, so loading it eagerly cost every one of them its scripts, its
+    trackers and its own ads for nothing.
+  */
   (function () {
-    var d = document,
-      s = d.createElement("script");
-    s.src = "https://airtonvancin.disqus.com/embed.js";
-    s.setAttribute("data-timestamp", +new Date());
-    (d.head || d.body).appendChild(s);
+    var thread = document.getElementById("disqus_thread");
+    if (!thread) return;
+
+    function load() {
+      var d = document,
+        s = d.createElement("script");
+      s.src = "https://airtonvancin.disqus.com/embed.js";
+      s.setAttribute("data-timestamp", +new Date());
+      (d.head || d.body).appendChild(s);
+    }
+
+    if (!("IntersectionObserver" in window)) return load();
+
+    var observer = new IntersectionObserver(
+      function (entries) {
+        if (!entries[0].isIntersecting) return;
+        observer.disconnect();
+        load();
+      },
+      { rootMargin: "600px 0px" },
+    );
+    observer.observe(thread);
   })();
+
+  /*
+    Manual ad units injected into the post body by rehypeInArticleAd. Each <ins>
+    needs its own push; Auto Ads only fills slots of its own.
+  */
+  document.querySelectorAll("ins.adsbygoogle[data-ad-slot]").forEach(function () {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  });
 </script>

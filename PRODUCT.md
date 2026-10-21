@@ -55,7 +55,7 @@ A working senior engineer publishing from practice, not from theory: 15+ years a
 **Constraints future work must respect:**
 
 - Static-only output — no server-side rendering or API routes available.
-- AdSense and Analytics scripts must keep loading site-wide; ad units must have somewhere to render on content pages.
+- AdSense and Analytics scripts must keep loading on every content page; ad units must have somewhere to render there. The one exception is `/404` (`noAds` on `Layout`), because AdSense policy forbids ads on screens without publisher content.
 - Performance is a positioning claim, not just a preference (the site's own posts are about migrating to Astro for speed). Regressions here contradict the content.
 - Dark mode exists via a `.dark` class variant, but coverage is uneven across pages — several pages are light-only.
 
