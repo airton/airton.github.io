@@ -34,6 +34,12 @@ interface Props {
    * no business ranking for anything.
    */
   noindex?: boolean;
+  /**
+   * Leaves the AdSense script out of the page. AdSense policy forbids ads on
+   * screens without publisher content, and error pages are its named example —
+   * Auto Ads would otherwise fill the 404 with ads around a single sentence.
+   */
+  noAds?: boolean;
 }
 
 const {
@@ -46,6 +52,7 @@ const {
   lang = "pt-BR",
   alternates = [],
   noindex = false,
+  noAds = false,
 } = Astro.props;
 
 const site = Astro.site || new URL("https://airtonvancin.com");
@@ -189,10 +196,15 @@ const ogLocale = lang.includes("-")
     </script>
 
     <!-- Google AdSense -->
-    <script
-      async
-      src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3553535106347103"
-      crossorigin="anonymous"></script>
+    {
+      !noAds && (
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3553535106347103"
+          crossorigin="anonymous"
+        />
+      )
+    }
   </head>
   <body>
     <div

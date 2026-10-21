@@ -346,6 +346,23 @@
     @apply outline-none ring-2 ring-brand ring-offset-2 rounded-lg;
   }
 
+  /* Injected by rehypeInArticleAd. The min-height reserves the slot before the
+     auction returns, so the text below doesn't jump when the ad lands (CLS).
+     An unfilled slot is collapsed — it sits below the first section, out of the
+     initial viewport, so the collapse doesn't register as a layout shift. */
+  .ad-slot {
+    @apply my-10 py-4 border-y border-hairline;
+    min-height: 300px;
+  }
+
+  .ad-slot-label {
+    @apply block mb-2 text-xs uppercase tracking-wide text-quiet text-center;
+  }
+
+  .ad-slot:has(ins[data-ad-status="unfilled"]) {
+    @apply hidden;
+  }
+
   .prose table {
     @apply w-full my-6 border-collapse;
   }
