@@ -47,7 +47,7 @@ function rehypeScrollableTables() {
   and the site keeps running on Auto Ads alone.
 */
 const ADSENSE_CLIENT = "ca-pub-3553535106347103";
-const ADSENSE_IN_ARTICLE_SLOT = "";
+const ADSENSE_IN_ARTICLE_SLOT = "8719098193";
 
 /**
  * Inserts one in-article ad unit at the end of the post's first section, right
