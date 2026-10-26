@@ -1,0 +1,124 @@
+---
+title: "WordPress SSO with JumpCloud: SAML Setup From Both Sides"
+seoTitle: "WordPress SSO with JumpCloud (SAML Setup)"
+description: "Connect WordPress to JumpCloud over SAML 2.0: the custom SAML app in the Admin Portal, the four values WordPress needs back, how users are matched and created, and the traps that make the first login fail."
+date: "2026-10-26"
+image: "../../assets/images/blog/wordpress-setup.jpg"
+tags: ["WordPress", "SSO", "Security"]
+lang: "en"
+faq:
+  - question: "Does JumpCloud have a WordPress integration?"
+    answer: "Not a prebuilt one in its application catalog. You create a Custom SAML App in the JumpCloud Admin Portal and install a SAML service-provider plugin on WordPress. SSO Connector for JumpCloud is a free plugin built for exactly this pairing; any standards-compliant SAML plugin also works, with more fields to fill in."
+  - question: "What ACS URL and SP Entity ID does WordPress use with JumpCloud?"
+    answer: "With SSO Connector for JumpCloud, the SP Entity ID is your site's home URL with a trailing slash (https://example.com/) and the ACS URL is https://example.com/?acs. JumpCloud compares both strings exactly, so a missing trailing slash on the entity ID is enough to reject every login."
+  - question: "Why does a user get a login error even though JumpCloud authenticated them?"
+    answer: "Usually one of three things: the user is not in a JumpCloud user group bound to the SAML application, the NameID is not the email address, or WordPress could not create the account because the part of the email before the @ is already taken as a username by someone else."
+  - question: "Can JumpCloud groups control WordPress roles?"
+    answer: "Yes. Turn on the group attribute in the JumpCloud application and name it groups, then map each group to a WordPress role. In SSO Connector for JumpCloud this mapping, along with restricting login to specific groups and SCIM deprovisioning, is part of the premium tier; the free tier creates every new user as a Subscriber."
+  - question: "How do I get back in if SSO locks me out of WordPress?"
+    answer: "Deactivate the plugin from the server: wp plugin deactivate sso-connector-for-jumpcloud with WP-CLI, or rename the plugin's folder under wp-content/plugins. The normal username and password login comes back immediately."
+---
+
+JumpCloud does not ship a WordPress connector in its application catalog, so every WordPress-to-JumpCloud setup is the same shape: a **Custom SAML App** on the JumpCloud side, a SAML service-provider plugin on the WordPress side, and four values copied between them. The work is not hard. The failures are all in the details — a trailing slash, a NameID format, a user who was never bound to the app.
+
+I maintain [SSO Connector for JumpCloud](/plugin/sso-connector-for-jumpcloud/), so the WordPress steps below use it and describe what it actually does with the assertion. The JumpCloud half applies to any SAML plugin.
+
+This is Architecture A from my [WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/): an external identity provider that applications trust, rather than one of your applications acting as the provider. JumpCloud is the right call when the people logging in are employees and the directory should stay the source of truth — someone offboarded in JumpCloud loses WordPress at the same moment they lose everything else.
+
+## Before you start: a way back in
+
+Configure SSO on a site where you can reach the server. If a setting goes wrong after you hide the password form, the fix is on the command line:
+
+```bash
+wp plugin deactivate sso-connector-for-jumpcloud
+```
+
+No WP-CLI? Renaming `wp-content/plugins/sso-connector-for-jumpcloud` does the same thing. Make sure one of these works before you touch the login page, and keep the **Disable Default Login** option off until a real JumpCloud user has logged in successfully.
+
+## The WordPress values JumpCloud needs
+
+Install and activate the plugin, then open **Settings → SSO JumpCloud**. JumpCloud needs two values from this side, and the plugin derives both from your site URL:
+
+| JumpCloud field | Value | Note |
+| --- | --- | --- |
+| SP Entity ID | `https://example.com/` | Your home URL **with** the trailing slash |
+| ACS URL | `https://example.com/?acs` | Where JumpCloud posts the assertion |
+
+The trailing slash matters. The entity ID is compared as a string, not as a URL, and `https://example.com` is a different string. If WordPress lives in a subdirectory, both values include it — `https://example.com/blog/` and `https://example.com/blog/?acs`.
+
+## Create the Custom SAML App in JumpCloud
+
+In the JumpCloud Admin Portal, open **SSO Applications**, click **+**, search for SAML 2.0 and choose **Custom SAML App**. Give it a name your users will recognise in the JumpCloud user portal, then open the **SSO** tab:
+
+| Field | Value |
+| --- | --- |
+| IdP Entity ID | Any unique string you choose, e.g. `wp-sso-example-com` |
+| SP Entity ID | The value from the plugin |
+| ACS URL | The value from the plugin |
+| SAMLSubject NameID | `email` |
+| SAMLSubject NameID Format | `urn:oasis:names:tc:SAML:1.1:nameid-format:emailAddress` |
+
+The IdP Entity ID is the one value you invent rather than copy. Write it down — WordPress needs it back, character for character.
+
+Under the attribute mappings, add `email`, `firstname` and `lastname`. If you plan to map groups to roles, also enable the group attribute and name it **`groups`**, exactly that, lowercase. The plugin reads the attribute by that name and ignores anything else.
+
+Save, then collect what WordPress needs from JumpCloud: the **IdP URL** (the SSO endpoint, which looks like `https://sso.jumpcloud.com/saml2/<your-app>`) and the **IdP certificate**, which you can download from the application or extract from the exported metadata.
+
+### Bind a group, or nobody can log in
+
+A new SAML application in JumpCloud is reachable by no one. Open the application's **User Groups** tab and bind the group of people who should have WordPress access. Skipping this produces the most confusing failure of the whole setup: the user authenticates successfully in JumpCloud and is still refused, because JumpCloud will not issue an assertion for an application they are not bound to.
+
+## Paste the four values into WordPress
+
+Back in **Settings → SSO JumpCloud**, in the General tab:
+
+| Plugin field | Source |
+| --- | --- |
+| IDP Entity ID | The string you invented in JumpCloud |
+| SSO URL | JumpCloud's IdP URL |
+| Certificate | The IdP certificate, including the `BEGIN`/`END` lines |
+| SLO URL | Optional; leave blank unless you need single logout |
+
+Save, then use **Test Configuration**. Do the real test in a private window: open `wp-login.php`, click **Login with JumpCloud**, authenticate, and confirm you land in WordPress as the right user.
+
+## What happens on the first login
+
+Knowing what the plugin does with the assertion explains every error message you will see:
+
+1. It validates the signature against the certificate you pasted. A wrong or truncated certificate fails here.
+2. It reads the **NameID as the email address**. No NameID, no login — which is why the NameID must be `email`.
+3. It looks for a WordPress user **with that email**. If one exists, that user is logged in. Existing accounts are linked by email, so an administrator whose WordPress email matches their JumpCloud email keeps their administrator role.
+4. If no user exists, it creates one. The username is the part of the email before the `@`, and the role is **Subscriber**.
+
+Step 4 has a trap. `ana@company.com` becomes the username `ana`. If a WordPress user called `ana` already exists with a different email — a contractor, an old test account — WordPress refuses to create a second one and the login fails with a "username already exists" error. Rename the old account or change its email to match, and the next login links instead of creating.
+
+## Groups and roles
+
+Every user created through SSO starts as a Subscriber. For a members area that is the right default. For an intranet where some people edit content, you want JumpCloud groups to decide.
+
+With the `groups` attribute enabled, the plugin's premium tier maps groups to roles with one line per group:
+
+```text
+WP-Admins:administrator
+WP-Editors:editor
+```
+
+The role is applied on each login, and the first group in the assertion that has a mapping wins. Two habits keep this predictable: give each person exactly one of the mapped groups, and map every group you use for WordPress access — including a plain `WP-Members:subscriber` — so that someone moved from Editors to Members is set to Subscriber on their next login rather than keeping the old role.
+
+The same tier can restrict login to a list of groups outright, which is stronger than binding groups in JumpCloud alone because WordPress checks it too, and adds SCIM so that deactivating someone in JumpCloud deactivates them in WordPress without waiting for them to try logging in.
+
+## Traps, in the order you will hit them
+
+**"Invalid audience" or a signature error on the first try.** The SP Entity ID in JumpCloud does not match the plugin's exactly. Check the trailing slash and the `https`.
+
+**JumpCloud says the user is not authorised for the application.** No user group is bound to it, or the user is not in the bound group.
+
+**"No email address provided in SAML response."** The SAMLSubject NameID is set to something other than `email`, or the user has no email in JumpCloud.
+
+**The user logs in but has the wrong name.** First and last names come from the `firstname` and `lastname` attributes, and are synced only when those attributes are present in the assertion.
+
+**Logging out of WordPress does not log you out of JumpCloud.** That is how single sign-on works: ending one session leaves the identity provider's session open, and the next click on **Login with JumpCloud** goes straight through. If that matters, configure the SLO URL and test it.
+
+## Where this fits
+
+JumpCloud in front of WordPress is half of a common setup. If the same people also use Nextcloud, put it behind the same JumpCloud directory as a second SAML application — the [WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/) covers the Nextcloud side and the attribute mapping that decides whether returning users find their files. If you run Keycloak instead of JumpCloud, the WordPress side looks different; I cover it in [WordPress SSO with Keycloak](/blog/wordpress-keycloak-sso/).
