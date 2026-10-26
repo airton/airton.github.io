@@ -354,11 +354,11 @@ export const plugins: PluginData[] = [
       installation: `
               <ol>
                   <li>Install and activate the plugin.</li>
-                  <li>In the JumpCloud dashboard, create a new SAML 2.0 application.</li>
-                  <li>In WordPress, go to <strong>Settings > JumpCloud SSO</strong>.</li>
-                  <li>Copy the JumpCloud Metadata URL and paste it into the plugin settings.</li>
-                  <li>Configure attribute and role mapping as needed.</li>
+                  <li>In WordPress, go to <strong>Settings > SSO JumpCloud</strong> and note the SP Entity ID and ACS URL.</li>
+                  <li>In the JumpCloud Admin Portal, create a <strong>Custom SAML App</strong> with those two values and NameID set to <code>email</code>, then bind the user groups that should have access.</li>
+                  <li>Paste JumpCloud's IdP Entity ID, SSO URL and certificate back into the plugin, save, and test the login in a private window.</li>
               </ol>
+              <p>Every field, and the traps that make the first login fail, are in the full guide: <a href="/blog/wordpress-jumpcloud-sso/">WordPress SSO with JumpCloud</a>.</p>
           `,
       faq: [
         {
@@ -412,11 +412,11 @@ export const plugins: PluginData[] = [
       installation: `
               <ol>
                   <li>Instale o plugin e ative-o.</li>
-                  <li>No painel do JumpCloud, crie uma nova aplicação SAML 2.0.</li>
-                  <li>No WordPress, vá para <strong>Configurações > JumpCloud SSO</strong>.</li>
-                  <li>Copie a URL de Metadados do JumpCloud e cole nas configurações do plugin.</li>
-                  <li>Configure o mapeamento de atributos e funções conforme necessário.</li>
+                  <li>No WordPress, vá para <strong>Configurações > SSO JumpCloud</strong> e anote o SP Entity ID e a ACS URL.</li>
+                  <li>No Admin Portal do JumpCloud, crie um <strong>Custom SAML App</strong> com esses dois valores e o NameID como <code>email</code>, e vincule os grupos de usuários que devem ter acesso.</li>
+                  <li>Cole o IdP Entity ID, a SSO URL e o certificado do JumpCloud no plugin, salve e teste o login numa janela anônima.</li>
               </ol>
+              <p>Todos os campos e as armadilhas que fazem o primeiro login falhar estão no guia completo (em inglês): <a href="/blog/wordpress-jumpcloud-sso/">WordPress SSO with JumpCloud</a>.</p>
           `,
       faq: [
         {

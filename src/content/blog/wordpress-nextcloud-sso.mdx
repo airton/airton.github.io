@@ -3,7 +3,7 @@ title: "WordPress and Nextcloud SSO: A Practical Guide to Single Sign-On"
 seoTitle: "WordPress and Nextcloud SSO Setup Guide"
 description: "Three ways to wire single sign-on between WordPress and Nextcloud: a shared SAML provider, WordPress as the OIDC provider, or Nextcloud's built-in OAuth2 server. Which plugin each needs, when to pick which, and the traps."
 date: "2026-07-30"
-updatedDate: "2026-09-21"
+updatedDate: "2026-10-26"
 image: "../../assets/images/blog/wordpress-setup.jpg"
 tags: ["WordPress", "Nextcloud", "SSO", "Security", "Architecture"]
 lang: "en"
@@ -82,9 +82,9 @@ The UID mapping deserves real thought. It becomes the Nextcloud username and it 
 
 ### WordPress side
 
-WordPress needs a SAML SP plugin. If your provider is JumpCloud, I maintain one: [SSO Connector for JumpCloud](/plugin/sso-connector-for-jumpcloud/). Create a SAML 2.0 application in the JumpCloud console, then in WordPress go to **Settings → JumpCloud SSO** and paste the JumpCloud metadata URL. It handles group-to-role mapping (a JumpCloud group `Admins` becomes the WordPress role `Administrator`), JIT provisioning so users are created on first login, and optional forced redirect so `wp-login.php` goes straight to SSO.
+WordPress needs a plugin that trusts the same provider. If your provider is JumpCloud, I maintain one: [SSO Connector for JumpCloud](/plugin/sso-connector-for-jumpcloud/). Create a Custom SAML App in the JumpCloud Admin Portal, then in WordPress go to **Settings → SSO JumpCloud** and paste the IdP entity ID, SSO URL and certificate. Users are created on first login, and an optional setting sends `wp-login.php` straight to SSO; group-to-role mapping (a JumpCloud group `WP-Admins` becomes the WordPress role `administrator`) is in the premium tier. Every field, and the traps that fail the first login, are in [WordPress SSO with JumpCloud](/blog/wordpress-jumpcloud-sso/).
 
-For other providers the shape is identical — exchange metadata, map attributes, map groups to roles — only the plugin changes. If yours is Keycloak, I walk the whole exchange through in [Nextcloud SSO with Keycloak](/blog/nextcloud-keycloak-sso/), including the metadata import that saves you transcribing endpoints by hand.
+For other providers the shape is the same — exchange identifiers, map attributes, map groups to roles — only the plugin changes. If yours is Keycloak, the WordPress side is simpler over OpenID Connect than over SAML; I go field by field in [WordPress SSO with Keycloak](/blog/wordpress-keycloak-sso/), and the Nextcloud side, including the metadata import that saves you transcribing endpoints by hand, is in [Nextcloud SSO with Keycloak](/blog/nextcloud-keycloak-sso/).
 
 ## Architecture B: WordPress as the identity provider
 

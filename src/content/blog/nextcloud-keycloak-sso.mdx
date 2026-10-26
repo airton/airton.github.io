@@ -76,4 +76,4 @@ The cost is cosmetic: Nextcloud account names become UUIDs rather than readable 
 
 ## If WordPress is in this picture too
 
-Keycloak fronting Nextcloud is half of a setup — the other half is pointing WordPress at the same realm as a second SAML service provider, at which point one login covers both. The decision of whether that is even the right shape, versus letting one of your two applications own identity directly, is what I work through in [the full WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/).
+Keycloak fronting Nextcloud is half of a setup — the other half is pointing WordPress at the same realm, at which point one login covers both. WordPress is easier to connect over OpenID Connect than over SAML, and the Keycloak session is shared either way; I cover that side in [WordPress SSO with Keycloak](/blog/wordpress-keycloak-sso/). The decision of whether that is even the right shape, versus letting one of your two applications own identity directly, is what I work through in [the full WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/).

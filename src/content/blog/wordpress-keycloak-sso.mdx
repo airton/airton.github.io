@@ -1,0 +1,156 @@
+---
+title: "WordPress SSO with Keycloak: OpenID Connect, Field by Field"
+seoTitle: "WordPress SSO with Keycloak (OIDC Setup)"
+description: "Log in to WordPress with Keycloak over OpenID Connect: the client to create in Keycloak, which endpoint goes in which plugin field, why linking users by email can hand out an admin account, and how to map Keycloak roles to WordPress roles."
+date: "2026-10-26"
+image: "../../assets/images/blog/software-architecture.jpg"
+tags: ["WordPress", "SSO", "Security"]
+lang: "en"
+faq:
+  - question: "Should WordPress use SAML or OpenID Connect with Keycloak?"
+    answer: "OpenID Connect, in most cases. Keycloak speaks both, but the best-maintained free WordPress plugin for this, OpenID Connect Generic Client, is OIDC, and the configuration is a handful of URLs from Keycloak's discovery document. Use SAML when a policy requires it or when every other application in the realm is already SAML."
+  - question: "What redirect URI do I register in Keycloak for WordPress?"
+    answer: "https://example.com/wp-admin/admin-ajax.php?action=openid-connect-authorize, query string included. If you turn on the plugin's Alternate Redirect URI option it becomes https://example.com/openid-connect-authorize, and Keycloak's Valid redirect URIs must change with it."
+  - question: "Why do Keycloak URLs from older tutorials return 404?"
+    answer: "Keycloak 17 and later dropped the /auth prefix. Endpoints now start at /realms/<realm>/protocol/openid-connect/. Older guides written for the WildFly distribution include /auth/realms, which no longer exists unless the server was started with a custom relative path."
+  - question: "Can Keycloak roles become WordPress roles?"
+    answer: "Yes, with a few lines of code. The plugin does not map roles by itself. Put the realm roles into the ID token or userinfo with a Keycloak mapper, then set the WordPress role from that claim in a hook that runs on every login."
+  - question: "How do I get back into WordPress if Keycloak login breaks?"
+    answer: "Deactivate the plugin from the server with wp plugin deactivate daggerhart-openid-connect-generic, or rename its folder under wp-content/plugins. The username and password form returns at once."
+---
+
+Keycloak can talk to WordPress over SAML or OpenID Connect. Use **OpenID Connect**. The plugin worth using is free and widely installed, the configuration is a handful of URLs Keycloak publishes for you, and you end up with one Keycloak client instead of a certificate to rotate by hand.
+
+The plugin is **OpenID Connect Generic Client** (slug `daggerhart-openid-connect-generic`). It is not Keycloak-specific, which is the point: it is a plain OIDC relying party, and Keycloak is a plain OIDC provider.
+
+This is the WordPress half of Architecture A in my [WordPress and Nextcloud SSO guide](/blog/wordpress-nextcloud-sso/) — Keycloak owns identity and your applications trust it. If your users actually live in WordPress and Keycloak would only exist to log them back into your own site, read [Making WordPress an OpenID Connect provider](/blog/wordpress-openid-connect-provider/) first; you may not need Keycloak at all.
+
+## Before you start: the way back in
+
+If you switch the plugin to automatic login and something is wrong, `wp-login.php` will redirect to a Keycloak that refuses you. Make sure you can run this on the server before you configure anything:
+
+```bash
+wp plugin deactivate daggerhart-openid-connect-generic
+```
+
+Renaming the plugin's folder under `wp-content/plugins` works too. Keep the login type on the button until a real Keycloak user has logged in.
+
+## Create the client in Keycloak
+
+In the Keycloak admin console, pick the realm your users live in, open **Clients → Create client** and set:
+
+| Setting | Value |
+| --- | --- |
+| Client type | OpenID Connect |
+| Client ID | `wordpress` (any name; you will paste it into WordPress) |
+| Client authentication | **On** — WordPress is a server-side app and can keep a secret |
+| Authentication flow | Standard flow only; turn off Direct access grants |
+| Valid redirect URIs | `https://example.com/wp-admin/admin-ajax.php?action=openid-connect-authorize` |
+| Valid post logout redirect URIs | `https://example.com/*` |
+| Web origins | `https://example.com` |
+
+Then open the client's **Credentials** tab and copy the client secret.
+
+The redirect URI is matched exactly, query string included. If you later enable the plugin's **Alternate Redirect URI** option, the callback becomes `https://example.com/openid-connect-authorize` — update Keycloak at the same time, and re-save permalinks in WordPress so the new route exists.
+
+## Get the endpoints from discovery, not from a tutorial
+
+Every value the plugin needs is listed in the realm's discovery document:
+
+```text
+https://keycloak.example.com/realms/<realm>/.well-known/openid-configuration
+```
+
+Copy from there rather than from a blog post, mine included. Keycloak 17 dropped the `/auth` prefix from every URL, and a large share of the guides still online were written before that — their endpoints return 404 on a current server.
+
+## Fill in the plugin, field by field
+
+Open **Settings → OpenID Connect Client**:
+
+| Plugin field | Value |
+| --- | --- |
+| Login Type | OpenID Connect button on login form (switch to auto later) |
+| Client ID | `wordpress` |
+| Client Secret Key | The secret from the Credentials tab |
+| OpenID Scope | `openid email profile` |
+| Login Endpoint URL | `…/realms/<realm>/protocol/openid-connect/auth` |
+| Userinfo Endpoint URL | `…/realms/<realm>/protocol/openid-connect/userinfo` |
+| Token Validation Endpoint URL | `…/realms/<realm>/protocol/openid-connect/token` |
+| End Session Endpoint URL | `…/realms/<realm>/protocol/openid-connect/logout` |
+| JWKS URI | `…/realms/<realm>/protocol/openid-connect/certs` |
+| Issuer | `https://keycloak.example.com/realms/<realm>` |
+| Identity Key | `preferred_username` |
+| Nickname Key | `preferred_username` |
+| Email Formatting | `{email}` |
+| Display Name Formatting | `{given_name} {family_name}` |
+
+Under the WordPress user settings, turn on **Create user if does not exist** if Keycloak should be able to create WordPress accounts. Leave **Link Existing Users** off for now; it gets its own section.
+
+Save, open a private window, click the login button and log in as a Keycloak user. You should come back to WordPress logged in, with a new account whose username is the Keycloak username.
+
+## Linking existing users: the setting that can give away an admin account
+
+If WordPress already has users, **Link Existing Users** makes the plugin log a Keycloak user into the WordPress account with the same email address, instead of failing.
+
+That is exactly what you want after a migration, and exactly what you must not turn on blindly. It trusts whatever email Keycloak sends. If your realm lets people register themselves, or lets them edit their own email, and does not verify it, anyone can set their Keycloak email to your administrator's address and be logged into WordPress as the administrator.
+
+Before enabling it, make sure the realm makes the email claim trustworthy:
+
+- **Verify email** is on in the realm's login settings, or self-registration is off entirely.
+- Users cannot change their own email, or changing it forces re-verification.
+- Accounts imported from another directory arrive with emails you control.
+
+After the first login the plugin remembers the Keycloak subject ID (`sub`) on the WordPress user and recognises them by that from then on, so the email match only matters once per account. Once is enough to hand over an admin account.
+
+## Keycloak roles to WordPress roles
+
+New users get WordPress's default role, set under **Settings → General → New User Default Role**. The plugin does not read Keycloak roles. Two steps get them across.
+
+First, put the roles into a claim WordPress receives. In Keycloak, open **Client scopes → roles → Mappers → realm roles** and turn on **Add to ID token** and **Add to userinfo**. Roles then arrive under `realm_access.roles`.
+
+Second, set the role in WordPress from that claim. The plugin fires an action on each login and one when it creates a user; hook both to the same function:
+
+```php
+<?php
+// wp-content/mu-plugins/keycloak-roles.php
+
+function airton_keycloak_sync_role( $user, $user_claim ) {
+	$roles = $user_claim['realm_access']['roles'] ?? array();
+
+	$map = array(
+		'wp-admin'  => 'administrator',
+		'wp-editor' => 'editor',
+	);
+
+	foreach ( $map as $keycloak_role => $wp_role ) {
+		if ( in_array( $keycloak_role, $roles, true ) ) {
+			$user->set_role( $wp_role );
+			return;
+		}
+	}
+
+	// No mapped role: fall back, so a removed role is actually removed.
+	$user->set_role( 'subscriber' );
+}
+
+add_action( 'openid-connect-generic-update-user-using-current-claim', 'airton_keycloak_sync_role', 10, 2 );
+add_action( 'openid-connect-generic-user-create', 'airton_keycloak_sync_role', 10, 2 );
+```
+
+The fallback at the end is the part that matters. Without it, removing someone's `wp-admin` role in Keycloak leaves them an administrator in WordPress forever, because nothing ever sets the role back. Order the map from most to least privileged, and test the demotion as carefully as the promotion.
+
+## Traps, in the order you will hit them
+
+**`Invalid parameter: redirect_uri` on the Keycloak page.** The redirect URI in Keycloak does not match the one the plugin sends. Compare them character by character; the `?action=openid-connect-authorize` part is part of the match.
+
+**404s from Keycloak.** An endpoint still has `/auth` in it. Copy from the discovery document.
+
+**Login works, but the user has no email or name.** The `email` and `profile` scopes are missing from the OpenID Scope field, or the Keycloak user has no email set.
+
+**Logout leaves you on a Keycloak error page.** The WordPress URL is not in **Valid post logout redirect URIs**.
+
+**Logging out of WordPress does not log you out of Keycloak.** Ending the WordPress session does not end the Keycloak session unless the End Session Endpoint URL is set, and even then other applications in the realm keep their own sessions. Single sign-on is not single logout.
+
+## If Nextcloud is in this picture too
+
+The same realm can serve Nextcloud, and one Keycloak session then covers both applications even though one uses OIDC and the other SAML — the session lives in Keycloak, not in the protocol. The Nextcloud side, including the toggle that stops you locking yourself out, is in [Nextcloud SSO with Keycloak](/blog/nextcloud-keycloak-sso/). If your directory is JumpCloud instead, the WordPress side is in [WordPress SSO with JumpCloud](/blog/wordpress-jumpcloud-sso/).
