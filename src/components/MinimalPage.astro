@@ -1,0 +1,47 @@
+---
+/*
+  Shell for the minimal pages (privacy, contact, projects, plugins, zero
+  downtime): the narrow Plex column, a way back home, a two-line header and the
+  one-line footer. The home and /sobre predate it and lay out their own header.
+*/
+import Layout from "../layouts/Layout.astro";
+import MinimalFooter from "./MinimalFooter.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  heading: string;
+  subheading?: string;
+  lang?: string;
+  alternates?: { hreflang: string; path: string }[];
+  backLabel?: string;
+}
+
+const { title, description, heading, subheading, lang = "en", alternates, backLabel = "← Home" } = Astro.props;
+---
+
+<Layout
+  title={title}
+  description={description}
+  lang={lang}
+  alternates={alternates}
+  image="/og-home.png"
+  minimalNav={true}
+  hideFooter={true}
+>
+  <slot name="head" />
+  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
+    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+      {backLabel}
+    </a>
+
+    <header class="mt-10 mb-14">
+      <h1 class="font-plex text-xl font-semibold tracking-tight">{heading}</h1>
+      {subheading && <p class="text-sm text-quiet dark:text-quiet-lifted">{subheading}</p>}
+    </header>
+
+    <slot />
+
+    <MinimalFooter />
+  </main>
+</Layout>

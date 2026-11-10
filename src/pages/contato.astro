@@ -1,232 +1,80 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  IconMail,
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconBrandTwitter,
-  IconBrandX,
-  IconMapPin,
-  IconClock,
-} from "@tabler/icons-react";
+import MinimalFooter from "../components/MinimalFooter.astro";
+
+const body = "space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted";
+
+const channels = [
+  { label: "Email", href: "mailto:airtonvancin@gmail.com?subject=Hello%20from%20your%20site", text: "airtonvancin@gmail.com", note: "Best way to reach me" },
+  { label: "LinkedIn", href: "https://linkedin.com/in/airtonvancin", text: "in/airtonvancin", note: "Professional network" },
+  { label: "X", href: "https://x.com/a_vancin", text: "@a_vancin", note: "What I'm building, as I build it" },
+  { label: "GitHub", href: "https://github.com/airton", text: "airton", note: "Code and open source" },
+];
+
+const topics = [
+  "Web application development",
+  "Software architecture consulting",
+  "WordPress plugins and themes",
+  "Cloud migration on AWS",
+  "Mentoring developers",
+];
 ---
 
 <Layout
-  title="Contato | Airton Vancin"
-  description="Entre em contato comigo para discutir projetos, oportunidades ou tirar dúvidas sobre desenvolvimento web."
+  title="Contact | Airton Vancin"
+  description="Get in touch with Airton Vancin about projects, partnerships, consulting or mentoring. Email, LinkedIn, X and GitHub."
+  lang="en"
+  image="/og-home.png"
+  minimalNav={true}
+  hideFooter={true}
 >
-  <!-- Hero Section -->
-  <section
-    class="w-full py-16 md:py-24 lg:py-32 bg-gallery-floor border-b border-hairline flex justify-center"
-  >
-    <div class="container px-4 md:px-6 max-w-4xl text-center">
-      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4">
-        Entre em Contato
-      </h1>
-      <p class="text-xl text-quiet max-w-2xl mx-auto">
-        Tem um projeto em mente ou quer conversar sobre tecnologia? Estou sempre
-        aberto a novas oportunidades e parcerias.
+  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
+    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+      ← Home
+    </a>
+
+    <header class="mt-10 mb-14">
+      <h1 class="font-plex text-xl font-semibold tracking-tight">Contact</h1>
+      <p class="text-sm text-quiet dark:text-quiet-lifted">Brazil · I usually reply within 24 hours on weekdays</p>
+    </header>
+
+    <section class={`mb-14 ${body}`}>
+      <p>
+        Have a project in mind or want to talk about software and AI? I'm open to projects,
+        partnerships and consulting. Email is the fastest way to reach me.
       </p>
-    </div>
-  </section>
+    </section>
 
-  <!-- Contact Info Section -->
-  <section class="w-full py-16 md:py-24 bg-wall flex justify-center">
-    <div class="container px-4 md:px-6 max-w-5xl">
-      <div class="grid md:grid-cols-2 gap-12">
-        <!-- Contact Methods -->
-        <div>
-          <h2 class="text-2xl font-bold text-ink mb-6">
-            Como me encontrar
-          </h2>
-
-          <div class="space-y-6">
-            <Card
-              className="border-hairline hover:shadow-md transition-shadow"
-            >
-              <CardContent className="p-6 flex items-start gap-4">
-                <div
-                  class="w-12 h-12 bg-brand-wash rounded-xl flex items-center justify-center flex-shrink-0"
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>channels</h2>
+      <dl class="divide-y divide-hairline-faint dark:divide-night-edge">
+        {
+          channels.map((c) => (
+            <div class="grid grid-cols-[6rem_1fr] sm:grid-cols-[8rem_1fr] gap-x-4 py-2.5">
+              <dt class="font-medium">{c.label}</dt>
+              <dd>
+                <a
+                  href={c.href}
+                  class="quiet-link"
+                  {...(c.href.startsWith("http") ? { target: "_blank", rel: "me noopener noreferrer" } : {})}
                 >
-                  <IconMail className="w-6 h-6 text-brand" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-ink mb-1">E-mail</h3>
-                  <a
-                    href="mailto:airtonvancin@gmail.com"
-                    class="text-brand hover:underline"
-                  >
-                    airtonvancin@gmail.com
-                  </a>
-                  <p class="text-sm text-quiet mt-1">
-                    Respondo em até 24 horas
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+                  {c.text}
+                </a>
+                <span class="block text-sm text-quiet dark:text-quiet-lifted">{c.note}</span>
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
 
-            <Card
-              className="border-hairline hover:shadow-md transition-shadow"
-            >
-              <CardContent className="p-6 flex items-start gap-4">
-                <div
-                  class="w-12 h-12 bg-hairline-faint rounded-xl flex items-center justify-center flex-shrink-0"
-                >
-                  <IconBrandLinkedin className="w-6 h-6 text-ink-secondary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-ink mb-1">LinkedIn</h3>
-                  <a
-                    href="https://linkedin.com/in/airtonvancin"
-                    target="_blank"
-                    class="text-brand hover:underline"
-                  >
-                    linkedin.com/in/airtonvancin
-                  </a>
-                  <p class="text-sm text-quiet mt-1">
-                    Conecte-se para networking profissional
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
+    <section class="mb-16">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>i-can-help-with</h2>
+      <ul class={`list-disc pl-5 ${body} space-y-1.5`}>
+        {topics.map((t) => <li>{t}</li>)}
+      </ul>
+    </section>
 
-            <Card
-              className="border-hairline hover:shadow-md transition-shadow"
-            >
-              <CardContent className="p-6 flex items-start gap-4">
-                <div
-                  class="w-12 h-12 bg-hairline-faint rounded-xl flex items-center justify-center flex-shrink-0"
-                >
-                  <IconBrandGithub className="w-6 h-6 text-ink-secondary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-ink mb-1">GitHub</h3>
-                  <a
-                    href="https://github.com/airton"
-                    target="_blank"
-                    class="text-brand hover:underline"
-                  >
-                    github.com/airton
-                  </a>
-                  <p class="text-sm text-quiet mt-1">
-                    Confira meus projetos open source
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card
-              className="border-hairline hover:shadow-md transition-shadow"
-            >
-              <CardContent className="p-6 flex items-start gap-4">
-                <div
-                  class="w-12 h-12 bg-hairline-faint rounded-xl flex items-center justify-center flex-shrink-0"
-                >
-                  <IconBrandX className="w-6 h-6 text-ink-secondary" />
-                </div>
-                <div>
-                  <h3 class="font-semibold text-ink mb-1">X (Twitter)</h3>
-                  <a
-                    href="https://x.com/a_vancin"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    class="text-brand hover:underline"
-                  >
-                    x.com/a_vancin
-                  </a>
-                  <p class="text-sm text-quiet mt-1">
-                    Acompanhe atualizações e novidades sobre tecnologia
-                  </p>
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        <!-- Additional Info -->
-        <div>
-          <h2 class="text-2xl font-bold text-ink mb-6">
-            Informações Adicionais
-          </h2>
-
-          <Card className="border-hairline mb-6">
-            <CardContent className="p-6">
-              <div class="flex items-start gap-4 mb-4">
-                <IconMapPin
-                  className="w-5 h-5 text-quiet flex-shrink-0 mt-1"
-                />
-                <div>
-                  <h3 class="font-semibold text-ink">Localização</h3>
-                  <p class="text-ink-secondary">Brasil</p>
-                </div>
-              </div>
-
-              <div class="flex items-start gap-4">
-                <IconClock
-                  className="w-5 h-5 text-quiet flex-shrink-0 mt-1"
-                />
-                <div>
-                  <h3 class="font-semibold text-ink">
-                    Horário de Resposta
-                  </h3>
-                  <p class="text-ink-secondary">Segunda a Sexta, 9h às 18h (BRT)</p>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-
-          <Card className="border-brand-edge bg-brand-wash">
-            <CardContent className="p-6">
-              <h3 class="font-semibold text-ink mb-3">
-                O que posso ajudar?
-              </h3>
-              <ul class="space-y-2 text-ink-secondary">
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
-                  Desenvolvimento de aplicações web
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
-                  Consultoria em arquitetura de software
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
-                  Plugins e temas WordPress
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
-                  Migração para cloud (AWS)
-                </li>
-                <li class="flex items-center gap-2">
-                  <span class="w-1.5 h-1.5 bg-brand rounded-full"></span>
-                  Mentoria em desenvolvimento
-                </li>
-              </ul>
-            </CardContent>
-          </Card>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="w-full py-16 bg-hairline-faint flex justify-center">
-    <div class="container px-4 md:px-6 max-w-3xl text-center">
-      <h2 class="text-2xl font-bold text-ink mb-4">
-        Prefere enviar um e-mail diretamente?
-      </h2>
-      <p class="text-ink-secondary mb-6">
-        Clique no botão abaixo para abrir seu cliente de e-mail com meu endereço
-        já preenchido.
-      </p>
-      <a href="mailto:airtonvancin@gmail.com?subject=Contato%20via%20Site">
-        <Button size="lg" className="bg-brand hover:bg-brand-deep text-wall">
-          <IconMail className="w-5 h-5 mr-2" />
-          Enviar E-mail
-        </Button>
-      </a>
-    </div>
-  </section>
+    <MinimalFooter />
+  </main>
 </Layout>

@@ -1,93 +1,23 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { projects } from "../data/projects";
-import { Card, CardContent } from "@/components/ui/card";
-import { IconCode, IconArrowRight, IconExternalLink } from "@tabler/icons-react";
-import { Image } from "astro:assets";
-
-const title = "Projetos & Cases - Airton Vancin";
-
-const description = "Uma coleção de produtos digitais e iniciativas open-source construídos com precisão.";
-
-const labels = {
-  featured: "Trabalhos em Destaque",
-  title: "Alguns cases de sucesso e projetos de código aberto.",
-  subtitle: "Uma coleção de produtos digitais e iniciativas open-source construídos com tecnologia moderna.",
-  expertise: "Demonstrando expertise em desenvolvimento full-stack e design de UI/UX.",
-  case_study: "Estudo de Caso"
-};
+import MinimalPage from "../components/MinimalPage.astro";
+import ProjectGrid from "../components/ProjectGrid.astro";
 ---
 
-<Layout
-  title={title}
-  description={description}
+<MinimalPage
+  title="Projects | Airton Vancin"
+  description="Side projects by Airton Vancin: Lume IQ, Juros de Obra, Balancewise and more. Small, fast tools that solve one problem well."
+  heading="Projects"
+  subheading="Side projects, built in spare time"
 >
-  <section class="w-full py-24 md:py-32 bg-wall flex justify-center min-h-screen">
-    <div class="container px-4 md:px-6 max-w-7xl">
-      <!-- Header -->
-      <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 text-left">
-        <div class="max-w-2xl">
-          <div class="inline-flex items-center gap-2 text-brand font-medium text-sm tracking-wider uppercase mb-3 text-left">
-            <IconCode className="w-4 h-4" />
-            <span>{labels.featured}</span>
-          </div>
-          <h1 class="text-4xl md:text-6xl font-bold tracking-tight text-ink mb-6 leading-[1.1]">
-            {labels.title}
-          </h1>
-          <p class="text-lg text-quiet font-serif italic text-left">
-            {labels.subtitle}
-          </p>
-        </div>
-        <div class="hidden md:block">
-          <p class="text-quiet text-sm max-w-[200px] text-right">
-            {labels.expertise}
-          </p>
-        </div>
-      </div>
-
-      <!-- Projects Grid -->
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-        {
-          projects.map(({ name, desc, slug, image }) => (
-            <a href={`/project/${slug}/`} class="group block h-full">
-              <Card className="h-full bg-wall border-transparent shadow-resting hover:shadow-approach group-hover:-translate-y-2 transition-all duration-500 rounded-[2rem] overflow-hidden flex flex-col">
-                <div class="relative aspect-[16/10] overflow-hidden">
-                  <Image
-                    src={image}
-                    alt={`Preview do projeto ${name}`}
-                    class="w-full h-full object-cover grayscale transition-all duration-1000 group-hover:scale-105 group-hover:grayscale-0"
-                    width={800}
-                    height={500}
-                  />
-                  <div class="absolute inset-0 bg-gradient-to-t from-ink/40 via-transparent to-transparent opacity-60 group-hover:opacity-20 transition-opacity"></div>
-                </div>
-                
-                <CardContent className="p-8 flex-grow flex flex-col">
-                  <div class="flex items-center justify-between mb-4">
-                    <h3 class="font-plex text-2xl font-semibold tracking-tight text-ink group-hover:text-brand transition-colors duration-300">
-                      {name}
-                    </h3>
-                    <div class="p-2 bg-gallery-floor rounded-full text-quiet group-hover:bg-brand-wash group-hover:text-brand transition-all duration-300 transform group-hover:rotate-12">
-                      <IconExternalLink className="w-5 h-5" />
-                    </div>
-                  </div>
-                  
-                  <p class="text-quiet text-sm leading-relaxed line-clamp-2 mb-8 flex-grow">
-                    {desc}
-                  </p>
-                  
-                  <!-- Footer -->
-                  <div class="flex items-center text-sm font-bold text-ink mt-auto tracking-tight uppercase">
-                    <span class="mr-2">{labels.case_study}</span>
-                    <div class="h-px flex-grow bg-hairline-faint mx-4 group-hover:bg-brand-edge transition-colors"></div>
-                    <IconArrowRight className="w-5 h-5 transform group-hover:translate-x-1 transition-transform duration-300 text-brand-bright" />
-                  </div>
-                </CardContent>
-              </Card>
-            </a>
-          ))
-        }
-      </div>
-    </div>
+  <section class="mb-14 space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
+    <p>
+      Small, fast tools that each solve one problem well. Pick one to read how it was built,
+      or visit the site from there.
+    </p>
   </section>
-</Layout>
+
+  <section class="mb-16">
+    <h2 class="term-title"><span aria-hidden="true">~/</span>projects</h2>
+    <ProjectGrid linkTo="case" />
+  </section>
+</MinimalPage>

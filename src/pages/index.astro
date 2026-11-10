@@ -4,8 +4,8 @@ import MinimalFooter from "../components/MinimalFooter.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import avatar from "../assets/images/profile-avatar.png";
-import { projects } from "../data/projects";
-import { plugins } from "../data/plugins";
+import ProjectGrid from "../components/ProjectGrid.astro";
+import PluginList from "../components/PluginList.astro";
 import { getGithubActivity } from "../helpers/githubActivity";
 import {
   IconBrandGithub,
@@ -22,27 +22,6 @@ const socialLinks = [
   { href: "https://profiles.wordpress.org/airtonvancin/", label: "WordPress", icon: IconBrandWordpress },
   { href: "mailto:airtonvancin@gmail.com", label: "Email", icon: IconMail },
 ];
-
-// One line per project — the long `desc` in projects.ts is written (in
-// Portuguese) for the case-study page and is too heavy for a list row.
-const projectHooks: Record<string, string> = {
-  "lume-iq": "Free online IQ test with IRT scoring and a margin of error.",
-  jurosobra: "Interest simulator for off-plan home financing in Brazil.",
-  balancewise: "Smart investment portfolio rebalancing.",
-  timberoad: "Solar sizing calculators and planning tools for vanlife.",
-  "pablo-escobar-ipsum": "Lorem Ipsum, Narcos edition.",
-};
-const building = new Set(["lume-iq", "jurosobra"]);
-
-const pluginHooks: Record<string, string> = {
-  "video-destacado": "Use a YouTube or Vimeo video as the featured image.",
-  "manage-user-roles": "Create and edit user roles and capabilities.",
-  "nudge-seo-ai": "AI-generated SEO suggestions inside the editor.",
-  "sso-connector-for-jumpcloud": "SAML single sign-on with JumpCloud.",
-  "notria-ai-suite": "A suite of AI tools for WordPress.",
-};
-
-const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -112,76 +91,15 @@ const formatDate = (d: Date) =>
     </section>
 
     <!-- Projects -->
-    <section class="projects mb-14">
+    <section class="mb-14">
       <h2 class="term-title"><span aria-hidden="true">~/</span>projects</h2>
-      <ul class="project-grid grid grid-cols-1 sm:grid-cols-2">
-        {
-          projects.map((p) => (
-            <li class="flex">
-              <a
-                href={p.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="row group w-full items-start"
-              >
-                <Image
-                  src={p.image}
-                  alt=""
-                  width={80}
-                  height={80}
-                  class="w-10 h-10 rounded-lg object-cover border border-hairline-faint dark:border-night-edge shrink-0"
-                />
-                <div class="min-w-0 flex-1">
-                  <span class="block font-medium group-hover:underline underline-offset-4">{p.name}</span>
-                  <div class="flex items-center gap-2 mt-0.5">
-                    <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">{domainOf(p.link)}</span>
-                    {building.has(p.slug) && (
-                      <span class="text-xs px-1.5 py-px rounded bg-status-ground text-status-ink dark:bg-night-edge dark:text-live-signal">
-                        building
-                      </span>
-                    )}
-                  </div>
-                  <p class="text-sm text-quiet dark:text-quiet-lifted line-clamp-2 mt-1.5">{projectHooks[p.slug] ?? p.desc}</p>
-                </div>
-              </a>
-            </li>
-          ))
-        }
-        <li class="flex">
-          <a href="/en/gemini-flow-downloader/" class="row group w-full items-start">
-            <span class="logo-fallback">G</span>
-            <div class="min-w-0 flex-1">
-              <span class="block font-medium group-hover:underline underline-offset-4">Gemini Flow Downloader</span>
-              <div class="flex items-center gap-2 mt-0.5">
-                <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">chrome</span>
-              </div>
-              <p class="text-sm text-quiet dark:text-quiet-lifted line-clamp-2 mt-1.5">Export Gemini chats to Markdown or JSON.</p>
-            </div>
-          </a>
-        </li>
-      </ul>
+      <ProjectGrid />
     </section>
 
     <!-- Plugins -->
     <section class="mb-14">
       <h2 class="term-title"><span aria-hidden="true">~/</span>plugins</h2>
-      <ul class="space-y-1 -mx-3">
-        {
-          plugins.map((p) => (
-            <li>
-              <a href={`/en/plugin/${p.slug}/`} class="row group">
-                <span class="logo-fallback">
-                  <IconBrandWordpress className="w-5 h-5" stroke={1.5} />
-                </span>
-                <div class="min-w-0 flex-1">
-                  <span class="font-medium group-hover:underline underline-offset-4">{p.name}</span>
-                  <p class="text-sm text-quiet dark:text-quiet-lifted sm:truncate">{pluginHooks[p.slug] ?? p.en.desc}</p>
-                </div>
-              </a>
-            </li>
-          ))
-        }
-      </ul>
+      <PluginList />
     </section>
 
     <!-- Activity -->
@@ -296,46 +214,4 @@ const formatDate = (d: Date) =>
   :global(.dark) .cell.l2 { @apply bg-brand-lifted/50; }
   :global(.dark) .cell.l3 { @apply bg-brand-lifted/75; }
   :global(.dark) .cell.l4 { @apply bg-brand-lifted; }
-  .row {
-    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gallery-floor;
-  }
-  /* Shared grid with dotted rules: one outer frame plus a right/bottom rule
-     on each cell. Borders rather than a 1px gap, because a gap can only ever
-     be solid. Rules on the last row and the right column are dropped so no
-     edge is drawn twice. */
-  .project-grid {
-    --rule: 1px dotted var(--color-hairline);
-    @apply overflow-hidden rounded-lg;
-    border: var(--rule);
-  }
-  .project-grid > li {
-    border-bottom: var(--rule);
-  }
-  .project-grid > li:last-child {
-    border-bottom: 0;
-  }
-  @media (min-width: 40rem) {
-    .project-grid > li:nth-child(odd) {
-      border-right: var(--rule);
-    }
-    .project-grid > li:nth-last-child(2):nth-child(odd) {
-      border-bottom: 0;
-    }
-  }
-  .projects .row {
-    @apply items-start p-5 rounded-none;
-  }
-  :global(.dark) .project-grid {
-    --rule: 1px dotted var(--color-night-edge);
-  }
-  :global(.dark) .row:hover {
-    @apply bg-night-floor;
-  }
-  .logo-fallback {
-    @apply w-10 h-10 rounded-lg shrink-0 flex items-center justify-center text-sm font-semibold
-      bg-gallery-floor text-quiet border border-hairline-faint;
-  }
-  :global(.dark) .logo-fallback {
-    @apply bg-night-floor text-quiet-lifted border-night-edge;
-  }
 </style>

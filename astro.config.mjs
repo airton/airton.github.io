@@ -161,6 +161,8 @@ export default defineConfig({
     // The old bio-link hub, replaced by the minimalist home. Kept as a redirect
     // because the URL lives in social profile bios.
     "/links": "/",
+    // Terms were folded into the privacy policy.
+    "/termos": "/politicas/",
   },
 
   markdown: {

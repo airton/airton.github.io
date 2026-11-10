@@ -1,174 +1,135 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import {
-  IconShieldCheck,
-  IconCookie,
-  IconGavel,
-  IconMail,
-} from "@tabler/icons-react";
+import MinimalFooter from "../components/MinimalFooter.astro";
+
+const body = "space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted";
 ---
 
 <Layout
-  title="Políticas de Privacidade | Airton Vancin"
-  description="Transparência e respeito com seus dados. Conheça as políticas de privacidade e termos do site airtonvancin.com."
+  title="Privacy Policy | Airton Vancin"
+  description="How airtonvancin.com handles your data: analytics, Google AdSense cookies, third-party links and how to opt out."
+  lang="en"
+  image="/og-home.png"
+  minimalNav={true}
+  hideFooter={true}
 >
-  <div class="bg-gallery-floor border-b border-hairline-faint">
-    <div
-      class="container px-4 md:px-6 py-16 md:py-24 max-w-4xl mx-auto text-center"
-    >
-      <div
-        class="inline-flex items-center gap-2 bg-brand-wash text-brand px-4 py-1.5 rounded-full text-sm font-bold tracking-wider uppercase mb-6"
-      >
-        <IconShieldCheck className="w-4 h-4" />
-        Privacy & Trust
-      </div>
-      <h1
-        class="text-4xl md:text-5xl font-bold tracking-tight text-ink mb-6"
-      >
-        Políticas de Privacidade
-      </h1>
-      <p class="text-lg text-quiet font-serif italic max-w-2xl mx-auto">
-        Transparência sobre como tratamos seus dados e garantimos sua
-        privacidade ao navegar no airtonvancin.com.
+  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
+    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+      ← Home
+    </a>
+
+    <header class="mt-10 mb-14">
+      <h1 class="font-plex text-xl font-semibold tracking-tight">Privacy Policy</h1>
+      <p class="text-sm text-quiet dark:text-quiet-lifted">Last updated November 10, 2026</p>
+    </header>
+
+    <section class={`mb-14 ${body}`}>
+      <p>
+        Your privacy matters. This page explains what airtonvancin.com collects when you visit,
+        why, and how to opt out. The same applies to any other site I own and operate.
       </p>
-      <div class="mt-8 text-sm text-quiet font-medium">
-        Última atualização: 18 de Dezembro, 2025
+    </section>
+
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>personal-data</h2>
+      <div class={body}>
+        <p>
+          I only ask for personal information when I need it to provide a service, such as
+          replying to a message you send me. I collect it by fair and lawful means, with your
+          knowledge and consent, and I tell you why and how it will be used.
+        </p>
+        <p>
+          I keep that information only as long as needed to provide the service, and protect it
+          by commercially acceptable means against loss, theft and unauthorized access,
+          disclosure, copying, use or modification.
+        </p>
       </div>
-    </div>
-  </div>
+    </section>
 
-  <section class="w-full py-20 bg-wall flex justify-center">
-    <div class="container px-4 md:px-6 max-w-3xl">
-      <div
-        class="prose prose-slate prose-lg max-w-none prose-headings:text-ink prose-p:text-ink-secondary prose-p:leading-relaxed prose-strong:text-ink prose-li:text-ink-secondary"
-      >
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>analytics</h2>
+      <div class={body}>
         <p>
-          Sua privacidade é importante para nós. É política do <strong
-            >airtonvancin.com</strong
-          > respeitar a sua privacidade em relação a qualquer informação sua que possamos
-          coletar no site, e outros sites que possuímos e operamos.
+          The site uses Google Analytics to count visits and see which pages are read. It sets
+          cookies and collects aggregated data such as pages viewed, referrer, device type and
+          approximate location. I don't use it to identify you. You can block it with the
+          <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" class="quiet-link">Google Analytics opt-out add-on</a>.
         </p>
+      </div>
+    </section>
 
-        <h2>1. Coleta e Uso de Informações</h2>
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>ads-and-cookies</h2>
+      <div class={body}>
         <p>
-          Solicitamos informações pessoais apenas quando realmente precisamos
-          delas para lhe fornecer um serviço. Fazemo-lo por meios justos e
-          legais, com o seu conhecimento e consentimento. Também informamos por
-          que estamos coletando e como será usado.
+          Some pages show ads from Google AdSense. Google, as a third-party vendor, uses cookies
+          to serve ads on this site.
         </p>
-        <p>
-          Apenas retemos as informações coletadas pelo tempo necessário para
-          fornecer o serviço solicitado. Quando armazenamos dados, os protegemos
-          dentro de meios comercialmente aceitáveis ​​para evitar perdas e
-          roubos, bem como acesso, divulgação, cópia, uso ou modificação não
-          autorizados.
-        </p>
-
-        <h2>2. Google AdSense e Cookies</h2>
-        <div
-          class="bg-brand-wash/50 border border-brand-edge p-8 rounded-[2rem] my-10 space-y-4"
-        >
-          <div class="flex items-center gap-3 text-brand font-bold mb-2">
-            <IconCookie className="w-6 h-6" />
-            <span>Divulgação AdSense</span>
-          </div>
-          <p class="text-sm leading-relaxed text-ink-secondary">
-            O Google, como fornecedor terceirizado, utiliza cookies para exibir
-            anúncios em nosso site. Com o uso do cookie DART, o Google pode
-            exibir anúncios para você com base na sua visita a este e a outros
-            sites na Internet.
-          </p>
-          <ul class="text-sm text-ink-secondary space-y-2 mb-0">
-            <li>
-              Terceiros, incluindo o Google, utilizam cookies para veicular
-              anúncios com base em visitas anteriores do usuário ao seu website
-              ou a outros websites.
-            </li>
-            <li>
-              Com o uso de cookies de publicidade, o Google e os parceiros dele
-              podem veicular anúncios para os usuários com base nas visitas
-              feitas aos seus sites e/ou a outros sites na Internet.
-            </li>
-            <li>
-              Os usuários podem desativar a publicidade personalizada acessando
-              as <a
-                href="https://www.google.com/settings/ads"
-                target="_blank"
-                class="text-brand font-bold underline"
-                >Configurações de anúncios</a
-              >.
-            </li>
-            <li>
-              Como alternativa, você pode acessar o site <a
-                href="https://www.aboutads.info"
-                target="_blank"
-                class="text-brand font-bold underline">www.aboutads.info</a
-              > para desativar o uso de cookies de publicidade personalizada de terceiros.
-            </li>
-          </ul>
-        </div>
-
-        <h2>3. Links para Terceiros</h2>
-        <p>
-          Nosso site pode ter links para sites externos que não são operados por
-          nós. Esteja ciente de que não temos controle sobre o conteúdo e
-          práticas desses sites e não podemos aceitar responsabilidade por suas
-          respectivas políticas de privacidade.
-        </p>
-
-        <h2>4. Compromisso do Usuário</h2>
-        <p>
-          O usuário se compromete a fazer uso adequado dos conteúdos e da
-          informação que o airtonvancin.com oferece no site e com caráter
-          enunciativo, mas não limitativo:
-        </p>
-        <ul>
+        <ul class="list-disc pl-5 space-y-2">
           <li>
-            A) Não se envolver em atividades que sejam ilegais ou contrárias à
-            boa fé a à ordem pública;
+            Third-party vendors, including Google, use cookies to serve ads based on your prior
+            visits to this website or other websites.
           </li>
           <li>
-            B) Não divulgar conteúdo ou propaganda de natureza racista,
-            xenofóbica, ou sobre cassinos, casas de apostas online (ex: betano),
-            jogos de sorte e azar, qualquer tipo de pornografia ilegal, de
-            apologia ao terrorismo ou contra os direitos humanos;
+            Google's use of advertising cookies enables it and its partners to serve ads based on
+            your visits to this site and/or other sites on the Internet.
           </li>
           <li>
-            C) Não causar danos aos sistemas físicos (hardwares) e lógicos
-            (softwares) do airtonvancin.com, de seus fornecedores ou terceiros.
+            You can opt out of personalized advertising in
+            <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" class="quiet-link">Google Ads Settings</a>,
+            or opt out of third-party vendors' cookies at
+            <a href="https://www.aboutads.info" target="_blank" rel="noopener noreferrer" class="quiet-link">aboutads.info</a>.
           </li>
         </ul>
-
-        <h2>5. Mais informações</h2>
-        <p>
-          Esperemos que esteja esclarecido e, como mencionado anteriormente, se
-          houver algo que você não tem certeza se precisa ou não, geralmente é
-          mais seguro deixar os cookies ativados, caso interaja com um dos
-          recursos que você usa em nosso site.
-        </p>
-
-        <div
-          class="flex flex-col sm:flex-row items-center gap-6 mt-16 p-10 bg-ink rounded-[2.5rem] text-wall"
-        >
-          <div
-            class="w-16 h-16 bg-wall/10 rounded-2xl flex items-center justify-center flex-shrink-0"
-          >
-            <IconMail className="w-8 h-8 text-brand-lifted" />
-          </div>
-          <div>
-            <h3 class="text-xl font-bold mb-1 text-wall">
-              Dúvidas sobre privacidade?
-            </h3>
-            <p class="text-quiet-faint text-sm mb-0 leading-relaxed">
-              Esta política é efetiva a partir de Dezembro/2025. Se tiver
-              dúvidas, entre em contato pelo e-mail <a
-                href="mailto:airtonvancin@gmail.com"
-                class="text-brand-lifted font-bold">airtonvancin@gmail.com</a
-              >.
-            </p>
-          </div>
-        </div>
       </div>
-    </div>
-  </section>
+    </section>
+
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>third-party-links</h2>
+      <div class={body}>
+        <p>
+          This site links to external sites that I don't operate. I have no control over their
+          content or practices and can't accept responsibility for their privacy policies.
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>your-commitment</h2>
+      <div class={body}>
+        <p>By using the site, you agree to use its content and information appropriately, including:</p>
+        <ul class="list-disc pl-5 space-y-2">
+          <li>Not engaging in activities that are illegal or contrary to good faith and public order.</li>
+          <li>
+            Not spreading racist or xenophobic content, gambling or online betting promotion, illegal
+            pornography, or content that supports terrorism or violates human rights.
+          </li>
+          <li>Not damaging the hardware or software of airtonvancin.com, its providers or third parties.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>disclaimer</h2>
+      <div class={body}>
+        <p>
+          Everything on this site is provided "as is", without warranties of any kind. Content
+          may contain errors and can change without notice, and I'm not liable for damages
+          arising from its use. These terms are governed by the laws of Brazil.
+        </p>
+      </div>
+    </section>
+
+    <section class="mb-16">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>contact</h2>
+      <div class={body}>
+        <p>
+          This policy is effective as of December 2025. If you have any questions, email
+          <a href="mailto:airtonvancin@gmail.com" class="quiet-link">airtonvancin@gmail.com</a>.
+        </p>
+      </div>
+    </section>
+
+    <MinimalFooter />
+  </main>
 </Layout>
