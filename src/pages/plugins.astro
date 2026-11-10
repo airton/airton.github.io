@@ -1,22 +1,6 @@
 ---
-/*
-  Portuguese plugins listing. Path unchanged — it is the indexed one.
-*/
-import Layout from "@/layouts/Layout.astro";
+/* Portuguese plugins listing. Path unchanged — it is the indexed one. */
 import PluginsGrid from "@/components/PluginsGrid.astro";
-
-const alternates = [
-  { hreflang: "pt-BR", path: "/plugins/" },
-  { hreflang: "en", path: "/en/plugins/" },
-  { hreflang: "x-default", path: "/plugins/" },
-];
 ---
 
-<Layout
-  title="Plugins WordPress - Airton Vancin"
-  description="Plugins WordPress customizados e de alta performance desenvolvidos para a comunidade."
-  lang="pt-BR"
-  alternates={alternates}
->
-  <PluginsGrid lang="pt" />
-</Layout>
+<PluginsGrid lang="pt" />

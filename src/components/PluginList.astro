@@ -1,0 +1,64 @@
+---
+/*
+  The WordPress plugins as a list of rows, used on the home and on both plugin
+  listings (/plugins/ in Portuguese, /en/plugins/ in English). Each row links
+  to the plugin page in the same language.
+*/
+import { IconBrandWordpress } from "@tabler/icons-react";
+import { plugins } from "../data/plugins";
+
+interface Props {
+  lang?: "en" | "pt";
+}
+
+const { lang = "en" } = Astro.props;
+
+// Short English hooks for the list; the Portuguese list uses each plugin's own
+// one-line `pt.desc`.
+const pluginHooks: Record<string, string> = {
+  "video-destacado": "Use a YouTube or Vimeo video as the featured image.",
+  "manage-user-roles": "Create and edit user roles and capabilities.",
+  "nudge-seo-ai": "AI-generated SEO suggestions inside the editor.",
+  "sso-connector-for-jumpcloud": "SAML single sign-on with JumpCloud.",
+  "notria-ai-suite": "A suite of AI tools for WordPress.",
+};
+
+const hrefOf = (slug: string) => (lang === "en" ? `/en/plugin/${slug}/` : `/plugin/${slug}/`);
+const hookOf = (p: (typeof plugins)[number]) => (lang === "en" ? (pluginHooks[p.slug] ?? p.en.desc) : p.pt.desc);
+---
+
+<ul class="space-y-1 -mx-3">
+  {
+    plugins.map((p) => (
+      <li>
+        <a href={hrefOf(p.slug)} class="row group">
+          <span class="logo-fallback">
+            <IconBrandWordpress className="w-5 h-5" stroke={1.5} />
+          </span>
+          <div class="min-w-0 flex-1">
+            <span class="font-medium group-hover:underline underline-offset-4">{p.name}</span>
+            <p class="text-sm text-quiet dark:text-quiet-lifted sm:truncate">{hookOf(p)}</p>
+          </div>
+        </a>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  @reference "../styles/global.css";
+
+  .row {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gallery-floor;
+  }
+  :global(.dark) .row:hover {
+    @apply bg-night-floor;
+  }
+  .logo-fallback {
+    @apply w-10 h-10 rounded-lg shrink-0 flex items-center justify-center text-sm font-semibold
+      bg-gallery-floor text-quiet border border-hairline-faint;
+  }
+  :global(.dark) .logo-fallback {
+    @apply bg-night-floor text-quiet-lifted border-night-edge;
+  }
+</style>

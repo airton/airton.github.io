@@ -1,22 +1,6 @@
 ---
-/*
-  English plugins listing — the page the English plugin pages link back to.
-*/
-import Layout from "@/layouts/Layout.astro";
+/* English plugins listing — the page the English plugin pages link back to. */
 import PluginsGrid from "@/components/PluginsGrid.astro";
-
-const alternates = [
-  { hreflang: "pt-BR", path: "/plugins/" },
-  { hreflang: "en", path: "/en/plugins/" },
-  { hreflang: "x-default", path: "/plugins/" },
-];
 ---
 
-<Layout
-  title="WordPress Plugins - Airton Vancin"
-  description="Custom and high-performance WordPress plugins developed for the community."
-  lang="en"
-  alternates={alternates}
->
-  <PluginsGrid lang="en" />
-</Layout>
+<PluginsGrid lang="en" />

@@ -1,0 +1,114 @@
+---
+/*
+  The dotted shared-grid of projects, used on the home (links to the live
+  sites) and on /projetos (links to the case studies).
+*/
+import { Image } from "astro:assets";
+import { projects } from "../data/projects";
+
+interface Props {
+  linkTo?: "site" | "case";
+}
+
+const { linkTo = "site" } = Astro.props;
+
+// One line per project — the long `desc` in projects.ts is written (in
+// Portuguese) for the case-study page and is too heavy for a grid cell.
+const projectHooks: Record<string, string> = {
+  "lume-iq": "Free online IQ test with IRT scoring and a margin of error.",
+  jurosobra: "Interest simulator for off-plan home financing in Brazil.",
+  balancewise: "Smart investment portfolio rebalancing.",
+  timberoad: "Solar sizing calculators and planning tools for vanlife.",
+  "pablo-escobar-ipsum": "Lorem Ipsum, Narcos edition.",
+};
+const building = new Set(["lume-iq", "jurosobra"]);
+
+const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+const external = linkTo === "site" ? { target: "_blank", rel: "noopener noreferrer" } : {};
+---
+
+<ul class="project-grid grid grid-cols-1 sm:grid-cols-2">
+  {
+    projects.map((p) => (
+      <li class="flex">
+        <a href={linkTo === "site" ? p.link : `/project/${p.slug}/`} {...external} class="row group w-full">
+          <Image
+            src={p.image}
+            alt=""
+            width={80}
+            height={80}
+            class="w-10 h-10 rounded-lg object-cover border border-hairline-faint dark:border-night-edge shrink-0"
+          />
+          <div class="min-w-0 flex-1">
+            <span class="block font-medium group-hover:underline underline-offset-4">{p.name}</span>
+            <div class="flex items-center gap-2 mt-0.5">
+              <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">{domainOf(p.link)}</span>
+              {building.has(p.slug) && (
+                <span class="text-xs px-1.5 py-px rounded bg-status-ground text-status-ink dark:bg-night-edge dark:text-live-signal">
+                  building
+                </span>
+              )}
+            </div>
+            <p class="text-sm text-quiet dark:text-quiet-lifted line-clamp-2 mt-1.5">{projectHooks[p.slug] ?? p.desc}</p>
+          </div>
+        </a>
+      </li>
+    ))
+  }
+  <li class="flex">
+    <a href="/en/gemini-flow-downloader/" class="row group w-full">
+      <span class="logo-fallback">G</span>
+      <div class="min-w-0 flex-1">
+        <span class="block font-medium group-hover:underline underline-offset-4">Gemini Flow Downloader</span>
+        <div class="flex items-center gap-2 mt-0.5">
+          <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">chrome</span>
+        </div>
+        <p class="text-sm text-quiet dark:text-quiet-lifted line-clamp-2 mt-1.5">Export Gemini chats to Markdown or JSON.</p>
+      </div>
+    </a>
+  </li>
+</ul>
+
+<style>
+  @reference "../styles/global.css";
+
+  /* Shared grid with dotted rules: one outer frame plus a right/bottom rule
+     on each cell. Borders rather than a 1px gap, because a gap can only ever
+     be solid. Rules on the last row and the right column are dropped so no
+     edge is drawn twice. */
+  .project-grid {
+    --rule: 1px dotted var(--color-hairline);
+    @apply overflow-hidden rounded-lg;
+    border: var(--rule);
+  }
+  .project-grid > li {
+    border-bottom: var(--rule);
+  }
+  .project-grid > li:last-child {
+    border-bottom: 0;
+  }
+  @media (min-width: 40rem) {
+    .project-grid > li:nth-child(odd) {
+      border-right: var(--rule);
+    }
+    .project-grid > li:nth-last-child(2):nth-child(odd) {
+      border-bottom: 0;
+    }
+  }
+  :global(.dark) .project-grid {
+    --rule: 1px dotted var(--color-night-edge);
+  }
+  .row {
+    @apply flex items-start gap-3 p-5 transition-colors hover:bg-gallery-floor;
+  }
+  :global(.dark) .row:hover {
+    @apply bg-night-floor;
+  }
+  .logo-fallback {
+    @apply w-10 h-10 rounded-lg shrink-0 flex items-center justify-center text-sm font-semibold
+      bg-gallery-floor text-quiet border border-hairline-faint;
+  }
+  :global(.dark) .logo-fallback {
+    @apply bg-night-floor text-quiet-lifted border-night-edge;
+  }
+</style>
