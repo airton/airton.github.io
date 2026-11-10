@@ -168,6 +168,17 @@
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+@font-face {
+  font-family: "IBM Plex Sans";
+  font-style: normal;
+  font-weight: 100 700;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-sans-latin-var.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @theme {
   /* Display — headlines and card titles. A geometric grotesk: it holds the
      tight negative tracking the Display and Headline roles ask for without the
@@ -175,6 +186,9 @@
   --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
   /* Body — everything a visitor actually reads. */
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* The minimalist home and the project cards — the whole face there, headings
+     included. A quieter, slightly technical grotesk than Inter. */
+  --font-plex: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   /* Code, and only code. */
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   /* The deck line, and nothing else — see The One Serif Rule in DESIGN.md.
@@ -268,6 +282,19 @@
 
 /* Article Content Styling */
 @layer components {
+  /* Minimal pages (home, /sobre): mono `~/section` headings and quiet
+     underlined links. Shared here so both pages stay in step. */
+  .term-title {
+    @apply font-mono text-sm text-ink mb-4 dark:text-gallery-floor;
+  }
+  .term-title > span {
+    @apply text-quiet-faint dark:text-quiet;
+  }
+  .quiet-link {
+    @apply text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink
+      dark:text-gallery-floor dark:decoration-night-edge dark:hover:decoration-gallery-floor;
+  }
+
   /* Body copy is Ink Secondary, not Ink: at 10.92:1 it clears AA with room to
      spare and stays comfortable over a long read, which full-strength Ink at
      17.44:1 does not. Headings keep Ink so the hierarchy reads by weight AND
