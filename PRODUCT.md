@@ -49,7 +49,7 @@ A working senior engineer publishing from practice, not from theory: 15+ years a
 - `/previas` — 18 live client website previews grouped into four niches
 - `/gemini-flow-downloader` — landing page + `.zip` download for a Chrome extension
 - `/zero-downtime` — service landing page for blue-green / zero-downtime deployment work
-- `/sobre`, `/contato`, `/politicas`, `/termos`, `/404`
+- `/sobre`, `/contato`, `/politicas`, `/404` (`/termos` redirects to `/politicas`)
 
 **Language:** PT-BR is the primary and default language. English exists only on selected pages via a `data-en`/`data-pt` attribute switcher (`LanguageSwitcher.astro`, currently on `/previas` and `/gemini-flow-downloader`) and in the plugin data model. Full site-wide bilingualism is explicitly not a goal; new pages default to PT-BR only, and the EN toggle is added deliberately where an international audience exists.
 
