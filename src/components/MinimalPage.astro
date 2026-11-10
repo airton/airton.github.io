@@ -15,9 +15,21 @@ interface Props {
   lang?: string;
   alternates?: { hreflang: string; path: string }[];
   backLabel?: string;
+  backHref?: string;
+  noindex?: boolean;
 }
 
-const { title, description, heading, subheading, lang = "en", alternates, backLabel = "← Home" } = Astro.props;
+const {
+  title,
+  description,
+  heading,
+  subheading,
+  lang = "en",
+  alternates,
+  backLabel = "← Home",
+  backHref = "/",
+  noindex = false,
+} = Astro.props;
 ---
 
 <Layout
@@ -25,13 +37,14 @@ const { title, description, heading, subheading, lang = "en", alternates, backLa
   description={description}
   lang={lang}
   alternates={alternates}
+  noindex={noindex}
   image="/og-home.png"
   minimalNav={true}
   hideFooter={true}
 >
   <slot name="head" />
   <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
-    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+    <a href={backHref} class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
       {backLabel}
     </a>
 

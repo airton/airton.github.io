@@ -1,0 +1,54 @@
+---
+/*
+  Posts as dated rows, optionally grouped by year. Most posts are Portuguese
+  and the chrome around them is English, so each row carries its language as
+  a small code and the title its own `lang`.
+*/
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"blog">[];
+  groupByYear?: boolean;
+}
+
+const { posts, groupByYear = false } = Astro.props;
+
+const sorted = [...posts].sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const groups = groupByYear
+  ? Object.entries(
+      sorted.reduce<Record<string, typeof sorted>>((acc, post) => {
+        const year = String(post.data.date.getFullYear());
+        (acc[year] ??= []).push(post);
+        return acc;
+      }, {}),
+    ).sort(([a], [b]) => Number(b) - Number(a))
+  : [["", sorted] as const];
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString("en-US", groupByYear ? { month: "short", day: "numeric" } : { month: "short", day: "numeric", year: "numeric" });
+const langCode = (lang: string) => lang.slice(0, 2).toLowerCase();
+---
+
+{
+  groups.map(([year, items]) => (
+    <section class="mb-10">
+      {year && <h2 class="term-title"><span aria-hidden="true">~/</span>{year}</h2>}
+      <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
+        {items.map((post) => (
+          <li>
+            <a href={`/blog/${post.id}/`} class="group flex items-baseline justify-between gap-4 py-2.5">
+              <span class="text-base group-hover:underline underline-offset-4" lang={post.data.lang}>
+                {post.data.title}
+              </span>
+              <span class="flex items-baseline gap-2 shrink-0 text-xs text-quiet dark:text-quiet-lifted tabular-nums">
+                <span class="font-mono" title={post.data.lang}>{langCode(post.data.lang)}</span>
+                <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))
+}
