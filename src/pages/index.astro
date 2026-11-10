@@ -1,23 +1,264 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import HeroHeadline from "../components/HeroHeadline.astro";
-// import SectionAbout from "../components/SectionAbout.astro";
-import ZeroDowntimeCTA from "../components/ZeroDowntimeCTA.astro";
-import FeaturedBlogSection from "../components/FeaturedBlogSection.astro";
-import SectionWordPressPlugins from "../components/SectionWordPressPlugins.astro";
-import SectionBrowserExtensions from "../components/SectionBrowserExtensions.astro";
-import SectionProjects from "../components/SectionProjects.astro";
+import { Image } from "astro:assets";
+import { getCollection } from "astro:content";
+import avatar from "../assets/images/profile-avatar.png";
+import { projects } from "../data/projects";
+import { plugins } from "../data/plugins";
+import {
+  IconBrandGithub,
+  IconBrandLinkedin,
+  IconBrandWordpress,
+  IconBrandX,
+  IconMail,
+} from "@tabler/icons-react";
+
+const socialLinks = [
+  { href: "https://x.com/a_vancin", label: "X", icon: IconBrandX },
+  { href: "https://github.com/airton", label: "GitHub", icon: IconBrandGithub },
+  { href: "https://linkedin.com/in/airtonvancin", label: "LinkedIn", icon: IconBrandLinkedin },
+  { href: "https://profiles.wordpress.org/airtonvancin/", label: "WordPress", icon: IconBrandWordpress },
+  { href: "mailto:airtonvancin@gmail.com", label: "Email", icon: IconMail },
+];
+
+// One line per project — the long `desc` in projects.ts is written (in
+// Portuguese) for the case-study page and is too heavy for a list row.
+const projectHooks: Record<string, string> = {
+  "lume-iq": "Free online IQ test with IRT scoring and an explicit margin of error.",
+  jurosobra: "Interest simulator for off-plan home financing in Brazil.",
+  balancewise: "Smart investment portfolio rebalancing.",
+  timberoad: "Solar sizing calculators and planning tools for vanlife.",
+  "pablo-escobar-ipsum": "Lorem Ipsum, Narcos edition.",
+};
+const building = new Set(["lume-iq", "jurosobra"]);
+
+const pluginHooks: Record<string, string> = {
+  "video-destacado": "Use a YouTube or Vimeo video as the featured image.",
+  "manage-user-roles": "Create and edit user roles and capabilities.",
+  "nudge-seo-ai": "AI-generated SEO suggestions inside the editor.",
+  "sso-connector-for-jumpcloud": "SAML single sign-on with JumpCloud.",
+  "notria-ai-suite": "A suite of AI tools for WordPress.",
+};
+
+const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+
+const posts = (await getCollection("blog"))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 6);
+
+const formatDate = (d: Date) =>
+  d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 ---
 
 <Layout
-  title="Airton Vancin | Software Engineer & Especialista WordPress"
-  description="Portfolio de Airton Vancin. Software Engineer com 15+ anos de experiência em React, Node.js, TypeScript e automação de infraestrutura."
+  title="Airton Vancin | AI Engineer & Builder"
+  description="Airton Vancin — Engineering Director, AI, with 15+ years in software engineering. Builds side projects and WordPress plugins, and writes about lessons from the work."
+  lang="en"
+  minimalNav={true}
+  hideFooter={true}
 >
-  <HeroHeadline />
-  <!-- <SectionAbout /> -->
-  <ZeroDowntimeCTA />
-  <FeaturedBlogSection />
-  <SectionWordPressPlugins />
-  <SectionBrowserExtensions />
-  <SectionProjects />
+  <main class="home font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
+    <!-- Header -->
+    <header class="mb-14">
+      <div class="flex items-center gap-4 mb-5">
+        <Image
+          src={avatar}
+          alt="Airton Vancin"
+          width={112}
+          height={112}
+          loading="eager"
+          class="w-14 h-14 rounded-full object-cover"
+        />
+        <div>
+          <h1 class="font-plex text-xl font-semibold tracking-tight">Airton Vancin</h1>
+          <p class="text-sm text-quiet dark:text-quiet-lifted">AI Engineer & Builder</p>
+        </div>
+      </div>
+
+      <nav aria-label="Social links" class="flex items-center gap-1 -ml-2">
+        {
+          socialLinks.map((s) => (
+            <a
+              href={s.href}
+              aria-label={s.label}
+              target={s.href.startsWith("http") ? "_blank" : undefined}
+              rel={s.href.startsWith("http") ? "me noopener noreferrer" : undefined}
+              class="p-2 rounded-md text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors"
+            >
+              <s.icon className="w-[18px] h-[18px]" stroke={1.75} />
+            </a>
+          ))
+        }
+      </nav>
+    </header>
+
+    <!-- About -->
+    <section class="mb-14 space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
+      <p>
+        I work as an Engineering Director in AI, after more than 15 years writing software
+        across WordPress, React, Node.js and AWS infrastructure. In my spare time, I build
+        side projects.
+      </p>
+      <p>
+        I like things that are small, fast and useful. Below is what I'm building, what I've
+        shipped and what I've been writing along the way. <a href="/sobre/" class="link">More about me →</a>
+      </p>
+    </section>
+
+    <!-- Projects -->
+    <section class="projects mb-14">
+      <h2 class="section-title">Projects</h2>
+      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+        {
+          projects.map((p) => (
+            <li class="flex">
+              <a
+                href={p.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="row group w-full items-start"
+              >
+                <Image
+                  src={p.image}
+                  alt=""
+                  width={80}
+                  height={80}
+                  class="w-10 h-10 rounded-lg object-cover border border-hairline-faint dark:border-night-edge shrink-0"
+                />
+                <div class="min-w-0 flex-1">
+                  <span class="block font-medium group-hover:underline underline-offset-4">{p.name}</span>
+                  <div class="flex items-center gap-2 mt-0.5">
+                    <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">{domainOf(p.link)}</span>
+                    {building.has(p.slug) && (
+                      <span class="text-xs px-1.5 py-px rounded bg-status-ground text-status-ink dark:bg-night-edge dark:text-live-signal">
+                        building
+                      </span>
+                    )}
+                  </div>
+                  <p class="text-sm text-quiet dark:text-quiet-lifted line-clamp-2 mt-1.5">{projectHooks[p.slug] ?? p.desc}</p>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+        <li class="flex">
+          <a href="/en/gemini-flow-downloader/" class="row group w-full items-start">
+            <span class="logo-fallback">G</span>
+            <div class="min-w-0 flex-1">
+              <span class="block font-medium group-hover:underline underline-offset-4">Gemini Flow Downloader</span>
+              <div class="flex items-center gap-2 mt-0.5">
+                <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">chrome</span>
+              </div>
+              <p class="text-sm text-quiet dark:text-quiet-lifted line-clamp-2 mt-1.5">Export Gemini chats to Markdown or JSON.</p>
+            </div>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <!-- Plugins -->
+    <section class="mb-14">
+      <h2 class="section-title">WordPress Plugins</h2>
+      <ul class="space-y-1 -mx-3">
+        {
+          plugins.map((p) => (
+            <li>
+              <a href={`/en/plugin/${p.slug}/`} class="row group">
+                <span class="logo-fallback">
+                  <IconBrandWordpress className="w-5 h-5" stroke={1.5} />
+                </span>
+                <div class="min-w-0 flex-1">
+                  <span class="font-medium group-hover:underline underline-offset-4">{p.name}</span>
+                  <p class="text-sm text-quiet dark:text-quiet-lifted sm:truncate">{pluginHooks[p.slug] ?? p.en.desc}</p>
+                </div>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Writing -->
+    <section class="mb-14">
+      <h2 class="section-title">Writing</h2>
+      <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
+        {
+          posts.map((post) => (
+            <li>
+              <a href={`/blog/${post.id}/`} class="group flex items-baseline justify-between gap-4 py-2.5">
+                <span class="text-base group-hover:underline underline-offset-4">{post.data.title}</span>
+                <time
+                  datetime={post.data.date.toISOString()}
+                  class="text-xs text-quiet dark:text-quiet-lifted shrink-0 tabular-nums"
+                >
+                  {formatDate(post.data.date)}
+                </time>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a href="/blog/" class="link inline-block mt-4 text-sm">All posts →</a>
+    </section>
+
+    <!-- Work with me -->
+    <section class="mb-16">
+      <h2 class="section-title">Work with me</h2>
+      <ul class="space-y-2 text-base text-ink-secondary dark:text-quiet-lifted">
+        <li><a href="/zero-downtime/" class="link">Zero Downtime</a> — blue-green deploys and high availability on AWS.</li>
+        <li><a href="/previas/" class="link">Business websites</a> — see live previews before you decide.</li>
+        <li><a href="/contato/" class="link">Contact</a> — projects, partnerships or consulting.</li>
+      </ul>
+    </section>
+
+    <footer class="text-xs text-quiet dark:text-quiet-lifted flex flex-wrap gap-x-4 gap-y-1">
+      <span>© {new Date().getFullYear()} Airton Vancin</span>
+      <a href="/rss.xml" class="hover:text-ink dark:hover:text-gallery-floor">RSS</a>
+      <a href="/politicas/" class="hover:text-ink dark:hover:text-gallery-floor">Privacy</a>
+      <a href="/termos/" class="hover:text-ink dark:hover:text-gallery-floor">Terms</a>
+    </footer>
+  </main>
+
 </Layout>
+
+<style>
+  @reference "../styles/global.css";
+
+  .section-title {
+    @apply font-plex text-xs font-medium uppercase tracking-wider text-quiet mb-4;
+  }
+  :global(.dark) .section-title {
+    @apply text-quiet-lifted;
+  }
+  .row {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gallery-floor;
+  }
+  .projects .row {
+    @apply items-start p-4 border border-dotted border-hairline;
+  }
+  .projects .row:hover {
+    @apply border-quiet-faint;
+  }
+  :global(.dark) .projects .row {
+    @apply border-night-edge;
+  }
+  :global(.dark) .projects .row:hover {
+    @apply border-quiet-faint;
+  }
+  :global(.dark) .row:hover {
+    @apply bg-night-floor;
+  }
+  .logo-fallback {
+    @apply w-10 h-10 rounded-lg shrink-0 flex items-center justify-center text-sm font-semibold
+      bg-gallery-floor text-quiet border border-hairline-faint;
+  }
+  :global(.dark) .logo-fallback {
+    @apply bg-night-floor text-quiet-lifted border-night-edge;
+  }
+  .link {
+    @apply text-ink underline decoration-hairline underline-offset-4 hover:decoration-ink transition-colors;
+  }
+  :global(.dark) .link {
+    @apply text-gallery-floor decoration-night-edge hover:decoration-gallery-floor;
+  }
+</style>

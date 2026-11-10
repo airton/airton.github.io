@@ -158,6 +158,9 @@ export default defineConfig({
   */
   redirects: {
     "/blog/tag/front-end": "/blog/tag/frontend/",
+    // The old bio-link hub, replaced by the minimalist home. Kept as a redirect
+    // because the URL lives in social profile bios.
+    "/links": "/",
   },
 
   markdown: {

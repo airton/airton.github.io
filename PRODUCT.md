@@ -45,7 +45,7 @@ A working senior engineer publishing from practice, not from theory: 15+ years a
 - `/blog`, `/blog/[slug]`, `/blog/tags`, `/blog/tag/[tag]`, `rss.xml` — 18 published posts with tags, reading time, share buttons
 - `/plugins`, `/plugin/[slug]` — five WordPress plugins (Video Destacado, Manage User Roles, Nudge SEO AI, SSO Connector for JumpCloud, Notria AI Suite), each with bilingual `en`/`pt` content in `src/data/plugins.ts`
 - `/projetos`, `/project/[slug]` — five projects (Lume IQ, Juros de Obra, Balancewise.io, Timberoad, Pablo Escobar Ipsum)
-- `/links` — hub de links, projetos ativos e canais de contato
+- `/links` — redireciona para `/` (a home minimalista substituiu o hub de links)
 - `/previas` — 18 live client website previews grouped into four niches
 - `/gemini-flow-downloader` — landing page + `.zip` download for a Chrome extension
 - `/zero-downtime` — service landing page for blue-green / zero-downtime deployment work
@@ -67,7 +67,7 @@ A working senior engineer publishing from practice, not from theory: 15+ years a
 - Name: **Airton Vancin** (full: Airton Vancin Junior). Domain `airtonvancin.com`.
 - Voice: PT-BR, first person, practitioner-to-practitioner. Direct and concrete — "+15 anos criando soluções que importam. Código limpo. Performance. Resultados."
 - Existing assets: profile avatar (`public/assets/images/profile-avatar.avif|png`), favicon set and web manifest, per-post header images in `src/assets/images/blog/`.
-- Social identity: GitHub `airton`, LinkedIn `airtonvancin`, WordPress.org `airtonvancin`, Substack `nichesignal`, email `airtonvancin@gmail.com`.
+- Social identity: GitHub `airton`, LinkedIn `airtonvancin`, X `a_vancin`, WordPress.org `airtonvancin`, email `airtonvancin@gmail.com`.
 
 ## Evidence on Hand
 
