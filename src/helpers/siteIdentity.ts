@@ -27,6 +27,7 @@ export const WEBSITE_ID = "#website";
 const PROFILES = [
   "https://github.com/airton",
   "https://linkedin.com/in/airtonvancin",
+  "https://x.com/a_vancin",
   "https://profiles.wordpress.org/airtonvancin/",
 ];
 
