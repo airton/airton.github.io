@@ -44,7 +44,8 @@ A working senior engineer publishing from practice, not from theory: 15+ years a
 - `/` — hero, Zero Downtime CTA, featured blog, WordPress plugins, browser extensions, projects
 - `/blog`, `/blog/[slug]`, `/blog/tags`, `/blog/tag/[tag]`, `rss.xml` — 18 published posts with tags, reading time, share buttons
 - `/plugins`, `/plugin/[slug]` — five WordPress plugins (Video Destacado, Manage User Roles, Nudge SEO AI, SSO Connector for JumpCloud, Notria AI Suite), each with bilingual `en`/`pt` content in `src/data/plugins.ts`
-- `/projetos`, `/project/[slug]` — three projects
+- `/projetos`, `/project/[slug]` — five projects (Lume IQ, Juros de Obra, Balancewise.io, Timberoad, Pablo Escobar Ipsum)
+- `/links` — hub de links, projetos ativos e canais de contato
 - `/previas` — 18 live client website previews grouped into four niches
 - `/gemini-flow-downloader` — landing page + `.zip` download for a Chrome extension
 - `/zero-downtime` — service landing page for blue-green / zero-downtime deployment work
@@ -73,7 +74,7 @@ A working senior engineer publishing from practice, not from theory: 15+ years a
 **Confirmed real — preserve verbatim, do not soften or restate:**
 
 - The `/sobre` timeline: Software Engineer Senior (2018–presente), Desenvolvedor WordPress (2014–2018), Análise e Desenvolvimento de Sistemas (graduação), AWS certifications.
-- The three projects in `src/data/projects.ts` — Balancewise.io, Timberoad, Pablo Escobar Ipsum — are genuine shipped work with live links.
+- The five projects in `src/data/projects.ts` — Lume IQ, Juros de Obra, Balancewise.io, Timberoad, Pablo Escobar Ipsum — are genuine shipped work with live links.
 - The 18 previews in `src/data/previas.ts` are real sites delivered for named local businesses, all live.
 - The five WordPress plugins are published on wordpress.org; the Gemini Flow downloader is a real, downloadable Chrome extension.
 - 18 published blog posts, all authored.

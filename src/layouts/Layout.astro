@@ -40,6 +40,14 @@ interface Props {
    * Auto Ads would otherwise fill the 404 with ads around a single sentence.
    */
   noAds?: boolean;
+  /**
+   * Omits the site-wide fixed navigation menubar for dedicated landing / bio link pages.
+   */
+  minimalNav?: boolean;
+  /**
+   * Omits the heavy 4-column site footer for minimalist bio-link pages.
+   */
+  hideFooter?: boolean;
 }
 
 const {
@@ -53,6 +61,8 @@ const {
   alternates = [],
   noindex = false,
   noAds = false,
+  minimalNav = false,
+  hideFooter = false,
 } = Astro.props;
 
 const site = Astro.site || new URL("https://airtonvancin.com");
@@ -210,15 +220,17 @@ const ogLocale = lang.includes("-")
     <div
       class="flex flex-col min-h-screen bg-wall dark:bg-night-wall text-ink dark:text-gallery-floor transition-colors duration-300"
     >
-      <header
-        class="m-auto p-2 flex items-center justify-center fixed w-full z-50"
-      >
-        <Navigation client:idle />
-      </header>
+      {
+        !minimalNav && (
+          <header class="m-auto p-2 flex items-center justify-center fixed w-full z-50">
+            <Navigation client:idle />
+          </header>
+        )
+      }
       <main class="flex-1">
         <slot />
       </main>
-      <Footer />
+      {!hideFooter && <Footer />}
     </div>
   </body>
 </html>
