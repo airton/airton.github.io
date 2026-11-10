@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import avatar from "../assets/images/profile-avatar.png";
 import { projects } from "../data/projects";
 import { plugins } from "../data/plugins";
+import { getGithubActivity } from "../helpers/githubActivity";
 import {
   IconBrandGithub,
   IconBrandLinkedin,
@@ -45,6 +46,9 @@ const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 6);
+
+const activity = await getGithubActivity("airton");
+const fmt = (n: number) => n.toLocaleString("en-US");
 
 const formatDate = (d: Date) =>
   d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
@@ -107,7 +111,7 @@ const formatDate = (d: Date) =>
 
     <!-- Projects -->
     <section class="projects mb-14">
-      <h2 class="section-title">Projects</h2>
+      <h2 class="section-title"><span aria-hidden="true">~/</span>projects</h2>
       <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
         {
           projects.map((p) => (
@@ -158,7 +162,7 @@ const formatDate = (d: Date) =>
 
     <!-- Plugins -->
     <section class="mb-14">
-      <h2 class="section-title">WordPress Plugins</h2>
+      <h2 class="section-title"><span aria-hidden="true">~/</span>plugins</h2>
       <ul class="space-y-1 -mx-3">
         {
           plugins.map((p) => (
@@ -178,9 +182,51 @@ const formatDate = (d: Date) =>
       </ul>
     </section>
 
+    <!-- Activity -->
+    {
+      activity && (
+        <section class="mb-14">
+          <h2 class="section-title"><span aria-hidden="true">~/</span>activity</h2>
+          <p class="text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted mb-5">
+            Most of my building happens on GitHub, between work and side projects.
+          </p>
+          <div
+            class="activity-grid"
+            style={`--weeks: ${activity.weeks.length}`}
+            role="img"
+            aria-label={`GitHub contributions over the last year: ${fmt(activity.total)} in total.`}
+          >
+            {activity.weeks.map((week) =>
+              week.map((day) => (
+                <span class:list={["cell", day ? `l${day.level}` : "empty"]} title={day?.date} />
+              ))
+            )}
+          </div>
+          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-quiet dark:text-quiet-lifted">
+            <span>
+              {fmt(activity.total)} contributions · {fmt(activity.activeDays)} active days
+              {activity.streak > 1 && <> · {activity.streak}-day streak</>}
+            </span>
+            <span class="flex items-center gap-1" aria-hidden="true">
+              Less
+              <span class="cell l0 legend" />
+              <span class="cell l1 legend" />
+              <span class="cell l2 legend" />
+              <span class="cell l3 legend" />
+              <span class="cell l4 legend" />
+              More
+            </span>
+          </div>
+          <a href="https://github.com/airton" target="_blank" rel="me noopener noreferrer" class="link inline-block mt-4 text-sm">
+            github.com/airton →
+          </a>
+        </section>
+      )
+    }
+
     <!-- Writing -->
     <section class="mb-14">
-      <h2 class="section-title">Writing</h2>
+      <h2 class="section-title"><span aria-hidden="true">~/</span>writing</h2>
       <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
         {
           posts.map((post) => (
@@ -203,7 +249,7 @@ const formatDate = (d: Date) =>
 
     <!-- Work with me -->
     <section class="mb-16">
-      <h2 class="section-title">Work with me</h2>
+      <h2 class="section-title"><span aria-hidden="true">~/</span>work-with-me</h2>
       <ul class="space-y-2 text-base text-ink-secondary dark:text-quiet-lifted">
         <li><a href="/zero-downtime/" class="link">Zero Downtime</a> — blue-green deploys and high availability on AWS.</li>
         <li><a href="/previas/" class="link">Business websites</a> — see live previews before you decide.</li>
@@ -225,25 +271,67 @@ const formatDate = (d: Date) =>
   @reference "../styles/global.css";
 
   .section-title {
-    @apply font-plex text-xs font-medium uppercase tracking-wider text-quiet mb-4;
+    @apply font-mono text-sm text-ink mb-4;
   }
+  .section-title span {
+    @apply text-quiet-faint;
+  }
+  :global(.dark) .section-title span {
+    @apply text-quiet;
+  }
+
+  /* Contribution heatmap: one column per week, cells sized by the container so
+     the full year always fits without scrolling. */
+  .activity-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--weeks), minmax(0, 1fr));
+    grid-template-rows: repeat(7, auto);
+    grid-auto-flow: column;
+    gap: 2px;
+  }
+  .cell {
+    @apply block aspect-square rounded-[2px];
+  }
+  .cell.legend {
+    @apply w-2.5 h-2.5;
+  }
+  .cell.empty {
+    @apply bg-transparent;
+  }
+  .cell.l0 { @apply bg-hairline-faint; }
+  .cell.l1 { @apply bg-brand/25; }
+  .cell.l2 { @apply bg-brand/50; }
+  .cell.l3 { @apply bg-brand/75; }
+  .cell.l4 { @apply bg-brand; }
+  :global(.dark) .cell.l0 { @apply bg-night-edge; }
+  :global(.dark) .cell.l1 { @apply bg-brand-lifted/25; }
+  :global(.dark) .cell.l2 { @apply bg-brand-lifted/50; }
+  :global(.dark) .cell.l3 { @apply bg-brand-lifted/75; }
+  :global(.dark) .cell.l4 { @apply bg-brand-lifted; }
   :global(.dark) .section-title {
-    @apply text-quiet-lifted;
+    @apply text-gallery-floor;
   }
   .row {
     @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gallery-floor;
   }
+  /* Dashed border drawn as SVG: CSS `border-dashed` gives no control over
+     dash length, gap or how dashes meet the rounded corners. The stroke is 2px
+     on the edge of the box, so half is clipped and 1px shows. Colors are
+     literal because a data URI cannot read CSS variables. */
   .projects .row {
-    @apply items-start p-4 border border-dotted border-hairline;
+    @apply items-start p-4 rounded-[10px] transition-[background-color,background-image];
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23D6D5CD' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
   }
   .projects .row:hover {
-    @apply border-quiet-faint;
+    background-color: var(--color-gallery-floor);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%239A9A92' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
   }
   :global(.dark) .projects .row {
-    @apply border-night-edge;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%2334342F' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
   }
   :global(.dark) .projects .row:hover {
-    @apply border-quiet-faint;
+    background-color: var(--color-night-floor);
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%236E6E64' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
   }
   :global(.dark) .row:hover {
     @apply bg-night-floor;
