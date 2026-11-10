@@ -1,5 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MinimalFooter from "../components/MinimalFooter.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import avatar from "../assets/images/profile-avatar.png";
@@ -25,7 +26,7 @@ const socialLinks = [
 // One line per project — the long `desc` in projects.ts is written (in
 // Portuguese) for the case-study page and is too heavy for a list row.
 const projectHooks: Record<string, string> = {
-  "lume-iq": "Free online IQ test with IRT scoring and an explicit margin of error.",
+  "lume-iq": "Free online IQ test with IRT scoring and a margin of error.",
   jurosobra: "Interest simulator for off-plan home financing in Brazil.",
   balancewise: "Smart investment portfolio rebalancing.",
   timberoad: "Solar sizing calculators and planning tools for vanlife.",
@@ -105,14 +106,14 @@ const formatDate = (d: Date) =>
       </p>
       <p>
         I like things that are small, fast and useful. Below is what I'm building, what I've
-        shipped and what I've been writing along the way. <a href="/sobre/" class="link">More about me →</a>
+        shipped and what I've been writing along the way. <a href="/sobre/" class="quiet-link">More about me →</a>
       </p>
     </section>
 
     <!-- Projects -->
     <section class="projects mb-14">
-      <h2 class="section-title"><span aria-hidden="true">~/</span>projects</h2>
-      <ul class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>projects</h2>
+      <ul class="project-grid grid grid-cols-1 sm:grid-cols-2">
         {
           projects.map((p) => (
             <li class="flex">
@@ -162,7 +163,7 @@ const formatDate = (d: Date) =>
 
     <!-- Plugins -->
     <section class="mb-14">
-      <h2 class="section-title"><span aria-hidden="true">~/</span>plugins</h2>
+      <h2 class="term-title"><span aria-hidden="true">~/</span>plugins</h2>
       <ul class="space-y-1 -mx-3">
         {
           plugins.map((p) => (
@@ -186,7 +187,7 @@ const formatDate = (d: Date) =>
     {
       activity && (
         <section class="mb-14">
-          <h2 class="section-title"><span aria-hidden="true">~/</span>activity</h2>
+          <h2 class="term-title"><span aria-hidden="true">~/</span>activity</h2>
           <p class="text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted mb-5">
             Most of my building happens on GitHub, between work and side projects.
           </p>
@@ -217,7 +218,7 @@ const formatDate = (d: Date) =>
               More
             </span>
           </div>
-          <a href="https://github.com/airton" target="_blank" rel="me noopener noreferrer" class="link inline-block mt-4 text-sm">
+          <a href="https://github.com/airton" target="_blank" rel="me noopener noreferrer" class="quiet-link inline-block mt-4 text-sm">
             github.com/airton →
           </a>
         </section>
@@ -226,7 +227,7 @@ const formatDate = (d: Date) =>
 
     <!-- Writing -->
     <section class="mb-14">
-      <h2 class="section-title"><span aria-hidden="true">~/</span>writing</h2>
+      <h2 class="term-title"><span aria-hidden="true">~/</span>writing</h2>
       <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
         {
           posts.map((post) => (
@@ -244,25 +245,20 @@ const formatDate = (d: Date) =>
           ))
         }
       </ul>
-      <a href="/blog/" class="link inline-block mt-4 text-sm">All posts →</a>
+      <a href="/blog/" class="quiet-link inline-block mt-4 text-sm">All posts →</a>
     </section>
 
     <!-- Work with me -->
     <section class="mb-16">
-      <h2 class="section-title"><span aria-hidden="true">~/</span>work-with-me</h2>
+      <h2 class="term-title"><span aria-hidden="true">~/</span>work-with-me</h2>
       <ul class="space-y-2 text-base text-ink-secondary dark:text-quiet-lifted">
-        <li><a href="/zero-downtime/" class="link">Zero Downtime</a> — blue-green deploys and high availability on AWS.</li>
-        <li><a href="/previas/" class="link">Business websites</a> — see live previews before you decide.</li>
-        <li><a href="/contato/" class="link">Contact</a> — projects, partnerships or consulting.</li>
+        <li><a href="/zero-downtime/" class="quiet-link">Zero Downtime</a> — blue-green deploys and high availability on AWS.</li>
+        <li><a href="/previas/" class="quiet-link">Business websites</a> — see live previews before you decide.</li>
+        <li><a href="/contato/" class="quiet-link">Contact</a> — projects, partnerships or consulting.</li>
       </ul>
     </section>
 
-    <footer class="text-xs text-quiet dark:text-quiet-lifted flex flex-wrap gap-x-4 gap-y-1">
-      <span>© {new Date().getFullYear()} Airton Vancin</span>
-      <a href="/rss.xml" class="hover:text-ink dark:hover:text-gallery-floor">RSS</a>
-      <a href="/politicas/" class="hover:text-ink dark:hover:text-gallery-floor">Privacy</a>
-      <a href="/termos/" class="hover:text-ink dark:hover:text-gallery-floor">Terms</a>
-    </footer>
+    <MinimalFooter />
   </main>
 
 </Layout>
@@ -270,15 +266,6 @@ const formatDate = (d: Date) =>
 <style>
   @reference "../styles/global.css";
 
-  .section-title {
-    @apply font-mono text-sm text-ink mb-4;
-  }
-  .section-title span {
-    @apply text-quiet-faint;
-  }
-  :global(.dark) .section-title span {
-    @apply text-quiet;
-  }
 
   /* Contribution heatmap: one column per week, cells sized by the container so
      the full year always fits without scrolling. */
@@ -308,30 +295,37 @@ const formatDate = (d: Date) =>
   :global(.dark) .cell.l2 { @apply bg-brand-lifted/50; }
   :global(.dark) .cell.l3 { @apply bg-brand-lifted/75; }
   :global(.dark) .cell.l4 { @apply bg-brand-lifted; }
-  :global(.dark) .section-title {
-    @apply text-gallery-floor;
-  }
   .row {
     @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gallery-floor;
   }
-  /* Dashed border drawn as SVG: CSS `border-dashed` gives no control over
-     dash length, gap or how dashes meet the rounded corners. The stroke is 2px
-     on the edge of the box, so half is clipped and 1px shows. Colors are
-     literal because a data URI cannot read CSS variables. */
+  /* Shared grid with dotted rules: one outer frame plus a right/bottom rule
+     on each cell. Borders rather than a 1px gap, because a gap can only ever
+     be solid. Rules on the last row and the right column are dropped so no
+     edge is drawn twice. */
+  .project-grid {
+    --rule: 1px dotted var(--color-hairline);
+    @apply overflow-hidden rounded-lg;
+    border: var(--rule);
+  }
+  .project-grid > li {
+    border-bottom: var(--rule);
+  }
+  .project-grid > li:last-child {
+    border-bottom: 0;
+  }
+  @media (min-width: 40rem) {
+    .project-grid > li:nth-child(odd) {
+      border-right: var(--rule);
+    }
+    .project-grid > li:nth-last-child(2):nth-child(odd) {
+      border-bottom: 0;
+    }
+  }
   .projects .row {
-    @apply items-start p-4 rounded-[10px] transition-[background-color,background-image];
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%23D6D5CD' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
+    @apply items-start p-5 rounded-none;
   }
-  .projects .row:hover {
-    background-color: var(--color-gallery-floor);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%239A9A92' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
-  }
-  :global(.dark) .projects .row {
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%2334342F' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
-  }
-  :global(.dark) .projects .row:hover {
-    background-color: var(--color-night-floor);
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100%25' height='100%25' fill='none' rx='10' ry='10' stroke='%236E6E64' stroke-width='2' stroke-dasharray='5 5' stroke-linecap='round'/%3E%3C/svg%3E");
+  :global(.dark) .project-grid {
+    --rule: 1px dotted var(--color-night-edge);
   }
   :global(.dark) .row:hover {
     @apply bg-night-floor;
@@ -342,11 +336,5 @@ const formatDate = (d: Date) =>
   }
   :global(.dark) .logo-fallback {
     @apply bg-night-floor text-quiet-lifted border-night-edge;
-  }
-  .link {
-    @apply text-ink underline decoration-hairline underline-offset-4 hover:decoration-ink transition-colors;
-  }
-  :global(.dark) .link {
-    @apply text-gallery-floor decoration-night-edge hover:decoration-gallery-floor;
   }
 </style>

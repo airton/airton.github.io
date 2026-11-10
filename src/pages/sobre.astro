@@ -1,21 +1,8 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import MinimalFooter from "../components/MinimalFooter.astro";
 import { Image } from "astro:assets";
 import avatar from "../assets/images/profile-avatar.png";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  IconBrandGithub,
-  IconBrandLinkedin,
-  IconMail,
-  IconCode,
-  IconServer,
-  IconDatabase,
-  IconCloud,
-  IconBriefcase,
-  IconSchool,
-  IconBrandX,
-} from "@tabler/icons-react";
 import { breadcrumbJsonLd, PERSON_ID } from "@/helpers/siteIdentity";
 
 const site = Astro.site || new URL("https://airtonvancin.com");
@@ -31,256 +18,175 @@ const profileJsonLd = {
   "@type": "ProfilePage",
   "@id": `${pageUrl}#profilepage`,
   url: pageUrl,
-  inLanguage: "pt-BR",
+  inLanguage: "en",
   mainEntity: { "@id": new URL(PERSON_ID, site).toString() },
 };
 
 const breadcrumb = breadcrumbJsonLd(
   [
     { name: "Home", path: "/" },
-    { name: "Sobre", path: "/sobre/" },
+    { name: "About", path: "/sobre/" },
   ],
   site,
   pageUrl,
 );
+
+const stack = [
+  { area: "AI & automation", tools: "LLM apps, agents, workflow automation" },
+  { area: "Front-end", tools: "React, Next.js, TypeScript, Tailwind CSS, Astro" },
+  { area: "Back-end", tools: "Node.js, Express, PHP, WordPress, REST APIs" },
+  { area: "Data", tools: "PostgreSQL, MySQL, MongoDB, Supabase, Firebase" },
+  { area: "Cloud & DevOps", tools: "AWS, Docker, CI/CD, GitHub Actions, Vercel" },
+];
+
+const experience = [
+  {
+    when: "Now",
+    role: "Engineering Director, AI",
+    note: "Leading engineering for AI products.",
+  },
+  {
+    when: "2018",
+    role: "Senior Software Engineer",
+    note: "Complex web applications, technical leadership and scalable architectures.",
+  },
+  {
+    when: "2014",
+    role: "WordPress Developer",
+    note: "Custom themes and plugins, performance and SEO.",
+  },
+];
+
+const education = [
+  {
+    title: "Information Systems",
+    note: "Bachelor's degree in software development, databases and systems architecture.",
+  },
+  {
+    title: "AWS certifications",
+    note: "Solutions architecture and cloud development on AWS.",
+  },
+];
+
+const socialLinks = [
+  { href: "https://github.com/airton", label: "GitHub" },
+  { href: "https://linkedin.com/in/airtonvancin", label: "LinkedIn" },
+  { href: "https://x.com/a_vancin", label: "X" },
+  { href: "https://profiles.wordpress.org/airtonvancin/", label: "WordPress" },
+];
 ---
 
 <Layout
-  title="Sobre Mim | Airton Vancin"
-  description="Conheça Airton Vancin, Software Engineer com experiência em React, Node.js, TypeScript e arquitetura de software."
+  title="About | Airton Vancin"
+  description="About Airton Vancin: Engineering Director in AI with 15+ years in software engineering, building side projects across React, Node.js, WordPress and AWS."
+  lang="en"
+  minimalNav={true}
+  hideFooter={true}
 >
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(profileJsonLd)}
-  />
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(breadcrumb)}
-  />
-  <!-- Hero Section -->
-  <section
-    class="w-full py-16 md:py-24 lg:py-32 bg-gallery-floor flex justify-center"
-  >
-    <div class="container px-4 md:px-6 max-w-5xl">
-      <div class="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-        <!-- Avatar -->
-        <div class="flex-shrink-0">
-          <div
-            class="w-40 h-40 md:w-52 md:h-52 rounded-full bg-hairline p-px"
-          >
-            <Image
-              src={avatar}
-              alt="Airton Vancin"
-              width={416}
-              height={416}
-              format="avif"
-              quality={80}
-              loading="eager"
-              class="w-full h-full rounded-full object-cover"
-            />
-          </div>
-        </div>
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(profileJsonLd)} />
+  <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
 
-        <!-- Intro -->
-        <div class="text-center md:text-left">
-          <h1
-            class="text-3xl md:text-4xl lg:text-5xl font-bold text-ink mb-4"
-          >
-            Olá, eu sou Airton Vancin
-          </h1>
-          <p class="text-xl text-ink-secondary mb-6 max-w-2xl">
-            Software Engineer apaixonado por criar soluções web modernas,
-            escaláveis e de alta performance. Com mais de 15 anos de experiência
-            em desenvolvimento de software.
-          </p>
-          <div class="flex flex-wrap gap-3 justify-center md:justify-start">
-            <a href="https://github.com/airton" target="_blank">
-              <Button variant="outline" className="gap-2">
-                <IconBrandGithub className="w-4 h-4" />
-                GitHub
-              </Button>
-            </a>
-            <a href="https://linkedin.com/in/airtonvancin" target="_blank">
-              <Button variant="outline" className="gap-2">
-                <IconBrandLinkedin className="w-4 h-4" />
-                LinkedIn
-              </Button>
-            </a>
-            <a
-              href="https://x.com/a_vancin"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <Button variant="outline" className="gap-2">
-                <IconBrandX className="w-4 h-4" />
-                X
-              </Button>
-            </a>
-            <a href="mailto:airtonvancin@gmail.com">
-              <Button className="gap-2 bg-brand hover:bg-brand-deep">
-                <IconMail className="w-4 h-4" />
-                Contato
-              </Button>
-            </a>
-          </div>
-        </div>
+  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
+    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+      ← Home
+    </a>
+
+    <!-- Header -->
+    <header class="mt-10 mb-14 flex items-center gap-4">
+      <Image
+        src={avatar}
+        alt="Airton Vancin"
+        width={112}
+        height={112}
+        loading="eager"
+        class="w-14 h-14 rounded-full object-cover"
+      />
+      <div>
+        <h1 class="font-plex text-xl font-semibold tracking-tight">About</h1>
+        <p class="text-sm text-quiet dark:text-quiet-lifted">Airton Vancin · AI Engineer & Builder</p>
       </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- Skills Section -->
-  <section class="w-full py-16 md:py-24 bg-wall flex justify-center">
-    <div class="container px-4 md:px-6 max-w-5xl">
-      <h2 class="text-3xl font-bold text-ink mb-8 text-center">
-        Minhas Especialidades
-      </h2>
-
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="border-hairline hover:shadow-lg transition-shadow">
-          <CardContent className="p-6 text-center">
-            <IconCode className="w-12 h-12 text-ink mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-ink mb-2">Front-end</h3>
-            <p class="text-sm text-ink-secondary">
-              React, Next.js, TypeScript, Tailwind CSS, Astro
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-hairline hover:shadow-lg transition-shadow">
-          <CardContent className="p-6 text-center">
-            <IconServer className="w-12 h-12 text-ink mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-ink mb-2">Back-end</h3>
-            <p class="text-sm text-ink-secondary">
-              Node.js, Express, PHP, WordPress, APIs REST
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-hairline hover:shadow-lg transition-shadow">
-          <CardContent className="p-6 text-center">
-            <IconDatabase className="w-12 h-12 text-ink mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-ink mb-2">
-              Banco de Dados
-            </h3>
-            <p class="text-sm text-ink-secondary">
-              PostgreSQL, MySQL, MongoDB, Supabase, Firebase
-            </p>
-          </CardContent>
-        </Card>
-
-        <Card className="border-hairline hover:shadow-lg transition-shadow">
-          <CardContent className="p-6 text-center">
-            <IconCloud className="w-12 h-12 text-ink mx-auto mb-4" />
-            <h3 class="font-semibold text-lg text-ink mb-2">
-              Cloud & DevOps
-            </h3>
-            <p class="text-sm text-ink-secondary">
-              AWS, Docker, CI/CD, GitHub Actions, Vercel
-            </p>
-          </CardContent>
-        </Card>
-      </div>
-    </div>
-  </section>
-
-  <!-- Experience Section -->
-  <section class="w-full py-16 md:py-24 bg-gallery-floor flex justify-center">
-    <div class="container px-4 md:px-6 max-w-5xl">
-      <h2 class="text-3xl font-bold text-ink mb-8 text-center">
-        Experiência & Formação
-      </h2>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        <!-- Experience -->
-        <div>
-          <div class="flex items-center gap-3 mb-6">
-            <IconBriefcase className="w-6 h-6 text-brand" />
-            <h3 class="text-xl font-semibold text-ink">Experiência</h3>
-          </div>
-
-          <div class="space-y-6">
-            <Card className="border-hairline">
-              <CardContent className="p-4">
-                <h4 class="font-semibold text-ink">
-                  Software Engineer Senior
-                </h4>
-                <p class="text-sm text-quiet mb-2">2018 - Presente</p>
-                <p class="text-ink-secondary text-sm">
-                  Desenvolvimento de aplicações web complexas, liderança técnica
-                  e implementação de arquiteturas escaláveis.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-hairline">
-              <CardContent className="p-4">
-                <h4 class="font-semibold text-ink">
-                  Desenvolvedor WordPress
-                </h4>
-                <p class="text-sm text-quiet mb-2">2014 - 2018</p>
-                <p class="text-ink-secondary text-sm">
-                  Criação de temas e plugins personalizados para WordPress,
-                  otimização de performance e SEO.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-
-        <!-- Education -->
-        <div>
-          <div class="flex items-center gap-3 mb-6">
-            <IconSchool className="w-6 h-6 text-brand" />
-            <h3 class="text-xl font-semibold text-ink">Formação</h3>
-          </div>
-
-          <div class="space-y-6">
-            <Card className="border-hairline">
-              <CardContent className="p-4">
-                <h4 class="font-semibold text-ink">
-                  Análise e Desenvolvimento de Sistemas
-                </h4>
-                <p class="text-sm text-quiet mb-2">Graduação</p>
-                <p class="text-ink-secondary text-sm">
-                  Formação técnica em desenvolvimento de software, banco de
-                  dados e arquitetura de sistemas.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="border-hairline">
-              <CardContent className="p-4">
-                <h4 class="font-semibold text-ink">Certificações AWS</h4>
-                <p class="text-sm text-quiet mb-2">Cloud Computing</p>
-                <p class="text-ink-secondary text-sm">
-                  Certificações em arquitetura de soluções e desenvolvimento na
-                  nuvem AWS.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="w-full py-16 md:py-24 bg-ink flex justify-center">
-    <div class="container px-4 md:px-6 max-w-3xl text-center">
-      <h2 class="text-3xl font-bold text-wall mb-4">
-        Vamos trabalhar juntos?
-      </h2>
-      <p class="text-quiet-lifted mb-8 text-lg">
-        Estou sempre aberto a novos projetos e oportunidades. Entre em contato
-        para discutirmos como posso ajudar.
+    <!-- Intro -->
+    <section class="mb-14 space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
+      <p>
+        I'm Airton. I work as an Engineering Director in AI, after more than 15 years writing
+        software — from WordPress themes and plugins to React front-ends, Node.js back-ends and
+        AWS infrastructure.
       </p>
-      <a href="/contato/">
-        <Button size="lg" className="bg-brand hover:bg-brand-deep text-wall">
-          Entre em Contato
-        </Button>
-      </a>
-    </div>
-  </section>
+      <p>
+        In my spare time I build side projects: small, fast tools that solve one problem well.
+        Some of them are on the <a href="/" class="quiet-link">home page</a>, and I write about
+        what I learn on the <a href="/blog/" class="quiet-link">blog</a>.
+      </p>
+    </section>
+
+    <!-- Stack -->
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>stack</h2>
+      <dl class="divide-y divide-hairline-faint dark:divide-night-edge">
+        {
+          stack.map((s) => (
+            <div class="grid sm:grid-cols-[10rem_1fr] gap-x-4 gap-y-0.5 py-2.5">
+              <dt class="font-medium">{s.area}</dt>
+              <dd class="text-quiet dark:text-quiet-lifted">{s.tools}</dd>
+            </div>
+          ))
+        }
+      </dl>
+    </section>
+
+    <!-- Experience -->
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>experience</h2>
+      <ol class="divide-y divide-hairline-faint dark:divide-night-edge">
+        {
+          experience.map((e) => (
+            <li class="grid grid-cols-[4rem_1fr] gap-x-4 py-3">
+              <span class="font-mono text-xs text-quiet dark:text-quiet-lifted pt-1">{e.when}</span>
+              <div>
+                <p class="font-medium">{e.role}</p>
+                <p class="text-sm text-quiet dark:text-quiet-lifted mt-0.5">{e.note}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <!-- Education -->
+    <section class="mb-14">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>education</h2>
+      <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
+        {
+          education.map((e) => (
+            <li class="py-3">
+              <p class="font-medium">{e.title}</p>
+              <p class="text-sm text-quiet dark:text-quiet-lifted mt-0.5">{e.note}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <!-- Elsewhere -->
+    <section class="mb-16">
+      <h2 class="term-title"><span aria-hidden="true">~/</span>elsewhere</h2>
+      <p class="text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
+        {
+          socialLinks.map((s, i) => (
+            <>
+              <a href={s.href} target="_blank" rel="me noopener noreferrer" class="quiet-link">{s.label}</a>
+              {i < socialLinks.length - 1 && <span class="text-quiet-faint"> · </span>}
+            </>
+          ))
+        }
+        <br />
+        Open to projects, partnerships and consulting — <a href="/contato/" class="quiet-link">get in touch</a>
+        or email <a href="mailto:airtonvancin@gmail.com" class="quiet-link">airtonvancin@gmail.com</a>.
+      </p>
+    </section>
+
+    <MinimalFooter />
+  </main>
 </Layout>

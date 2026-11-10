@@ -282,6 +282,19 @@
 
 /* Article Content Styling */
 @layer components {
+  /* Minimal pages (home, /sobre): mono `~/section` headings and quiet
+     underlined links. Shared here so both pages stay in step. */
+  .term-title {
+    @apply font-mono text-sm text-ink mb-4 dark:text-gallery-floor;
+  }
+  .term-title > span {
+    @apply text-quiet-faint dark:text-quiet;
+  }
+  .quiet-link {
+    @apply text-ink underline decoration-hairline underline-offset-4 transition-colors hover:decoration-ink
+      dark:text-gallery-floor dark:decoration-night-edge dark:hover:decoration-gallery-floor;
+  }
+
   /* Body copy is Ink Secondary, not Ink: at 10.92:1 it clears AA with room to
      spare and stays comfortable over a long read, which full-strength Ink at
      17.44:1 does not. Headings keep Ink so the hierarchy reads by weight AND
