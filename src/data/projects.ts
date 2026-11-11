@@ -1,6 +1,7 @@
 import type { ImageMetadata } from "astro";
 
 // Import project images
+import decloneImg from "../assets/images/projects/declone.png";
 import lumeIqImg from "../assets/images/projects/lume-iq.png";
 import jurosobraImg from "../assets/images/projects/jurosobra.jpg";
 import balancewiseImg from "../assets/images/projects/balancewise.jpg";
@@ -21,6 +22,60 @@ export interface ProjectData {
 }
 
 export const projects: ProjectData[] = [
+  {
+    id: 6,
+    name: "Declone",
+    slug: "declone",
+    desc: "Coloque a URL do seu site e descubra se alguém criou um site falso ou copiado com domínio parecido. Varredura de variações de domínio, comparação visual por prints e veredito por IA.",
+    image: decloneImg,
+    link: "https://declone.si/",
+    fullDescription: `
+            <p>O <strong>Declone</strong> (disponível em <a href="https://declone.si" target="_blank" rel="noopener noreferrer">declone.si</a>) é uma ferramenta para encontrar clones e sites falsos de uma marca. Você informa a URL do seu site e ele procura domínios parecidos que copiam seu conteúdo, seu visual ou usam sua marca para aplicar golpes. O projeto está na v0 e é construído em público.</p>
+
+            <h3>Como funciona</h3>
+            <p>Primeiro, o Declone gera cerca de 500 variações do domínio: erros de digitação, homóglifos (<code>o→0</code>), troca de TLD e combinações como <code>marca-oficial</code> ou <code>blackfridaymarca</code>. Ele também consulta os logs de Certificate Transparency (crt.sh) atrás de certificados que citam a marca. Os candidatos passam por um filtro de DNS, e os que existem são abertos e analisados: título, texto, estrutura HTML, imagens, favicon, CNPJ e telefones, campos de senha ou cartão e menções a Pix.</p>
+
+            <h3>Similaridade de código e visual</h3>
+            <p>Cada site recebe uma pontuação heurística de similaridade com o original. Os mais suspeitos são fotografados com um navegador headless e comparados por perceptual hash e paleta de cores: um print idêntico dá 100%, uma cópia levemente alterada fica perto de 72% e sites sem relação ficam abaixo de 25%.</p>
+
+            <h3>Veredito por IA</h3>
+            <p>Os suspeitos mais fortes vão para o Claude junto com os dois prints, e ele classifica cada um como clone para fraude, imitação de marca, cópia de conteúdo, relacionado legítimo, domínio estacionado ou não relacionado, com nota de risco de 0 a 100 e as evidências usadas. Uma triagem opcional com um modelo menor filtra os casos óbvios antes, para baratear a varredura.</p>
+        `,
+    features: [
+      "Cerca de 500 variações de domínio por varredura (typos, homóglifos, TLDs, prefixos e sufixos).",
+      "Busca em logs de Certificate Transparency por certificados com a marca.",
+      "Extração de sinais de golpe: campos de senha e cartão, Pix, CNPJ e telefones.",
+      "Comparação visual por prints com perceptual hash e paleta de cores.",
+      "Classificação por IA com nota de risco de 0 a 100 e evidências.",
+      "Detecção de domínios estacionados, à venda ou fora do ar.",
+      "Progresso da varredura em tempo real (streaming).",
+    ],
+    technologies: [
+      "Python",
+      "FastAPI",
+      "Claude (Anthropic API)",
+      "Playwright / Headless Chromium",
+      "Perceptual hashing",
+      "Vercel",
+    ],
+    faq: [
+      {
+        question: "O que o Declone procura?",
+        answer:
+          "Sites com domínio parecido com o seu que copiam o conteúdo, imitam o visual ou usam a marca, especialmente os que pedem senha, cartão ou Pix.",
+      },
+      {
+        question: "Como ele decide se um site é golpe?",
+        answer:
+          "Combina similaridade de código, similaridade visual por prints e uma análise do Claude, que recebe os dois prints e devolve uma classificação com nota de risco e evidências.",
+      },
+      {
+        question: "O projeto está pronto?",
+        answer:
+          "É uma v0 construída em público. Os próximos passos incluem monitoramento contínuo de domínios novos, alertas e geração de denúncias.",
+      },
+    ],
+  },
   {
     id: 4,
     name: "Lume IQ",

@@ -15,13 +15,14 @@ const { linkTo = "site" } = Astro.props;
 // One line per project — the long `desc` in projects.ts is written (in
 // Portuguese) for the case-study page and is too heavy for a grid cell.
 const projectHooks: Record<string, string> = {
+  declone: "Finds fake and cloned copies of your site on lookalike domains.",
   "lume-iq": "Free online IQ test with IRT scoring and a margin of error.",
   jurosobra: "Interest simulator for off-plan home financing in Brazil.",
   balancewise: "Smart investment portfolio rebalancing.",
   timberoad: "Solar sizing calculators and planning tools for vanlife.",
   "pablo-escobar-ipsum": "Lorem Ipsum, Narcos edition.",
 };
-const building = new Set(["lume-iq", "jurosobra"]);
+const building = new Set(["declone", "lume-iq", "jurosobra"]);
 
 const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 const external = linkTo === "site" ? { target: "_blank", rel: "noopener noreferrer" } : {};
