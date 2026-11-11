@@ -1,6 +1,6 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import PostCard from "@/components/PostCard.astro";
+import MinimalPage from "@/components/MinimalPage.astro";
+import PostList from "@/components/PostList.astro";
 import { getCollection } from "astro:content";
 import { slugify } from "@/helpers/slugify";
 import { TAG_INDEX_MIN_POSTS } from "@/data/tags";
@@ -42,32 +42,16 @@ const { label, posts } = Astro.props;
 const thin = posts.length < TAG_INDEX_MIN_POSTS;
 ---
 
-<Layout
-  title={`Artigos sobre ${label} | Blog Airton Vancin`}
-  description={`Confira todos os artigos sobre ${label} no blog de Airton Vancin: desenvolvimento web, arquitetura de software e tecnologia.`}
+<MinimalPage
+  title={`${label} | Airton Vancin`}
+  description={`Every post about ${label} on Airton Vancin's blog: web development, software architecture and technology.`}
+  heading={`#${label}`}
+  subheading={`${posts.length} ${posts.length === 1 ? "post" : "posts"}`}
+  backLabel="← All tags"
+  backHref="/blog/tags/"
   noindex={thin}
 >
-  <section
-    class="w-full py-12 md:py-24 lg:py-32 bg-background flex flex-col items-center"
-  >
-    <div class="container px-4 md:px-6">
-      <div class="max-w-3xl mx-auto text-center mb-12 lg:mb-20">
-        <p class="text-sm font-medium text-primary mb-2">
-          <a href="/blog/tags/" class="hover:underline">Tags</a>
-        </p>
-        <h1
-          class="text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl mb-6"
-        >
-          #{label}
-        </h1>
-        <p class="text-xl text-muted-foreground">
-          {posts.length} {posts.length === 1 ? "artigo encontrado" : "artigos encontrados"}
-        </p>
-      </div>
-
-      <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-        {posts.map((post) => <PostCard post={post} />)}
-      </div>
-    </div>
-  </section>
-</Layout>
+  <div class="mb-6">
+    <PostList posts={posts} />
+  </div>
+</MinimalPage>
