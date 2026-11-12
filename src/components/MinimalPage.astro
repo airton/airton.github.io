@@ -1,7 +1,7 @@
 ---
 /*
   Shell for the minimal pages (privacy, contact, projects, plugins, zero
-  downtime): the narrow Plex column, a way back home, a two-line header and the
+  downtime, blog posts, plugin pages): the narrow Plex column, a way back home, a two-line header and the
   one-line footer. The home and /sobre predate it and lay out their own header.
 */
 import Layout from "../layouts/Layout.astro";
@@ -17,6 +17,10 @@ interface Props {
   backLabel?: string;
   backHref?: string;
   noindex?: boolean;
+  image?: string;
+  type?: "website" | "article";
+  publishedDate?: Date;
+  modifiedDate?: Date;
 }
 
 const {
@@ -29,6 +33,10 @@ const {
   backLabel = "← Home",
   backHref = "/",
   noindex = false,
+  image = "/og-home.png",
+  type,
+  publishedDate,
+  modifiedDate,
 } = Astro.props;
 ---
 
@@ -38,7 +46,10 @@ const {
   lang={lang}
   alternates={alternates}
   noindex={noindex}
-  image="/og-home.png"
+  image={image}
+  type={type}
+  publishedDate={publishedDate}
+  modifiedDate={modifiedDate}
   minimalNav={true}
   hideFooter={true}
 >
@@ -49,8 +60,15 @@ const {
     </a>
 
     <header class="mt-10 mb-14">
-      <h1 class="font-plex text-xl font-semibold tracking-tight">{heading}</h1>
-      {subheading && <p class="text-sm text-quiet dark:text-quiet-lifted">{subheading}</p>}
+      <div class="flex items-center gap-3">
+        <slot name="icon" />
+        <div class="min-w-0">
+          <h1 class="font-plex text-xl font-semibold tracking-tight">{heading}</h1>
+          {subheading && <p class="text-sm text-quiet dark:text-quiet-lifted">{subheading}</p>}
+          <slot name="subheading" />
+        </div>
+      </div>
+      <slot name="header" />
     </header>
 
     <slot />

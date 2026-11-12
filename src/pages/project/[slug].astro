@@ -1,16 +1,13 @@
 ---
-import Layout from "../../layouts/Layout.astro";
-import { projects } from "../../data/projects";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  IconArrowLeft,
-  IconExternalLink,
-  IconCircleCheck,
-  IconQuestionMark,
-  IconLayersIntersect,
-} from "@tabler/icons-react";
+/*
+  One project's case study, on the minimal shell. The copy in data/projects.ts
+  is Portuguese, so the page declares pt-BR; the `~/section` labels are the
+  same English identifiers used across the minimal pages.
+*/
 import { Image } from "astro:assets";
+import MinimalPage from "@/components/MinimalPage.astro";
+import { projects, BUILDING } from "@/data/projects";
+import { breadcrumbJsonLd } from "@/helpers/siteIdentity";
 
 export async function getStaticPaths() {
   return projects.map((project) => ({
@@ -20,165 +17,167 @@ export async function getStaticPaths() {
 }
 
 const { project } = Astro.props;
+const hostOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+const host = hostOf(project.link);
+const body = "text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted";
+
+/*
+  `image` is each site's social card, shown at its own aspect so nothing is
+  cropped. Declone's is a 320px square icon rather than a card, and blown up to
+  the column width it read as a giant logo; anything that small is skipped.
+*/
+const showCard = project.image.width >= 600;
+
+const others = projects.filter((p) => p.slug !== project.slug);
+
+const site = Astro.site ?? new URL("https://airtonvancin.com");
+const pageUrl = new URL(Astro.url.pathname, site).href;
+const breadcrumb = breadcrumbJsonLd(
+  [
+    { name: "Home", path: "/" },
+    { name: "Projects", path: "/projetos/" },
+    { name: project.name, path: Astro.url.pathname },
+  ],
+  site,
+  pageUrl,
+);
+// Same `#faq` binding as ArticleLayout: the bare URL belongs to the page itself.
+const faqJsonLd = project.faq?.length
+  ? {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "@id": `${pageUrl}#faq`,
+      inLanguage: "pt-BR",
+      mainEntity: project.faq.map((item) => ({
+        "@type": "Question",
+        name: item.question,
+        acceptedAnswer: { "@type": "Answer", text: item.answer },
+      })),
+    }
+  : undefined;
 ---
 
-<Layout
+<MinimalPage
   title={`${project.name} - Case Study | Airton Vancin`}
   description={project.desc}
+  heading={project.name}
+  lang="pt-BR"
   image={project.image.src}
+  backLabel="← Projects"
+  backHref="/projetos/"
 >
-  <div class="bg-wall border-b border-hairline-faint">
-    <div class="container px-4 md:px-6 py-12 md:py-20 max-w-6xl mx-auto">
-      <a
-        href="/#projects"
-        class="inline-flex items-center text-sm font-medium text-quiet hover:text-brand mb-12 transition-colors group"
-      >
-        <IconArrowLeft
-          className="mr-2 h-4 w-4 transform group-hover:-translate-x-1 transition-transform"
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+    {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}
+  </Fragment>
+
+  <Image
+    slot="icon"
+    src={project.logo}
+    alt=""
+    width={80}
+    height={80}
+    class="w-10 h-10 rounded-lg object-cover border border-hairline-faint dark:border-night-edge shrink-0"
+  />
+
+  <p slot="subheading" class="flex items-center gap-2">
+    <a
+      href={project.link}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="font-mono text-xs text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor"
+    >
+      {host}
+    </a>
+    {
+      BUILDING.has(project.slug) && (
+        <span
+          class="text-xs px-1.5 py-px rounded bg-status-ground text-status-ink dark:bg-night-edge dark:text-live-signal"
+          lang="en"
+        >
+          building
+        </span>
+      )
+    }
+  </p>
+
+  <Fragment slot="header">
+    <p class={`mt-6 ${body}`}>{project.desc}</p>
+    <p class="mt-4 text-sm">
+      <a href={project.link} target="_blank" rel="noopener noreferrer" class="quiet-link">Visitar {host} →</a>
+    </p>
+  </Fragment>
+
+  {
+    showCard && (
+      <a href={project.link} target="_blank" rel="noopener noreferrer" class="block mb-14" tabindex="-1" aria-hidden="true">
+        <Image
+          src={project.image}
+          alt=""
+          width={1200}
+          class="w-full h-auto rounded-md border border-hairline-faint dark:border-night-edge"
         />
-        Voltar para projetos
       </a>
+    )
+  }
 
-      <div class="grid lg:grid-cols-2 gap-16 items-center">
-        <div class="space-y-8">
-          <div
-            class="inline-flex items-center gap-2 bg-brand-wash text-brand px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
-          >
-            <IconLayersIntersect className="w-3.5 h-3.5" />
-            Projeto em Destaque
-          </div>
+  <section class="mb-14">
+    <h2 class="term-title"><span aria-hidden="true">~/</span>about</h2>
+    <div class="prose post-body" set:html={project.fullDescription} />
+  </section>
 
-          <div class="space-y-4">
-            <h1
-              class="text-4xl md:text-6xl font-bold tracking-tight text-ink leading-[1.1]"
-            >
-              {project.name}
-            </h1>
-            <p class="text-xl text-ink-secondary leading-relaxed font-serif italic">
-              {project.desc}
-            </p>
-          </div>
+  <section class="mb-14">
+    <h2 class="term-title"><span aria-hidden="true">~/</span>features</h2>
+    <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
+      {project.features.map((feature) => <li class={`py-2.5 ${body}`}>{feature}</li>)}
+    </ul>
+  </section>
 
-          <div class="flex flex-wrap gap-4 pt-4">
-            <Button
-              size="lg"
-              className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-brand-bright/20 bg-brand hover:bg-brand-deep"
-              asChild
-            >
-              <a href={project.link} target="_blank" rel="noopener noreferrer">
-                Visitar Projeto <IconExternalLink className="ml-2 h-5 w-5" />
-              </a>
-            </Button>
-            {
-              project.technologies &&
-                project.technologies
-                  .slice(0, 3)
-                  .map((tech) => (
-                    <div class="hidden sm:flex items-center px-5 py-2 bg-gallery-floor border border-hairline-faint rounded-full text-sm text-quiet font-bold tracking-tight uppercase">
-                      {tech}
-                    </div>
-                  ))
-            }
-          </div>
-        </div>
-
-        <div class="relative group">
-          <div
-            class="relative overflow-hidden rounded-[2.5rem] border border-hairline-faint shadow-2xl transition-all duration-700 group-hover:scale-[1.02]"
-          >
-            <Image
-              src={project.image}
-              alt={project.name}
-              class="w-full aspect-[4/3] object-cover grayscale transition-all duration-1000 group-hover:grayscale-0"
-              width={1200}
-              height={900}
-            />
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="container px-4 md:px-6 py-24 max-w-4xl mx-auto">
-    <div class="grid gap-24">
-      <!-- Description -->
-      <section
-        class="prose prose-slate lg:prose-lg max-w-none prose-headings:text-ink prose-p:text-ink-secondary prose-p:leading-relaxed prose-li:text-ink-secondary prose-strong:text-ink"
-      >
-        <div set:html={project.fullDescription} />
+  {
+    project.technologies?.length > 0 && (
+      <section class="mb-14">
+        <h2 class="term-title"><span aria-hidden="true">~/</span>stack</h2>
+        <ul class="flex flex-wrap gap-2">
+          {project.technologies.map((tech) => (
+            <li class="font-mono text-xs px-2 py-1 rounded border border-hairline-faint text-ink-secondary dark:border-night-edge dark:text-quiet-lifted">
+              {tech}
+            </li>
+          ))}
+        </ul>
       </section>
+    )
+  }
 
-      <!-- Technologies -->
-      {
-        project.technologies && project.technologies.length > 0 && (
-          <section>
-            <div class="flex items-center gap-4 mb-10">
-              <h2 class="text-3xl font-bold text-ink">Tecnologias</h2>
-              <div class="h-px flex-grow bg-hairline-faint" />
+  {
+    project.faq?.length > 0 && (
+      <section id="faq" class="mb-14">
+        <h2 class="term-title"><span aria-hidden="true">~/</span>faq</h2>
+        <dl class="divide-y divide-hairline-faint dark:divide-night-edge">
+          {project.faq.map((item) => (
+            <div class="py-4">
+              <dt class="font-medium">{item.question}</dt>
+              <dd class={`mt-1 ${body}`}>{item.answer}</dd>
             </div>
-            <div class="flex flex-wrap gap-3">
-              {project.technologies.map((tech) => (
-                <div class="px-6 py-3 bg-wall border border-hairline-faint rounded-2xl text-sm font-bold text-ink-secondary shadow-sm hover:border-brand-edge hover:text-brand transition-all cursor-default">
-                  {tech}
-                </div>
-              ))}
-            </div>
-          </section>
-        )
-      }
-
-      <!-- Features -->
-      <section>
-        <div class="flex items-center gap-4 mb-10">
-          <h2 class="text-3xl font-bold text-ink">Principais Recursos</h2>
-          <div class="h-px flex-grow bg-hairline-faint"></div>
-        </div>
-        <div class="grid sm:grid-cols-2 gap-6">
-          {
-            project.features.map((feature) => (
-              <div class="group p-8 bg-wall border border-hairline-faint rounded-[2rem] shadow-sm hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-5">
-                <div class="p-3 bg-brand-wash rounded-2xl text-brand-bright group-hover:bg-brand group-hover:text-wall transition-colors duration-300">
-                  <IconCircleCheck className="w-6 h-6" />
-                </div>
-                <span class="text-ink-secondary font-semibold leading-relaxed pt-1">
-                  {feature}
-                </span>
-              </div>
-            ))
-          }
-        </div>
+          ))}
+        </dl>
       </section>
+    )
+  }
 
-      <!-- FAQ -->
+  <section class="mb-14" lang="en">
+    <h2 class="term-title"><span aria-hidden="true">~/</span>more-projects</h2>
+    <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
       {
-        project.faq && project.faq.length > 0 && (
-          <section>
-            <div class="flex items-center gap-4 mb-10">
-              <h2 class="text-3xl font-bold text-ink">
-                Perguntas Frequentes
-              </h2>
-              <div class="h-px flex-grow bg-hairline-faint" />
-            </div>
-            <div class="grid gap-8">
-              {project.faq.map((item) => (
-                <div class="bg-gallery-floor border border-transparent p-10 rounded-[2.5rem] hover:bg-wall hover:border-hairline-faint transition-all duration-300 shadow-sm group">
-                  <div class="flex items-start gap-5 mb-6">
-                    <div class="w-12 h-12 shrink-0 bg-wall shadow-sm flex items-center justify-center rounded-2xl text-quiet group-hover:text-brand-bright transition-colors">
-                      <IconQuestionMark className="w-6 h-6" />
-                    </div>
-                    <h3 class="text-2xl font-bold text-ink pt-2 tracking-tight group-hover:text-brand">
-                      {item.question}
-                    </h3>
-                  </div>
-                  <p class="text-lg text-quiet leading-relaxed ml-16">
-                    {item.answer}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </section>
-        )
+        others.map((p) => (
+          <li>
+            <a href={`/project/${p.slug}/`} class="group flex items-center gap-3 py-2.5">
+              <Image src={p.logo} alt="" width={48} height={48} class="w-6 h-6 rounded object-cover shrink-0" />
+              <span class="text-base group-hover:underline underline-offset-4">{p.name}</span>
+              <span class="ml-auto font-mono text-xs text-quiet dark:text-quiet-lifted">{hostOf(p.link)}</span>
+            </a>
+          </li>
+        ))
       }
-    </div>
-  </div>
-</Layout>
+    </ul>
+  </section>
+</MinimalPage>

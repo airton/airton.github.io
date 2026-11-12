@@ -4,7 +4,7 @@
   sites) and on /projetos (links to the case studies).
 */
 import { Image } from "astro:assets";
-import { projects } from "../data/projects";
+import { projects, BUILDING } from "../data/projects";
 
 interface Props {
   linkTo?: "site" | "case";
@@ -22,7 +22,6 @@ const projectHooks: Record<string, string> = {
   timberoad: "Solar sizing calculators and planning tools for vanlife.",
   "pablo-escobar-ipsum": "Lorem Ipsum, Narcos edition.",
 };
-const building = new Set(["declone", "lume-iq", "jurosobra"]);
 
 const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
 const external = linkTo === "site" ? { target: "_blank", rel: "noopener noreferrer" } : {};
@@ -44,7 +43,7 @@ const external = linkTo === "site" ? { target: "_blank", rel: "noopener noreferr
             <span class="block font-medium group-hover:underline underline-offset-4">{p.name}</span>
             <div class="flex items-center gap-2 mt-0.5">
               <span class="text-xs text-quiet dark:text-quiet-lifted font-mono">{domainOf(p.link)}</span>
-              {building.has(p.slug) && (
+              {BUILDING.has(p.slug) && (
                 <span class="text-xs px-1.5 py-px rounded bg-status-ground text-status-ink dark:bg-night-edge dark:text-live-signal">
                   building
                 </span>

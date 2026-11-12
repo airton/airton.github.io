@@ -4,10 +4,8 @@
   so this is the version that has to be indexable on its own URL rather than
   buried in a Portuguese document.
 */
-import Layout from "@/layouts/Layout.astro";
 import PluginArticle from "@/components/PluginArticle.astro";
 import { plugins } from "@/data/plugins";
-import { pluginJsonLd } from "@/helpers/pluginJsonLd";
 
 export async function getStaticPaths() {
   return plugins.map((plugin) => ({
@@ -18,33 +16,6 @@ export async function getStaticPaths() {
 
 const { plugin } = Astro.props;
 
-const ptPath = `/plugin/${plugin.slug}/`;
-const enPath = `/en/plugin/${plugin.slug}/`;
-const metaDescription = plugin.seoDescription ?? plugin.en.desc;
 ---
 
-<Layout
-  title={`${plugin.name} — WordPress Plugin | Airton Vancin`}
-  description={metaDescription}
-  image={`https://ps.w.org/${plugin.slug}/assets/banner-772x250.png`}
-  lang="en"
-  alternates={[
-    { hreflang: "pt-BR", path: ptPath },
-    { hreflang: "en", path: enPath },
-    { hreflang: "x-default", path: ptPath },
-  ]}
->
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(
-      pluginJsonLd({
-        plugin,
-        lang: "en",
-        description: metaDescription,
-        url: new URL(enPath, Astro.site).href,
-      })
-    )}
-  />
-  <PluginArticle plugin={plugin} lang="en" />
-</Layout>
+<PluginArticle plugin={plugin} lang="en" />
