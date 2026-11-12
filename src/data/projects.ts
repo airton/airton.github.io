@@ -16,6 +16,9 @@ import balancewiseLogo from "../assets/images/projects/logos/balancewise.png";
 import timberoadLogo from "../assets/images/projects/logos/timberoad.png";
 import pabloEscobarLogo from "../assets/images/projects/logos/pablo-escobar.png";
 
+/** Projects still being built in public: flagged on the grid and on their page. */
+export const BUILDING = new Set(["declone", "lume-iq", "jurosobra"]);
+
 export interface ProjectData {
   id: number;
   name: string;

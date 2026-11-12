@@ -1,144 +1,60 @@
 ---
-import Layout from "../layouts/Layout.astro";
-import { previas, previaCategories } from "../data/previas";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  IconLayoutGrid,
-  IconArrowUpRight,
-  IconSnowflake,
-  IconSparkles,
-  IconPaw,
-  IconTool,
-} from "@tabler/icons-react";
-
-const title = "Portfólio de Prévias - Airton Vancin";
-
-const description =
-  "Uma coleção de prévias de sites publicadas para negócios locais nos nichos de refrigeração, beleza, pet e B2B.";
-
-const labels = {
-  eyebrow: "Prévias ao Vivo",
-  title: "Prévias de sites construídas para negócios reais.",
-  subtitle:
-    "Cada link é uma prévia totalmente funcional, entregue com agilidade para o negócio ver sua marca no ar antes do lançamento.",
-  count: `${previas.length} prévias publicadas`,
-  visit: "Ver prévia",
-};
-
-const categoryIcons = {
-  refrigeracao: IconSnowflake,
-  beleza: IconSparkles,
-  pet: IconPaw,
-  b2b: IconTool,
-} as const;
+/*
+  Live site previews built for local businesses, grouped by niche. The audience
+  is Brazilian business owners, so the page and its chrome are Portuguese.
+*/
+import MinimalPage from "@/components/MinimalPage.astro";
+import { previas, previaCategories } from "@/data/previas";
 
 const grouped = previaCategories
-  .map((cat) => ({
-    ...cat,
-    items: previas.filter((p) => p.category === cat.id),
-  }))
+  .map((cat) => ({ ...cat, items: previas.filter((p) => p.category === cat.id) }))
   .filter((g) => g.items.length > 0);
 ---
 
-<Layout title={title} description={description}>
-  <section
-    class="w-full py-24 md:py-32 bg-wall flex justify-center min-h-screen"
-  >
-    <div class="container px-4 md:px-6 max-w-7xl">
-      <!-- Header -->
-      <div
-        class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6 text-left"
-      >
-        <div class="max-w-2xl">
-          <div
-            class="inline-flex items-center gap-2 text-brand font-medium text-sm tracking-wider uppercase mb-3 text-left"
-          >
-            <IconLayoutGrid className="w-4 h-4" />
-            <span
-              >{labels.eyebrow}</span
-            >
-          </div>
-          <h1
-            class="text-4xl md:text-6xl font-bold tracking-tight text-ink mb-6 leading-[1.1]"
-          >
-            {labels.title}
-          </h1>
-          <p
-            class="text-lg text-quiet font-serif italic text-left"
-          >
-            {labels.subtitle}
-          </p>
-        </div>
-        <div class="hidden md:block">
-          <p
-            class="text-quiet text-sm max-w-[200px] text-right font-bold uppercase tracking-widest"
-          >
-            {labels.count}
-          </p>
-        </div>
-      </div>
-
-      <!-- Grouped previews -->
-      <div class="flex flex-col gap-16">
-        {
-          grouped.map((group) => {
-            const CatIcon = categoryIcons[group.id];
-            return (
-              <div>
-                <div class="flex items-center gap-3 mb-8">
-                  <div class="p-2.5 bg-brand-wash rounded-2xl text-brand">
-                    <CatIcon className="w-5 h-5" />
-                  </div>
-                  <h2
-                    class="text-2xl font-bold tracking-tight text-ink"
-                  >
-                    {group.labelPt}
-                  </h2>
-                  <span class="text-sm font-bold text-ink-secondary tabular-nums">
-                    {String(group.items.length).padStart(2, "0")}
-                  </span>
-                  <div class="h-px flex-grow bg-hairline-faint ml-2" />
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {group.items.map((previa) => (
-                    <a
-                      href={previa.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      class="group block h-full"
-                    >
-                      <Card className="h-full bg-wall border border-hairline-faint shadow-resting hover:shadow-approach group-hover:-translate-y-1 group-hover:border-brand-edge transition-all duration-500 rounded-3xl overflow-hidden flex flex-col">
-                        <CardContent className="p-7 flex-grow flex flex-col">
-                          <div class="flex items-start justify-between gap-4 mb-6">
-                            <h3 class="text-xl font-bold text-ink group-hover:text-brand transition-colors duration-300 leading-snug">
-                              {previa.name}
-                            </h3>
-                            <div class="shrink-0 p-2 bg-gallery-floor rounded-full text-quiet group-hover:bg-brand-wash group-hover:text-brand transition-all duration-300">
-                              <IconArrowUpRight className="w-5 h-5 transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300" />
-                            </div>
-                          </div>
-
-                          <div class="mt-auto flex flex-col gap-1">
-                            <span class="text-sm font-medium text-ink-secondary">
-                              {previa.niche}
-                            </span>
-                            {previa.location && (
-                              <span class="text-xs text-quiet uppercase tracking-wider">
-                                {previa.location}
-                              </span>
-                            )}
-                          </div>
-                        </CardContent>
-                      </Card>
-                    </a>
-                  ))}
-                </div>
-              </div>
-            );
-          })
-        }
-      </div>
-    </div>
+<MinimalPage
+  title="Portfólio de Prévias | Airton Vancin"
+  description="Uma coleção de prévias de sites publicadas para negócios locais nos nichos de refrigeração, beleza, pet e B2B."
+  heading="Prévias"
+  subheading={`${previas.length} prévias publicadas`}
+  lang="pt-BR"
+  backLabel="← Início"
+>
+  <section class="mb-14 space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
+    <p>
+      Prévias de sites construídas para negócios reais. Cada link é uma prévia funcionando, entregue com
+      agilidade para o negócio ver sua marca no ar antes do lançamento.
+    </p>
   </section>
-</Layout>
+
+  {
+    grouped.map((group) => (
+      <section class="mb-14">
+        <div class="flex items-baseline gap-2 mb-4">
+          <h2 class="term-title mb-0"><span aria-hidden="true">~/</span>{group.id}</h2>
+          <span class="text-xs text-quiet dark:text-quiet-lifted">{group.labelPt} · {group.items.length}</span>
+        </div>
+        <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
+          {group.items.map((previa) => (
+            <li>
+              <a
+                href={previa.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-baseline justify-between gap-4 py-2.5"
+              >
+                <span class="text-base group-hover:underline underline-offset-4">
+                  {previa.name}
+                  <span aria-hidden="true" class="text-quiet-faint dark:text-quiet">↗</span>
+                </span>
+                <span class="shrink-0 text-right text-xs text-quiet dark:text-quiet-lifted">
+                  {previa.niche}
+                  {previa.location && <span class="hidden sm:inline"> · {previa.location}</span>}
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</MinimalPage>

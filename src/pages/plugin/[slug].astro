@@ -4,10 +4,8 @@
   it is the one Google has indexed and the one carrying the site's search
   impressions, so it keeps its path and the English version takes /en/.
 */
-import Layout from "@/layouts/Layout.astro";
 import PluginArticle from "@/components/PluginArticle.astro";
 import { plugins } from "@/data/plugins";
-import { pluginJsonLd } from "@/helpers/pluginJsonLd";
 
 export async function getStaticPaths() {
   return plugins.map((plugin) => ({
@@ -18,33 +16,6 @@ export async function getStaticPaths() {
 
 const { plugin } = Astro.props;
 
-const ptPath = `/plugin/${plugin.slug}/`;
-const enPath = `/en/plugin/${plugin.slug}/`;
-const metaDescription = plugin.seoDescriptionPt ?? plugin.pt.desc;
 ---
 
-<Layout
-  title={`${plugin.name} — Plugin WordPress | Airton Vancin`}
-  description={metaDescription}
-  image={`https://ps.w.org/${plugin.slug}/assets/banner-772x250.png`}
-  lang="pt-BR"
-  alternates={[
-    { hreflang: "pt-BR", path: ptPath },
-    { hreflang: "en", path: enPath },
-    { hreflang: "x-default", path: ptPath },
-  ]}
->
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(
-      pluginJsonLd({
-        plugin,
-        lang: "pt",
-        description: metaDescription,
-        url: new URL(ptPath, Astro.site).href,
-      })
-    )}
-  />
-  <PluginArticle plugin={plugin} lang="pt" />
-</Layout>
+<PluginArticle plugin={plugin} lang="pt" />

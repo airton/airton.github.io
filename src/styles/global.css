@@ -417,4 +417,66 @@
   .prose hr {
     @apply border-hairline my-8;
   }
+
+  /* Blog posts on the minimal shell: the same rules scaled down to the narrow
+     Plex column, where the page h1 is text-xl, so h2s can't shout over it. */
+  .post-body,
+  .post-body :is(h2, h3, h4, h5, h6) {
+    @apply font-plex;
+  }
+  .post-body {
+    @apply text-base leading-relaxed dark:text-quiet-lifted;
+  }
+  .post-body p,
+  .post-body ul,
+  .post-body ol {
+    @apply font-normal text-base leading-relaxed mb-5 lg:mb-5 dark:text-quiet-lifted;
+  }
+  .post-body li {
+    @apply dark:text-quiet-lifted;
+  }
+  .post-body h2 {
+    @apply text-lg lg:text-lg font-semibold tracking-tight mt-12 mb-3 border-0 pb-0 dark:text-gallery-floor;
+  }
+  .post-body h3 {
+    @apply text-base lg:text-base font-semibold mt-8 mb-2 dark:text-gallery-floor;
+  }
+  .post-body :is(h4, h5, h6) {
+    @apply text-base lg:text-base font-medium mt-6 mb-2 dark:text-gallery-floor;
+  }
+  .post-body :is(strong, b) {
+    @apply font-semibold dark:text-gallery-floor;
+  }
+  .post-body a {
+    @apply font-normal text-ink underline decoration-hairline underline-offset-4 hover:text-ink hover:decoration-ink
+      dark:text-gallery-floor dark:decoration-night-edge dark:hover:decoration-gallery-floor;
+  }
+  .post-body blockquote {
+    @apply border-l-2 border-hairline bg-transparent rounded-none py-0 px-4 not-italic text-quiet
+      dark:border-night-edge dark:text-quiet-lifted;
+  }
+  .post-body pre {
+    @apply text-sm rounded-md shadow-none dark:border dark:border-night-edge;
+  }
+  .post-body :not(pre) > code {
+    @apply bg-hairline-faint text-ink text-[0.875em] dark:bg-night-edge dark:text-gallery-floor;
+  }
+  .post-body img {
+    @apply rounded-md shadow-none;
+  }
+  .post-body :is(th, td) {
+    @apply p-2 text-sm dark:border-night-edge dark:text-quiet-lifted;
+  }
+  .post-body th {
+    @apply dark:bg-night-floor dark:text-gallery-floor;
+  }
+  .post-body tr:nth-child(even) {
+    @apply dark:bg-night-floor;
+  }
+  .post-body hr {
+    @apply dark:border-night-edge;
+  }
+  .post-body .ad-slot {
+    @apply dark:border-night-edge;
+  }
 }

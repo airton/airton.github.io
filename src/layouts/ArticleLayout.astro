@@ -1,78 +1,47 @@
 ---
-import { dateFormat } from "@/helpers/dateFormat";
+/*
+  One blog post, on the minimal shell: the narrow Plex column, a way back to
+  /blog, the title as the two-line header, then the body, tags, sharing,
+  related posts and comments as quiet `~/section` blocks.
+*/
+import { getCollection } from "astro:content";
 import { slugify } from "@/helpers/slugify";
-import Layout from "@/layouts/Layout.astro";
-import ZeroDowntimeCTA from "@/components/ZeroDowntimeCTA.astro";
-import RecentPosts from "@/components/RecentPosts.astro";
+import MinimalPage from "@/components/MinimalPage.astro";
+import PostList from "@/components/PostList.astro";
 import ShareButtons from "@/components/ShareButtons.astro";
 import { breadcrumbJsonLd, PERSON_ID } from "@/helpers/siteIdentity";
-import type { MarkdownInstance } from "astro";
 
-const { frontmatter, readingTime } = Astro.props;
+const { id, frontmatter, readingTime } = Astro.props;
 const pageUrl = Astro.url.href;
 const pageId = Astro.url.pathname;
 
-const postImports = import.meta.glob("../content/blog/*.mdx", { eager: true });
-const allPosts = Object.values(postImports).map((post) => {
-  const typedPost = post as MarkdownInstance<Record<string, any>> & {
-    file: string;
-  };
-  /*
-    Trailing slash matters twice here: the site serves trailing-slash URLs, so
-    without it every related-post link 308-redirects — and the self-filter below
-    compares this against Astro.url.pathname, which always has one. Mismatched,
-    the comparison never fired and every post listed itself as related to itself.
-  */
-  const url = `${typedPost.file.split("/src/content")[1].replace(".mdx", "")}/`;
-  return {
-    ...typedPost,
-    url,
-  };
-});
+const currentTags: string[] = frontmatter.tags || [];
 
-const currentTags = frontmatter.tags || [];
-
-const scoredPosts = allPosts.map((post) => {
-  let score = 0;
-  const postTags = post.frontmatter.tags || [];
-
-  // Point for shared tags
-  postTags.forEach((tag: string) => {
-    if (currentTags.includes(tag)) score += 1;
-  });
-
-  return { ...post, score };
-});
-
-const sortedPosts = scoredPosts
-  .filter((post) => post.url !== Astro.url.pathname) // Remove current post
-  .sort((a, b) => {
-    // Sort by score first (descending)
-    if (b.score !== a.score) return b.score - a.score;
-    // Then by date (descending)
-    return (
-      new Date(b.frontmatter.date).valueOf() -
-      new Date(a.frontmatter.date).valueOf()
-    );
-  });
-
-const relatedPosts = sortedPosts.slice(0, 3);
+/*
+  Related posts: most shared tags first, then newest. PostList re-sorts by date,
+  so the score only decides which three make the cut.
+*/
+const relatedPosts = (await getCollection("blog"))
+  .filter((post) => post.id !== id)
+  .map((post) => ({
+    post,
+    score: (post.data.tags ?? []).filter((tag) => currentTags.includes(tag)).length,
+  }))
+  .sort((a, b) => b.score - a.score || b.post.data.date.valueOf() - a.post.data.date.valueOf())
+  .slice(0, 3)
+  .map(({ post }) => post);
 
 const site = Astro.site || new URL("https://airtonvancin.com");
 const lang = frontmatter.lang ?? "pt-BR";
 const publishedDate = new Date(frontmatter.date);
-const modifiedDate = frontmatter.updatedDate
-  ? new Date(frontmatter.updatedDate)
-  : undefined;
+const modifiedDate = frontmatter.updatedDate ? new Date(frontmatter.updatedDate) : undefined;
 
 /*
   `frontmatter.image` is ImageMetadata now that the collection schema declares
   it with `image()`, so the absolute URL comes from `.src` — the build-hashed
   path of the optimized asset — rather than from the frontmatter string.
 */
-const socialImage = frontmatter.image
-  ? new URL(frontmatter.image.src, site).toString()
-  : undefined;
+const socialImage = frontmatter.image ? new URL(frontmatter.image.src, site).toString() : undefined;
 
 const jsonLd = {
   "@context": "https://schema.org",
@@ -100,14 +69,14 @@ const jsonLd = {
   their @id is the ambiguity that makes Google keep one and discard the other.
   Same reasoning as helpers/pluginJsonLd.ts.
 */
-const faq = frontmatter.faq ?? [];
+const faq: { question: string; answer: string }[] = frontmatter.faq ?? [];
 const faqJsonLd = faq.length
   ? {
       "@context": "https://schema.org",
       "@type": "FAQPage",
       "@id": `${pageUrl}#faq`,
       inLanguage: lang,
-      mainEntity: faq.map((item: { question: string; answer: string }) => ({
+      mainEntity: faq.map((item) => ({
         "@type": "Question",
         name: item.question,
         acceptedAnswer: { "@type": "Answer", text: item.answer },
@@ -115,8 +84,7 @@ const faqJsonLd = faq.length
     }
   : undefined;
 
-const faqHeading =
-  lang === "pt-BR" ? "Perguntas frequentes" : "Frequently asked questions";
+const faqHeading = lang === "pt-BR" ? "Perguntas frequentes" : "Frequently asked questions";
 
 const breadcrumb = breadcrumbJsonLd(
   [
@@ -135,163 +103,105 @@ const breadcrumb = breadcrumbJsonLd(
   truncated every post in the SERP.
 */
 const pageTitle = `${frontmatter.seoTitle ?? frontmatter.title} | Airton Vancin`;
+
+// Chrome is English across the minimal pages, as on /blog; the body keeps its own language.
+const dateLabel = publishedDate.toLocaleDateString("en-US", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+  timeZone: "UTC",
+});
+const meta = [dateLabel, readingTime && `${readingTime} min read`].filter(Boolean).join(" · ");
 ---
 
-<Layout
+<MinimalPage
   title={pageTitle}
   description={frontmatter.description}
+  heading={frontmatter.title}
+  lang={lang}
   image={socialImage}
   type="article"
   publishedDate={publishedDate}
   modifiedDate={modifiedDate}
-  lang={lang}
+  backLabel="← Writing"
+  backHref="/blog/"
 >
-  <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
-  <script
-    type="application/ld+json"
-    is:inline
-    set:html={JSON.stringify(breadcrumb)}
-  />
+  <Fragment slot="head">
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(jsonLd)} />
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
+    {faqJsonLd && <script type="application/ld+json" is:inline set:html={JSON.stringify(faqJsonLd)} />}
+  </Fragment>
+
+  <Fragment slot="header">
+    <p class="text-sm text-quiet dark:text-quiet-lifted" lang="en">
+      <time datetime={publishedDate.toISOString()}>{meta}</time>
+    </p>
+    <p class="mt-6 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
+      {frontmatter.description}
+    </p>
+  </Fragment>
+
+  <article class="prose post-body mb-14">
+    <slot />
+    {
+      faq.length > 0 && (
+        <section id="faq">
+          <h2>{faqHeading}</h2>
+          {faq.map((item) => (
+            <>
+              <h3>{item.question}</h3>
+              <p>{item.answer}</p>
+            </>
+          ))}
+        </section>
+      )
+    }
+  </article>
+
   {
-    faqJsonLd && (
-      <script
-        type="application/ld+json"
-        is:inline
-        set:html={JSON.stringify(faqJsonLd)}
-      />
+    currentTags.length > 0 && (
+      <section class="mb-14" lang="en">
+        <h2 class="term-title"><span aria-hidden="true">~/</span>tags</h2>
+        <p class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+          {currentTags.map((tag) => (
+            <a href={`/blog/tag/${slugify(tag)}/`} class="quiet-link">#{tag}</a>
+          ))}
+        </p>
+      </section>
     )
   }
-  <div
-    class="w-full py-12 md:py-24 lg:py-32 bg-gallery-floor flex justify-center"
-  >
-    <div class="container px-4 md:px-6 max-w-4xl">
-      <div
-        class="flex flex-col lg:flex-row items-center justify-center gap-4 space-y-4 text-center"
-      >
-        <div class="flex flex-col items-center space-y-4 text-center">
-          <div class="space-y-2">
-            <h1
-              class="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none text-ink"
-            >
-              {frontmatter.title}
-            </h1>
-            <p
-              class="mx-auto max-w-[700px] text-ink md:text-xl dark:text-ink"
-            >
-              {frontmatter.description}
-            </p>
-            <p
-              class="mx-auto max-w-[700px] text-ink md:text-sm dark:text-ink"
-            >
-              {dateFormat(frontmatter.date)}
-              {
-                readingTime &&
-                  ` · ${readingTime} ${lang === "pt-BR" ? "min de leitura" : "min read"}`
-              }
-            </p>
-            {
-              lang !== "pt-BR" && (
-                <p
-                  class="mx-auto max-w-[700px] pt-2 text-sm text-quiet"
-                  lang="pt-BR"
-                >
-                  Este artigo está em inglês. Ele responde a buscas técnicas que
-                  chegam nesse idioma, e traduzir só a interface ao redor
-                  deixaria o leitor sem aviso.
-                </p>
-              )
-            }
-            {
-              currentTags.length > 0 && (
-                <div class="flex flex-wrap justify-center gap-2 pt-2">
-                  {currentTags.map((tag: string) => (
-                    <a
-                      href={`/blog/tag/${slugify(tag)}/`}
-                      class="inline-flex items-center rounded-full bg-ink/5 hover:bg-ink/10 px-3 py-1 text-xs font-medium text-ink-secondary transition-colors"
-                    >
-                      #{tag}
-                    </a>
-                  ))}
-                </div>
-              )
-            }
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div
-    class="w-full px-4 md:px-6 py-8 md:py-12 lg:py-16 flex justify-center bg-wall"
-  >
-    <article
-      class="prose prose-slate prose-lg max-w-4xl w-full
-        prose-headings:font-bold prose-headings:tracking-tight prose-headings:text-ink
-        prose-h2:text-3xl prose-h2:mt-12 prose-h2:mb-4 prose-h2:border-b prose-h2:border-hairline prose-h2:pb-2
-        prose-h3:text-2xl prose-h3:mt-8 prose-h3:mb-3
-        prose-h4:text-xl prose-h4:mt-6 prose-h4:mb-2
-        prose-h5:text-lg prose-h5:mt-4 prose-h5:mb-2
-        prose-h6:text-base prose-h6:mt-4 prose-h6:mb-2 prose-h6:uppercase prose-h6:tracking-wide
-        prose-p:text-ink-secondary prose-p:leading-relaxed prose-p:mb-4
-        prose-a:text-brand prose-a:font-medium prose-a:no-underline hover:prose-a:underline hover:prose-a:text-brand-deep
-        prose-strong:font-bold prose-strong:text-ink
-        prose-em:italic prose-em:text-ink-secondary
-        prose-ul:list-disc prose-ul:pl-6 prose-ul:my-4 prose-ul:space-y-2
-        prose-ol:list-decimal prose-ol:pl-6 prose-ol:my-4 prose-ol:space-y-2
-        prose-li:text-ink-secondary prose-li:leading-relaxed
-        prose-blockquote:border-l-4 prose-blockquote:border-brand prose-blockquote:bg-gallery-floor prose-blockquote:py-4 prose-blockquote:px-6 prose-blockquote:my-6 prose-blockquote:rounded-r-lg prose-blockquote:italic prose-blockquote:text-ink-secondary
-        prose-code:bg-hairline-faint prose-code:text-code-magenta prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm prose-code:font-mono prose-code:before:content-none prose-code:after:content-none
-        prose-pre:bg-ink prose-pre:text-gallery-floor prose-pre:rounded-xl prose-pre:shadow-xl prose-pre:my-6 prose-pre:overflow-x-auto
-        prose-table:w-full prose-table:my-6 prose-table:border-collapse prose-table:rounded-lg
-        prose-thead:bg-hairline-faint
-        prose-th:text-left prose-th:font-semibold prose-th:text-ink prose-th:p-3 prose-th:border prose-th:border-hairline
-        prose-td:p-3 prose-td:border prose-td:border-hairline prose-td:text-ink-secondary
-        prose-tr:even:bg-gallery-floor
-        prose-img:rounded-xl prose-img:shadow-lg prose-img:my-6
-        prose-hr:border-hairline prose-hr:my-8"
-    >
-      <slot />
-      {
-        faq.length > 0 && (
-          <section id="faq">
-            <h2>{faqHeading}</h2>
-            {faq.map((item: { question: string; answer: string }) => (
-              <>
-                <h3>{item.question}</h3>
-                <p>{item.answer}</p>
-              </>
-            ))}
-          </section>
-        )
-      }
-    </article>
-  </div>
 
-  <div class="w-full px-4 md:px-6 pb-8 flex justify-center bg-wall">
-    <div class="max-w-4xl w-full border-t border-hairline pt-8">
-      <ShareButtons url={pageUrl} title={frontmatter.title} />
-    </div>
-  </div>
+  <section class="mb-14" lang="en">
+    <h2 class="term-title"><span aria-hidden="true">~/</span>share</h2>
+    <ShareButtons url={pageUrl} title={frontmatter.title} />
+  </section>
 
-  <RecentPosts posts={relatedPosts} title="Posts Relacionados" />
+  {
+    relatedPosts.length > 0 && (
+      <section class="mb-4" lang="en">
+        <h2 class="term-title"><span aria-hidden="true">~/</span>related</h2>
+        <PostList posts={relatedPosts} />
+      </section>
+    )
+  }
 
-  <!-- Disqus Comments Section -->
-  <!-- Disqus injects its own theming, so this block pins itself to the light
-       reading surface rather than inheriting it. -->
-  <div class="w-full bg-wall text-ink-secondary py-12" style="color-scheme: light;">
-    <div class="container px-4 md:px-6 max-w-4xl mx-auto">
-      <h2 class="text-2xl font-bold mb-6 text-ink">
-        Comentários
-      </h2>
-      <div id="disqus_thread" style="color-scheme: light;"></div>
-      <noscript>
-        Por favor, habilite o JavaScript para ver os
-        <a href="https://disqus.com/?ref_noscript">comentários do Disqus.</a>
-      </noscript>
-    </div>
-  </div>
+  <section class="mb-14 text-sm text-quiet dark:text-quiet-lifted" lang="en">
+    <p>
+      Need deploys without downtime? See <a href="/zero-downtime/" class="quiet-link">Front-end Zero Downtime</a>.
+    </p>
+  </section>
 
-  <ZeroDowntimeCTA />
-</Layout>
+  <!-- Disqus injects its own theming, so the thread pins itself to the light scheme. -->
+  <section class="mb-14" lang="en">
+    <h2 class="term-title"><span aria-hidden="true">~/</span>comments</h2>
+    <div id="disqus_thread" style="color-scheme: light;"></div>
+    <noscript>
+      <p class="text-sm text-quiet">
+        Enable JavaScript to see the <a href="https://disqus.com/?ref_noscript" class="quiet-link">Disqus comments</a>.
+      </p>
+    </noscript>
+  </section>
+</MinimalPage>
 
 <script is:inline define:vars={{ pageUrl, pageId }}>
   var disqus_config = function () {
