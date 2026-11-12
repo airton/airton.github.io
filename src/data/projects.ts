@@ -8,12 +8,21 @@ import balancewiseImg from "../assets/images/projects/balancewise.jpg";
 import timberoadImg from "../assets/images/projects/timberoad.jpg";
 import pabloEscobarImg from "../assets/images/projects/pablo-escobar.jpg";
 
+// Project logos (each site's own app icon)
+import decloneLogo from "../assets/images/projects/logos/declone.png";
+import lumeIqLogo from "../assets/images/projects/logos/lume-iq.png";
+import jurosobraLogo from "../assets/images/projects/logos/jurosobra.png";
+import balancewiseLogo from "../assets/images/projects/logos/balancewise.png";
+import timberoadLogo from "../assets/images/projects/logos/timberoad.png";
+import pabloEscobarLogo from "../assets/images/projects/logos/pablo-escobar.png";
+
 export interface ProjectData {
   id: number;
   name: string;
   slug: string;
   desc: string;
   image: ImageMetadata;
+  logo: ImageMetadata;
   link: string;
   fullDescription: string;
   features: string[];
@@ -28,6 +37,7 @@ export const projects: ProjectData[] = [
     slug: "declone",
     desc: "Coloque a URL do seu site e descubra se alguém criou um site falso ou copiado com domínio parecido. Varredura de variações de domínio, comparação visual por prints e veredito por IA.",
     image: decloneImg,
+    logo: decloneLogo,
     link: "https://declone.si/",
     fullDescription: `
             <p>O <strong>Declone</strong> (disponível em <a href="https://declone.si" target="_blank" rel="noopener noreferrer">declone.si</a>) é uma ferramenta para encontrar clones e sites falsos de uma marca. Você informa a URL do seu site e ele procura domínios parecidos que copiam seu conteúdo, seu visual ou usam sua marca para aplicar golpes. O projeto está na v0 e é construído em público.</p>
@@ -82,6 +92,7 @@ export const projects: ProjectData[] = [
     slug: "lume-iq",
     desc: "Teste de QI online gratuito, preciso e transparente baseado na Teoria de Resposta ao Item (IRT). Pontuação instantânea com margem de erro explícita e sem assinaturas ocultas.",
     image: lumeIqImg,
+    logo: lumeIqLogo,
     link: "https://getlumeiq.com/",
     fullDescription: `
             <p>O <strong>Lume IQ</strong> (disponível em <a href="https://getlumeiq.com" target="_blank" rel="noopener noreferrer">getlumeiq.com</a>) é uma plataforma moderna de avaliação cognitiva desenvolvida com foco em rigor estatístico, psicometria contemporânea e transparência total com o usuário.</p>
@@ -137,6 +148,7 @@ export const projects: ProjectData[] = [
     slug: "jurosobra",
     desc: "Simulador inteligente de financiamento imobiliário na planta. Calcule mês a mês a evolução dos juros de obra com correção pelo INCC, fluxo de desembolso e comparação SAC vs. Price.",
     image: jurosobraImg,
+    logo: jurosobraLogo,
     link: "https://jurosobra.com.br/",
     fullDescription: `
             <p>O <strong>Juros de Obra</strong> (disponível em <a href="https://jurosobra.com.br" target="_blank" rel="noopener noreferrer">jurosobra.com.br</a>) é uma ferramenta financeira especializada projetada para resolver uma das maiores dores de quem compra imóveis na planta: a imprevisibilidade da <strong>taxa de evolução de obra</strong> (comumente chamada de 'juros de obra') cobrada pela Caixa Econômica Federal e outros bancos ao longo da construção.</p>
@@ -193,6 +205,7 @@ export const projects: ProjectData[] = [
     slug: "balancewise",
     desc: "Rebalanceie sua carteira de investimentos com o balancewise. Otimize seus investimentos com o balancewise. Rebalanceie sua carteira de forma simples e eficiente para maximizar seus ganhos.",
     image: balancewiseImg,
+    logo: balancewiseLogo,
     link: "https://balancewise.io/",
     fullDescription: `
             <p>O <strong>Balancewise.io</strong> é uma ferramenta sofisticada de gestão de portfólio projetada para investidores que entendem a importância do rebalanceamento periódico. Manter a alocação de ativos alinhada com seus objetivos de risco e retorno é uma das estratégias mais eficazes para o sucesso a longo prazo, mas calcular manualmente quanto comprar ou vender de cada ativo pode ser trabalhoso e propenso a erros.</p>
@@ -241,6 +254,7 @@ export const projects: ProjectData[] = [
     slug: "timberoad",
     desc: "Timberoad é sobre liberdade. Em um mundo cheio de regras, tudo o que buscamos é um pedaço de paraíso tranquilo para nos divertirmos. Ao projetar uma van, prezamos pela funcionalidade, conforto e confiabilidade.",
     image: timberoadImg,
+    logo: timberoadLogo,
     link: "https://timberoad.vercel.app/",
     fullDescription: `
             <p><strong>Timberoad</strong> não é apenas um projeto de conversão de vans; é um manifesto de liberdade sobre rodas. Nascido da paixão pela estrada e pelo estilo de vida minimalista, o Timberoad documenta e auxilia na transformação de veículos utilitários em casas móveis completas, funcionais e aconchegantes.</p>
@@ -288,6 +302,7 @@ export const projects: ProjectData[] = [
     slug: "pablo-escobar-ipsum",
     desc: "Pablo Escobar Ipsum. O lorem ipsum do pablito. Ustedes pueden aceptar mi negocio o aceptar las consequências. ¿Plata o plomo?",
     image: pabloEscobarImg,
+    logo: pabloEscobarLogo,
     link: "https://www.pabloescobaripsum.com/",
     fullDescription: `
             <p><strong>Pablo Escobar Ipsum</strong> é um gerador de texto placeholder (Lorem Ipsum) com um toque de humor negro e história pop. Em vez do latim clássico e monótono, ele preenche seus layouts de design com as frases icônicas, gírias e diálogos memoráveis da série Narcos e da cultura pop que envolve a figura de Pablo Escobar.</p>
