@@ -90,6 +90,7 @@ const formatDate = (d: Date) =>
   image="/og-home.png"
   minimalNav={true}
   hideFooter={true}
+  noAds
 >
   <SiteShell>
       <main class="home">
@@ -327,27 +328,11 @@ const formatDate = (d: Date) =>
           </div>
         </section>
 
-        <!-- The home's only ad: one manual unit at the very end. -->
-        <aside class="ad-slot" aria-label="Advertisement">
-          <span class="ad-label">Advertisement</span>
-          <ins
-            class="adsbygoogle"
-            style="display:block; text-align:center;"
-            data-ad-layout="in-article"
-            data-ad-format="fluid"
-            data-ad-client="ca-pub-3553535106347103"
-            data-ad-slot="8719098193"></ins>
-        </aside>
       </main>
 
   </SiteShell>
 </Layout>
 
-<script is:inline>
-  document.querySelectorAll("ins.adsbygoogle[data-ad-slot]").forEach(function () {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
-  });
-</script>
 
 <style>
   .home {
@@ -989,20 +974,6 @@ const formatDate = (d: Date) =>
     border-color: #bfc5e8;
   }
 
-  /* Ad */
-  .ad-slot {
-    padding: 32px 0 40px;
-    border-top: 1px solid var(--line);
-  }
-  .ad-label {
-    display: block;
-    margin-bottom: 8px;
-    color: var(--faint);
-    font-size: 10px;
-    letter-spacing: 0.12em;
-    text-align: center;
-    text-transform: uppercase;
-  }
 
   /* Footer */
 
