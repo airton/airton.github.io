@@ -1,9 +1,9 @@
 ---
 title: "WordPress and Nextcloud SSO: A Practical Guide to Single Sign-On"
-seoTitle: "WordPress and Nextcloud SSO Setup Guide"
+seoTitle: "WordPress Nextcloud SSO (Single Sign-On): 3 Ways to Set It Up"
 description: "Three ways to wire single sign-on between WordPress and Nextcloud: a shared SAML provider, WordPress as the OIDC provider, or Nextcloud's built-in OAuth2 server. Which plugin each needs, when to pick which, and the traps."
 date: "2026-07-30"
-updatedDate: "2026-10-26"
+updatedDate: "2026-11-21"
 image: "../../assets/images/blog/wordpress-setup.jpg"
 tags: ["WordPress", "Nextcloud", "SSO", "Security", "Architecture"]
 lang: "en"
@@ -21,6 +21,8 @@ faq:
   - question: "What happens if I lock myself out of Nextcloud by misconfiguring SSO?"
     answer: "You recover from the command line with `occ app:disable user_saml` or `occ app:disable user_oidc`. Confirm you have working shell access before you enable SSO, and turn on the option to allow multiple user back-ends so the local Nextcloud login survives as a fallback."
 ---
+
+**Short answer:** you can set up single sign-on between WordPress and Nextcloud three ways, and two of them are free with no third system. (1) **WordPress users log into Nextcloud:** install an OpenID Connect server plugin on WordPress and the `user_oidc` app on Nextcloud. (2) **Nextcloud users log into WordPress:** register an OAuth2 client under Nextcloud's *Administration settings → Security* and use a Nextcloud OAuth2 login plugin on WordPress. (3) **Both behind a company login:** connect both to a shared identity provider (Keycloak, JumpCloud, Entra ID) over SAML, with `user_saml` on Nextcloud. Pick by who owns the user accounts. The details and traps follow.
 
 Search for "WordPress Nextcloud SSO" and you get a pile of tutorials that all answer the same question: how to put both applications behind a corporate identity provider. That is a fine answer. It is usually not the question.
 
