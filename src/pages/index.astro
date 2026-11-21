@@ -105,6 +105,11 @@ const formatDate = (d: Date) =>
             }
           </div>
 
+          <button type="button" class="gravity" id="gravity-toggle" aria-pressed="false">
+            <span class="gravity-ico" aria-hidden="true">↓</span>
+            <span class="gravity-label">Disable gravity</span>
+          </button>
+
           <div class="photo">
             <Image src={avatar} alt="Airton Vancin" width={168} height={168} loading="eager" />
           </div>
@@ -335,6 +340,249 @@ const formatDate = (d: Date) =>
 
 
 
+<script>
+  /*
+    "Disable gravity": the floating stack tiles drop, bounce and pile up on the
+    hero floor, and can be grabbed and thrown. "Restore gravity" floats them
+    back to their places. Plain circle physics — the tiles are near-square, so
+    treating them as circles keeps collisions cheap and stacking stable.
+  */
+  const stack = document.querySelector<HTMLElement>(".hero .stack");
+  const button = document.getElementById("gravity-toggle");
+  const label = button?.querySelector(".gravity-label");
+  const ico = button?.querySelector(".gravity-ico");
+
+  if (stack && button && label && ico) {
+    type Body = { el: HTMLElement; x: number; y: number; vx: number; vy: number; a: number; va: number; size: number };
+
+    const G = 2600; // px/s²
+    const BOUNCE = 0.42;
+    const FRICTION = 0.985;
+    const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    let bodies: Body[] = [];
+    let running = false;
+    let falling = false;
+    let raf = 0;
+    let last = 0;
+    let drag: { b: Body; dx: number; dy: number; lx: number; ly: number; lt: number } | null = null;
+
+    const visibleTiles = () =>
+      [...stack.querySelectorAll<HTMLElement>(".tile")].filter((t) => getComputedStyle(t).display !== "none");
+
+    const bounds = () => ({ w: stack.clientWidth, h: stack.clientHeight });
+
+    function render() {
+      for (const b of bodies) {
+        b.el.style.transform = `translate(${b.x}px, ${b.y}px) rotate(${b.a}deg)`;
+      }
+    }
+
+    function step(dt: number) {
+      const { w, h } = bounds();
+      for (const b of bodies) {
+        if (drag?.b === b) continue;
+        b.vy += G * dt;
+        b.vx *= FRICTION;
+        b.x += b.vx * dt;
+        b.y += b.vy * dt;
+        b.a += b.va * dt;
+        if (b.y + b.size > h) {
+          b.y = h - b.size;
+          b.vy = -b.vy * BOUNCE;
+          b.vx *= 0.8;
+          b.va *= 0.6;
+          if (Math.abs(b.vy) < 40) b.vy = 0;
+        }
+        if (b.x < 0) {
+          b.x = 0;
+          b.vx = -b.vx * BOUNCE;
+        } else if (b.x + b.size > w) {
+          b.x = w - b.size;
+          b.vx = -b.vx * BOUNCE;
+        }
+      }
+      // Pairwise collisions, a few passes so piles settle instead of sinking.
+      for (let pass = 0; pass < 4; pass++) {
+        for (let i = 0; i < bodies.length; i++) {
+          for (let j = i + 1; j < bodies.length; j++) {
+            const p = bodies[i];
+            const q = bodies[j];
+            const r = (p.size + q.size) / 2;
+            const dx = q.x + q.size / 2 - (p.x + p.size / 2);
+            const dy = q.y + q.size / 2 - (p.y + p.size / 2);
+            const d = Math.hypot(dx, dy) || 0.01;
+            if (d >= r) continue;
+            const nx = dx / d;
+            const ny = dy / d;
+            const push = (r - d) / 2;
+            const pFixed = drag?.b === p;
+            const qFixed = drag?.b === q;
+            if (!pFixed) {
+              p.x -= nx * push * (qFixed ? 2 : 1);
+              p.y -= ny * push * (qFixed ? 2 : 1);
+            }
+            if (!qFixed) {
+              q.x += nx * push * (pFixed ? 2 : 1);
+              q.y += ny * push * (pFixed ? 2 : 1);
+            }
+            const rel = (q.vx - p.vx) * nx + (q.vy - p.vy) * ny;
+            if (rel < 0) {
+              const imp = (-(1 + BOUNCE) * rel) / 2;
+              if (!pFixed) {
+                p.vx -= imp * nx;
+                p.vy -= imp * ny;
+              }
+              if (!qFixed) {
+                q.vx += imp * nx;
+                q.vy += imp * ny;
+              }
+              p.va += rel * 0.15;
+              q.va -= rel * 0.15;
+            }
+          }
+        }
+      }
+    }
+
+    const settled = () => !drag && bodies.every((b) => Math.abs(b.vx) < 6 && Math.abs(b.vy) < 6 && Math.abs(b.va) < 4);
+
+    function loop(t: number) {
+      const dt = Math.min((t - last) / 1000, 1 / 30);
+      last = t;
+      // Two substeps per frame keep fast tiles from tunnelling through each other.
+      step(dt / 2);
+      step(dt / 2);
+      render();
+      if (settled()) {
+        running = false;
+        return;
+      }
+      raf = requestAnimationFrame(loop);
+    }
+
+    function wake() {
+      if (running || reduced) return;
+      running = true;
+      last = performance.now();
+      raf = requestAnimationFrame(loop);
+    }
+
+    function drop() {
+      const box = stack.getBoundingClientRect();
+      bodies = visibleTiles().map((el) => {
+        const r = el.getBoundingClientRect();
+        return {
+          el,
+          x: r.left - box.left,
+          y: r.top - box.top,
+          vx: (Math.random() - 0.5) * 260,
+          vy: -Math.random() * 180,
+          a: 0,
+          va: (Math.random() - 0.5) * 240,
+          size: r.width,
+        };
+      });
+      stack.classList.add("falling");
+      if (reduced) {
+        // No motion: run the simulation off-screen and show where it lands.
+        for (let i = 0; i < 900; i++) step(1 / 120);
+        render();
+      } else {
+        render();
+        wake();
+      }
+    }
+
+    function restore() {
+      cancelAnimationFrame(raf);
+      running = false;
+      drag = null;
+      const { w, h } = bounds();
+      // Fly each tile back to its resting spot (the inline left/top %, centred),
+      // then hand it back to the CSS layout, which puts it in the same place.
+      stack.classList.add("returning");
+      for (const b of bodies) {
+        const hx = (parseFloat(b.el.style.left) / 100) * w - b.size / 2;
+        const hy = (parseFloat(b.el.style.top) / 100) * h - b.size / 2;
+        b.el.style.transform = `translate(${hx}px, ${hy}px) rotate(0deg)`;
+      }
+      const done = () => {
+        stack.classList.remove("falling", "returning");
+        for (const b of bodies) b.el.style.transform = "";
+        bodies = [];
+      };
+      if (reduced) done();
+      else setTimeout(done, 900);
+    }
+
+    button.addEventListener("click", () => {
+      falling = !falling;
+      button.setAttribute("aria-pressed", String(falling));
+      label.textContent = falling ? "Restore gravity" : "Disable gravity";
+      ico.textContent = falling ? "↑" : "↓";
+      if (falling) drop();
+      else restore();
+    });
+
+    // Grab and throw while the tiles are down.
+    stack.addEventListener("pointerdown", (e) => {
+      if (!falling) return;
+      const b = bodies.find((b) => b.el === (e.target as HTMLElement).closest(".tile"));
+      if (!b) return;
+      e.preventDefault(); // no text selection while dragging across the hero
+      const box = stack.getBoundingClientRect();
+      drag = { b, dx: e.clientX - box.left - b.x, dy: e.clientY - box.top - b.y, lx: e.clientX, ly: e.clientY, lt: e.timeStamp };
+      b.el.setPointerCapture(e.pointerId);
+      b.el.classList.add("grabbed");
+      b.vx = b.vy = 0;
+      wake();
+    });
+    stack.addEventListener("pointermove", (e) => {
+      if (!drag) return;
+      const box = stack.getBoundingClientRect();
+      const { w, h } = bounds();
+      const b = drag.b;
+      const dt = Math.max((e.timeStamp - drag.lt) / 1000, 1 / 240);
+      b.vx = (e.clientX - drag.lx) / dt;
+      b.vy = (e.clientY - drag.ly) / dt;
+      drag.lx = e.clientX;
+      drag.ly = e.clientY;
+      drag.lt = e.timeStamp;
+      b.x = Math.min(Math.max(e.clientX - box.left - drag.dx, 0), w - b.size);
+      b.y = Math.min(Math.max(e.clientY - box.top - drag.dy, 0), h - b.size);
+      if (reduced) render();
+    });
+    const release = () => {
+      if (!drag) return;
+      const b = drag.b;
+      b.el.classList.remove("grabbed");
+      const cap = 2400;
+      b.vx = Math.max(-cap, Math.min(cap, b.vx));
+      b.vy = Math.max(-cap, Math.min(cap, b.vy));
+      drag = null;
+      if (reduced) {
+        for (let i = 0; i < 900; i++) step(1 / 120);
+        render();
+      } else wake();
+    };
+    // On the window too: a release outside the hero (or a lost capture) must
+    // still let go, or the tile would hang in mid-air.
+    addEventListener("pointerup", release);
+    addEventListener("pointercancel", release);
+    stack.addEventListener("lostpointercapture", release);
+
+    // Keep fallen tiles inside the hero when the window changes size.
+    addEventListener("resize", () => {
+      if (!falling) return;
+      if (reduced) {
+        for (let i = 0; i < 900; i++) step(1 / 120);
+        render();
+      } else wake();
+    });
+  }
+</script>
+
 <style>
   .home {
     --ink: #151515;
@@ -424,6 +672,64 @@ const formatDate = (d: Date) =>
     animation: drift 7s ease-in-out infinite;
     animation-delay: var(--d);
   }
+  /* Gravity toggle and the fallen state. Once dropped, a tile's position is
+     owned by the script (a transform from the stack's top-left corner), so
+     the % placement, centring margin and drift animation all step aside. */
+  .hero > .gravity {
+    position: absolute;
+    z-index: 3;
+    top: 28px;
+    right: 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 30px;
+    padding: 0 12px 0 8px;
+    border: 1px solid #dededb;
+    border-radius: 999px;
+    background: #ffffffd9;
+    color: var(--muted);
+    font-family: inherit;
+    font-size: 11px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px #191f410a;
+    transition: color 0.2s, border-color 0.2s, transform 0.2s;
+  }
+  .hero > .gravity:hover {
+    color: var(--ink);
+    border-color: #bfc5e8;
+    transform: translateY(-1px);
+  }
+  .gravity-ico {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    font-size: 11px;
+  }
+  .stack.falling .tile {
+    left: 0 !important;
+    top: 0 !important;
+    margin: 0;
+    animation: none;
+    pointer-events: auto;
+    cursor: grab;
+    touch-action: none;
+    user-select: none;
+    will-change: transform;
+  }
+  .stack.falling .tile.grabbed {
+    cursor: grabbing;
+    box-shadow: 0 14px 34px #2d356030;
+  }
+  .stack.falling.returning .tile {
+    pointer-events: none;
+    transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
   .photo {
     width: 84px;
     height: 84px;
@@ -1001,6 +1307,9 @@ const formatDate = (d: Date) =>
   @media (max-width: 680px) {
     .hero {
       padding: 48px 0 72px;
+    }
+    .hero > .gravity {
+      top: 8px;
     }
     .tile {
       width: 40px;
