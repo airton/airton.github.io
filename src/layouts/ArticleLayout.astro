@@ -239,12 +239,5 @@ const meta = [dateLabel, readingTime && `${readingTime} min read`].filter(Boolea
     );
     observer.observe(thread);
   })();
-
-  /*
-    Manual ad units injected into the post body by rehypeInArticleAd. Each <ins>
-    needs its own push; Auto Ads only fills slots of its own.
-  */
-  document.querySelectorAll("ins.adsbygoogle[data-ad-slot]").forEach(function () {
-    (window.adsbygoogle = window.adsbygoogle || []).push({});
   });
 </script>
