@@ -138,8 +138,8 @@ const homeHref = "/";
 ---
 
 <!-- Hero -->
-<div class="bg-gallery-floor/50 border-b border-hairline-faint">
-  <div class="container px-4 md:px-6 pt-24 pb-12 md:py-20 max-w-6xl mx-auto">
+<div class="border-b border-[#ddddda]">
+  <div class="pt-14 pb-12 md:py-16">
     <a
       href={homeHref}
       class="inline-flex items-center text-sm font-medium text-quiet hover:text-brand mb-12 transition-colors group"
@@ -153,7 +153,7 @@ const homeHref = "/";
     <div class="grid lg:grid-cols-2 gap-12 items-center">
       <div class="space-y-6">
         <div
-          class="inline-flex items-center gap-2 bg-brand-wash text-brand px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+          class="inline-flex items-center gap-2 text-[#3558ff] text-[11px] font-semibold tracking-[0.12em] uppercase"
         >
           <IconBrandChrome className="w-3.5 h-3.5" />
           <span>{t.badge}</span>
@@ -197,7 +197,7 @@ const homeHref = "/";
   </div>
 </div>
 
-<div class="container px-4 md:px-6 py-20 max-w-4xl mx-auto">
+<div class="py-16 max-w-[760px] mx-auto">
   <div class="grid gap-24">
     <!-- Features -->
     <section>
@@ -210,7 +210,7 @@ const homeHref = "/";
           t.features.map(({ icon, title, desc }) => {
             const Icon = iconMap[icon as keyof typeof iconMap];
             return (
-              <div class="group p-6 bg-wall border border-hairline-faint rounded-2xl shadow-sm hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-4">
+              <div class="group p-6 bg-wall border border-[#dcdcd8] rounded-xl shadow-[0_12px_40px_#2227410a] hover:shadow-md hover:border-brand-edge transition-all flex items-start gap-4">
                 <div class="p-2 bg-brand-wash rounded-lg text-brand-bright">
                   <Icon className="w-5 h-5" />
                 </div>
@@ -232,7 +232,7 @@ const homeHref = "/";
         <div class="h-px flex-grow bg-hairline-faint"></div>
       </div>
       <div
-        class="bg-wall border border-hairline-faint rounded-[2rem] p-8 md:p-12 shadow-sm"
+        class="bg-wall border border-[#dcdcd8] rounded-xl p-6 md:p-10 shadow-[0_12px_40px_#2227410a]"
       >
         <ol class="grid gap-6">
           {

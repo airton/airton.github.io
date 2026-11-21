@@ -1,0 +1,17 @@
+---
+/*
+  The paper-theme frame for pages that lay out their own content (home, /sobre,
+  /contato, /politicas, 404, the extension page): the `.pc` theme root, the
+  shared top bar and footer. MinimalPage builds on it for the standard inner page.
+*/
+import SiteHeader from "./SiteHeader.astro";
+import SiteFooter from "./SiteFooter.astro";
+---
+
+<div class="pc">
+  <div class="pc-wrap flex flex-col flex-1">
+    <SiteHeader />
+    <slot />
+    <SiteFooter />
+  </div>
+</div>

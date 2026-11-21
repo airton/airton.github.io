@@ -1,6 +1,7 @@
 ---
 import Layout from "@/layouts/Layout.astro";
 import GeminiDownloader from "@/components/GeminiDownloader.astro";
+import SiteShell from "@/components/SiteShell.astro";
 import { geminiJsonLd, GEMINI_ALTERNATES } from "@/helpers/geminiSeo";
 
 const SEO_TITLE =
@@ -19,6 +20,8 @@ const OG_IMAGE = new URL(
   image={OG_IMAGE}
   lang="pt-BR"
   alternates={GEMINI_ALTERNATES}
+  minimalNav={true}
+  hideFooter={true}
 >
   <script
     type="application/ld+json"
@@ -32,5 +35,7 @@ const OG_IMAGE = new URL(
       })
     )}
   />
-  <GeminiDownloader lang="pt" />
+  <SiteShell>
+    <GeminiDownloader lang="pt" />
+  </SiteShell>
 </Layout>

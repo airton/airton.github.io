@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MinimalFooter from "../components/MinimalFooter.astro";
+import SiteShell from "../components/SiteShell.astro";
 import { Image } from "astro:assets";
 import avatar from "../assets/images/profile-avatar.png";
 import { breadcrumbJsonLd, PERSON_ID } from "@/helpers/siteIdentity";
@@ -87,24 +87,25 @@ const socialLinks = [
   <script type="application/ld+json" is:inline set:html={JSON.stringify(profileJsonLd)} />
   <script type="application/ld+json" is:inline set:html={JSON.stringify(breadcrumb)} />
 
-  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
-    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+  <SiteShell>
+  <main class="pc-page">
+    <a href="/" class="pc-back">
       ← Home
     </a>
 
     <!-- Header -->
-    <header class="mt-10 mb-14 flex items-center gap-4">
+    <header class="pc-pagehead flex items-center gap-5">
       <Image
         src={avatar}
         alt="Airton Vancin"
         width={112}
         height={112}
         loading="eager"
-        class="w-14 h-14 rounded-full object-cover"
+        class="w-[72px] h-[72px] shrink-0 rounded-full object-cover border-2 border-[#151515] shadow-[0_7px_20px_#1b337821]"
       />
       <div>
-        <h1 class="font-plex text-xl font-semibold tracking-tight">About</h1>
-        <p class="text-sm text-quiet dark:text-quiet-lifted">Airton Vancin · AI Engineer & Builder</p>
+        <h1 class="pc-title">About</h1>
+        <p class="pc-subtitle">Airton Vancin · AI Engineer & Builder</p>
       </div>
     </header>
 
@@ -188,6 +189,6 @@ const socialLinks = [
       </p>
     </section>
 
-    <MinimalFooter />
-  </main>
+    </main>
+  </SiteShell>
 </Layout>

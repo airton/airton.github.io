@@ -1,11 +1,11 @@
 ---
 /*
-  Shell for the minimal pages (privacy, contact, projects, plugins, zero
-  downtime, blog posts, plugin pages): the narrow Plex column, a way back home, a two-line header and the
-  one-line footer. The home and /sobre predate it and lay out their own header.
+  Shell for the standard inner pages (projects, plugins, zero downtime, blog
+  posts and tags, plugin and project pages, previews): the paper-theme frame
+  from SiteShell, a way back, a big heading and a centred reading column.
 */
 import Layout from "../layouts/Layout.astro";
-import MinimalFooter from "./MinimalFooter.astro";
+import SiteShell from "./SiteShell.astro";
 
 interface Props {
   title: string;
@@ -54,25 +54,23 @@ const {
   hideFooter={true}
 >
   <slot name="head" />
-  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
-    <a href={backHref} class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
-      {backLabel}
-    </a>
+  <SiteShell>
+    <main class="pc-page">
+      <a href={backHref} class="pc-back">{backLabel}</a>
 
-    <header class="mt-10 mb-14">
-      <div class="flex items-center gap-3">
-        <slot name="icon" />
-        <div class="min-w-0">
-          <h1 class="font-plex text-xl font-semibold tracking-tight">{heading}</h1>
-          {subheading && <p class="text-sm text-quiet dark:text-quiet-lifted">{subheading}</p>}
-          <slot name="subheading" />
+      <header class="pc-pagehead">
+        <div class="flex items-center gap-4">
+          <slot name="icon" />
+          <div class="min-w-0">
+            <h1 class="pc-title">{heading}</h1>
+            {subheading && <p class="pc-subtitle">{subheading}</p>}
+            <slot name="subheading" />
+          </div>
         </div>
-      </div>
-      <slot name="header" />
-    </header>
+        <slot name="header" />
+      </header>
 
-    <slot />
-
-    <MinimalFooter />
-  </main>
+      <slot />
+    </main>
+  </SiteShell>
 </Layout>

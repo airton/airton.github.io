@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MinimalFooter from "../components/MinimalFooter.astro";
+import SiteShell from "../components/SiteShell.astro";
 
 const body = "space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted";
 
@@ -28,14 +28,15 @@ const topics = [
   minimalNav={true}
   hideFooter={true}
 >
-  <main class="font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
-    <a href="/" class="text-sm text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors">
+  <SiteShell>
+  <main class="pc-page">
+    <a href="/" class="pc-back">
       ← Home
     </a>
 
-    <header class="mt-10 mb-14">
-      <h1 class="font-plex text-xl font-semibold tracking-tight">Contact</h1>
-      <p class="text-sm text-quiet dark:text-quiet-lifted">Brazil · I usually reply within 24 hours on weekdays</p>
+    <header class="pc-pagehead">
+      <h1 class="pc-title">Contact</h1>
+      <p class="pc-subtitle">Brazil · I usually reply within 24 hours on weekdays</p>
     </header>
 
     <section class={`mb-14 ${body}`}>
@@ -69,12 +70,12 @@ const topics = [
     </section>
 
     <section class="mb-16">
-      <h2 class="term-title"><span aria-hidden="true">~/</span>i-can-help-with</h2>
+      <h2 class="term-title"><span aria-hidden="true">~/</span>i can help with</h2>
       <ul class={`list-disc pl-5 ${body} space-y-1.5`}>
         {topics.map((t) => <li>{t}</li>)}
       </ul>
     </section>
 
-    <MinimalFooter />
-  </main>
+    </main>
+  </SiteShell>
 </Layout>

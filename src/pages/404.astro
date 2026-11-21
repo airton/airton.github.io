@@ -1,10 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { Button } from "@/components/ui/button";
-import { IconHome, IconSearch, IconArrowLeft } from "@tabler/icons-react";
+import SiteShell from "../components/SiteShell.astro";
 
 const labels = {
-  title: "404 - Página não encontrada",
+  kicker: "Erro 404",
   heading: "Perdido no espaço?",
   description:
     "A página que você está procurando não existe ou foi movida para uma galáxia diferente.",
@@ -17,84 +16,86 @@ const labels = {
 <Layout
   title="404 - Página não encontrada | Airton Vancin"
   description="A página que você está procurando não existe."
+  lang="pt-BR"
   noindex
   noAds
+  minimalNav={true}
+  hideFooter={true}
 >
-  <div
-    class="min-h-[80vh] flex items-center justify-center p-4 relative overflow-hidden"
-  >
-    <!-- Abstract Background Decorations -->
-    <div class="relative z-10 text-center max-w-2xl px-4">
-      <!-- 404 Visual -->
-      <div class="relative inline-block mb-8">
-        <h1
-          class="text-[12rem] md:text-[18rem] font-black leading-none tracking-tighter text-gallery-floor/80 dark:text-ink/50 select-none"
-        >
-          404
-        </h1>
-        <div class="absolute inset-0 flex items-center justify-center">
-          <div
-            class="bg-wall/80 dark:bg-ink/80 backdrop-blur-md px-6 py-2 rounded-2xl border border-hairline dark:border-ink-secondary shadow-xl"
-          >
-            <span
-              class="text-2xl md:text-3xl font-bold text-ink dark:text-gallery-floor"
-            >
-              {labels.heading}
-            </span>
-          </div>
-        </div>
+  <SiteShell>
+    <main class="lost">
+      <p class="code" aria-hidden="true">404</p>
+      <p class="kicker">{labels.kicker}</p>
+      <h1>{labels.heading}</h1>
+      <p class="desc">{labels.description}</p>
+      <div class="actions">
+        <a href="/" class="pc-btn pc-btn-dark">{labels.back_home}</a>
+        <a href="/plugins/" class="pc-btn pc-btn-light">{labels.search_plugins}</a>
+        <a href="/projetos/" class="pc-btn pc-btn-light">{labels.search_projects}</a>
       </div>
-
-      <!-- Text Content -->
-      <p
-        class="text-xl text-ink-secondary dark:text-quiet-faint mb-12 leading-relaxed font-serif italic"
-      >
-        {labels.description}
-      </p>
-
-      <!-- Action Buttons -->
-      <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
-        <Button
-          size="lg"
-          className="rounded-full px-8 h-14 text-base font-bold shadow-lg shadow-blue-500/20 bg-brand hover:bg-brand-deep w-full sm:w-auto"
-          asChild
-        >
-          <a href="/">
-            <IconHome className="mr-2 h-5 w-5" />
-            <span
-              >{labels.back_home}</span
-            >
-          </a>
-        </Button>
-
-        <div class="flex gap-4 w-full sm:w-auto">
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-full px-8 h-14 text-base font-bold border-hairline hover:bg-gallery-floor flex-1 sm:flex-none"
-            asChild
-          >
-            <a href="/plugins/">
-              <span
-                >{labels.search_plugins}</span
-              >
-            </a>
-          </Button>
-
-          <Button
-            variant="outline"
-            size="lg"
-            className="rounded-full px-8 h-14 text-base font-bold border-hairline hover:bg-gallery-floor flex-1 sm:flex-none"
-            asChild
-          >
-            <a href="/projetos/">
-              <span
-                >{labels.search_projects}</span
-              >
-            </a>
-          </Button>
-        </div>
-      </div>
-    </div>
-  </div>
+    </main>
+  </SiteShell>
 </Layout>
+
+<style>
+  .lost {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 96px 0;
+    text-align: center;
+  }
+  .lost::before {
+    content: "";
+    position: absolute;
+    inset: 24px 3%;
+    z-index: -1;
+    background-image:
+      linear-gradient(#5467d612 1px, transparent 1px),
+      linear-gradient(90deg, #5467d612 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(#000 10%, #000c 46%, transparent 76%);
+  }
+  .code {
+    margin: 0 0 8px;
+    font-family: var(--pc-display);
+    font-size: clamp(96px, 18vw, 180px);
+    font-weight: 700;
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: #e4e4e0;
+  }
+  .kicker {
+    margin: 0 0 10px;
+    color: var(--pc-blue);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 0 0 16px;
+    font-weight: 700;
+    font-size: clamp(30px, 4.4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .desc {
+    max-width: 520px;
+    margin: 0;
+    color: var(--pc-muted);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 28px;
+  }
+</style>

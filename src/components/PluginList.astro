@@ -27,38 +27,20 @@ const hrefOf = (slug: string) => (lang === "en" ? `/en/plugin/${slug}/` : `/plug
 const hookOf = (p: (typeof plugins)[number]) => (lang === "en" ? (pluginHooks[p.slug] ?? p.en.desc) : p.pt.desc);
 ---
 
-<ul class="space-y-1 -mx-3">
+<ul class="pc-card">
   {
     plugins.map((p) => (
       <li>
-        <a href={hrefOf(p.slug)} class="row group">
-          <span class="logo-fallback">
+        <a href={hrefOf(p.slug)} class="pc-row">
+          <span class="pc-mark round">
             <IconBrandWordpress className="w-5 h-5" stroke={1.5} />
           </span>
           <div class="min-w-0 flex-1">
-            <span class="font-medium group-hover:underline underline-offset-4">{p.name}</span>
-            <p class="text-sm text-quiet dark:text-quiet-lifted sm:truncate">{hookOf(p)}</p>
+            <span class="pc-row-title">{p.name}</span>
+            <p class="pc-row-desc">{hookOf(p)}</p>
           </div>
         </a>
       </li>
     ))
   }
 </ul>
-
-<style>
-  @reference "../styles/global.css";
-
-  .row {
-    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg transition-colors hover:bg-gallery-floor;
-  }
-  :global(.dark) .row:hover {
-    @apply bg-night-floor;
-  }
-  .logo-fallback {
-    @apply w-10 h-10 rounded-lg shrink-0 flex items-center justify-center text-sm font-semibold
-      bg-gallery-floor text-quiet border border-hairline-faint;
-  }
-  :global(.dark) .logo-fallback {
-    @apply bg-night-floor text-quiet-lifted border-night-edge;
-  }
-</style>
