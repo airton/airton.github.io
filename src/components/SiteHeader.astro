@@ -1,0 +1,27 @@
+---
+/* The top bar every page shares: the domain as the logo, the main pages on the right. */
+const links = [
+  { href: "/sobre/", label: "About" },
+  { href: "/projetos/", label: "Projects" },
+  { href: "/en/plugins/", label: "Plugins", match: ["/plugins/", "/plugin/", "/en/plugin"] },
+  { href: "/blog/", label: "Writing" },
+];
+
+const path = Astro.url.pathname;
+const isCurrent = (l: (typeof links)[number]) =>
+  path.startsWith(l.href) || (l.match ?? []).some((m) => path.startsWith(m));
+---
+
+<header class="pc-topbar">
+  <a href="/" class="pc-logo">airtonvancin<span>.com</span></a>
+  <nav aria-label="Pages">
+    {
+      links.map((l, i) => (
+        <>
+          {i > 0 && <span aria-hidden="true">·</span>}
+          <a href={l.href} aria-current={isCurrent(l) ? "page" : undefined}>{l.label}</a>
+        </>
+      ))
+    }
+  </nav>
+</header>

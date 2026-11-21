@@ -179,6 +179,38 @@
     U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
+/* The home's body face (static weights; there is no variable cut). */
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-latin-400.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-latin-500.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-latin-600.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA,
+    U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193,
+    U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
 @theme {
   /* Display — headlines and card titles. A geometric grotesk: it holds the
      tight negative tracking the Display and Headline roles ask for without the
@@ -190,6 +222,8 @@
      included. A quieter, slightly technical grotesk than Inter. */
   --font-plex: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
   /* Code, and only code. */
+  /* The home page's whole face, after the pcships-style rebrand. */
+  --font-plex-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
   /* The deck line, and nothing else — see The One Serif Rule in DESIGN.md.
      Left as the system serif: it appears once per section, small and grey, and
@@ -478,5 +512,377 @@
   }
   .post-body .ad-slot {
     @apply dark:border-night-edge;
+  }
+}
+/*
+  The "paper" theme (Nov 2026 rebrand, after pcships.com): off-white paper,
+  IBM Plex Mono for the interface, Space Grotesk for headings, hairline-ruled
+  white cards and uppercase kickers. Every page renders inside `.pc`
+  (SiteShell / MinimalPage), and the shared classes the pages already use —
+  term-title, quiet-link, divide-y lists, prose — are re-skinned here, so the
+  pages pick the theme up without each one restating it.
+
+  It lives in the components layer so a page's own utilities still win.
+*/
+@layer components {
+  .pc {
+    --pc-ink: #151515;
+    --pc-body: #2f2f2d;
+    --pc-muted: #6b6b6b;
+    --pc-faint: #8a8a86;
+    --pc-line: #ddddda;
+    --pc-line-soft: #e8e8e4;
+    --pc-paper: #fbfbfa;
+    --pc-card: #ffffff;
+    --pc-head: #f6f6f4;
+    --pc-blue: #3558ff;
+    --pc-green: #218d4d;
+    --pc-green-bg: #e8f8ed;
+    --pc-pulse: #28b665;
+    --pc-warm: #b64f24;
+    --pc-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+    --pc-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    min-height: 100svh;
+    background: var(--pc-paper);
+    color: var(--pc-ink);
+    font-family: var(--pc-mono);
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  .pc-wrap {
+    width: min(980px, 100% - 32px);
+    margin: 0 auto;
+  }
+  .pc :is(h1, h2, h3, h4) {
+    font-family: var(--pc-display);
+    color: var(--pc-ink);
+    text-wrap: balance;
+  }
+  .pc :focus-visible {
+    outline: 2px solid var(--pc-blue);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+
+  /* Top bar and footer */
+  .pc-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    min-height: 72px;
+    border-bottom: 1px solid var(--pc-line);
+  }
+  .pc-logo {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--pc-ink);
+  }
+  .pc-logo span {
+    color: var(--pc-blue);
+  }
+  .pc-topbar nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--pc-muted);
+  }
+  .pc-topbar nav a:hover,
+  .pc-topbar nav a[aria-current="page"],
+  .pc-footer a:hover {
+    color: var(--pc-blue);
+  }
+  .pc-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    min-height: 90px;
+    margin-top: auto;
+    border-top: 1px solid var(--pc-line);
+    color: var(--pc-muted);
+    font-size: 11px;
+  }
+  .pc-footer p {
+    margin: 0;
+  }
+  .pc-footer div {
+    display: flex;
+    gap: 18px;
+  }
+  @media (max-width: 680px) {
+    .pc-topbar nav span,
+    .pc-topbar nav a:nth-of-type(n + 3) {
+      display: none;
+    }
+    .pc-footer {
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+  }
+
+  /* Inner-page header: back link, big heading, muted line under it. */
+  .pc-page {
+    width: min(760px, 100%);
+    margin: 0 auto;
+    padding: 56px 0 72px;
+  }
+  .pc-back {
+    display: inline-block;
+    margin-bottom: 28px;
+    color: var(--pc-muted);
+    font-size: 12px;
+    transition: color 0.2s;
+  }
+  .pc-back:hover {
+    color: var(--pc-blue);
+  }
+  .pc-title {
+    margin: 0;
+    font-size: clamp(34px, 5.4vw, 60px);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.04em;
+  }
+  .pc-subtitle {
+    margin: 14px 0 0;
+    color: var(--pc-muted);
+    font-size: 13px;
+    line-height: 1.6;
+  }
+  .pc-pagehead {
+    margin-bottom: 48px;
+  }
+
+  /* Shared pieces the pages already use, re-skinned. */
+  .pc .term-title {
+    margin: 0 0 16px;
+    color: var(--pc-blue);
+    font-family: var(--pc-mono);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .pc .term-title > span[aria-hidden] {
+    display: none;
+  }
+  .pc section:has(> .term-title, > div > .term-title) {
+    padding-top: 36px;
+    border-top: 1px solid var(--pc-line);
+  }
+  .pc .quiet-link {
+    color: var(--pc-ink);
+    text-decoration: underline;
+    text-decoration-color: var(--pc-line);
+    text-underline-offset: 4px;
+    transition: color 0.2s, text-decoration-color 0.2s;
+  }
+  .pc .quiet-link:hover {
+    color: var(--pc-blue);
+    text-decoration-color: currentColor;
+  }
+  .pc .text-ink-secondary {
+    color: var(--pc-body);
+  }
+  .pc .text-quiet {
+    color: var(--pc-muted);
+  }
+
+  /* Rule-divided lists become white, hairline-ruled cards. */
+  .pc :is(ul, ol, dl).divide-y {
+    padding: 0 20px;
+    border: 1px solid #dcdcd8;
+    border-radius: 12px;
+    background: var(--pc-card);
+    box-shadow: 0 12px 40px #2227410a;
+  }
+  .pc .divide-y > :not(:last-child) {
+    border-color: var(--pc-line-soft);
+  }
+
+  /* Cards */
+  .pc-card {
+    overflow: hidden;
+    border: 1px solid #dcdcd8;
+    border-radius: 12px;
+    background: var(--pc-card);
+    box-shadow: 0 12px 40px #2227410a;
+  }
+  .pc-thead {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 42px;
+    padding: 0 20px;
+    background: var(--pc-head);
+    border-bottom: 1px solid #e4e4e0;
+    color: #777;
+    font-family: var(--pc-display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .pc-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--pc-line-soft);
+    transition: background 0.2s;
+  }
+  .pc-row:last-child {
+    border-bottom: 0;
+  }
+  .pc-row:hover {
+    background: var(--pc-paper);
+  }
+  .pc-row:hover .pc-row-title {
+    color: var(--pc-blue);
+  }
+  .pc-row-title {
+    font-family: var(--pc-display);
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--pc-ink);
+    transition: color 0.2s;
+  }
+  .pc-row-desc {
+    margin-top: 4px;
+    color: var(--pc-muted);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .pc-meta {
+    color: #5f5f5c;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+  }
+  .pc-mark {
+    display: grid;
+    flex-shrink: 0;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    object-fit: cover;
+    border: 1px solid #00000012;
+    background: var(--pc-ink);
+    color: #fff;
+    font-family: var(--pc-display);
+    font-weight: 700;
+  }
+  .pc-mark.round {
+    border-radius: 50%;
+  }
+  .pc-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 3px 8px;
+    border-radius: 99px;
+    background: var(--pc-green-bg);
+    color: var(--pc-green);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Buttons */
+  .pc-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 44px;
+    padding: 0 18px;
+    border-radius: 8px;
+    font-family: var(--pc-display);
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .pc-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px #1b33781a;
+  }
+  .pc-btn-dark {
+    background: #171717;
+    color: #fff;
+  }
+  .pc-btn-light {
+    background: #fff;
+    color: var(--pc-ink);
+    border: 1px solid #d8d8d5;
+  }
+
+  /* Long-form reading: the body steps out of mono into Plex Sans, the same
+     family, because a 2,000-word post in a monospace face is a chore. */
+  .pc .post-body {
+    font-family: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+    color: var(--pc-body);
+  }
+  .pc .post-body :is(p, ul, ol, li) {
+    font-size: 17px;
+    line-height: 1.75;
+    color: var(--pc-body);
+  }
+  .pc .post-body :is(h2, h3, h4, h5, h6) {
+    font-family: var(--pc-display);
+    color: var(--pc-ink);
+    letter-spacing: -0.025em;
+  }
+  .pc .post-body h2 {
+    font-size: 26px;
+    line-height: 1.15;
+  }
+  .pc .post-body h3 {
+    font-size: 20px;
+  }
+  .pc .post-body a {
+    color: var(--pc-blue);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .pc .post-body :not(pre) > code {
+    font-family: var(--pc-mono);
+  }
+  .pc .post-body pre {
+    border-radius: 12px;
+  }
+  .pc .post-body blockquote {
+    border-left: 2px solid var(--pc-line);
+    color: var(--pc-muted);
+  }
+  .pc .post-body table {
+    overflow: hidden;
+    border: 1px solid #dcdcd8;
+    border-radius: 12px;
+    background: var(--pc-card);
+  }
+  .pc .post-body th {
+    background: var(--pc-head);
+    font-family: var(--pc-display);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pc-btn:hover {
+      transform: none;
+    }
   }
 }

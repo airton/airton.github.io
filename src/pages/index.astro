@@ -1,35 +1,77 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import MinimalFooter from "../components/MinimalFooter.astro";
+import SiteShell from "../components/SiteShell.astro";
 import { Image } from "astro:assets";
 import { getCollection } from "astro:content";
 import avatar from "../assets/images/profile-avatar.png";
-import ProjectGrid from "../components/ProjectGrid.astro";
-import PluginList from "../components/PluginList.astro";
+import { projects, BUILDING } from "../data/projects";
+import { plugins } from "../data/plugins";
 import { getGithubActivity } from "../helpers/githubActivity";
 import {
+  IconBrandAstro,
+  IconBrandAws,
+  IconBrandDocker,
   IconBrandGithub,
+  IconBrandJavascript,
   IconBrandLinkedin,
+  IconBrandNodejs,
+  IconBrandOpenai,
+  IconBrandPhp,
+  IconBrandReact,
+  IconBrandTailwind,
+  IconBrandTypescript,
+  IconBrandVercel,
   IconBrandWordpress,
   IconBrandX,
   IconMail,
 } from "@tabler/icons-react";
-
-const pageLinks = [
-  { href: "/sobre/", label: "About" },
-  { href: "/projetos/", label: "Projects" },
-  { href: "/en/plugins/", label: "Plugins" },
-  { href: "/blog/", label: "Writing" },
-  { href: "/contato/", label: "Contact" },
-];
 
 const socialLinks = [
   { href: "https://x.com/a_vancin", label: "X", icon: IconBrandX },
   { href: "https://github.com/airton", label: "GitHub", icon: IconBrandGithub },
   { href: "https://linkedin.com/in/airtonvancin", label: "LinkedIn", icon: IconBrandLinkedin },
   { href: "https://profiles.wordpress.org/airtonvancin/", label: "WordPress", icon: IconBrandWordpress },
-  { href: "mailto:airtonvancin@gmail.com", label: "Email", icon: IconMail },
 ];
+
+/* The stack, floating around the hero. Positions are percentages of the hero
+   box, hand-placed to keep clear of the centred copy column. */
+const stack = [
+  { icon: IconBrandWordpress, label: "WordPress", x: 9, y: 12 },
+  { icon: IconBrandReact, label: "React", x: 22, y: 30 },
+  { icon: IconBrandTypescript, label: "TypeScript", x: 6, y: 52 },
+  { icon: IconBrandNodejs, label: "Node.js", x: 18, y: 74 },
+  { icon: IconBrandAws, label: "AWS", x: 4, y: 90 },
+  { icon: IconBrandAstro, label: "Astro", x: 30, y: 6 },
+  { icon: IconBrandOpenai, label: "OpenAI", x: 72, y: 7 },
+  { icon: IconBrandPhp, label: "PHP", x: 88, y: 18 },
+  { icon: IconBrandJavascript, label: "JavaScript", x: 79, y: 36 },
+  { icon: IconBrandDocker, label: "Docker", x: 93, y: 54 },
+  { icon: IconBrandTailwind, label: "Tailwind", x: 81, y: 76 },
+  { icon: IconBrandVercel, label: "Vercel", x: 95, y: 92 },
+];
+
+// One line per project — the long `desc` in projects.ts is the Portuguese
+// case-study copy and is too heavy for a table row.
+const projectHooks: Record<string, string> = {
+  declone: "Finds fake and cloned copies of your site on lookalike domains.",
+  "lume-iq": "Free online IQ test with IRT scoring and a margin of error.",
+  jurosobra: "Interest simulator for off-plan home financing in Brazil.",
+  balancewise: "Smart investment portfolio rebalancing.",
+  timberoad: "Solar sizing calculators and planning tools for vanlife.",
+  "pablo-escobar-ipsum": "Lorem Ipsum, Narcos edition.",
+};
+
+const pluginHooks: Record<string, string> = {
+  "video-destacado": "Use a YouTube or Vimeo video as the featured image.",
+  "manage-user-roles": "Create and edit user roles and capabilities.",
+  "nudge-seo-ai": "AI-generated SEO suggestions inside the editor.",
+  "sso-connector-for-jumpcloud": "SAML single sign-on with JumpCloud.",
+  "notria-ai-suite": "A suite of AI tools for WordPress.",
+};
+
+const domainOf = (url: string) => new URL(url).hostname.replace(/^www\./, "");
+const building = projects.filter((p) => BUILDING.has(p.slug));
+const shipped = projects.filter((p) => !BUILDING.has(p.slug));
 
 const posts = (await getCollection("blog"))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
@@ -37,7 +79,6 @@ const posts = (await getCollection("blog"))
 
 const activity = await getGithubActivity("airton");
 const fmt = (n: number) => n.toLocaleString("en-US");
-
 const formatDate = (d: Date) =>
   d.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" });
 ---
@@ -50,158 +91,789 @@ const formatDate = (d: Date) =>
   minimalNav={true}
   hideFooter={true}
 >
-  <main class="home font-plex mx-auto w-full max-w-2xl px-4 sm:px-6 py-16 sm:py-24 text-ink dark:text-gallery-floor">
-    <!-- Header -->
-    <header class="mb-14">
-      <div class="flex items-center gap-4 mb-5">
-        <Image
-          src={avatar}
-          alt="Airton Vancin"
-          width={112}
-          height={112}
-          loading="eager"
-          class="w-14 h-14 rounded-full object-cover"
-        />
-        <div>
-          <h1 class="font-plex text-xl font-semibold tracking-tight">Airton Vancin</h1>
-          <p class="text-sm text-quiet dark:text-quiet-lifted">AI Engineer & Builder</p>
-        </div>
-      </div>
-
-      <nav aria-label="Social links" class="flex items-center gap-1 -ml-2">
-        {
-          socialLinks.map((s) => (
-            <a
-              href={s.href}
-              aria-label={s.label}
-              target={s.href.startsWith("http") ? "_blank" : undefined}
-              rel={s.href.startsWith("http") ? "me noopener noreferrer" : undefined}
-              class="p-2 rounded-md text-quiet dark:text-quiet-lifted hover:text-ink dark:hover:text-gallery-floor transition-colors"
-            >
-              <s.icon className="w-[18px] h-[18px]" stroke={1.75} />
-            </a>
-          ))
-        }
-      </nav>
-
-      <nav aria-label="Pages" class="mt-3 flex flex-wrap gap-x-4 gap-y-1 text-sm">
-        {pageLinks.map((l) => <a href={l.href} class="quiet-link">{l.label}</a>)}
-      </nav>
-    </header>
-
-    <!-- About -->
-    <section class="mb-14 space-y-4 text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted">
-      <p>
-        I work as an Engineering Director in AI, after more than 15 years writing software
-        across WordPress, React, Node.js and AWS infrastructure. In my spare time, I build
-        side projects.
-      </p>
-      <p>
-        I like things that are small, fast and useful. Below is what I'm building, what I've
-        shipped and what I've been writing along the way. <a href="/sobre/" class="quiet-link">More about me →</a>
-      </p>
-    </section>
-
-    <!-- Projects -->
-    <section class="mb-14">
-      <h2 class="term-title"><span aria-hidden="true">~/</span>projects</h2>
-      <ProjectGrid />
-      <a href="/projetos/" class="quiet-link inline-block mt-4 text-sm">All projects →</a>
-    </section>
-
-    <!-- Plugins -->
-    <section class="mb-14">
-      <h2 class="term-title"><span aria-hidden="true">~/</span>plugins</h2>
-      <PluginList />
-      <a href="/en/plugins/" class="quiet-link inline-block mt-4 text-sm">All plugins →</a>
-    </section>
-
-    <!-- Activity -->
-    {
-      activity && (
-        <section class="mb-14">
-          <h2 class="term-title"><span aria-hidden="true">~/</span>activity</h2>
-          <p class="text-base leading-relaxed text-ink-secondary dark:text-quiet-lifted mb-5">
-            Most of my building happens on GitHub, between work and side projects.
-          </p>
-          <div
-            class="activity-grid"
-            style={`--weeks: ${activity.weeks.length}`}
-            role="img"
-            aria-label={`GitHub contributions over the last year: ${fmt(activity.total)} in total.`}
-          >
-            {activity.weeks.map((week) =>
-              week.map((day) => (
-                <span class:list={["cell", day ? `l${day.level}` : "empty"]} title={day?.date} />
+  <SiteShell>
+      <main class="home">
+        <!-- Hero -->
+        <section class="hero">
+          <div class="stack" aria-hidden="true">
+            {
+              stack.map((s, i) => (
+                <span class:list={["tile", s.y > 25 && "low"]} style={`left:${s.x}%;top:${s.y}%;--d:${(i % 5) * -1.3}s`} title={s.label}>
+                  <s.icon className="w-6 h-6" stroke={1.5} />
+                </span>
               ))
-            )}
+            }
           </div>
-          <div class="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs text-quiet dark:text-quiet-lifted">
-            <span>
-              {fmt(activity.total)} contributions · {fmt(activity.activeDays)} active days
-              {activity.streak > 1 && <> · {activity.streak}-day streak</>}
-            </span>
-            <span class="flex items-center gap-1" aria-hidden="true">
-              Less
-              <span class="cell l0 legend" />
-              <span class="cell l1 legend" />
-              <span class="cell l2 legend" />
-              <span class="cell l3 legend" />
-              <span class="cell l4 legend" />
-              More
-            </span>
-          </div>
-          <a href="https://github.com/airton" target="_blank" rel="me noopener noreferrer" class="quiet-link inline-block mt-4 text-sm">
-            github.com/airton →
-          </a>
-        </section>
-      )
-    }
 
-    <!-- Writing -->
-    <section class="mb-14">
-      <h2 class="term-title"><span aria-hidden="true">~/</span>writing</h2>
-      <ul class="divide-y divide-hairline-faint dark:divide-night-edge">
-        {
-          posts.map((post) => (
-            <li>
-              <a href={`/blog/${post.id}/`} class="group flex items-baseline justify-between gap-4 py-2.5">
-                <span class="text-base group-hover:underline underline-offset-4">{post.data.title}</span>
-                <time
-                  datetime={post.data.date.toISOString()}
-                  class="text-xs text-quiet dark:text-quiet-lifted shrink-0 tabular-nums"
-                >
-                  {formatDate(post.data.date)}
-                </time>
+          <div class="photo">
+            <Image src={avatar} alt="Airton Vancin" width={168} height={168} loading="eager" />
+          </div>
+
+          <p class="brand"><span aria-hidden="true">✦</span>Airton Vancin</p>
+
+          {
+            activity && (
+              <a href="https://github.com/airton" target="_blank" rel="me noopener noreferrer" class="pill">
+                <i aria-hidden="true" />
+                <strong>{fmt(activity.total)}</strong> GitHub contributions this year
               </a>
-            </li>
-          ))
+            )
+          }
+
+          <h1>I build small, fast and useful things.</h1>
+          <p class="sub">
+            Engineering Director in AI, after more than 15 years writing software across WordPress, React,
+            Node.js and AWS. In my spare time, I ship side projects and plugins, and write about what I learn.
+          </p>
+
+          <div class="actions">
+            <a href="/contato/" class="btn btn-dark"><IconMail className="w-4 h-4" stroke={1.75} /> Contact me</a>
+            <a href="/blog/" class="btn btn-light">Read the writing <span aria-hidden="true">→</span></a>
+          </div>
+
+          <nav aria-label="Social links" class="social">
+            {
+              socialLinks.map((s) => (
+                <a href={s.href} aria-label={s.label} target="_blank" rel="me noopener noreferrer">
+                  <s.icon className="w-[18px] h-[18px]" stroke={1.75} />
+                </a>
+              ))
+            }
+          </nav>
+        </section>
+
+        <!-- Currently building -->
+        <section class="section">
+          <div class="head">
+            <div>
+              <p class="kicker">Currently building</p>
+              <h2>What's on the bench right now.</h2>
+            </div>
+            <span class="live"><i aria-hidden="true" />Updated as I ship</span>
+          </div>
+          <div class="tbl">
+            <div class="thead cols-3" aria-hidden="true">
+              <span>Project</span><span>Domain</span><span>Status</span>
+            </div>
+            {
+              building.map((p) => (
+                <a href={p.link} target="_blank" rel="noopener noreferrer" class="trow cols-3">
+                  <div class="cell-main">
+                    <Image src={p.logo} alt="" width={84} height={84} class="mark" />
+                    <div class="min-w-0">
+                      <h3>{p.name}</h3>
+                      <p>{projectHooks[p.slug] ?? p.desc}</p>
+                    </div>
+                  </div>
+                  <span class="mono">{domainOf(p.link)}</span>
+                  <span>
+                    <span class="status"><i aria-hidden="true" />Building</span>
+                  </span>
+                </a>
+              ))
+            }
+          </div>
+        </section>
+
+        <!-- Shipped -->
+        <section class="section pt-0">
+          <div class="head">
+            <div>
+              <p class="kicker kicker-muted">Software</p>
+              <h2>Shipped and live.</h2>
+            </div>
+            <span class="shipped"><i aria-hidden="true">✓</i>Shipped</span>
+          </div>
+          <div class="tbl">
+            <div class="thead cols-3" aria-hidden="true">
+              <span>App</span><span>Platform</span><span>Link</span>
+            </div>
+            {
+              shipped.map((p) => (
+                <a href={p.link} target="_blank" rel="noopener noreferrer" class="trow cols-3">
+                  <div class="cell-main">
+                    <Image src={p.logo} alt="" width={84} height={84} class="mark" />
+                    <div class="min-w-0">
+                      <h3>{p.name}</h3>
+                      <p>{projectHooks[p.slug] ?? p.desc}</p>
+                    </div>
+                  </div>
+                  <span class="mono">Web app</span>
+                  <span class="link">{domainOf(p.link)} <span aria-hidden="true">↗</span></span>
+                </a>
+              ))
+            }
+            <a href="/en/gemini-flow-downloader/" class="trow cols-3">
+              <div class="cell-main">
+                <span class="mark mark-text">G</span>
+                <div class="min-w-0">
+                  <h3>Gemini Flow Downloader</h3>
+                  <p>Export Gemini chats to Markdown or JSON.</p>
+                </div>
+              </div>
+              <span class="mono">Chrome extension</span>
+              <span class="link">Download <span aria-hidden="true">→</span></span>
+            </a>
+          </div>
+          <a href="/projetos/" class="more">All projects →</a>
+        </section>
+
+        <!-- Plugins -->
+        <section class="section bordered">
+          <div class="intro">
+            <div>
+              <p class="kicker kicker-green">WordPress.org</p>
+              <h2>Plugins in the official directory.</h2>
+            </div>
+            <p>
+              Open-source plugins I wrote and maintain, from video thumbnails to SAML single sign-on. Each one
+              has its own page with setup notes.
+            </p>
+          </div>
+          <div class="grid2">
+            {
+              plugins.map((p) => (
+                <a href={`/en/plugin/${p.slug}/`} class="gcell">
+                  <span class="round">
+                    <IconBrandWordpress className="w-5 h-5" stroke={1.5} />
+                  </span>
+                  <div class="min-w-0">
+                    <h3>{p.name}</h3>
+                    <p>{pluginHooks[p.slug] ?? p.en.desc}</p>
+                  </div>
+                </a>
+              ))
+            }
+          </div>
+          <p class="loop">
+            Write <i>→</i> Ship <i>→</i> Maintain <i>→</i> Share
+          </p>
+        </section>
+
+        <!-- Activity -->
+        {
+          activity && (
+            <section class="section bordered center">
+              <p class="kicker">On GitHub</p>
+              <h2>Most of the building happens in the open.</h2>
+              <div class="heatcard">
+                <div
+                  class="activity-grid"
+                  style={`--weeks: ${activity.weeks.length}`}
+                  role="img"
+                  aria-label={`GitHub contributions over the last year: ${fmt(activity.total)} in total.`}
+                >
+                  {activity.weeks.map((week) =>
+                    week.map((day) => (
+                      <span class:list={["cell", day ? `l${day.level}` : "empty"]} title={day?.date} />
+                    ))
+                  )}
+                </div>
+              </div>
+              <div class="stats">
+                <span>
+                  <strong>{fmt(activity.total)}</strong>contributions
+                </span>
+                <span>
+                  <strong>{fmt(activity.activeDays)}</strong>active days
+                </span>
+                <span>
+                  <strong>{activity.streak > 1 ? `${activity.streak} days` : fmt(plugins.length)}</strong>
+                  {activity.streak > 1 ? "current streak" : "plugins shipped"}
+                </span>
+              </div>
+              <a href="https://github.com/airton" target="_blank" rel="me noopener noreferrer" class="more">
+                github.com/airton ↗
+              </a>
+            </section>
+          )
         }
-      </ul>
-      <a href="/blog/" class="quiet-link inline-block mt-4 text-sm">All posts →</a>
-    </section>
 
-    <!-- Work with me -->
-    <section class="mb-16">
-      <h2 class="term-title"><span aria-hidden="true">~/</span>work-with-me</h2>
-      <ul class="space-y-2 text-base text-ink-secondary dark:text-quiet-lifted">
-        <li><a href="/zero-downtime/" class="quiet-link">Zero Downtime</a> — blue-green deploys and high availability on AWS.</li>
-        <li><a href="/previas/" class="quiet-link">Business websites</a> — see live previews before you decide.</li>
-        <li><a href="/contato/" class="quiet-link">Contact</a> — projects, partnerships or consulting.</li>
-      </ul>
-    </section>
+        <!-- Writing -->
+        <section class="section bordered">
+          <div class="head">
+            <div>
+              <p class="kicker">Writing</p>
+              <h2>Notes from the work.</h2>
+            </div>
+          </div>
+          <div class="tbl">
+            <div class="thead cols-post" aria-hidden="true">
+              <span>Post</span><span>Published</span>
+            </div>
+            {
+              posts.map((post) => (
+                <a href={`/blog/${post.id}/`} class="trow cols-post post">
+                  <h3>{post.data.title}</h3>
+                  <time datetime={post.data.date.toISOString()} class="mono">
+                    {formatDate(post.data.date)}
+                  </time>
+                </a>
+              ))
+            }
+          </div>
+          <a href="/blog/" class="more">All posts →</a>
+        </section>
 
-    <MinimalFooter />
-  </main>
+        <!-- Work with me -->
+        <section class="cta">
+          <p class="kicker kicker-warm">Work with me</p>
+          <h2>Need a hand with infrastructure, WordPress or a new website?</h2>
+          <p>Blue-green deploys and high availability on AWS, plugin engineering, or a business site you can see live before you decide.</p>
+          <div class="cta-links">
+            <a href="/zero-downtime/">Zero Downtime</a>
+            <a href="/previas/">Business websites</a>
+            <a href="/contato/">Get in touch</a>
+          </div>
+        </section>
 
+        <!-- The home's only ad: one manual unit at the very end. -->
+        <aside class="ad-slot" aria-label="Advertisement">
+          <span class="ad-label">Advertisement</span>
+          <ins
+            class="adsbygoogle"
+            style="display:block; text-align:center;"
+            data-ad-layout="in-article"
+            data-ad-format="fluid"
+            data-ad-client="ca-pub-3553535106347103"
+            data-ad-slot="8719098193"></ins>
+        </aside>
+      </main>
+
+  </SiteShell>
 </Layout>
 
+<script is:inline>
+  document.querySelectorAll("ins.adsbygoogle[data-ad-slot]").forEach(function () {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  });
+</script>
+
 <style>
-  @reference "../styles/global.css";
+  .home {
+    --ink: #151515;
+    --muted: #6b6b6b;
+    --faint: #8a8a86;
+    --line: #ddddda;
+    --line-soft: #e8e8e4;
+    --paper: #fbfbfa;
+    --card: #ffffff;
+    --head: #f6f6f4;
+    --blue: #3558ff;
+    --green: #218d4d;
+    --green-bg: #e8f8ed;
+    --pulse: #28b665;
+    --warm: #b64f24;
+    --display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
 
+    flex: 1;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  .home a {
+    color: inherit;
+    text-decoration: none;
+  }
+  .home h1,
+  .home h2,
+  .home h3 {
+    font-family: var(--display);
+    color: var(--ink);
+    margin: 0;
+    text-wrap: balance;
+  }
+  .home :focus-visible {
+    outline: 2px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 
-  /* Contribution heatmap: one column per week, cells sized by the container so
-     the full year always fits without scrolling. */
+  /* Top bar */
+
+  /* Hero */
+  .hero {
+    position: relative;
+    isolation: isolate;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: 76px 24px 84px;
+  }
+  .hero > :not(.stack) {
+    position: relative;
+    z-index: 2;
+  }
+  .stack {
+    position: absolute;
+    inset: 24px 0 24px;
+    pointer-events: none;
+  }
+  .stack::before {
+    content: "";
+    position: absolute;
+    inset: 0 3%;
+    background-image:
+      linear-gradient(#5467d612 1px, transparent 1px),
+      linear-gradient(90deg, #5467d612 1px, transparent 1px);
+    background-size: 48px 48px;
+    mask-image: radial-gradient(#000 10%, #000c 46%, transparent 76%);
+    animation: mesh 18s linear infinite;
+  }
+  .tile {
+    position: absolute;
+    display: grid;
+    place-items: center;
+    width: 54px;
+    height: 54px;
+    margin: -27px 0 0 -27px;
+    border-radius: 16px;
+    background: #111;
+    color: #fff;
+    border: 1px solid #ffffff24;
+    box-shadow: 0 8px 30px #2d356014;
+    animation: drift 7s ease-in-out infinite;
+    animation-delay: var(--d);
+  }
+  .photo {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid var(--ink);
+    background: #fff;
+    box-shadow: 0 7px 20px #1b337821;
+    margin-bottom: 18px;
+  }
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    min-height: 32px;
+    padding: 0 14px 0 7px;
+    margin: 0 0 12px;
+    border-radius: 999px;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 7px 18px #0000001a;
+  }
+  .brand span {
+    display: grid;
+    place-items: center;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #262626;
+    border: 1px solid #ffffff2e;
+    font-size: 10px;
+  }
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    min-height: 27px;
+    padding: 0 11px;
+    margin-bottom: 22px;
+    border-radius: 999px;
+    border: 1px solid #dededb;
+    background: #ffffffd9;
+    color: var(--muted);
+    font-size: 11px;
+    box-shadow: 0 4px 15px #191f410a;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+  .pill strong {
+    color: var(--ink);
+    font-family: var(--display);
+  }
+  .pill:hover {
+    border-color: #bfc5e8;
+    transform: translateY(-1px);
+  }
+  .pill i,
+  .live i,
+  .status i {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--pulse);
+    animation: pulse 1.7s ease-out infinite;
+  }
+  .hero h1 {
+    max-width: 760px;
+    margin-bottom: 18px;
+    font-size: clamp(36px, 5.6vw, 66px);
+    font-weight: 700;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+  }
+  .sub {
+    max-width: 620px;
+    margin: 0;
+    color: var(--muted);
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 9px;
+    min-height: 46px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 600;
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  }
+  .home .btn-dark {
+    background: #171717;
+    color: #fff;
+  }
+  .btn-light {
+    background: #fff;
+    color: var(--ink);
+    border: 1px solid #d8d8d5;
+    box-shadow: 0 2px 7px #0000000a;
+  }
+  .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 20px #1b33781a;
+  }
+  .social {
+    display: flex;
+    gap: 4px;
+    margin-top: 22px;
+  }
+  .social a {
+    padding: 8px;
+    border-radius: 8px;
+    color: var(--muted);
+    transition: color 0.2s, background 0.2s;
+  }
+  .social a:hover {
+    color: var(--ink);
+    background: #fff;
+  }
+
+  /* Sections */
+  .section {
+    border-top: 1px solid var(--line);
+    padding: 68px 0 82px;
+  }
+  .section.pt-0 {
+    border-top: 0;
+    padding-top: 0;
+  }
+  .section.center {
+    text-align: center;
+  }
+  .head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    margin-bottom: 24px;
+  }
+  .kicker {
+    margin: 0 0 10px;
+    color: var(--blue);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+  .kicker-muted {
+    color: var(--faint);
+  }
+  .kicker-green {
+    color: var(--green);
+  }
+  .kicker-warm {
+    color: var(--warm);
+  }
+  .section h2,
+  .cta h2 {
+    font-size: clamp(26px, 3.4vw, 38px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+  }
+  .live,
+  .shipped {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    white-space: nowrap;
+    font-size: 11px;
+    margin-bottom: 4px;
+  }
+  .live {
+    color: var(--muted);
+  }
+  .shipped {
+    color: var(--green);
+  }
+  .shipped i {
+    display: grid;
+    place-items: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--green-bg);
+    font-style: normal;
+    font-weight: 700;
+  }
+
+  /* Tables */
+  .tbl {
+    overflow: hidden;
+    border: 1px solid #dcdcd8;
+    border-radius: 12px;
+    background: var(--card);
+    box-shadow: 0 12px 40px #2227410a;
+  }
+  .cols-3 {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(140px, 0.6fr) minmax(130px, 0.5fr);
+    align-items: center;
+    column-gap: 24px;
+  }
+  .cols-post {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    column-gap: 24px;
+  }
+  .thead {
+    min-height: 42px;
+    padding: 0 20px;
+    background: var(--head);
+    border-bottom: 1px solid #e4e4e0;
+    color: #777;
+    font-family: var(--display);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .trow {
+    min-height: 96px;
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--line-soft);
+    transition: background 0.2s;
+  }
+  .trow:last-child {
+    border-bottom: 0;
+  }
+  .trow:hover {
+    background: var(--paper);
+  }
+  .trow:hover h3 {
+    color: var(--blue);
+  }
+  .cell-main {
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+  }
+  .mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    object-fit: cover;
+    border: 1px solid #00000012;
+  }
+  .mark-text {
+    display: grid;
+    place-items: center;
+    background: var(--ink);
+    color: #fff;
+    font-family: var(--display);
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .trow h3 {
+    margin-bottom: 5px;
+    font-size: 17px;
+    line-height: 1.15;
+    letter-spacing: -0.025em;
+    transition: color 0.2s;
+  }
+  .trow p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.55;
+  }
+  .mono {
+    color: #5f5f5c;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  .link {
+    color: var(--blue);
+    font-size: 12px;
+    white-space: nowrap;
+  }
+  .status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 9px;
+    border-radius: 99px;
+    background: var(--green-bg);
+    color: var(--green);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .status i {
+    width: 5px;
+    height: 5px;
+  }
+  .post {
+    min-height: 64px;
+  }
+  .post h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  .more {
+    display: inline-block;
+    margin-top: 18px;
+    font-size: 12px;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .more:hover {
+    color: var(--blue);
+  }
+
+  /* Plugins */
+  .bordered {
+    border-top: 1px solid var(--line);
+  }
+  .intro {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(260px, 0.72fr);
+    align-items: end;
+    gap: 48px;
+    margin-bottom: 28px;
+  }
+  .intro > p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+  }
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    overflow: hidden;
+    border: 1px solid #dcdcd8;
+    border-radius: 12px;
+    background: var(--card);
+  }
+  .gcell {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: center;
+    gap: 14px;
+    min-height: 108px;
+    padding: 22px;
+    border-bottom: 1px solid var(--line-soft);
+    transition: background 0.2s;
+  }
+  .gcell:nth-child(odd) {
+    border-right: 1px solid var(--line-soft);
+  }
+  .gcell:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    border-right: 0;
+  }
+  .gcell:last-child,
+  .gcell:nth-last-child(2):nth-child(odd) {
+    border-bottom: 0;
+  }
+  .gcell:hover {
+    background: var(--paper);
+  }
+  .gcell:hover h3 {
+    color: var(--blue);
+  }
+  .round {
+    display: grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--ink);
+    color: #fff;
+    border: 1px solid #242424;
+  }
+  .gcell h3 {
+    margin-bottom: 5px;
+    font-size: 17px;
+    letter-spacing: -0.025em;
+    transition: color 0.2s;
+  }
+  .gcell p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.5;
+  }
+  .loop {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin: 20px 0 0;
+    font-family: var(--display);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .loop i {
+    color: #a5a5a0;
+    font-style: normal;
+  }
+
+  /* Activity */
+  .center h2 {
+    max-width: 640px;
+    margin: 0 auto 28px;
+  }
+  .heatcard {
+    padding: 20px;
+    border: 1px solid #dcdcd8;
+    border-radius: 12px;
+    background: var(--card);
+    box-shadow: 0 12px 40px #2227410a;
+  }
   .activity-grid {
     display: grid;
     grid-template-columns: repeat(var(--weeks), minmax(0, 1fr));
@@ -210,22 +882,247 @@ const formatDate = (d: Date) =>
     gap: 2px;
   }
   .cell {
-    @apply block aspect-square rounded-[2px];
-  }
-  .cell.legend {
-    @apply w-2.5 h-2.5;
+    display: block;
+    aspect-ratio: 1;
+    border-radius: 2px;
   }
   .cell.empty {
-    @apply bg-transparent;
+    background: transparent;
   }
-  .cell.l0 { @apply bg-hairline-faint; }
-  .cell.l1 { @apply bg-brand/25; }
-  .cell.l2 { @apply bg-brand/50; }
-  .cell.l3 { @apply bg-brand/75; }
-  .cell.l4 { @apply bg-brand; }
-  :global(.dark) .cell.l0 { @apply bg-night-edge; }
-  :global(.dark) .cell.l1 { @apply bg-brand-lifted/25; }
-  :global(.dark) .cell.l2 { @apply bg-brand-lifted/50; }
-  :global(.dark) .cell.l3 { @apply bg-brand-lifted/75; }
-  :global(.dark) .cell.l4 { @apply bg-brand-lifted; }
+  .cell.l0 { background: #efefec; }
+  .cell.l1 { background: #3558ff40; }
+  .cell.l2 { background: #3558ff80; }
+  .cell.l3 { background: #3558ffbf; }
+  .cell.l4 { background: #3558ff; }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    max-width: 650px;
+    margin: 20px auto 0;
+    overflow: hidden;
+    border: 1px solid #deded9;
+    border-radius: 10px;
+    background: var(--card);
+  }
+  .stats span {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    min-height: 70px;
+    color: #777;
+    font-size: 11px;
+  }
+  .stats span + span {
+    border-left: 1px solid #e5e5e1;
+  }
+  .stats strong {
+    color: var(--ink);
+    font-family: var(--display);
+    font-size: 20px;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* CTA */
+  .cta {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: 88px 7%;
+    border-top: 1px solid var(--line);
+    text-align: center;
+  }
+  .cta::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    width: 460px;
+    height: 240px;
+    border-radius: 50%;
+    background: radial-gradient(#ee77401c, #ffc26f0b 48%, transparent 72%);
+    transform: translate(-50%, -50%);
+  }
+  .cta h2 {
+    max-width: 720px;
+    margin: 0 auto 18px;
+    font-size: clamp(28px, 4vw, 48px);
+    line-height: 1.02;
+    letter-spacing: -0.04em;
+  }
+  .cta > p:not(.kicker) {
+    max-width: 580px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.75;
+  }
+  .cta-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 26px;
+  }
+  .cta-links a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 38px;
+    padding: 0 16px;
+    border-radius: 999px;
+    border: 1px solid #deded9;
+    background: #ffffffd9;
+    font-family: var(--display);
+    font-size: 13px;
+    font-weight: 600;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .cta-links a:last-child {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .cta-links a:hover {
+    transform: translateY(-1px);
+    border-color: #bfc5e8;
+  }
+
+  /* Ad */
+  .ad-slot {
+    padding: 32px 0 40px;
+    border-top: 1px solid var(--line);
+  }
+  .ad-label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--faint);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  /* Footer */
+
+  @keyframes mesh {
+    to {
+      background-position: 48px 48px, 48px 48px;
+    }
+  }
+  @keyframes drift {
+    0%, 100% { transform: translateY(0) rotate(-2deg); }
+    50% { transform: translateY(-8px) rotate(2deg); }
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 #28b66557; }
+    70%, 100% { box-shadow: 0 0 0 7px #28b66500; }
+  }
+
+  @media (max-width: 900px) {
+    .tile:nth-child(3n) {
+      display: none;
+    }
+  }
+
+  @media (max-width: 680px) {
+    .hero {
+      padding: 48px 0 72px;
+    }
+    .tile {
+      width: 40px;
+      height: 40px;
+      margin: -20px 0 0 -20px;
+      border-radius: 12px;
+      opacity: 0.55;
+    }
+    .tile.low {
+      display: none;
+    }
+    .tile :global(svg) {
+      width: 18px;
+      height: 18px;
+    }
+    .sub {
+      font-size: 13px;
+    }
+    .actions {
+      flex-direction: column;
+      align-self: stretch;
+    }
+    .btn {
+      width: 100%;
+    }
+    .section {
+      padding: 52px 0 60px;
+    }
+    .head {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .thead {
+      display: none;
+    }
+    .cols-3 {
+      grid-template-columns: 1fr auto;
+      gap: 12px 14px;
+      padding: 16px 14px;
+    }
+    .cols-3 .cell-main {
+      grid-column: 1 / -1;
+    }
+    .cols-post {
+      padding: 14px;
+      gap: 6px 14px;
+      grid-template-columns: 1fr;
+    }
+    .intro {
+      grid-template-columns: 1fr;
+      gap: 14px;
+    }
+    .grid2 {
+      grid-template-columns: 1fr;
+    }
+    .gcell,
+    .gcell:nth-child(odd),
+    .gcell:nth-last-child(2):nth-child(odd) {
+      border-right: 0;
+      border-bottom: 1px solid var(--line-soft);
+      grid-column: auto;
+      padding: 16px 14px;
+      min-height: 84px;
+    }
+    .gcell:last-child {
+      border-bottom: 0;
+    }
+    .loop {
+      gap: 9px;
+      font-size: 10px;
+    }
+    .heatcard {
+      padding: 12px;
+    }
+    .stats {
+      grid-template-columns: 1fr;
+    }
+    .stats span + span {
+      border-left: 0;
+      border-top: 1px solid #e5e5e1;
+    }
+    .cta {
+      padding: 64px 4px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .stack::before,
+    .tile,
+    .pill i,
+    .live i,
+    .status i {
+      animation: none;
+    }
+  }
 </style>
