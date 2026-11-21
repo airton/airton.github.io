@@ -1,0 +1,91 @@
+---
+/*
+  The site's only ad: a display unit fixed to the bottom of the screen,
+  728×90 on desktop and 320×50 on phones (AdSense sizes the unit from the
+  <ins> box). Closable for the session. While it shows, the body gets
+  matching bottom padding so the bar never sits on top of the footer.
+  Rendered by Layout; see data/ads.ts.
+*/
+import { ADSENSE_CLIENT, STICKY_AD_SLOT } from "../data/ads";
+---
+
+<aside class="sticky-ad" id="sticky-ad" aria-label="Advertisement">
+  <button type="button" class="sticky-ad-close" id="sticky-ad-close" aria-label="Close advertisement">×</button>
+  <ins class="adsbygoogle sticky-ad-unit" data-ad-client={ADSENSE_CLIENT} data-ad-slot={STICKY_AD_SLOT}></ins>
+</aside>
+
+<script is:inline>
+  (function () {
+    var bar = document.getElementById("sticky-ad");
+    if (!bar) return;
+    var closed = false;
+    try {
+      closed = sessionStorage.getItem("sticky-ad-closed") === "1";
+    } catch (e) {}
+    if (closed) {
+      bar.remove();
+      return;
+    }
+    document.body.classList.add("has-sticky-ad");
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+    document.getElementById("sticky-ad-close").addEventListener("click", function () {
+      bar.remove();
+      document.body.classList.remove("has-sticky-ad");
+      try {
+        sessionStorage.setItem("sticky-ad-closed", "1");
+      } catch (e) {}
+    });
+  })();
+</script>
+
+<style>
+  .sticky-ad {
+    position: fixed;
+    z-index: 40;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    padding: 6px 0;
+    background: #fbfbfaf2;
+    border-top: 1px solid #ddddda;
+    box-shadow: 0 -6px 20px #2227410d;
+    backdrop-filter: blur(6px);
+  }
+  .sticky-ad-unit {
+    display: inline-block;
+    width: 728px;
+    height: 90px;
+  }
+  .sticky-ad-close {
+    position: absolute;
+    top: -26px;
+    right: 12px;
+    width: 26px;
+    height: 26px;
+    border: 1px solid #ddddda;
+    border-bottom: 0;
+    border-radius: 8px 8px 0 0;
+    background: #fbfbfa;
+    color: #6b6b6b;
+    font-size: 16px;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .sticky-ad-close:hover {
+    color: #151515;
+  }
+  :global(body.has-sticky-ad) {
+    padding-bottom: 104px;
+  }
+  @media (max-width: 760px) {
+    .sticky-ad-unit {
+      width: 320px;
+      height: 50px;
+    }
+    :global(body.has-sticky-ad) {
+      padding-bottom: 64px;
+    }
+  }
+</style>
