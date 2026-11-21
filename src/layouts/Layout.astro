@@ -1,4 +1,6 @@
 ---
+import StickyAd from "../components/StickyAd.astro";
+import { ADSENSE_CLIENT, STICKY_AD_SLOT } from "../data/ads";
 import Footer from "@/components/Footer.astro";
 import { Navigation } from "@/components/Navigation";
 import { siteIdentityJsonLd } from "@/helpers/siteIdentity";
@@ -35,7 +37,7 @@ interface Props {
    */
   noindex?: boolean;
   /**
-   * Leaves the AdSense script out of the page. AdSense policy forbids ads on
+   * Leaves AdSense (the sticky bottom banner) out of the page. AdSense policy forbids ads on
    * screens without publisher content, and error pages are its named example —
    * Auto Ads would otherwise fill the 404 with ads around a single sentence.
    */
@@ -64,6 +66,9 @@ const {
   minimalNav = false,
   hideFooter = false,
 } = Astro.props;
+
+// The one ad on the site; off until a display slot is configured.
+const showAds = !noAds && Boolean(STICKY_AD_SLOT);
 
 const site = Astro.site || new URL("https://airtonvancin.com");
 const canonicalURL = new URL(Astro.url.pathname, site);
@@ -205,12 +210,12 @@ const ogLocale = lang.includes("-")
       gtag("config", "G-1HNLJCL2MF");
     </script>
 
-    <!-- Google AdSense -->
+    <!-- Google AdSense: only for the sticky bottom banner (see data/ads.ts) -->
     {
-      !noAds && (
+      showAds && (
         <script
           async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3553535106347103"
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${ADSENSE_CLIENT}`}
           crossorigin="anonymous"
         />
       )
@@ -232,5 +237,6 @@ const ogLocale = lang.includes("-")
       </main>
       {!hideFooter && <Footer />}
     </div>
+    {showAds && <StickyAd />}
   </body>
 </html>

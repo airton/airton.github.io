@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import { readdirSync, readFileSync } from "node:fs";
 
 import { defineConfig } from "astro/config";
+import { ADSENSE_CLIENT, IN_ARTICLE_SLOT } from "./src/data/ads.ts";
 
 import react from "@astrojs/react";
 
@@ -42,28 +43,32 @@ function rehypeScrollableTables() {
 }
 
 /*
-  In-article AdSense unit. Create an "In-article" ad unit in the AdSense panel
-  and paste its data-ad-slot here; while it is empty the plugin inserts nothing
-  and the site keeps running on Auto Ads alone.
+  One in-article ad in the middle of each blog post. It goes right before the
+  <h2> closest to the halfway point of the post's top-level blocks, so it never
+  splits a heading from its own text. Posts without at least two <h2>s fall
+  back to the middle paragraph; very short posts (under 6 blocks) get none.
 */
-const ADSENSE_CLIENT = "ca-pub-3553535106347103";
-const ADSENSE_IN_ARTICLE_SLOT = "8719098193";
-
-/**
- * Inserts one in-article ad unit at the end of the post's first section, right
- * before its second top-level <h2>. Placing it before a heading rather than
- * after one keeps the ad from separating a heading from its own text. Posts
- * with fewer than two <h2>s are short enough that Auto Ads covers them.
- */
-function rehypeInArticleAd() {
+function rehypeMidPostAd() {
   return (tree) => {
-    if (!ADSENSE_IN_ARTICLE_SLOT) return;
-    const h2s = tree.children.filter(
-      (node) => node.type === "element" && node.tagName === "h2",
-    );
-    if (h2s.length < 2) return;
-    const at = tree.children.indexOf(h2s[1]);
-    tree.children.splice(at, 0, {
+    if (!IN_ARTICLE_SLOT) return;
+    const blocks = tree.children.filter((n) => n.type === "element");
+    if (blocks.length < 6) return;
+    const mid = blocks.length / 2;
+    const h2s = blocks.filter((n) => n.tagName === "h2");
+    let anchor;
+    if (h2s.length >= 2) {
+      // Never before the first h2: that would put the ad above most of the post.
+      anchor = h2s.slice(1).reduce((best, n) =>
+        Math.abs(blocks.indexOf(n) - mid) < Math.abs(blocks.indexOf(best) - mid) ? n : best,
+      );
+    } else {
+      const ps = blocks.filter((n) => n.tagName === "p");
+      if (ps.length < 4) return;
+      const after = ps[Math.floor(ps.length / 2)];
+      anchor = blocks[blocks.indexOf(after) + 1];
+      if (!anchor) return;
+    }
+    tree.children.splice(tree.children.indexOf(anchor), 0, {
       type: "element",
       tagName: "aside",
       properties: { className: ["ad-slot"], ariaLabel: "Publicidade" },
@@ -83,7 +88,7 @@ function rehypeInArticleAd() {
             dataAdLayout: "in-article",
             dataAdFormat: "fluid",
             dataAdClient: ADSENSE_CLIENT,
-            dataAdSlot: ADSENSE_IN_ARTICLE_SLOT,
+            dataAdSlot: IN_ARTICLE_SLOT,
           },
           children: [],
         },
@@ -166,7 +171,7 @@ export default defineConfig({
   },
 
   markdown: {
-    rehypePlugins: [rehypeScrollableTables, rehypeInArticleAd],
+    rehypePlugins: [rehypeScrollableTables, rehypeMidPostAd],
   },
 
   image: {

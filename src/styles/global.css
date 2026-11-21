@@ -407,22 +407,6 @@
     @apply outline-none ring-2 ring-brand ring-offset-2 rounded-lg;
   }
 
-  /* Injected by rehypeInArticleAd. The min-height reserves the slot before the
-     auction returns, so the text below doesn't jump when the ad lands (CLS).
-     An unfilled slot is collapsed — it sits below the first section, out of the
-     initial viewport, so the collapse doesn't register as a layout shift. */
-  .ad-slot {
-    @apply my-10 py-4 border-y border-hairline;
-    min-height: 300px;
-  }
-
-  .ad-slot-label {
-    @apply block mb-2 text-xs uppercase tracking-wide text-quiet text-center;
-  }
-
-  .ad-slot:has(ins[data-ad-status="unfilled"]) {
-    @apply hidden;
-  }
 
   .prose table {
     @apply w-full my-6 border-collapse;
@@ -508,9 +492,6 @@
     @apply dark:bg-night-floor;
   }
   .post-body hr {
-    @apply dark:border-night-edge;
-  }
-  .post-body .ad-slot {
     @apply dark:border-night-edge;
   }
 }
@@ -878,6 +859,30 @@
     font-size: 12px;
     letter-spacing: 0.04em;
     text-transform: uppercase;
+  }
+
+  /* The mid-post ad. min-height reserves room before the auction returns, so
+     the text below doesn't jump (CLS); an unfilled slot collapses — it sits
+     mid-post, well below the first viewport. */
+  .pc .post-body .ad-slot {
+    margin: 40px 0;
+    padding: 14px 0 18px;
+    min-height: 300px;
+    border-top: 1px solid var(--pc-line);
+    border-bottom: 1px solid var(--pc-line);
+  }
+  .pc .post-body .ad-slot-label {
+    display: block;
+    margin-bottom: 10px;
+    color: var(--pc-faint);
+    font-family: var(--pc-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-align: center;
+    text-transform: uppercase;
+  }
+  .pc .post-body .ad-slot:has(ins[data-ad-status="unfilled"]) {
+    display: none;
   }
 
   @media (prefers-reduced-motion: reduce) {
