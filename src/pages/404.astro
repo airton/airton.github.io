@@ -24,11 +24,11 @@ const labels = {
 >
   <SiteShell>
     <main class="lost">
-      <p class="code" aria-hidden="true">404</p>
-      <p class="kicker">{labels.kicker}</p>
-      <h1>{labels.heading}</h1>
-      <p class="desc">{labels.description}</p>
-      <div class="actions">
+      <p class="font-display text-8xl sm:text-9xl font-bold leading-none tracking-tighter text-hairline mb-4" aria-hidden="true">404</p>
+      <p class="term-title">{labels.kicker}</p>
+      <h1 class="pc-title">{labels.heading}</h1>
+      <p class="pc-subtitle max-w-md">{labels.description}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-2.5">
         <a href="/" class="pc-btn pc-btn-dark">{labels.back_home}</a>
         <a href="/plugins/" class="pc-btn pc-btn-light">{labels.search_plugins}</a>
         <a href="/projetos/" class="pc-btn pc-btn-light">{labels.search_projects}</a>
@@ -38,64 +38,15 @@ const labels = {
 </Layout>
 
 <style>
+  /* Centred in whatever height is left between the top bar and the footer.
+     Type, colour and buttons all come from the shared paper theme. */
   .lost {
-    position: relative;
-    isolation: isolate;
     display: flex;
     flex: 1;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    padding: 96px 0;
+    padding-block: 6rem;
     text-align: center;
-  }
-  .lost::before {
-    content: "";
-    position: absolute;
-    inset: 24px 3%;
-    z-index: -1;
-    background-image:
-      linear-gradient(#5467d612 1px, transparent 1px),
-      linear-gradient(90deg, #5467d612 1px, transparent 1px);
-    background-size: 48px 48px;
-    mask-image: radial-gradient(#000 10%, #000c 46%, transparent 76%);
-  }
-  .code {
-    margin: 0 0 8px;
-    font-family: var(--pc-display);
-    font-size: clamp(96px, 18vw, 180px);
-    font-weight: 700;
-    line-height: 0.9;
-    letter-spacing: -0.06em;
-    color: #e4e4e0;
-  }
-  .kicker {
-    margin: 0 0 10px;
-    color: var(--pc-blue);
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-  }
-  h1 {
-    margin: 0 0 16px;
-    font-weight: 700;
-    font-size: clamp(30px, 4.4vw, 48px);
-    line-height: 1;
-    letter-spacing: -0.04em;
-  }
-  .desc {
-    max-width: 520px;
-    margin: 0;
-    color: var(--pc-muted);
-    font-size: 14px;
-    line-height: 1.75;
-  }
-  .actions {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 28px;
   }
 </style>
