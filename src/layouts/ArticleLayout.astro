@@ -239,5 +239,10 @@ const meta = [dateLabel, readingTime && `${readingTime} min read`].filter(Boolea
     );
     observer.observe(thread);
   })();
+
+  /* The mid-post ad injected by rehypeMidPostAd; each <ins> needs its own push. */
+  document.querySelectorAll(".post-body ins.adsbygoogle").forEach(function () {
+    (window.adsbygoogle = window.adsbygoogle || []).push({});
+  });
   });
 </script>

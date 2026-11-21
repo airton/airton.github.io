@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import { readdirSync, readFileSync } from "node:fs";
 
 import { defineConfig } from "astro/config";
+import { ADSENSE_CLIENT, IN_ARTICLE_SLOT } from "./src/data/ads.ts";
 
 import react from "@astrojs/react";
 
@@ -38,6 +39,61 @@ function rehypeScrollableTables() {
       });
     };
     walk(tree);
+  };
+}
+
+/*
+  One in-article ad in the middle of each blog post. It goes right before the
+  <h2> closest to the halfway point of the post's top-level blocks, so it never
+  splits a heading from its own text. Posts without at least two <h2>s fall
+  back to the middle paragraph; very short posts (under 6 blocks) get none.
+*/
+function rehypeMidPostAd() {
+  return (tree) => {
+    if (!IN_ARTICLE_SLOT) return;
+    const blocks = tree.children.filter((n) => n.type === "element");
+    if (blocks.length < 6) return;
+    const mid = blocks.length / 2;
+    const h2s = blocks.filter((n) => n.tagName === "h2");
+    let anchor;
+    if (h2s.length >= 2) {
+      // Never before the first h2: that would put the ad above most of the post.
+      anchor = h2s.slice(1).reduce((best, n) =>
+        Math.abs(blocks.indexOf(n) - mid) < Math.abs(blocks.indexOf(best) - mid) ? n : best,
+      );
+    } else {
+      const ps = blocks.filter((n) => n.tagName === "p");
+      if (ps.length < 4) return;
+      const after = ps[Math.floor(ps.length / 2)];
+      anchor = blocks[blocks.indexOf(after) + 1];
+      if (!anchor) return;
+    }
+    tree.children.splice(tree.children.indexOf(anchor), 0, {
+      type: "element",
+      tagName: "aside",
+      properties: { className: ["ad-slot"], ariaLabel: "Publicidade" },
+      children: [
+        {
+          type: "element",
+          tagName: "span",
+          properties: { className: ["ad-slot-label"] },
+          children: [{ type: "text", value: "Publicidade" }],
+        },
+        {
+          type: "element",
+          tagName: "ins",
+          properties: {
+            className: ["adsbygoogle"],
+            style: "display:block; text-align:center;",
+            dataAdLayout: "in-article",
+            dataAdFormat: "fluid",
+            dataAdClient: ADSENSE_CLIENT,
+            dataAdSlot: IN_ARTICLE_SLOT,
+          },
+          children: [],
+        },
+      ],
+    });
   };
 }
 
@@ -115,7 +171,7 @@ export default defineConfig({
   },
 
   markdown: {
-    rehypePlugins: [rehypeScrollableTables],
+    rehypePlugins: [rehypeScrollableTables, rehypeMidPostAd],
   },
 
   image: {
